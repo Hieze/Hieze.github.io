@@ -1,69 +1,122 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <style>
+    h1 {
+      width: auto;
+      font-size: 45px;
+      animation: cl 6s infinite;
+    }
+    h2 {
+      width: auto;
+      color: #008000;        
+      text-align: center;
+      font-size: 24px;
+      animation: uuu 6s infinite;
+    }
+    @keyframes cl {
+      8.3% {
+        color: blue-violet;
+      }
+      16.6% {
+        color: violet;
+      }
+      24.9% {
+        color: red violet;
+      }
+      33.2% {
+        color: red;
+      }
+       41.5% {
+        color: red orange;
+      }
+      49.8% {
+        color: orange yellow;
+      }
+       57.1% {
+        color: yellow;
+      }
+    65.3% {
+        color: yellow green;
+      }
+       73.6% {
+        color: green;
+      }
+      81.9% {
+        color: green blue;
+      }
+        90% {
+        color: blue;
+      }
+    }
+  </style>
+  <head>
     <title>Example Website</title>
     <style>
-        /* CSS cho giao diện trang web */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+      /* CSS cho giao diện trang web */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      /* CSS cho header */
+      header {
+        background-color: #333;
+        color: #fff;
         
-        /* CSS cho header */
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        /* CSS cho sidebar */
-        .sidebar {
-            background-color: #f1f1f1;
-            width: 200px;
-            padding: 20px;
-            float: left;
-        }
-        
-        /* CSS cho nội dung chính */
-        .content {
-            margin-left: 220px;
-            padding: 20px;
-        }
-        
-        /* CSS cho footer */
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            clear: both;
-        }
+        padding: 26px;
+        text-align: center;
+      }
+
+      /* CSS cho sidebar */
+      .sidebar {
+        background-color: #f1f1f1;
+        width: 110px;
+        padding: 50px;
+        text-align: center;
+        float: left;
+      }
+
+      /* CSS cho nội dung chính */
+      .content {
+        margin-left: 500px;
+        padding: 230px;
+      }
+
+      /* CSS cho footer */
+      footer {
+        background-color: #333;
+        color: #fff;
+        padding: 5px;
+        text-align: center;
+        clear: both;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Example Website</h1>
+      <img src="ThuatNgaCalculator.png" />
     </header>
-    
+
     <div class="sidebar">
-        <h3>Menu</h3>
-        <ul>
-            <li><a href="#">Trang chủ</a></li>
-            <li><a href="#">Giới thiệu</a></li>
-            <li><a href="#">Dịch vụ</a></li>
-            <li><a href="#">Liên hệ</a></li>
-        </ul>
+      <h3>Menu</h3>
+      <ul>
+        <li><a href="#">Trang chủ</a></li>
+        <li><a href="#">Giới thiệu</a></li>
+        <li><a href="#">Dịch vụ</a></li>
+        <li><a href="#">Liên hệ</a></li>
+      </ul>
     </div>
-    
+
     <div class="content">
-        <h2>Tiêu đề trang</h2>
-        <p>Nội dung trang web.</p>
+     
+      <img src="Nga.png" />
+      
+      <img src="Thuat.png" />
     </div>
-    
+
     <footer>
-        <p>Bản quyền &copy; 2023 Example Website</p>
+      <h1>Web by Thanh Nga and Thuật Đặng</h1>
     </footer>
-</body>
+  </body>
 </html>
