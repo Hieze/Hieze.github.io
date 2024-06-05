@@ -1,5 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ThuatNgaCalculator</title>
+  <style>
+    /* CSS cho giao diện trang web */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
 
+    /* CSS cho header */
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 26px;
+      text-align: center;
+    }
 
+    /* CSS cho sidebar */
+    .sidebar {
+      background-color: #f1f1f1;
+      width: 110px;
+      padding: 50px;
+      text-align: center;
+      float: left;
+    }
+
+    /* CSS cho nội dung chính */
+    .content {
+      padding: 250px;
+      text-align: center;
+    }
+
+    .www {
+      width: 350px; /* Increase width of images */
+      height: 350px; /* Increase height of images */
+    }
+
+    /* CSS cho footer */
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 5px;
+      clear: both;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .ninet-gif {
+      width: 100px; /* Increase width of gif images */
+      height: 100px; /* Increase height of gif images */
+      margin: 0 20px; /* Adjust margin for spacing */
+    }
+
+    .text-container {
+      flex-grow: 1; /* Allow the text container to take up remaining space */
+      text-align: center; /* Align text to center */
+    }
+
+    /* Rainbow text animation */
+    @keyframes rainbow {
+      0% {
+        color: red;
+      }
+      16.666% {
+        color: orange;
+      }
+      33.333% {
+        color: yellow;
+      }
+      50% {
+        color: green;
+      }
+      66.666% {
+        color: blue;
+      }
+      83.333% {
+        color: indigo;
+      }
+      100% {
+        color: violet;
+      }
+    }
+
+    h1.rainbow-text {
+      animation: rainbow 4s infinite; /* Apply rainbow animation to text */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="ThuatNgaCalculator.png" />
+  </header>
+
+  <div class="sidebar">
+    <h3>Menu</h3>
+    <ul>
+      <li><a href="https://www.mediafire.com/file/4t6w2gppd8ldj3b/AsaBetterV777.mcpack/file">Trang chủ</a></li>
+      <li><a href="#">Giới thiệu</a></li>
+      <li><a href="#">Dịch vụ</a></li>
+      <li><a href="#">Liên hệ</a></li>
+    </ul>
+  </div>
+
+  <span class="content">
+    <img src="Nga.png" class="www"/>
+    <img src="Thuat.png" class="www"/>
   </span>
 
   <footer>
@@ -7,9 +115,8 @@
     <div class="text-container">
       <h1 class="rainbow-text" style="display: inline;">Web by Thanh Ngà and Thuật Đặng</h1>
     </div>
-    <img src="ninet.gif" class="ninet-gif"/>
+    <img src="ninet.gif" class="ninet-gif" style="margin-right: 0;"/>
+    <img src="ninet.gif" class="ninet-gif" style="margin-left: 0;"/>
   </footer>
 </body>
 </html>
-
-
