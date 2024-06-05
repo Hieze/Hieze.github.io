@@ -34,8 +34,8 @@
     }
 
     .www {
-      width: 250px;
-      height: 250px;
+      width: 350px; /* Increase width of images */
+      height: 350px; /* Increase height of images */
     }
 
     /* CSS cho footer */
@@ -50,13 +50,42 @@
     }
 
     .ninet-gif {
-      width: 50px;
-      height: 50px;
-      margin: 0 10px; /* Adjust margin for spacing */
+      width: 100px; /* Increase width of gif images */
+      height: 100px; /* Increase height of gif images */
+      margin: 0 20px; /* Adjust margin for spacing */
     }
 
     .text-container {
       flex-grow: 1; /* Allow the text container to take up remaining space */
+    }
+
+    /* Rainbow text animation */
+    @keyframes rainbow {
+      0% {
+        color: red;
+      }
+      16.666% {
+        color: orange;
+      }
+      33.333% {
+        color: yellow;
+      }
+      50% {
+        color: green;
+      }
+      66.666% {
+        color: blue;
+      }
+      83.333% {
+        color: indigo;
+      }
+      100% {
+        color: violet;
+      }
+    }
+
+    h1.rainbow-text {
+      animation: rainbow 4s infinite; /* Apply rainbow animation to text */
     }
   </style>
 </head>
@@ -83,10 +112,11 @@
   <footer>
     <img src="ninet.gif" class="ninet-gif"/>
     <div class="text-container">
-      <h1>Web by Thanh Ngà and Thuật Đặng</h1>
+      <h1 class="rainbow-text">Web by Thanh Ngà and Thuật Đặng</h1>
     </div>
     <img src="ninet.gif" class="ninet-gif"/>
   </footer>
 </body>
 </html>
+
 
