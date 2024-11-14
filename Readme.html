@@ -1,110 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-  <title>ThuatNgaCalculator</title>
-  <style>
-    /* CSS for page styling */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    /* CSS for header */
-    header {
-      background-color: #333;
-      color: #fff;
-      padding: 26px;
-      text-align: center;
-    }
-
-    /* CSS for sidebar */
-    .sidebar {
-      background-color: #f1f1f1;
-      width: 110px;
-      padding: 20px;
-      text-align: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-    }
-
-    /* CSS for main content */
-    .main-content {
-      margin-left: 130px; /* Adjust margin to accommodate fixed sidebar */
-      padding: 50px;
-      text-align: center;
-    }
-
-    .www {
-      width: 350px;
-      height: 350px;
-    }
-
-    /* CSS for footer */
-    footer {
-      background-color: #333;
-      color: #fff;
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .ninet-gif {
-      width: 100px;
-      height: 100px;
-      margin: 0 10px;
-    }
-
-    .text-container {
-      flex-grow: 1;
-      text-align: center;
-    }
-
-    /* Rainbow text animation */
-    @keyframes rainbow {
-      0% { color: red; }
-      16.666% { color: orange; }
-      33.333% { color: yellow; }
-      50% { color: green; }
-      66.666% { color: blue; }
-      83.333% { color: indigo; }
-      100% { color: violet; }
-    }
-
-    h1.rainbow-text {
-      animation: rainbow 4s infinite;
-      margin: 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Cơ Bản</title>
+    <style>
+        /* CSS cơ bản cho bố cục */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+        }
+        nav a {
+            color: white;
+            padding: 1rem;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+        section {
+            padding: 2rem;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <img src="ThuatNgaCalculator.png" alt="Calculator Logo"/>
-  </header>
 
-  <div class="sidebar">
-    <h3>Menu</h3>
-    <ul>
-      <li><a href="https://www.mediafire.com/file/4t6w2gppd8ldj3b/AsaBetterV777.mcpack/file">Trang chủ</a></li>
-      <li><a href="#">Giới thiệu</a></li>
-      <li><a href="#">Dịch vụ</a></li>
-      <li><a href="#">Liên hệ</a></li>
-    </ul>
-  </div>
+    <!-- Header -->
+    <header>
+        <h1>Website Của Tôi</h1>
+    </header>
 
-  <div class="main-content">
-    <img src="Nga.png" class="www" alt="Image Nga"/>
-    <img src="Thuat.png" class="www" alt="Image Thuat"/>
-  </div>
+    <!-- Navigation -->
+    <nav>
+        <a href="#home">Trang chủ</a>
+        <a href="#about">Giới thiệu</a>
+        <a href="#services">Dịch vụ</a>
+        <a href="#contact">Liên hệ</a>
+    </nav>
 
-  <footer> 
-    <div class="text-container">
-      <h1 class="rainbow-text">Web by Thanh Ngà and Thuật Đặng</h1>
-    </div>  
-  </footer>
+    <!-- Trang chủ Section -->
+    <section id="home">
+        <h2>Trang chủ</h2>
+        <p>Chào mừng bạn đến với trang web của chúng tôi!</p>
+    </section>
+
+    <!-- Giới thiệu Section -->
+    <section id="about">
+        <h2>Giới thiệu</h2>
+        <p>Thông tin về công ty hoặc tổ chức của bạn được đặt ở đây.</p>
+    </section>
+
+    <!-- Dịch vụ Section -->
+    <section id="services">
+        <h2>Dịch vụ</h2>
+        <p>Liệt kê các dịch vụ mà bạn cung cấp cho khách hàng.</p>
+    </section>
+
+    <!-- Liên hệ Section -->
+    <section id="contact">
+        <h2>Liên hệ</h2>
+        <p>Thông tin liên hệ của bạn được đặt ở đây.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Website Của Tôi. Đã đăng ký bản quyền.</p>
+    </footer>
+
 </body>
 </html>
