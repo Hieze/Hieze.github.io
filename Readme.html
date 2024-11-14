@@ -3,14 +3,14 @@
 <head>
   <title>ThuatNgaCalculator</title>
   <style>
-    /* CSS cho giao diện trang web */
+    /* CSS for page styling */
     body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
     }
 
-    /* CSS cho header */
+    /* CSS for header */
     header {
       background-color: #333;
       color: #fff;
@@ -18,81 +18,72 @@
       text-align: center;
     }
 
-    /* CSS cho sidebar */
+    /* CSS for sidebar */
     .sidebar {
       background-color: #f1f1f1;
       width: 110px;
-      padding: 50px;
+      padding: 20px;
       text-align: center;
-      float: left;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
     }
 
-    /* CSS cho nội dung chính */
-    .content {
-      padding: 250px;
+    /* CSS for main content */
+    .main-content {
+      margin-left: 130px; /* Adjust margin to accommodate fixed sidebar */
+      padding: 50px;
       text-align: center;
     }
 
     .www {
-      width: 350px; /* Increase width of images */
-      height: 350px; /* Increase height of images */
+      width: 350px;
+      height: 350px;
     }
 
-    /* CSS cho footer */
+    /* CSS for footer */
     footer {
       background-color: #333;
       color: #fff;
-      padding: 5px;
-      clear: both;
+      padding: 10px;
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .ninet-gif {
-      width: 100px; /* Increase width of gif images */
-      height: 100px; /* Increase height of gif images */
-      margin: 0 10px; /* Adjust margin for spacing */
+      width: 100px;
+      height: 100px;
+      margin: 0 10px;
     }
 
     .text-container {
-      flex-grow: 1; /* Allow the text container to take up remaining space */
-      text-align: center; /* Align text to center */
+      flex-grow: 1;
+      text-align: center;
     }
 
     /* Rainbow text animation */
     @keyframes rainbow {
-      0% {
-        color: red;
-      }
-      16.666% {
-        color: orange;
-      }
-      33.333% {
-        color: yellow;
-      }
-      50% {
-        color: green;
-      }
-      66.666% {
-        color: blue;
-      }
-      83.333% {
-        color: indigo;
-      }
-      100% {
-        color: violet;
-      }
+      0% { color: red; }
+      16.666% { color: orange; }
+      33.333% { color: yellow; }
+      50% { color: green; }
+      66.666% { color: blue; }
+      83.333% { color: indigo; }
+      100% { color: violet; }
     }
 
     h1.rainbow-text {
-      animation: rainbow 4s infinite; /* Apply rainbow animation to text */
+      animation: rainbow 4s infinite;
+      margin: 0;
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="ThuatNgaCalculator.png" />
+    <img src="ThuatNgaCalculator.png" alt="Calculator Logo"/>
   </header>
 
   <div class="sidebar">
@@ -105,18 +96,18 @@
     </ul>
   </div>
 
-  <span class="content">
-    <img src="Nga.png" class="www"/>
-    <img src="Thuat.png" class="www"/>
-  </span>
+  <div class="main-content">
+    <img src="Nga.png" class="www" alt="Image Nga"/>
+    <img src="Thuat.png" class="www" alt="Image Thuat"/>
+  </div>
 
   <footer>
-    <img src="ninet.gif" class="ninet-gif"/>
+    <img src="ninet.gif" class="ninet-gif" alt="Decorative Gif"/>
     <div class="text-container">
-      <h1 class="rainbow-text" style="display: inline;">Web by Thanh Ngà and Thuật Đặng</h1>
+      <h1 class="rainbow-text">Web by Thanh Ngà and Thuật Đặng</h1>
     </div>
-    <img src="ninet.gif" class="ninet-gif" style="margin: 0;"/>
-    <img src="ninet.gif" class="ninet-gif" style="margin: 0;"/>
+    <img src="ninet.gif" class="ninet-gif" alt="Decorative Gif"/>
+    <img src="ninet.gif" class="ninet-gif" alt="Decorative Gif"/>
   </footer>
 </body>
 </html>
