@@ -33,13 +33,14 @@
       cursor: pointer;
       box-shadow: 0 0 10px rgba(128, 0, 128, 0.5), 0 0 20px rgba(128, 0, 128, 0.5), 0 0 30px rgba(128, 0, 128, 0.5);
       transition: 0.5s;
-    } 
+    }
+
     .glow-on-hover3:hover {
       background: #111;
       box-shadow: 0 0 20px rgb(128, 0, 128), 0 0 30px rgba(128, 0, 128, 0.8), 0 0 40px rgba(128, 0, 128, 0.8);
       transform: scale(1.1);
     }
- 
+
     .glow-on-hover3:before {
       content: '';
       position: absolute;
@@ -134,6 +135,7 @@
       animation: glowing 20s linear infinite;
       border-radius: 50%;
     }
+
     .glow-on-hover2 {
       width: 250px;
       height: 50px;
@@ -513,378 +515,545 @@
 
     ];
     const dataBase = [
-      ["adopt", "adopted", "adopted", "nhận nuôi, chấp nhận, thông qua, áp dụng (phương pháp, ý tưởng, luật lệ, phong cách, v.v.)",
-        "•I want to <cc>adopt</cc> a dog(Tôi muốn nuôi một con chó)<br>•The new policy has been <cc>adopted</cc> by the company."],
-      ["awake", "awoke", "awoken", "thức giấc",
-        "•I <cc>awake</cc> early every morning<br>•He <cc>awoke</cc> to the sound of thunder."],
-      ["be", "was/were", "been", "thì, là, ở",
-        "•She <cc>is</cc> a teacher. (Cô ấy là một giáo viên.)<br>•They <cc>were</cc> at the park yesterday. (Họ đã ở công viên hôm qua.)"
+      ["adopt - adopted - adopted", "nhận nuôi, chấp nhận, thông qua, áp dụng (phương pháp, ý tưởng, luật lệ, phong cách, v.v.)", "•I want to <cc>adopt</cc> a dog (Tôi muốn nuôi một con chó)<br>•The new policy has been <cc>adopted</cc> by the company."],
+      ["arise - arose - arisen", "nảy sinh",
+        "•A problem <cc>arose</cc> during the meeting. (Một vấn đề đã nảy sinh trong cuộc họp.)<br>•He has <cc>arisen</cc> as a strong leader in the company. (Anh ấy đã nổi lên như một nhà lãnh đạo vững mạnh trong công ty.)"
       ],
-      ["bear", "bore", "borne", "chịu đựng",
-        "•He <cc>bore</cc> the pain bravely. (Anh ấy chịu đựng nỗi đau một cách dũng cảm.)<br>•The burden was hard to <cc>bear</cc>. (Gánh nặng thật khó chịu đựng.)"
+      ["bet - bet - bet", "đặt cược",
+        "•She <cc>bet</cc> all her money on the horse race. (Cô ấy đã đặt cược tất cả tiền của mình vào cuộc đua ngựa.)<br>•He has <cc>bet</cc> on the outcome of the game. (Anh ấy đã đặt cược vào kết quả của trò chơi.)"
       ],
-      ["beat", "beat", "beaten", "đánh, đập",
-        "•She <cc>beat</cc> the drum loudly. (Cô ấy đánh trống rất to.)<br>•He was <cc>beaten</cc> by his opponent in the game. (Anh ấy bị đối thủ đánh bại trong trò chơi.)"
+      ["bind - bound - bound", "ràng buộc",
+        "•They <cc>bound</cc> the books together with a string. (Họ đã buộc những cuốn sách lại với nhau bằng sợi dây.)<br>•The contract has <cc>bound</cc> them to the terms. (Hợp đồng đã ràng buộc họ với các điều khoản.)"
       ],
-      ["become", "became", "become", "trở thành, trở nên",
-        "•She <cc>became</cc> a doctor after years of studying. (Cô ấy trở thành bác sĩ sau nhiều năm học tập.)<br>•The weather <cc>became</cc> colder as the night approached. (Thời tiết trở nên lạnh hơn khi đêm đến.)"
+      ["awake - awoke - awoken", "thức giấc", "•I <cc>awake</cc> early every morning<br>•He <cc>awoke</cc> to the sound of thunder."],
+      ["withdraw - withdrew - withdrawn", "rút lui",
+        "•He <cc>withdrew</cc> his offer after considering the risks. (Anh ấy đã rút lại lời đề nghị sau khi xem xét các rủi ro.)<br>•They have <cc>withdrawn</cc> from the competition due to personal reasons. (Họ đã rút lui khỏi cuộc thi vì lý do cá nhân.)"
       ],
-      ["begin", "began", "begun", "bắt đầu",
-        "•I <cc>began</cc> my career as a teacher. (Tôi bắt đầu sự nghiệp của mình với tư cách là một giáo viên.)<br>•The movie has already <cc>begun</cc>. (Bộ phim đã bắt đầu.)"
-      ],
-      ["bite", "bit", "bitten", "cắn",
-        "•The dog <cc>bit</cc> me on the hand. (Con chó đã cắn tôi vào tay.)<br>•I was <cc>bitten</cc> by a mosquito. (Tôi đã bị muỗi cắn.)"
-      ],
-      ["block", "blocked", "blocked", "chặn, ngăn cản",
-        "•He <cc>blocked</cc> the door to keep people out. (Anh ấy đã chặn cửa để ngăn không cho người khác vào.)<br>•The road was <cc>blocked</cc> by a fallen tree. (Con đường đã bị chặn lại bởi một cây đổ.)"
-      ],
-      ["blow", "blew", "blown", "thổi",
-        "•She <cc>blew</cc> out the candles on her birthday cake. (Cô ấy thổi tắt nến trên bánh sinh nhật.)<br>•The wind has <cc>blown</cc> the leaves across the street. (Gió đã thổi lá cây qua đường.)"
-      ],
-      ["break", "broke", "broken", "làm vỡ",
-        "•I accidentally <cc>broke</cc> the glass. (Tôi vô tình làm vỡ chiếc ly.)<br>•The vase is <cc>broken</cc>. (Chậu hoa bị vỡ.)"
-      ],
-      ["bring", "brought", "brought", "mang đến",
-        "•He <cc>brought</cc> a gift for her birthday. (Anh ấy mang một món quà cho sinh nhật cô ấy.)<br>•They have already <cc>brought</cc> the food. (Họ đã mang đồ ăn đến.)"
-      ],
-      ["build", "built", "built", "xây dựng",
-        "•They <cc>built</cc> a new house last year. (Họ đã xây dựng một ngôi nhà mới vào năm ngoái.)<br>•The bridge was <cc>built</cc> in 1995. (Cây cầu được xây dựng vào năm 1995.)"
-      ],
-      ["burn", "burnt/burned", "burnt/burned", "cháy",
-        "•The paper <cc>burnt</cc> in the fire. (Tờ giấy cháy trong lửa.)<br>•He accidentally <cc>burned</cc> his hand. (Anh ấy vô tình làm bỏng tay.)"
-      ],
-      ["buy", "bought", "bought", "mua",
-        "•She <cc>bought</cc> a new phone. (Cô ấy mua một chiếc điện thoại mới.)<br>•I have <cc>bought</cc> some groceries. (Tôi đã mua một số thực phẩm.)"
-      ],
-      ["catch", "caught", "caught", "bắt, chụp lấy",
-        "•He <cc>caught</cc> the ball. (Anh ấy bắt bóng.)<br>•I <cc>caught</cc> a cold last week. (Tôi bị cảm lạnh tuần trước.)"
+      ["wreak - wrought - wrought", "gây ra",
+        "•The storm <cc>wrought</cc> havoc on the coastal cities. (Cơn bão đã gây ra sự tàn phá cho các thành phố ven biển.)<br>•Her actions have <cc>wrought</cc> much confusion among the team. (Hành động của cô ấy đã gây ra sự bối rối lớn cho đội.)"
       ],
 
-
-      ["chase", "chased", "chased", "đuổi theo, săn bắt, lùa",
-        "•The farmer <cc>chased</cc> the cows into the barn. (Người nông dân đã lùa những con bò vào chuồng.)<br>•He <cc>loves</cc> to chase deer in the forest. (Anh ấy thích săn hươu trong rừng.)"
+      ["create - created - created", "tạo ra",
+        "•She <cc>created</cc> a beautiful painting. (Cô ấy đã tạo ra một bức tranh đẹp.)<br>•They have <cc>created</cc> a new app for the company. (Họ đã tạo ra một ứng dụng mới cho công ty.)"
       ],
-      ["choose", "chose", "chosen", "lựa chọn",
-        "•I <cc>chose</cc> the red dress for the party. (Tôi chọn chiếc váy đỏ cho buổi tiệc.)<br>•She has already <cc>chosen</cc> her team members. (Cô ấy đã chọn các thành viên cho đội của mình.)"
+      ["crack - cracked - cracked", "làm nứt",
+        "•He <cc>cracked</cc> the glass with a hammer. (Anh ấy đã làm nứt kính bằng búa.)<br>•The team has <cc>cracked</cc> the code. (Nhóm đã giải mã được mã code.)"
       ],
-      ["come", "came", "come", "đến, đi đến",
-        "•She <cc>came</cc> to the party late. (Cô ấy đến bữa tiệc muộn.)<br>•We will <cc>come</cc> to your house tomorrow. (Chúng tôi sẽ đến nhà bạn vào ngày mai.)"
+      ["conceal  - concealed - concealed", "che giấu",
+        "•He <cc>concealed</cc> the gift inside the box. (Anh ấy đã che giấu món quà trong hộp.)<br>•She has <cc>concealed</cc> her true feelings for years. (Cô ấy đã che giấu cảm xúc thật trong suốt nhiều năm.)"
       ],
-      ["cost", "cost", "cost", "có giá",
-        "•The book <cc>cost</cc> 20 dollars. (Cuốn sách có giá 20 đô la.)<br>•How much did the car <cc>cost</cc>? (Chiếc xe có giá bao nhiêu?)"
+      ["conquer - conquered - conquered", "chinh phục",
+        "•The empire <cc>conquered</cc> vast lands. (Đế chế đã chinh phục những vùng đất rộng lớn.)<br>•They have <cc>conquered</cc> their fears. (Họ đã chinh phục được nỗi sợ hãi của mình.)"
       ],
-      ["creep", "crept", "crept", "bò, trườn",
-        "•The cat <cc>crept</cc> slowly toward the mouse. (Con mèo bò chậm chạp về phía con chuột.)<br>•He <cc>crept</cc> around the corner cautiously. (Anh ấy bò quanh góc một cách thận trọng.)"
+      ["contaminate - contaminated - contaminated", "làm ô nhiễm",
+        "•The river was <cc>contaminated</cc> by industrial waste. (Con sông đã bị ô nhiễm bởi chất thải công nghiệp.)<br>•The food has <cc>contaminated</cc> with bacteria. (Thực phẩm đã bị nhiễm khuẩn.)"
       ],
-      ["deal", "dealt", "dealt", "thoả thuận",
-        "•They <cc>dealt</cc> with the situation calmly. (Họ đã xử lý tình huống một cách bình tĩnh.)<br>•We have <cc>dealt</cc> with this problem before. (Chúng tôi đã giải quyết vấn đề này trước đây.)"
+      ["collapse - collapsed - collapsed", "sụp đổ",
+        "•The building <cc>collapsed</cc> during the earthquake. (Tòa nhà đã sụp đổ trong trận động đất.)<br>•The bridge has <cc>collapsed</cc> under the weight of the trucks. (Cây cầu đã sụp đổ dưới trọng tải của những chiếc xe tải.)"
       ],
-      ["disprove", "disproved", "disproven", "bác bỏ",
-        "•She <cc>disproved</cc> the theory with new evidence. (Cô ấy đã bác bỏ giả thuyết bằng bằng chứng mới.)<br>•The accusations were <cc>disproven</cc> in court. (Những cáo buộc đã bị bác bỏ tại tòa.)"
+      ["counsel - counseled - counseled", "tư vấn",
+        "•She <cc>counseled</cc> the students on their career choices. (Cô ấy đã tư vấn cho các học sinh về sự lựa chọn nghề nghiệp.)<br>•They have <cc>counseled</cc> several clients on financial planning. (Họ đã tư vấn cho một số khách hàng về kế hoạch tài chính.)"
       ],
-      ["dive", "dived/dove", "dived", "lặn",
-        "•He <cc>dove</cc> into the pool to save the child. (Anh ấy lặn xuống hồ để cứu đứa trẻ.)<br>•She <cc>dived</cc> into the water from the cliff. (Cô ấy lặn xuống nước từ vách đá.)"
-      ],
-      ["do", "did", "done", "làm",
-        "•I <cc>did</cc> my homework last night. (Tôi đã làm bài tập về nhà tối qua.)<br>•They have <cc>done</cc> all the work for the project. (Họ đã hoàn thành tất cả công việc cho dự án.)"
-      ],
-      ["draw", "drew", "drawn", "vẽ",
-        "•She <cc>drew</cc> a beautiful picture of the sunset. (Cô ấy vẽ một bức tranh đẹp về hoàng hôn.)<br>•His work has been <cc>drawn</cc> from various sources. (Công việc của anh ấy đã được vẽ từ nhiều nguồn khác nhau.)"
-      ],
-      ["drink", "drank", "drunk", "uống",
-        "•He <cc>drank</cc> a glass of water after the run. (Anh ấy đã uống một ly nước sau khi chạy.)<br>•She had <cc>drunk</cc> all the juice before I arrived. (Cô ấy đã uống hết nước trái cây trước khi tôi đến.)"
-      ],
-      ["drive", "drove", "driven", "lái xe",
-        "•She <cc>drove</cc> to the beach for the weekend. (Cô ấy lái xe đến bãi biển vào cuối tuần.)<br>•He has <cc>driven</cc> for hours to reach the destination. (Anh ấy đã lái xe hàng giờ để đến nơi.)"
-      ],
-      ["eat", "ate", "eaten", "ăn",
-        "•I <cc>ate</cc> lunch at noon. (Tôi đã ăn trưa lúc 12 giờ.)<br>•They have <cc>eaten</cc> all the cake. (Họ đã ăn hết tất cả bánh.)"
-      ],
-      ["fall", "fell", "fallen", "rơi, ngã",
-        "•The book <cc>fell</cc> from the shelf. (Cuốn sách rơi xuống từ kệ.)<br>•He has <cc>fallen</cc> asleep on the couch. (Anh ấy đã ngủ quên trên ghế.)"
-      ],
-      ["feed", "fed", "fed", "cho ăn",
-        "•She <cc>fed</cc> the dog before leaving for work. (Cô ấy cho chó ăn trước khi đi làm.)<br>•The animals were <cc>fed</cc> early in the morning. (Các con vật được cho ăn sớm vào buổi sáng.)"
-      ],
-      ["feel", "felt", "felt", "cảm thấy",
-        "•He <cc>felt</cc> sick after eating too much. (Anh ấy cảm thấy đau bụng sau khi ăn quá nhiều.)<br>•She has <cc>felt</cc> very tired lately. (Cô ấy cảm thấy rất mệt mỏi gần đây.)"
-      ],
-      ["find", "found", "found", "tìm thấy",
-        "•I <cc>found</cc> my keys in the kitchen. (Tôi tìm thấy chìa khóa của mình trong nhà bếp.)<br>•They have <cc>found</cc> a solution to the problem. (Họ đã tìm ra giải pháp cho vấn đề.)"
-      ],
-      ["fight", "fought", "fought", "chiến đấu",
-        "•The two soldiers <cc>fought</cc> bravely in the battle. (Hai người lính đã chiến đấu dũng cảm trong trận chiến.)<br>•He has <cc>fought</cc> for justice all his life. (Anh ấy đã chiến đấu cho công lý suốt cuộc đời.)"
-      ],
-      ["fly", "flew", "flown", "bay",
-        "•The bird <cc>flew</cc> across the sky. (Con chim bay qua bầu trời.)<br>•We have <cc>flown</cc> to Paris several times. (Chúng tôi đã bay đến Paris vài lần.)"
-      ], ["follow", "followed", "followed", "theo",
-        "•She <cc>followed</cc> him through the crowd. (Cô ấy đã theo anh ấy qua đám đông.)<br>•They have <cc>followed</cc> the instructions carefully. (Họ đã làm theo hướng dẫn một cách cẩn thận.)"
-      ],
-      ["forbid", "forbade", "forbidden", "cấm",
-        "•He <cc>forbade</cc> them from entering the room. (Anh ấy đã cấm họ vào phòng.)<br>•Smoking is <cc>forbidden</cc> in the building. (Hút thuốc bị cấm trong tòa nhà.)"
-      ],
-      ["forget", "forgot", "forgotten", "quên",
-        "•I <cc>forgot</cc> to bring my book. (Tôi quên mang sách của mình.)<br>•She had <cc>forgotten</cc> her friend's birthday. (Cô ấy đã quên sinh nhật của bạn mình.)"
-      ],
-      ["foresee", "foresaw", "foreseen", "thấy trước",
-        "•I <cc>foresaw</cc> the difficulties ahead. (Tôi đã thấy trước những khó khăn phía trước.)<br>•The problem was <cc>foreseen</cc> by the experts. (Vấn đề đã được các chuyên gia thấy trước.)"
-      ],
-      ["freeze", "froze", "frozen", "làm đông lại",
-        "•The pond <cc>froze</cc> during the night. (Cái ao đã đóng băng trong đêm.)<br>•They have <cc>frozen</cc> all the food for preservation. (Họ đã đông lạnh tất cả thực phẩm để bảo quản.)"
-      ],
-      ["get", "got", "got/gotten", "có được",
-        "•He <cc>got</cc> a new job last week. (Anh ấy có một công việc mới tuần trước.)<br>•We have <cc>gotten</cc> all the information needed. (Chúng tôi đã có tất cả thông tin cần thiết.)"
-      ],
-      ["hunt", "hunted", "hunted", "săn bắt",
-        "•They <cc>hunted</cc> wild animals in the forest. (Họ đã săn bắt động vật hoang dã trong rừng.)<br>•He has <cc>hunted</cc> for many years. (Anh ấy đã săn bắt suốt nhiều năm.)"
-      ],
-      ["hope", "hoped", "hoped", "hy vọng",
-        "•I <cc>hope</cc> you have a nice day. (Tôi hy vọng bạn có một ngày tốt lành.)<br>•We <cc>hoped</cc> for good weather. (Chúng tôi đã hy vọng có thời tiết đẹp.)"
-      ],
-      ["hurt", "hurt", "hurt", "làm đau, tổn thương",
-        "•He <cc>hurt</cc> his leg while playing football. (Anh ấy bị đau chân khi chơi bóng đá.)<br>•She has <cc>hurt</cc> my feelings. (Cô ấy đã làm tổn thương cảm xúc của tôi.)"
-      ],
-      ["hold", "held", "held", "cầm, giữ",
-        "•She <cc>holds</cc> the cup tightly. (Cô ấy cầm chặt chiếc cốc.)<br>•They <cc>held</cc> a meeting yesterday. (Họ đã tổ chức một cuộc họp vào ngày hôm qua.)"
-      ],
-      ["hinder", "hindered", "hindered", "cản trở, gây khó khăn",
-        "•The heavy rain <cc>hindered</cc> our travel plans. (Cơn mưa to đã cản trở kế hoạch du lịch của chúng tôi.)<br>•She has <cc>hindered</cc> my progress at work. (Cô ấy đã gây khó khăn cho tiến độ công việc của tôi.)"
-      ],
-      ["happen", "happened", "happened", "xảy ra",
-        "•The accident <cc>happened</cc> late at night. (Vụ tai nạn đã xảy ra vào cuối đêm.)<br>•What <cc>happened</cc> at the party yesterday? (Chuyện gì đã xảy ra ở bữa tiệc hôm qua?)"
-      ],
-      ["hit", "hit", "hit", "đánh",
-        "•He <cc>hit</cc> the ball over the fence. (Anh ấy đánh bóng qua hàng rào.)<br>•She has <cc>hit</cc> a milestone in her career. (Cô ấy đã đạt được một cột mốc trong sự nghiệp.)"
-      ],
-      ["hide", "hid", "hidden", "ẩn, trốn",
-        "•She <cc>hides</cc> the key under the mat. (Cô ấy giấu chìa khóa dưới thảm.)<br>•They <cc>hid</cc> in the closet to surprise him. (Họ đã trốn trong tủ để tạo bất ngờ cho anh ấy.)"
-      ],
-      ["hear", "heard", "heard", "nghe",
-        "•I <cc>hear</cc> a strange noise. (Tôi nghe thấy một tiếng động lạ.)<br>•He <cc>heard</cc> the news yesterday. (Anh ấy đã nghe tin tức vào ngày hôm qua.)"
-      ],
-      ["show", "showed", "shown", "cho xem, trình diễn",
-        "•She <cc>showed</cc> me how to cook the dish. (Cô ấy đã cho tôi xem cách nấu món ăn.)<br>•The teacher has <cc>shown</cc> us many interesting facts. (Giáo viên đã trình diễn cho chúng ta nhiều thông tin thú vị.)"
-      ], ["run", "ran", "run", "chạy , vận hành, điều khiển, quản lý, điều hành ",
-        "•He <cc>runs</cc> the company with great efficiency. (Anh ấy điều hành công ty một cách hiệu quả.)<br>•I <cc>ran</cc> to catch the bus. (Tôi đã chạy để bắt xe buýt.)"
-      ],
-      ["sing", "sang", "sung", "hát",
-        "•He <cc>sang</cc> a beautiful song at the concert. (Anh ấy đã hát một bài hát tuyệt vời trong buổi hòa nhạc.)<br>•She has <cc>sung</cc> in many performances. (Cô ấy đã hát trong nhiều buổi biểu diễn.)"
-      ],
-      ["sink", "sank", "sunk", "chìm, lặn",
-        "•The ship <cc>sank</cc> after hitting an iceberg. (Con tàu đã chìm sau khi va phải một tảng băng.)<br>•The ship has <cc>sunk</cc> to the bottom of the ocean. (Con tàu đã chìm xuống đáy đại dương.)"
-      ],
-      ["sit", "sat", "sat", "ngồi",
-        "•I <cc>sat</cc> on the bench for an hour. (Tôi đã ngồi trên ghế một giờ.)<br>•They have <cc>sat</cc> in the same spot for the whole meeting. (Họ đã ngồi cùng một chỗ suốt cuộc họp.)"
-      ],
-      ["sleep", "slept", "slept", "ngủ",
-        "•He <cc>slept</cc> for eight hours last night. (Anh ấy đã ngủ tám giờ tối qua.)<br>•She has <cc>slept</cc> through the entire flight. (Cô ấy đã ngủ suốt chuyến bay.)"
-      ],
-      ["smell", "smelt/smelled", "smelt/smelled", "ngửi",
-        "•I <cc>smelt</cc> something burning in the kitchen. (Tôi đã ngửi thấy mùi cháy trong bếp.)<br>•The flowers have <cc>smelt</cc> so sweet today. (Những bông hoa hôm nay ngửi thật ngọt ngào.)"
-      ],
-      ["speak", "spoke", "spoken", "nói",
-        "•She <cc>spoke</cc> with a calm voice. (Cô ấy đã nói bằng một giọng điềm tĩnh.)<br>•They have <cc>spoken</cc> about the issue many times. (Họ đã nói về vấn đề này nhiều lần.)"
-      ],
-      ["spend", "spent", "spent", "tiêu xài",
-        "•I <cc>spent</cc> all my money on books. (Tôi đã tiêu hết tiền vào sách.)<br>•She has <cc>spent</cc> a lot of time working on the project. (Cô ấy đã dành rất nhiều thời gian để làm việc với dự án.)"
-      ],
-      ["spread", "spread", "spread", "lan truyền, lan tỏa",
-        "News of the event <cc>spread</cc> quickly. (Tin tức về sự kiện đã lan truyền nhanh chóng.)<br>•The rumor has <cc>spread</cc> to everyone in the office. (Tin đồn đã lan tỏa đến tất cả mọi người trong văn phòng.)"
-      ],
-      ["stand", "stood", "stood", "đứng",
-        "•He <cc>stood</cc> near the door waiting for his turn. (Anh ấy đã đứng gần cửa chờ đến lượt.)<br>•She has <cc>stood</cc> at the podium for an hour. (Cô ấy đã đứng tại bục giảng một giờ.)"
-      ],
-      ["steal", "stole", "stolen", "đánh cắp",
-        "•The thief <cc>stole</cc> my wallet. (Kẻ trộm đã đánh cắp ví của tôi.)<br>•He has <cc>stolen</cc> several cars in the past. (Anh ta đã đánh cắp một vài chiếc ô tô trong quá khứ.)"
-      ],
-      ["stick", "stuck", "stuck", "ghim vào, dính vào",
-        "•The note <cc>stuck</cc> to the fridge. (Mẩu giấy đã dính vào tủ lạnh.)<br>•She has <cc>stuck</cc> with the plan despite the difficulties. (Cô ấy đã kiên trì với kế hoạch mặc dù có khó khăn.)"
-      ],
-      ["swear", "swore", "sworn", "tuyên thệ",
-        "•He <cc>swore</cc> to tell the truth. (Anh ấy đã tuyên thệ sẽ nói sự thật.)<br>•She has <cc>sworn</cc> an oath to protect her country. (Cô ấy đã tuyên thệ sẽ bảo vệ đất nước.)"
-      ],
-      ["sweep", "swept", "swept", "quét",
-        "•She <cc>swept</cc> the floor before the guests arrived. (Cô ấy đã quét sàn trước khi khách đến.)<br>•They have <cc>swept</cc> the room clean. (Họ đã quét dọn sạch sẽ căn phòng.)"
-      ],
-      ["swim", "swam", "swum", "bơi lội",
+      ["be - was/were - been", "thì, là, ở", "•She <cc>is</cc> a teacher. (Cô ấy là một giáo viên.)<br>•They <cc>were</cc> at the park yesterday. (Họ đã ở công viên hôm qua.)"],
+      ["bear - bore - borne", "chịu đựng", "•He <cc>bore</cc> the pain bravely. (Anh ấy chịu đựng nỗi đau một cách dũng cảm.)<br>•The burden was hard to <cc>bear</cc>. (Gánh nặng thật khó chịu đựng.)"],
+      ["beat - beat - beaten", "đánh, đập", "•She <cc>beat</cc> the drum loudly. (Cô ấy đánh trống rất to.)<br>•He was <cc>beaten</cc> by his opponent in the game. (Anh ấy bị đối thủ đánh bại trong trò chơi.)"],
+      ["become - became - become", "trở thành, trở nên", "•She <cc>became</cc> a doctor after years of studying. (Cô ấy trở thành bác sĩ sau nhiều năm học tập.)<br>•The weather <cc>became</cc> colder as the night approached. (Thời tiết trở nên lạnh hơn khi đêm đến.)"],
+      ["begin - began - begun", "bắt đầu", "•I <cc>began</cc> my career as a teacher. (Tôi bắt đầu sự nghiệp của mình với tư cách là một giáo viên.)<br>•The movie has already <cc>begun</cc>. (Bộ phim đã bắt đầu.)"],
+      ["bite - bit - bitten", "cắn", "•The dog <cc>bit</cc> me on the hand. (Con chó đã cắn tôi vào tay.)<br>•I was <cc>bitten</cc> by a mosquito. (Tôi đã bị muỗi cắn.)"],
+      ["block - blocked - blocked", "chặn, ngăn cản", "•He <cc>blocked</cc> the door to keep people out. (Anh ấy đã chặn cửa để ngăn không cho người khác vào.)<br>•The road was <cc>blocked</cc> by a fallen tree. (Con đường đã bị chặn lại bởi một cây đổ.)"],
+      ["blow - blew - blown", "thổi", "•She <cc>blew</cc> out the candles on her birthday cake. (Cô ấy thổi tắt nến trên bánh sinh nhật.)<br>•The wind has <cc>blown</cc> the leaves across the street. (Gió đã thổi lá cây qua đường.)"],
+      ["break - broke - broken", "làm vỡ", "•I accidentally <cc>broke</cc> the glass. (Tôi vô tình làm vỡ chiếc ly.)<br>•The vase is <cc>broken</cc>. (Chậu hoa bị vỡ.)"],
+      ["bring - brought - brought", "mang đến", "•He <cc>brought</cc> a gift for her birthday. (Anh ấy mang một món quà cho sinh nhật cô ấy.)<br>•They have already <cc>brought</cc> the food. (Họ đã mang đồ ăn đến.)"],
+      ["build - built - built", "xây dựng", "•They <cc>built</cc> a new house last year. (Họ đã xây dựng một ngôi nhà mới vào năm ngoái.)<br>•The bridge was <cc>built</cc> in 1995. (Cây cầu được xây dựng vào năm 1995.)"],
+      ["cut - cut - cut", "cắt", "•She <cc>cut</cc> the paper into pieces. (Cô ấy đã cắt tờ giấy thành nhiều mảnh.)<br>•I have <cc>cut</cc> my finger while chopping vegetables. (Tôi đã cắt ngón tay khi thái rau.)"],
+      ["do - did - done", "làm", "•She <cc>did</cc> her homework last night. (Cô ấy đã làm bài tập về nhà tối qua.)<br>•I have <cc>done</cc> my work for the day. (Tôi đã làm xong công việc hôm nay.)"],
+      ["draw - drew - drawn", "vẽ", "•He <cc>drew</cc> a picture of the mountains. (Anh ấy đã vẽ một bức tranh về những ngọn núi.)<br>•She has <cc>drawn</cc> a beautiful portrait. (Cô ấy đã vẽ một bức chân dung đẹp.)"],
+      ["drink - drank - drunk", "uống", "•They <cc>drank</cc> all the water. (Họ đã uống hết nước.)<br>•I have <cc>drunk</cc> too much coffee today. (Tôi đã uống quá nhiều cà phê hôm nay.)"],
+      ["drive - drove - driven", "lái xe", "•He <cc>drove</cc> to work this morning. (Anh ấy đã lái xe đi làm sáng nay.)<br>•She has <cc>driven</cc> across the country. (Cô ấy đã lái xe qua cả đất nước.)"],
+      ["eat - ate - eaten", "ăn", "•We <cc>ate</cc> dinner at 7 pm. (Chúng tôi đã ăn tối vào lúc 7 giờ tối.)<br>•I have <cc>eaten</cc> too much cake. (Tôi đã ăn quá nhiều bánh.)"],
+      ["fall - fell - fallen", "rơi", "•The leaves <cc>fell</cc> from the tree. (Những chiếc lá đã rơi xuống từ cây.)<br>•I have <cc>fallen</cc> asleep on the couch. (Tôi đã ngủ quên trên ghế sô pha.)"],
+      ["feed - fed - fed", "cho ăn", "•She <cc>fed</cc> the cat this morning. (Cô ấy đã cho con mèo ăn sáng nay.)<br>•I have <cc>fed</cc> the dog already. (Tôi đã cho chó ăn rồi.)"],
+      ["feel- felt- felt", "cảm thấy", "•She <cc>felt</cc> happy after the concert. (Cô ấy cảm thấy vui sau buổi hòa nhạc.)<br>•I have <cc>felt</cc> a bit tired lately. (Gần đây tôi cảm thấy hơi mệt mỏi.)"],
+      ["fight- fought- fought", "đánh nhau", "•They <cc>fought</cc> over the last piece of cake. (Họ đã đánh nhau vì miếng bánh cuối cùng.)<br>•He has <cc>fought</cc> bravely in the war. (Anh ấy đã chiến đấu dũng cảm trong cuộc chiến.)"],
+      ["find- found- found", "tìm thấy", "•She <cc>found</cc> a wallet on the ground. (Cô ấy đã tìm thấy một chiếc ví dưới đất.)<br>•I have <cc>found</cc> a great restaurant nearby. (Tôi đã tìm thấy một nhà hàng tuyệt vời gần đây.)"],
+      ["fly- flew- flown", "bay", "•The bird <cc>flew</cc> across the sky. (Con chim đã bay qua bầu trời.)<br>•We have <cc>flown</cc> to Paris many times. (Chúng tôi đã bay đến Paris nhiều lần.)"],
+      ["forget- forgot- forgotten", "quên", "•I <cc>forgot</cc> to bring my homework. (Tôi đã quên mang bài tập về nhà.)<br>•He has <cc>forgotten</cc> the details of the meeting. (Anh ấy đã quên chi tiết của cuộc họp.)"],
+      ["forgive- forgave- forgiven", "tha thứ", "•She <cc>forgave</cc> him for his mistake. (Cô ấy đã tha thứ cho anh ấy vì sai lầm của anh.)<br>•I have <cc>forgiven</cc> him many times. (Tôi đã tha thứ cho anh ấy nhiều lần.)"],
+      ["grow- grew- grown", "lớn lên", "•The plant <cc>grew</cc> quickly in the warm weather. (Cây đã lớn lên nhanh chóng trong thời tiết ấm áp.)<br>•I have <cc>grown</cc> fond of this city. (Tôi đã trở nên yêu mến thành phố này.)"],
+      ["swim - swam - swum", "bơi lội",
         "•He <cc>swam</cc> across the river. (Anh ấy đã bơi qua sông.)<br>•We have <cc>swum</cc> in that lake every summer. (Chúng tôi đã bơi trong hồ đó mỗi mùa hè.)"
       ],
-      ["take", "took", "taken", "cầm, lấy",
+      ["breed - bred - bred", "nuôi dưỡng, sinh sản",
+        "•They <cc>bred</cc> dogs for several generations. (Họ đã nuôi dưỡng chó qua nhiều thế hệ.)<br>•The animals have <cc>bred</cc> in captivity. (Các con vật đã sinh sản trong điều kiện nuôi nhốt.)"
+      ],
+      ["cast - cast - cast", "ném",
+        "•He <cc>cast</cc> the fishing line into the river. (Anh ấy đã ném dây câu xuống sông.)<br>•The actor has <cc>cast</cc> for the role in the movie. (Diễn viên đã được chọn vào vai trong bộ phim.)"
+      ],
+      ["cling - clung - clung", "bám vào",
+        "•She <cc>clung</cc> to her belief despite the criticism. (Cô ấy đã bám vào niềm tin của mình mặc dù bị chỉ trích.)<br>•The wet clothes have <cc>clung</cc> to her skin. (Quần áo ướt đã bám vào da cô ấy.)"
+      ],
+      ["get - got - got/gotten", "nhận, có được",
+        "•He <cc>got</cc> a promotion at work. (Anh ấy đã nhận được thăng chức ở công ty.)<br>•She has <cc>gotten</cc> all the information she needed. (Cô ấy đã có được tất cả thông tin cần thiết.)"
+      ],
+      ["give - gave - given", "cho",
+        "•They <cc>gave</cc> me a great gift for my birthday. (Họ đã cho tôi một món quà tuyệt vời vào sinh nhật.)<br>•She has <cc>given</cc> a lot of help to the community. (Cô ấy đã giúp đỡ rất nhiều cho cộng đồng.)"
+      ],
+      ["go - went - gone", "đi",
+        "•We <cc>went</cc> to the beach last weekend. (Chúng tôi đã đi biển vào cuối tuần trước.)<br>•He has <cc>gone</cc> to the store to buy groceries. (Anh ấy đã đi đến cửa hàng để mua đồ tạp hóa.)"
+      ],
+      ["run - ran - run", "chạy",
+        "•She <cc>ran</cc> fast to catch the bus. (Cô ấy đã chạy nhanh để bắt xe buýt.)<br>•They have <cc>run</cc> 5 miles this morning. (Họ đã chạy 5 dặm sáng nay.)"
+      ],
+      ["eat - ate - eaten", "ăn",
+        "•I <cc>ate</cc> pizza for lunch. (Tôi đã ăn pizza vào bữa trưa.)<br>•He has <cc>eaten</cc> all the cookies. (Anh ấy đã ăn hết tất cả các chiếc bánh quy.)"
+      ],
+      ["go - went - gone", "đi",
+        "•They <cc>went</cc> to the park yesterday. (Họ đã đi công viên hôm qua.)<br>•We have <cc>gone</cc> to that museum several times. (Chúng tôi đã đến bảo tàng đó vài lần.)"
+      ],
+      ["see - saw - seen", "thấy",
+        "•I <cc>saw</cc> him at the party last night. (Tôi đã thấy anh ấy ở bữa tiệc tối qua.)<br>•We have <cc>seen</cc> that movie twice. (Chúng tôi đã xem bộ phim đó hai lần.)"
+      ],
+      ["beget - begot - begotten", "gây ra, sinh ra",
+        "•His actions <cc>begot</cc> a series of consequences. (Hành động của anh ấy đã gây ra một loạt hệ quả.)<br>•This event has <cc>begotten</cc> much discussion in the media. (Sự kiện này đã sinh ra nhiều cuộc thảo luận trên phương tiện truyền thông.)"
+      ],
+      ["behold - beheld - beheld", "nhìn thấy",
+        "•They <cc>beheld</cc> the majestic view from the mountaintop. (Họ đã nhìn thấy cảnh tượng hùng vĩ từ đỉnh núi.)<br>•I have <cc>beheld</cc> many wonderful sunsets during my travels. (Tôi đã chứng kiến nhiều hoàng hôn tuyệt vời trong các chuyến du lịch của mình.)"
+      ],
+      ["bereave - bereft - bereft", "mất mát",
+        "•They <cc>bereft</cc> their loved ones in the tragedy. (Họ đã mất đi người thân trong bi kịch.)<br>•He feels <cc>bereft</cc> of hope after the failure. (Anh ấy cảm thấy mất hy vọng sau thất bại.)"
+      ],
+      ["betide - betid - betid", "xảy đến",
+        "•Misfortune <cc>betid</cc> them after the accident. (Xui xẻo đã xảy đến với họ sau tai nạn.)<br>•Nothing has <cc>betid</cc> her since the move. (Không có gì xảy ra với cô ấy kể từ khi chuyển đi.)"
+      ],
+      ["broadcast - broadcast - broadcast", "phát sóng",
+        "•The news was <cc>broadcast</cc> live on television. (Tin tức đã được phát sóng trực tiếp trên truyền hình.)<br>•The program has <cc>broadcast</cc> to millions of viewers. (Chương trình đã được phát sóng đến hàng triệu người xem.)"
+      ],
+      ["clothe - clothed - clothed", "mặc quần áo",
+        "•He <cc>clothed</cc> himself in a warm jacket before going outside. (Anh ấy đã mặc áo khoác ấm trước khi ra ngoài.)<br>•She has <cc>clothed</cc> her children in new outfits for the festival. (Cô ấy đã mặc đồ mới cho các con mình nhân dịp lễ hội.)"
+      ],
+      ["dare - dared - dared", "dám",
+        "•He <cc>dared</cc> to speak his mind in front of the crowd. (Anh ấy đã dám nói lên suy nghĩ của mình trước đám đông.)<br>•She has <cc>dared</cc> to challenge the status quo. (Cô ấy đã dám thách thức hiện trạng.)"
+      ],
+      ["encompass - encompassed - encompassed", "bao gồm",
+        "•The project <cc>encompassed</cc> various aspects of the city's development. (Dự án bao gồm nhiều khía cạnh phát triển của thành phố.)<br>•The report has <cc>encompassed</cc> all the major findings. (Báo cáo đã bao gồm tất cả những phát hiện chính.)"
+      ],
+      ["forgo - forwent - forgone", "từ bỏ",
+        "•They <cc>forwent</cc> the vacation to focus on work. (Họ đã từ bỏ kỳ nghỉ để tập trung vào công việc.)<br>•He has <cc>forgone</cc> his usual routine for a healthier lifestyle. (Anh ấy đã từ bỏ thói quen thường ngày để có lối sống lành mạnh hơn.)"
+      ],
+      ["grieve - grieved - grieved", "buồn rầu",
+        "•They <cc>grieved</cc> the loss of their beloved pet. (Họ đã buồn rầu vì mất đi thú cưng yêu quý.)<br>•She has <cc>grieved</cc> for months after the tragedy. (Cô ấy đã buồn rầu trong suốt nhiều tháng sau bi kịch.)"
+      ],
+      ["grow - grew - grown", "trưởng thành",
+        "•She <cc>grew</cc> as a person after the difficult experience. (Cô ấy đã trưởng thành sau trải nghiệm khó khăn.)<br>•They have <cc>grown</cc> stronger over time. (Họ đã trở nên mạnh mẽ hơn theo thời gian.)"
+      ],
+      ["inspire - inspired - inspired", "truyền cảm hứng",
+        "•His speech <cc>inspired</cc> the audience to take action. (Bài phát biểu của anh ấy đã truyền cảm hứng cho khán giả hành động.)<br>•The story of her perseverance has <cc>inspired</cc> many others. (Câu chuyện về sự kiên trì của cô ấy đã truyền cảm hứng cho nhiều người khác.)"
+      ],
+      ["lament - lamented - lamented", "than vãn, thương tiếc",
+        "•He <cc>lamented</cc> the loss of his childhood home. (Anh ấy đã than vãn về sự mất mát ngôi nhà thời thơ ấu.)<br>•She has <cc>lamented</cc> the changes in the neighborhood. (Cô ấy đã thương tiếc về những thay đổi trong khu phố.)"
+      ],
+      ["relinquish - relinquished - relinquished", "từ bỏ, nhường lại",
+        "•He <cc>relinquished</cc> his control over the project to a new team. (Anh ấy đã từ bỏ quyền kiểm soát dự án cho một nhóm mới.)<br>•They have <cc>relinquished</cc> their claim to the property. (Họ đã từ bỏ yêu sách đối với tài sản đó.)"
+      ],
+      ["rescue - rescued - rescued", "giải cứu",
+        "•The firefighters <cc>rescued</cc> the family from the burning building. (Những người lính cứu hỏa đã giải cứu gia đình khỏi tòa nhà đang cháy.)<br>•She has <cc>rescued</cc> countless animals over the years. (Cô ấy đã giải cứu vô số động vật trong suốt những năm qua.)"
+      ],
+      ["slink - slunk - slunk", "lén lút di chuyển",
+        "•The cat <cc>slunk</cc> across the floor, trying not to be noticed. (Con mèo đã lén lút di chuyển trên sàn nhà, cố gắng không bị phát hiện.)<br>•He has <cc>slunk</cc> away in shame after the incident. (Anh ấy đã lén lút rời đi trong sự xấu hổ sau sự cố.)"
+      ],
+      ["withdraw - withdrew - withdrawn", "rút lui",
+        "•He <cc>withdrew</cc> his offer after considering the risks. (Anh ấy đã rút lại lời đề nghị sau khi xem xét các rủi ro.)<br>•They have <cc>withdrawn</cc> from the competition due to personal reasons. (Họ đã rút lui khỏi cuộc thi vì lý do cá nhân.)"
+      ],
+      ["wreak - wrought - wrought", "gây ra",
+        "•The storm <cc>wrought</cc> havoc on the coastal cities. (Cơn bão đã gây ra sự tàn phá cho các thành phố ven biển.)<br>•Her actions have <cc>wrought</cc> much confusion among the team. (Hành động của cô ấy đã gây ra sự bối rối lớn cho đội.)"
+      ],
+      ["take - took - taken", "cầm, lấy",
         "•She <cc>took</cc> the book from the shelf. (Cô ấy đã lấy cuốn sách từ kệ.)<br>•He has <cc>taken</cc> the wrong bus. (Anh ấy đã đi nhầm xe buýt.)"
       ],
-      ["teach", "taught", "taught", "dạy",
+      ["teach - taught - taught", "dạy",
         "•She <cc>taught</cc> me how to solve the math problem. (Cô ấy đã dạy tôi cách giải bài toán.)<br>•He has <cc>taught</cc> at this school for ten years. (Anh ấy đã dạy ở trường này mười năm.)"
       ],
-      ["tear", "tore", "torn", "xé rách",
+      ["tear - tore - torn", "xé rách",
         "•He <cc>tore</cc> the letter in half. (Anh ấy đã xé lá thư làm đôi.)<br>•She has <cc>torn</cc> the paper into pieces. (Cô ấy đã xé giấy thành nhiều mảnh.)"
       ],
-      ["tell", "told", "told", "nói, kể",
+      ["tell - told - told", "nói, kể",
         "•I <cc>told</cc> him the truth. (Tôi đã nói với anh ấy sự thật.)<br>•They have <cc>told</cc> everyone about the event. (Họ đã kể cho mọi người về sự kiện.)"
       ],
-      ["think", "thought", "thought", "nghĩ",
+      ["think - thought - thought", "nghĩ",
         "•She <cc>thought</cc> it was a good idea. (Cô ấy đã nghĩ đó là một ý tưởng hay.)<br>•They have <cc>thought</cc> of a new solution. (Họ đã nghĩ ra một giải pháp mới.)"
       ],
-      ["throw", "threw", "thrown", "ném",
+      ["throw - threw - thrown", "ném",
         "•He <cc>threw</cc> the ball to me. (Anh ấy ném quả bóng cho tôi.)<br>•She has <cc>thrown</cc> away all the old clothes. (Cô ấy đã ném hết tất cả quần áo cũ.)"
       ],
-      ["understand", "understood", "understood", "hiểu",
+      ["understand - understood - understood", "hiểu",
         "•I <cc>understood</cc> the lesson clearly. (Tôi đã hiểu bài học một cách rõ ràng.)<br>•They have <cc>understood</cc> the concept after the explanation. (Họ đã hiểu khái niệm sau khi giải thích.)"
       ],
-      ["wear", "wore", "worn", "mặc",
+      ["wear - wore - worn", "mặc",
         "•She <cc>wore</cc> a red dress to the party. (Cô ấy mặc một chiếc váy đỏ đến bữa tiệc.)<br>•He has <cc>worn</cc> this shirt for days. (Anh ấy đã mặc chiếc áo này mấy ngày rồi.)"
       ],
-      ["weep", "wept", "wept", "khóc",
+      ["weep - wept - wept", "khóc",
         "•She <cc>wept</cc> when she heard the bad news. (Cô ấy đã khóc khi nghe tin xấu.)<br>•He has <cc>wept</cc> for hours after the loss. (Anh ấy đã khóc suốt nhiều giờ sau khi mất.)"
       ],
-      ["win", "won", "won", "thắng",
+      ["win - won - won", "thắng",
         "•They <cc>won</cc> the match yesterday. (Họ đã thắng trận đấu hôm qua.)<br>•We have <cc>won</cc> three competitions this year. (Chúng tôi đã thắng ba cuộc thi năm nay.)"
       ],
-      ["write", "wrote", "written", "viết", "•He <cc>wrote</cc> a letter to his friend. (Anh ấy đã viết một bức thư cho bạn.)<br>•She has <cc>written</cc> several books on the subject. (Cô ấy đã viết vài cuốn sách về chủ đề này.)"],
-      ["abhor", "abhorred", "abhorred", "ghét cay ghét đắng",
+      ["write - wrote - written", "viết",
+        "•He <cc>wrote</cc> a letter to his friend. (Anh ấy đã viết một bức thư cho bạn.)<br>•She has <cc>written</cc> several books on the subject. (Cô ấy đã viết vài cuốn sách về chủ đề này.)"
+      ],
+      ["abhor - abhorred - abhorred", "ghét cay ghét đắng",
         "•She <cc>abhorred</cc> the idea of cheating in exams. (Cô ấy ghét cay ghét đắng ý tưởng gian lận trong kỳ thi.)<br>•They had never <cc>abhorred</cc> anything so much before. (Họ chưa bao giờ ghét điều gì đến vậy.)"
       ],
-      ["besiege", "besieged", "besieged", "bao vây, vây hãm",
+      ["besiege - besieged - besieged", "bao vây, vây hãm",
         "•The castle was <cc>besieged</cc> for weeks by enemy forces. (Lâu đài đã bị vây hãm trong nhiều tuần bởi lực lượng thù địch.)<br>•The city was <cc>besieged</cc> by protesters. (Thành phố bị bao vây bởi những người biểu tình.)"
       ],
-      ["concoct", "concocted", "concocted", "bịa đặt, chế tạo (một câu chuyện)",
+      ["concoct - concocted - concocted", "bịa đặt, chế tạo (một câu chuyện)",
         "•He <cc>concocted</cc> a story to cover up his mistake. (Anh ấy bịa ra một câu chuyện để che đậy sai lầm của mình.)<br>•The chef <cc>concocted</cc> a delicious new dish. (Đầu bếp đã chế tạo một món ăn mới tuyệt vời.)"
       ],
-      ["diminish", "diminished", "diminished", "giảm bớt, làm giảm đi",
+      ["lead - led - led", "dẫn dắt",
+        "•He <cc>led</cc> the team to victory. (Anh ấy đã dẫn dắt đội chiến thắng.)<br>•They have <cc>led</cc> the project for several months. (Họ đã dẫn dắt dự án suốt vài tháng.)"
+      ],
+      ["learn - learned/learnt - learned/learnt", "học",
+        "•She <cc>learned</cc> to play the piano. (Cô ấy đã học chơi đàn piano.)<br>•He has <cc>learnt</cc> a lot about history. (Anh ấy đã học được nhiều về lịch sử.)"
+      ],
+      ["draw - drew - drawn", "vẽ, kéo",
+        "•She <cc>drew</cc> a beautiful picture of the landscape. (Cô ấy đã vẽ một bức tranh đẹp về phong cảnh.)<br>•They have <cc>drawn</cc> the curtains to block the light. (Họ đã kéo rèm lại để che ánh sáng.)"
+      ],
+      ["leave - left - left", "rời đi",
+        "•She <cc>left</cc> the house early this morning. (Cô ấy đã rời nhà sớm sáng nay.)<br>•They have <cc>left</cc> for the airport. (Họ đã rời đi đến sân bay.)"
+      ],
+      ["lose - lost - lost", "mất",
+        "•He <cc>lost</cc> his wallet yesterday. (Anh ấy đã mất ví hôm qua.)<br>•She has <cc>lost</cc> all hope. (Cô ấy đã mất hết hy vọng.)"
+      ],
+      ["lie - lay - lain", "nằm",
+        "•He <cc>lay</cc> on the grass, staring at the sky. (Anh ấy đã nằm trên bãi cỏ, nhìn lên bầu trời.)<br>•The book has <cc>lain</cc> on the table for days. (Cuốn sách đã nằm trên bàn suốt mấy ngày qua.)"
+      ],
+      ["diminish - diminished - diminished", "giảm bớt, làm giảm đi",
         "•His authority was <cc>diminished</cc> after the scandal. (Quyền lực của anh ấy đã giảm bớt sau vụ bê bối.)<br>•The medicine <cc>diminished</cc> the pain significantly. (Thuốc đã làm giảm đáng kể cơn đau.)"
       ],
-      ["exacerbate", "exacerbated", "exacerbated", "làm trầm trọng thêm",
+      ["exacerbate - exacerbated - exacerbated", "làm trầm trọng thêm",
         "•The new law only <cc>exacerbated</cc> the problem. (Luật mới chỉ làm vấn đề trở nên trầm trọng hơn.)<br>•His actions <cc>exacerbated</cc> the tension between the two groups. (Hành động của anh ta đã làm trầm trọng thêm căng thẳng giữa hai nhóm.)"
       ],
-      ["flounder", "floundered", "floundered", "vật lộn, khó khăn",
+      ["flounder - floundered - floundered", "vật lộn, khó khăn",
         "•The company <cc>floundered</cc> after the market crash. (Công ty gặp khó khăn sau khi thị trường sụp đổ.)<br>•He <cc>floundered</cc> in the interview, struggling to answer questions. (Anh ấy vật lộn trong cuộc phỏng vấn, gặp khó khăn khi trả lời các câu hỏi.)"
       ],
-      ["galvanize", "galvanized", "galvanized", "kích động, khuyến khích hành động",
+      ["galvanize - galvanized - galvanized", "kích động, khuyến khích hành động",
         "•The speech <cc>galvanized</cc> the crowd into action. (Bài phát biểu đã kích động đám đông hành động.)<br>•The news of the crisis <cc>galvanized</cc> the community to help. (Tin tức về cuộc khủng hoảng đã khuyến khích cộng đồng hành động.)"
       ],
-      ["harangue", "harangued", "harangued", "diễn thuyết dài dòng, chỉ trích kịch liệt",
+      ["harangue - harangued - harangued", "diễn thuyết dài dòng, chỉ trích kịch liệt",
         "•He <cc>harangued</cc> his team for failing to meet expectations. (Anh ấy đã diễn thuyết dài dòng chỉ trích đội của mình vì không đạt kỳ vọng.)<br>•The manager <cc>harangued</cc> the employees about their performance. (Quản lý đã chỉ trích nhân viên về hiệu suất công việc của họ.)"
       ],
-      ["impede", "impeded", "impeded", "cản trở, ngăn chặn",
+      ["impede - impeded - impeded", "cản trở, ngăn chặn",
         "•The heavy traffic <cc>impeded</cc> our progress. (Giao thông đông đúc đã cản trở tiến trình của chúng tôi.)<br>•The lack of funding <cc>impeded</cc> the research. (Thiếu hụt kinh phí đã ngăn chặn nghiên cứu.)"
       ],
-      ["juxtapose", "juxtaposed", "juxtaposed", "đặt cạnh nhau để so sánh",
+      ["juxtapose - juxtaposed - juxtaposed", "đặt cạnh nhau để so sánh",
         "•The artist <cc>juxtaposed</cc> modern and traditional elements in her work. (Nghệ sĩ đã đặt các yếu tố hiện đại và truyền thống cạnh nhau trong tác phẩm của cô ấy.)<br>•The movie <cc>juxtaposed</cc> love and war in an interesting way. (Bộ phim đã đặt tình yêu và chiến tranh cạnh nhau một cách thú vị.)"
-      ], ["languish", "languished", "languished", "buồn rầu, uể oải",
+      ],
+      ["languish - languished - languished", "buồn rầu, uể oải",
         "•The prisoner <cc>languished</cc> in his cell for years. (Tù nhân đã buồn rầu trong phòng giam của mình suốt nhiều năm.)<br>•The flowers <cc>languished</cc> without water in the hot sun. (Những bông hoa đã uể oải vì không có nước dưới ánh mặt trời gay gắt.)"
       ],
-      ["mollify", "mollified", "mollified", "làm dịu đi, xoa dịu",
-        "•The manager <cc>mollified</cc> the angry customer with a refund. (Quản lý đã xoa dịu khách hàng tức giận bằng một khoản hoàn tiền.)<br>•She <cc>mollified</cc> her mother by promising to help around the house. (Cô ấy đã làm dịu mẹ mình bằng cách hứa sẽ giúp đỡ việc nhà.)"
+      ["mollify - mollified - mollified", "xoa dịu, làm dịu đi",
+        "•The manager <cc>mollified</cc> the angry customer by offering a refund. (Quản lý đã xoa dịu khách hàng giận dữ bằng cách hoàn lại tiền.)<br>•Her kind words <cc>mollified</cc> the upset child. (Những lời nói dịu dàng của cô ấy đã xoa dịu đứa trẻ buồn.)"
       ],
-      ["nebulize", "nebulized", "nebulized", "xịt, phun sương",
-        "•The doctor <cc>nebulized</cc> the medication for the patient with asthma. (Bác sĩ đã phun thuốc cho bệnh nhân bị hen suyễn.)<br>•The machine <cc>nebulized</cc> the disinfectant throughout the room. (Máy đã phun sương chất khử trùng khắp phòng.)"
+      ["nullify - nullified - nullified", "vô hiệu hóa, làm mất giá trị",
+        "•The contract was <cc>nullified</cc> after the violation. (Hợp đồng đã bị vô hiệu hóa sau khi vi phạm.)<br>•The new evidence <cc>nullified</cc> the previous claim. (Bằng chứng mới đã làm vô hiệu hóa yêu cầu trước đó.)"
       ],
-      ["obfuscate", "obfuscated", "obfuscated", "làm khó hiểu, làm mờ đi",
-        "•The politician <cc>obfuscated</cc> the issue with misleading statements. (Chính trị gia đã làm mờ vấn đề bằng những tuyên bố sai lệch.)<br>•The technical jargon <cc>obfuscated</cc> the explanation. (Thuật ngữ kỹ thuật đã làm cho lời giải thích trở nên khó hiểu.)"
+      ["obfuscate - obfuscated - obfuscated", "làm tối nghĩa, làm mờ đi",
+        "•The lawyer <cc>obfuscated</cc> the issue with complex legal terms. (Luật sư đã làm tối nghĩa vấn đề bằng các thuật ngữ pháp lý phức tạp.)<br>•The speaker <cc>obfuscated</cc> the truth with vague statements. (Diễn giả đã làm mờ đi sự thật với những phát biểu mơ hồ.)"
       ],
-      ["placate", "placated", "placated", "xoa dịu, làm nguôi ngoai",
-        "•The teacher <cc>placated</cc> the upset student by offering extra help. (Giáo viên đã làm nguôi ngoai học sinh đang bực bội bằng cách đề nghị giúp đỡ thêm.)<br>•He <cc>placated</cc> his boss with a sincere apology. (Anh ta đã xoa dịu sếp bằng một lời xin lỗi chân thành.)"
+      ["offer - offered - offered", "đề nghị, cung cấp",
+        "•She <cc>offered</cc> him a cup of tea. (Cô ấy đã đề nghị anh ta một tách trà.)<br>•He has <cc>offered</cc> his help to the team. (Anh ấy đã cung cấp sự giúp đỡ cho đội.)"
       ],
-      ["quell", "quelled", "quelled", "dẹp yên, làm dịu đi",
-        "•The police <cc>quelled</cc> the riot before it spread. (Cảnh sát đã dẹp yên cuộc bạo động trước khi nó lan rộng.)<br>•The new medication <cc>quelled</cc> his anxiety. (Thuốc mới đã làm dịu đi sự lo âu của anh ấy.)"
+      ["oppose - opposed - opposed", "đối lập, phản đối",
+        "•The senator <cc>opposed</cc> the new bill. (Thượng nghị sĩ đã phản đối dự luật mới.)<br>•They have <cc>opposed</cc> the decision from the beginning. (Họ đã phản đối quyết định từ đầu.)"
       ],
-      ["rejuvenate", "rejuvenated", "rejuvenated", "làm trẻ lại, làm mới lại",
-        "•A good night's sleep <cc>rejuvenated</cc> her energy. (Một giấc ngủ ngon đã làm mới lại năng lượng của cô ấy.)<br>•The spa treatment <cc>rejuvenated</cc> his tired body. (Chữa trị tại spa đã làm trẻ lại cơ thể mệt mỏi của anh ấy.)"
+      ["organize - organized - organized", "tổ chức, sắp xếp",
+        "•They <cc>organized</cc> a charity event last weekend. (Họ đã tổ chức một sự kiện từ thiện vào cuối tuần trước.)<br>•She has <cc>organized</cc> the files in the office. (Cô ấy đã sắp xếp lại các tài liệu trong văn phòng.)"
       ],
-      ["subjugate", "subjugated", "subjugated", "chinh phục, thống trị",
-        "•The empire <cc>subjugated</cc> its neighboring lands. (Đế chế đã chinh phục các vùng đất lân cận.)<br>•He tried to <cc>subjugate</cc> his employees through fear. (Anh ta đã cố gắng thống trị các nhân viên của mình bằng sự sợ hãi.)"
+      ["overcome - overcame - overcome", "vượt qua",
+        "•He <cc>overcame</cc> his fear of public speaking. (Anh ấy đã vượt qua nỗi sợ nói trước đám đông.)<br>•They have <cc>overcome</cc> many challenges to succeed. (Họ đã vượt qua nhiều thử thách để thành công.)"
       ],
-      ["transcend", "transcended", "transcended", "vượt qua, siêu việt",
-        "•The artist's work <cc>transcended</cc> traditional boundaries. (Tác phẩm của nghệ sĩ đã vượt qua ranh giới truyền thống.)<br>•Her courage <cc>transcended</cc> all expectations. (Lòng dũng cảm của cô ấy đã vượt qua mọi kỳ vọng.)"
+      ["participate - participated - participated", "tham gia",
+        "•She <cc>participated</cc> in the competition last year. (Cô ấy đã tham gia cuộc thi năm ngoái.)<br>•He has <cc>participated</cc> in all the meetings. (Anh ấy đã tham gia tất cả các cuộc họp.)"
       ],
-      ["abscond", "absconded", "absconded", "biến mất, trốn thoát",
-        "•The thief <cc>absconded</cc> with the stolen money. (Tên trộm đã trốn thoát với số tiền ăn cắp.)<br>•He had <cc>absconded</cc> before the police arrived. (Anh ấy đã trốn mất trước khi cảnh sát đến.)"
+      ["perceive - perceived - perceived", "nhận thức, cảm nhận",
+        "•I <cc>perceived</cc> the situation as a threat. (Tôi đã nhận thức tình huống như một mối đe dọa.)<br>•She has <cc>perceived</cc> the change in his attitude. (Cô ấy đã cảm nhận được sự thay đổi trong thái độ của anh ấy.)"
       ],
-      ["ameliorate", "ameliorated", "ameliorated", "cải thiện",
-        "•The government has <cc>ameliorated</cc> the living conditions in the area. (Chính phủ đã cải thiện điều kiện sống trong khu vực.)<br>•The situation has <cc>ameliorated</cc> significantly since the reforms. (Tình hình đã cải thiện rõ rệt kể từ khi cải cách.)"
+      ["persist - persisted - persisted", "kiên trì",
+        "•He <cc>persisted</cc> despite all the obstacles. (Anh ấy đã kiên trì mặc dù gặp rất nhiều trở ngại.)<br>•She has <cc>persisted</cc> in her efforts to succeed. (Cô ấy đã kiên trì trong những nỗ lực để thành công.)"
       ],
-      ["commemorate", "commemorated", "commemorated", "tưởng nhớ, kỷ niệm",
-        "•The statue was erected to <cc>commemorate</cc> the heroes of the war. (Tượng đài được dựng lên để tưởng nhớ các anh hùng trong cuộc chiến.)<br>•We <cc>commemorated</cc> the anniversary of his death with a special ceremony. (Chúng tôi đã kỷ niệm ngày mất của ông bằng một buổi lễ đặc biệt.)"
+      ["place - placed - placed", "đặt, để",
+        "•She <cc>placed</cc> the book on the table. (Cô ấy đã đặt cuốn sách lên bàn.)<br>•He has <cc>placed</cc> all the orders for the event. (Anh ấy đã đặt tất cả các đơn hàng cho sự kiện.)"
       ],
-      ["coerce", "coerced", "coerced", "ép buộc",
-        "•They <cc>coerced</cc> him into signing the contract. (Họ đã ép buộc anh ấy ký hợp đồng.)<br>•She was <cc>coerced</cc> into confessing to the crime. (Cô ấy đã bị ép buộc thú nhận tội ác.)"
+      ["plead - pleaded - pleaded", "biện hộ, khẩn cầu",
+        "•He <cc>pleaded</cc> guilty to the charges. (Anh ấy đã nhận tội đối với các cáo buộc.)<br>•She has <cc>pleaded</cc> for mercy. (Cô ấy đã khẩn cầu sự tha thứ.)"
       ],
-      ["contradict", "contradicted", "contradicted", "mâu thuẫn, phản bác",
-        "•His actions <cc>contradicted</cc> his words. (Hành động của anh ấy mâu thuẫn với lời nói.)<br>•The evidence <cc>contradicted</cc> her testimony. (Chứng cứ đã phản bác lời khai của cô ấy.)"
+      ["predict - predicted - predicted", "dự đoán",
+        "•She <cc>predicted</cc> the weather would be sunny. (Cô ấy đã dự đoán thời tiết sẽ nắng.)<br>•They have <cc>predicted</cc> the stock market crash. (Họ đã dự đoán vụ sụp đổ thị trường chứng khoán.)"
       ],
-      ["debase", "debased", "debased", "hạ thấp, làm giảm giá trị",
-        "•The scandal <cc>debased</cc> his reputation. (Vụ bê bối đã làm hạ thấp danh tiếng của anh ấy.)<br>•The leader's corrupt actions <cc>debased</cc> the ideals of the movement. (Hành động tham nhũng của nhà lãnh đạo đã làm giảm giá trị lý tưởng của phong trào.)"
+      ["prescribe - prescribed - prescribed", "kê đơn",
+        "•The doctor <cc>prescribed</cc> a new medication. (Bác sĩ đã kê đơn thuốc mới.)<br>•He has <cc>prescribed</cc> antibiotics for the infection. (Anh ấy đã kê đơn kháng sinh cho bệnh nhiễm trùng.)"
       ],
-      ["elucidate", "elucidated", "elucidated", "làm sáng tỏ, giải thích",
-        "•The professor <cc>elucidated</cc> the complex theory in simple terms. (Giáo sư đã giải thích lý thuyết phức tạp một cách đơn giản.)<br>•He <cc>elucidated</cc> the reasons behind the decision. (Anh ấy đã làm sáng tỏ lý do đằng sau quyết định.)"
+      ["present - presented - presented", "trình bày, giới thiệu",
+        "•She <cc>presented</cc> her research at the conference. (Cô ấy đã trình bày nghiên cứu của mình tại hội nghị.)<br>•He has <cc>presented</cc> the proposal to the board. (Anh ấy đã giới thiệu đề xuất với ban giám đốc.)"
       ],
-      ["exacerbate", "exacerbated", "exacerbated", "làm trầm trọng thêm",
-        "•The new law <cc>exacerbated</cc> the economic situation. (Luật mới đã làm tình hình kinh tế trở nên trầm trọng hơn.)<br>•His rude behavior only <cc>exacerbated</cc> the conflict. (Thái độ thô lỗ của anh ấy chỉ làm xung đột trở nên nghiêm trọng hơn.)"
+      ["presume - presumed - presumed", "giả định",
+        "•I <cc>presumed</cc> he would arrive late. (Tôi đã giả định anh ấy sẽ đến muộn.)<br>•They have <cc>presumed</cc> the project is already completed. (Họ đã giả định rằng dự án đã hoàn thành.)"
       ],
-      ["exonerate", "exonerated", "exonerated", "minh oan",
-        "•The evidence <cc>exonerated</cc> him from all charges. (Chứng cứ đã minh oan cho anh ấy khỏi tất cả các cáo buộc.)<br>•The investigation <cc>exonerated</cc> the suspect after finding new proof. (Cuộc điều tra đã minh oan cho nghi phạm sau khi tìm thấy bằng chứng mới.)"
+      ["prevent - prevented - prevented", "ngăn ngừa",
+        "•The vaccine <cc>prevented</cc> the disease. (Vaccine đã ngăn ngừa căn bệnh.)<br>•They have <cc>prevented</cc> a major crisis from happening. (Họ đã ngăn ngừa một cuộc khủng hoảng lớn xảy ra.)"
       ],
-      ["galvanize", "galvanized", "galvanized", "kích thích, thôi thúc",
-        "•The tragedy <cc>galvanized</cc> the community into action. (Thảm kịch đã thôi thúc cộng đồng hành động.)<br>•Her speech <cc>galvanized</cc> the audience into supporting the cause. (Bài phát biểu của cô ấy đã kích thích khán giả tham gia ủng hộ sự nghiệp này.)"
+      ["prohibit - prohibited - prohibited", "cấm",
+        "•The law <cc>prohibited</cc> smoking in public places. (Luật pháp đã cấm hút thuốc ở nơi công cộng.)<br>•They have <cc>prohibited</cc> the use of mobile phones during meetings. (Họ đã cấm sử dụng điện thoại di động trong các cuộc họp.)"
       ],
-      ["impede", "impeded", "impeded", "cản trở, ngăn chặn",
-        "•The heavy traffic <cc>impeded</cc> our progress. (Giao thông đông đúc đã cản trở tiến độ của chúng tôi.)<br>•The lack of funding <cc>impeded</cc> the research project. (Thiếu kinh phí đã cản trở dự án nghiên cứu.)"
+      ["promise - promised - promised", "hứa",
+        "•He <cc>promised</cc> to help with the project. (Anh ấy đã hứa giúp đỡ với dự án.)<br>•She has <cc>promised</cc> to finish the work by Friday. (Cô ấy đã hứa sẽ hoàn thành công việc trước thứ Sáu.)"
       ],
-      ["abide", "abode", "abode", "chấp nhận, tuân theo",
-        "•He <cc>abode</cc> by the rules despite the challenges. (Anh ấy đã tuân thủ các quy tắc dù gặp khó khăn.)<br>•They have <cc>abode</cc> by their promises for years. (Họ đã giữ lời hứa của mình suốt nhiều năm.)"
+      ["prove - proved - proven", "chứng minh",
+        "•She <cc>proved</cc> her theory with evidence. (Cô ấy đã chứng minh lý thuyết của mình bằng chứng cứ.)<br>•He has <cc>proven</cc> that he is the best candidate. (Anh ấy đã chứng minh rằng mình là ứng viên tốt nhất.)"
       ],
-      ["bestow", "bestowed", "bestowed", "ban tặng, trao tặng",
-        "•The king <cc>bestowed</cc> titles upon his loyal servants. (Nhà vua đã trao tặng danh hiệu cho các tôi tớ trung thành.)<br>•He has <cc>bestowed</cc> a great honor on me. (Anh ấy đã trao cho tôi một vinh dự lớn.)"
+      ["provoke - provoked - provoked", "kích động",
+        "•His comments <cc>provoked</cc> an angry response. (Những bình luận của anh ấy đã kích động một phản ứng giận dữ.)<br>•The news has <cc>provoked</cc> outrage among the public. (Tin tức đã kích động sự phẫn nộ trong công chúng.)"
       ],
-      ["forsake", "forsook", "forsaken", "từ bỏ",
-        "•She <cc>forsook</cc> her family to pursue her dreams. (Cô ấy đã từ bỏ gia đình để theo đuổi ước mơ của mình.)<br>•He has <cc>forsaken</cc> his old habits. (Anh ấy đã từ bỏ những thói quen cũ.)"
+      ["punish - punished - punished", "trừng phạt",
+        "•She <cc>punished</cc> the student for being late. (Cô ấy đã trừng phạt học sinh vì đến muộn.)<br>•He has <cc>punished</cc> the team for not following the rules. (Anh ấy đã trừng phạt đội vì không tuân theo các quy tắc.)"
+      ], ["put - put - put", "đặt, để",
+        "•She <cc>put</cc> the book on the table. (Cô ấy đã đặt cuốn sách lên bàn.)<br>•He has <cc>put</cc> all his energy into the project. (Anh ấy đã dồn hết năng lượng vào dự án.)"
       ],
-      ["seethe", "seethed", "seethed", "sôi sục, giận dữ",
-        "•He <cc>seethed</cc> with anger after hearing the news. (Anh ấy sôi sục với cơn giận sau khi nghe tin.)<br>•She has <cc>seethed</cc> silently at the injustice. (Cô ấy đã âm thầm giận dữ vì sự bất công.)"
+      ["quit - quit - quit", "bỏ, từ bỏ",
+        "•He <cc>quit</cc> his job last month. (Anh ấy đã bỏ công việc vào tháng trước.)<br>•She has <cc>quit</cc> smoking for good. (Cô ấy đã từ bỏ thuốc lá vĩnh viễn.)"
       ],
-      ["slink", "slunk", "slunk", "lén lút đi, đi rón rén",
-        "•The cat <cc>slinked</cc> through the shadows to catch its prey. (Con mèo lén lút qua bóng tối để bắt con mồi.)<br>•He has <cc>slunk</cc> out of the room to avoid being seen. (Anh ấy đã lén lút ra khỏi phòng để tránh bị phát hiện.)"
+      ["read - read - read", "đọc",
+        "•She <cc>read</cc> the book in one sitting. (Cô ấy đã đọc cuốn sách trong một lần ngồi.)<br>•He has <cc>read</cc> the report already. (Anh ấy đã đọc báo cáo rồi.)"
       ],
-      ["shriek", "shrieked", "shrieked", "hét lên, kêu la",
-        "•She <cc>shrieked</cc> when she saw the spider on her desk. (Cô ấy hét lên khi thấy con nhện trên bàn.)<br>•He has <cc>shrieked</cc> in excitement when the event began. (Anh ấy đã hét lên vì phấn khích khi sự kiện bắt đầu.)"
+      ["ride - rode - ridden", "cưỡi, đi",
+        "•She <cc>rode</cc> her bike to work yesterday. (Cô ấy đã cưỡi xe đạp đến công ty hôm qua.)<br>•He has <cc>ridden</cc> horses since he was a child. (Anh ấy đã cưỡi ngựa từ khi còn là một đứa trẻ.)"
       ],
-      ["scorn", "scorned", "scorned", "khinh bỉ",
-        "•He <cc>scorned</cc> the idea of quitting his job. (Anh ấy đã khinh bỉ ý tưởng bỏ việc.)<br>•They have <cc>scorned</cc> his efforts despite his hard work. (Họ đã khinh bỉ nỗ lực của anh ấy mặc dù anh ấy làm việc chăm chỉ.)"
+      ["ring - rang - rung", "kêu, reo",
+        "•The phone <cc>rang</cc> all morning. (Điện thoại reo suốt buổi sáng.)<br>•The bells have <cc>rung</cc> for the celebration. (Những chiếc chuông đã kêu cho buổi lễ.)"
       ],
-      ["beget", "begot", "begotten", "sinh ra, tạo ra",
-        "•His actions <cc>begot</cc> a series of unfortunate events. (Hành động của anh ấy đã sinh ra một loạt các sự kiện không may.)<br>•She has <cc>begotten</cc> a child who will carry on the legacy. (Cô ấy đã sinh ra một đứa trẻ sẽ tiếp nối di sản.)"
+      ["rise - rose - risen", "tăng, dâng lên",
+        "•The sun <cc>rose</cc> at 6 AM this morning. (Mặt trời đã mọc lúc 6 giờ sáng nay.)<br>•The river has <cc>risen</cc> due to heavy rain. (Con sông đã dâng lên do mưa lớn.)"
       ],
-      ["dwell", "dwelled", "dwelled", "sống, cư trú",
-        "•He <cc>dwelled</cc> in a small village near the mountains. (Anh ấy sống trong một ngôi làng nhỏ gần núi.)<br>•They have <cc>dwelled</cc> in this city for generations. (Họ đã cư trú ở thành phố này qua nhiều thế hệ.)"
-      ], ["ingrain", "ingrained", "ingrained", "khắc sâu, ghi vào tâm trí",
-        "•Her kindness was <cc>ingrained</cc> in the community. (Lòng tốt của cô ấy đã khắc sâu vào cộng đồng.)<br>•These values have been <cc>ingrained</cc> in him since childhood. (Những giá trị này đã được ghi vào tâm trí anh ấy từ khi còn nhỏ.)"
+      ["run - ran - run", "chạy",
+        "•He <cc>ran</cc> a marathon last year. (Anh ấy đã chạy một cuộc thi marathon năm ngoái.)<br>•She has <cc>run</cc> five miles every morning. (Cô ấy đã chạy năm dặm mỗi sáng.)"
       ],
-      ["induce", "induced", "induced", "kích thích, gây ra",
-        "•The drug <cc>induced</cc> a feeling of relaxation. (Thuốc đã gây ra cảm giác thư giãn.)<br>•They have <cc>induced</cc> him to make a decision. (Họ đã kích thích anh ấy đưa ra quyết định.)"
+      ["saw - sawed - sawed", "cưa",
+        "•He <cc>sawed</cc> the wood into pieces. (Anh ấy đã cưa gỗ thành những mảnh.)<br>•She has <cc>sawed</cc> the boards for the project. (Cô ấy đã cưa các tấm ván cho dự án.)"
       ],
-      ["languish", "languished", "languished", "mệt mỏi, suy yếu",
-        "•The prisoners <cc>languished</cc> in the harsh conditions. (Các tù nhân đã suy yếu trong điều kiện khắc nghiệt.)<br>•He <cc>languished</cc> for years without any opportunity for advancement. (Anh ấy đã mệt mỏi suốt nhiều năm mà không có cơ hội thăng tiến.)"
+      ["say - said - said", "nói",
+        "•She <cc>said</cc> she would come later. (Cô ấy đã nói rằng sẽ đến sau.)<br>•He has <cc>said</cc> everything on his mind. (Anh ấy đã nói hết những gì trong lòng.)"
       ],
-      ["meditate", "meditated", "meditated", "suy ngẫm, thiền",
-        "•He <cc>meditated</cc> for hours to clear his mind. (Anh ấy đã thiền suốt hàng giờ để xua tan mọi lo âu.)<br>•She has <cc>meditated</cc> on the issue for several days. (Cô ấy đã suy ngẫm về vấn đề này suốt vài ngày.)"
+      ["see - saw - seen", "nhìn thấy",
+        "•I <cc>saw</cc> a movie last night. (Tôi đã xem một bộ phim tối qua.)<br>•She has <cc>seen</cc> the new exhibit at the museum. (Cô ấy đã nhìn thấy triển lãm mới ở bảo tàng.)"
       ],
-      ["obliterate", "obliterated", "obliterated", "xóa bỏ, phá hủy",
-        "•The explosion <cc>obliterated</cc> the building. (Vụ nổ đã phá hủy tòa nhà.)<br>•All traces of the old town have been <cc>obliterated</cc>. (Tất cả dấu vết của thị trấn cũ đã bị xóa bỏ.)"
+      ["sell - sold - sold", "bán",
+        "•He <cc>sold</cc> his car last week. (Anh ấy đã bán xe tuần trước.)<br>•They have <cc>sold</cc> all the tickets for the concert. (Họ đã bán hết tất cả vé cho buổi hòa nhạc.)"
       ],
-      ["perpetuate", "perpetuated", "perpetuated", "làm cho tồn tại mãi mãi",
-        "•Their actions <cc>perpetuated</cc> the myth. (Hành động của họ đã làm cho huyền thoại đó tồn tại mãi mãi.)<br>•The tradition was <cc>perpetuated</cc> through generations. (Truyền thống đã được duy trì qua các thế hệ.)"
+      ["send - sent - sent", "gửi",
+        "•She <cc>sent</cc> an email to her colleague. (Cô ấy đã gửi một email cho đồng nghiệp.)<br>•He has <cc>sent</cc> the invitation to all the guests. (Anh ấy đã gửi thiệp mời đến tất cả khách mời.)"
       ],
-      ["rejuvenate", "rejuvenated", "rejuvenated", "làm trẻ lại, hồi sinh",
-        "•The spa treatment <cc>rejuvenated</cc> her skin. (Liệu trình spa đã làm trẻ lại làn da của cô ấy.)<br>•The new leadership <cc>rejuvenated</cc> the company. (Lãnh đạo mới đã làm hồi sinh công ty.)"
+      ["set - set - set", "đặt, thiết lập",
+        "•They <cc>set</cc> the table for dinner. (Họ đã đặt bàn ăn tối.)<br>•She has <cc>set</cc> the alarm for 7 AM. (Cô ấy đã thiết lập báo thức lúc 7 giờ sáng.)"
       ],
-      ["relinquish", "relinquished", "relinquished", "từ bỏ, nhường lại",
-        "•He <cc>relinquished</cc> his claim to the throne. (Anh ấy đã từ bỏ quyền đòi lại ngai vàng.)<br>•She <cc>relinquished</cc> control of the project to her colleague. (Cô ấy đã nhường quyền kiểm soát dự án cho đồng nghiệp.)"
+      ["shake - shook - shaken", "lắc, rung",
+        "•He <cc>shook</cc> the bottle before opening it. (Anh ấy đã lắc chai trước khi mở.)<br>•She has <cc>shaken</cc> the tree to get the fruit. (Cô ấy đã rung cây để hái quả.)"
       ],
-      ["subjugate", "subjugated", "subjugated", "chinh phục, nô dịch",
-        "•The conquerors <cc>subjugated</cc> the native tribes. (Những kẻ xâm lược đã chinh phục các bộ tộc bản địa.)<br>•The people were <cc>subjugated</cc> by a harsh regime. (Nhân dân đã bị nô dịch dưới một chế độ tàn bạo.)"
+      ["shine - shone - shone", "chiếu sáng",
+        "•The sun <cc>shone</cc> brightly all day. (Mặt trời đã chiếu sáng rực rỡ suốt cả ngày.)<br>•The stars have <cc>shone</cc> brightly tonight. (Các vì sao đã chiếu sáng rực rỡ tối nay.)"
       ],
-      ["vex", "vexed", "vexed", "làm phiền, làm khó chịu",
-        "•The constant noise <cc>vexed</cc> him. (Tiếng ồn liên tục đã làm phiền anh ấy.)<br>•She was <cc>vexed</cc> by the constant interruptions. (Cô ấy cảm thấy khó chịu vì sự gián đoạn liên tục.)"
+      ["shoot - shot - shot", "bắn",
+        "•He <cc>shot</cc> the arrow at the target. (Anh ấy đã bắn mũi tên vào mục tiêu.)<br>•She has <cc>shot</cc> several films this year. (Cô ấy đã quay vài bộ phim trong năm nay.)"
+      ],
+      ["show - showed - shown", "cho thấy, biểu diễn",
+        "•He <cc>showed</cc> me his new car. (Anh ấy đã cho tôi xem chiếc xe mới của mình.)<br>•She has <cc>shown</cc> great dedication to her work. (Cô ấy đã thể hiện sự cống hiến tuyệt vời cho công việc.)"
+      ],
+      ["shrink - shrank - shrunk", "co lại",
+        "•The shirt <cc>shrank</cc> after washing. (Chiếc áo đã co lại sau khi giặt.)<br>•The sweater has <cc>shrunk</cc> in the wash. (Chiếc áo len đã co lại khi giặt.)"
+      ],
+      ["sing - sang - sung", "hát",
+        "•She <cc>sang</cc> beautifully at the concert. (Cô ấy đã hát rất hay trong buổi hòa nhạc.)<br>•He has <cc>sung</cc> in a choir for years. (Anh ấy đã hát trong một dàn hợp xướng suốt nhiều năm.)"
+      ], ["sit - sat - sat", "ngồi",
+        "•She <cc>sat</cc> in the front row. (Cô ấy đã ngồi ở hàng ghế đầu.)<br>•He has <cc>sat</cc> at the same desk for years. (Anh ấy đã ngồi ở cùng một bàn suốt nhiều năm.)"
+      ],
+      ["sleep - slept - slept", "ngủ",
+        "•He <cc>slept</cc> for eight hours last night. (Anh ấy đã ngủ tám giờ tối qua.)<br>•She has <cc>slept</cc> all day because she's sick. (Cô ấy đã ngủ suốt cả ngày vì bị ốm.)"
+      ],
+      ["speak - spoke - spoken", "nói",
+        "•He <cc>spoke</cc> to the manager about the issue. (Anh ấy đã nói chuyện với người quản lý về vấn đề này.)<br>•She has <cc>spoken</cc> to him already. (Cô ấy đã nói chuyện với anh ấy rồi.)"
+      ],
+      ["spend - spent - spent", "chi tiêu, dành",
+        "•They <cc>spent</cc> all their money on the trip. (Họ đã chi tiêu hết tiền cho chuyến đi.)<br>•She has <cc>spent</cc> the whole day shopping. (Cô ấy đã dành cả ngày để mua sắm.)"
+      ],
+      ["spill - spilled - spilled", "làm đổ",
+        "•He <cc>spilled</cc> the coffee on the floor. (Anh ấy đã làm đổ cà phê trên sàn.)<br>•She has <cc>spilled</cc> the juice by accident. (Cô ấy đã làm đổ nước ép một cách vô tình.)"
+      ],
+      ["stand - stood - stood", "đứng",
+        "•She <cc>stood</cc> by the door waiting for him. (Cô ấy đã đứng cạnh cửa đợi anh ấy.)<br>•They have <cc>stood</cc> in line for hours. (Họ đã đứng xếp hàng suốt nhiều giờ.)"
+      ],
+      ["steal - stole - stolen", "ăn cắp",
+        "•He <cc>stole</cc> my wallet last night. (Anh ấy đã ăn cắp ví của tôi tối qua.)<br>•She has <cc>stolen</cc> the last piece of cake. (Cô ấy đã ăn cắp miếng bánh cuối cùng.)"
+      ],
+      ["stick - stuck - stuck", "dán, đâm",
+        "•He <cc>stuck</cc> the poster on the wall. (Anh ấy đã dán tấm áp phích lên tường.)<br>•She has <cc>stuck</cc> to her plan despite the obstacles. (Cô ấy đã kiên định với kế hoạch của mình dù có khó khăn.)"
+      ],
+      ["swim - swam - swum", "bơi",
+        "•They <cc>swam</cc> in the lake yesterday. (Họ đã bơi trong hồ hôm qua.)<br>•He has <cc>swum</cc> in the ocean before. (Anh ấy đã bơi trong đại dương trước đây.)"
+      ],
+      ["take - took - taken", "lấy",
+        "•She <cc>took</cc> the book from the shelf. (Cô ấy đã lấy cuốn sách từ trên kệ.)<br>•He has <cc>taken</cc> a photo of the beautiful sunset. (Anh ấy đã chụp một bức ảnh hoàng hôn đẹp.)"
+      ],
+      ["teach - taught - taught", "dạy",
+        "•She <cc>taught</cc> English last year. (Cô ấy đã dạy tiếng Anh năm ngoái.)<br>•He has <cc>taught</cc> many students how to play the guitar. (Anh ấy đã dạy nhiều học sinh cách chơi đàn guitar.)"
+      ],
+      ["tear - tore - torn", "xé",
+        "•He <cc>tore</cc> the paper into pieces. (Anh ấy đã xé giấy thành các mảnh.)<br>•She has <cc>torn</cc> the letter by accident. (Cô ấy đã xé lá thư một cách vô tình.)"
+      ],
+      ["tell - told - told", "nói, kể",
+        "•She <cc>told</cc> me about the event. (Cô ấy đã kể tôi nghe về sự kiện.)<br>•He has <cc>told</cc> everyone the news. (Anh ấy đã kể cho mọi người tin tức này.)"
+      ],
+      ["think - thought - thought", "suy nghĩ",
+        "•I <cc>thought</cc> she would be here by now. (Tôi đã nghĩ cô ấy sẽ ở đây bây giờ.)<br>•They have <cc>thought</cc> about moving to a new city. (Họ đã suy nghĩ về việc chuyển đến một thành phố mới.)"
+      ],
+      ["throw - threw - thrown", "ném",
+        "•He <cc>threw</cc> the ball to his teammate. (Anh ấy đã ném bóng cho đồng đội của mình.)<br>•She has <cc>thrown</cc> away all the old clothes. (Cô ấy đã ném tất cả quần áo cũ đi.)"
+      ],
+      ["understand - understood - understood", "hiểu",
+        "•I <cc>understood</cc> the problem after she explained. (Tôi đã hiểu vấn đề sau khi cô ấy giải thích.)<br>•He has <cc>understood</cc> the importance of the project. (Anh ấy đã hiểu được tầm quan trọng của dự án.)"
+      ],
+      ["wake - woke - woken", "thức dậy",
+        "•She <cc>woke</cc> up late this morning. (Cô ấy đã thức dậy muộn sáng nay.)<br>•He has <cc>woken</cc> up early every day this week. (Anh ấy đã thức dậy sớm mỗi ngày trong tuần này.)"
+      ], ["abrogate - abrogated - abrogated", "hủy bỏ, bãi bỏ",
+        "•The government <cc>abrogated</cc> the outdated law. (Chính phủ đã hủy bỏ luật lỗi thời.)<br>•The agreement has been <cc>abrogated</cc> by both parties. (Thỏa thuận đã bị bãi bỏ bởi cả hai bên.)"
+      ],
+      ["acquiesce - acquiesced - acquiesced", "bằng lòng, đồng ý một cách miễn cưỡng",
+        "•He <cc>acquiesced</cc> to their demands after much pressure. (Anh ấy đã đồng ý với yêu cầu của họ sau nhiều sức ép.)<br>•She has <cc>acquiesced</cc> in silence to the new rules. (Cô ấy đã im lặng đồng ý với các quy tắc mới.)"
+      ],
+      ["balk - balked - balked", "ngừng lại, do dự, không đồng ý",
+        "•He <cc>balked</cc> at the idea of signing the contract without further review. (Anh ấy đã do dự với ý tưởng ký hợp đồng mà không xem xét kỹ.)<br>•She has <cc>balked</cc> at the prospect of a long-term commitment. (Cô ấy đã không đồng ý với viễn cảnh cam kết lâu dài.)"
+      ],
+      ["cavil - caviled - caviled", "phê phán, chỉ trích vặt vãnh",
+        "•He <cc>caviled</cc> at every small detail of the report. (Anh ấy đã chỉ trích từng chi tiết nhỏ trong báo cáo.)<br>•She has <cc>caviled</cc> over the project for hours. (Cô ấy đã phê phán dự án suốt nhiều giờ.)"
+      ],
+      ["defenestrate - defenestrated - defenestrated", "ném ra ngoài cửa sổ",
+        "•The angry protester <cc>defenestrated</cc> the statue during the demonstration. (Người biểu tình tức giận đã ném bức tượng ra ngoài cửa sổ trong cuộc biểu tình.)<br>•The document was <cc>defenestrated</cc> in a fit of frustration. (Tài liệu đã bị ném ra ngoài cửa sổ trong cơn bực bội.)"
+      ],
+      ["discommode - discommoded - discommoded", "làm phiền, gây khó khăn",
+        "•She <cc>discommoded</cc> her colleagues with her constant interruptions. (Cô ấy đã làm phiền các đồng nghiệp với những sự gián đoạn liên tục.)<br>•He has <cc>discommoded</cc> the staff with his last-minute changes. (Anh ấy đã làm khó nhân viên với những thay đổi vào phút cuối.)"
+      ],
+      ["efface - effaced - effaced", "xóa bỏ, làm mờ",
+        "•The passage of time has <cc>effaced</cc> the memories of those days. (Thời gian đã làm mờ đi những ký ức của những ngày đó.)<br>•He has <cc>effaced</cc> all traces of his former life. (Anh ấy đã xóa bỏ mọi dấu vết của cuộc sống trước đây.)"
+      ],
+      ["embellish - embellished - embellished", "tô vẽ, làm đẹp thêm",
+        "•The story was <cc>embellished</cc> to make it more interesting. (Câu chuyện đã được tô vẽ để làm cho nó hấp dẫn hơn.)<br>•She has <cc>embellished</cc> her resume with exaggerations. (Cô ấy đã tô vẽ lý lịch của mình với những phóng đại.)"
+      ],
+      ["enervate - enervated - enervated", "làm kiệt sức, làm yếu đi",
+        "•The long journey <cc>enervated</cc> the travelers. (Chuyến đi dài đã làm kiệt sức những người du hành.)<br>•The illness has <cc>enervated</cc> him completely. (Căn bệnh đã làm anh ấy kiệt quệ hoàn toàn.)"
+      ],
+      ["gallivant - gallivanted - gallivanted", "đi lang thang, du lịch vô mục đích",
+        "•They <cc>gallivanted</cc> across Europe without any particular destination in mind. (Họ đã đi lang thang khắp châu Âu mà không có điểm đến cụ thể.)<br>•He has <cc>gallivanted</cc> around the world, never staying in one place for long. (Anh ấy đã đi du lịch khắp thế giới, không bao giờ ở lại một nơi lâu.)"
+      ],
+      ["imbroglio - imbroglioed - imbroglioed", "tình huống rối ren, lộn xộn",
+        "•The negotiations turned into an <cc>imbroglio</cc> with no resolution in sight. (Cuộc đàm phán trở thành một tình huống rối ren mà không có giải pháp.)<br>•They have <cc>imbroglioed</cc> the matter beyond repair. (Họ đã làm tình huống này trở nên rối ren đến mức không thể sửa chữa.)"
+      ],
+      ["inveigh - inveighed - inveighed", "phê phán mạnh mẽ",
+        "•The author <cc>inveighed</cc> against the injustice in society. (Tác giả đã phê phán mạnh mẽ sự bất công trong xã hội.)<br>•He has <cc>inveighed</cc> against the government's policies for years. (Anh ấy đã chỉ trích mạnh mẽ các chính sách của chính phủ trong nhiều năm.)"
+      ],
+      ["jugulate - jugulated - jugulated", "cản trở, ngăn chặn",
+        "•The authorities <cc>jugulated</cc> the riot before it escalated further. (Những nhà chức trách đã ngăn chặn cuộc bạo loạn trước khi nó leo thang.)<br>•He has <cc>jugulated</cc> any attempts to disrupt the process. (Anh ấy đã ngăn chặn mọi nỗ lực phá hoại quá trình.)"
+      ],
+      ["languish - languished - languished", "yếu ớt, héo mòn",
+        "•The plants <cc>languished</cc> in the heat without water. (Những cây cối đã héo mòn trong cơn nóng mà không có nước.)<br>•His health has <cc>languished</cc> since the accident. (Sức khỏe của anh ấy đã yếu đi kể từ vụ tai nạn.)"
+      ],
+      ["obfuscate - obfuscated - obfuscated", "làm rối rắm, làm khó hiểu",
+        "•The lawyer <cc>obfuscated</cc> the issue to confuse the jury. (Luật sư đã làm rối rắm vấn đề để làm khó hiểu bồi thẩm đoàn.)<br>•The technical jargon has <cc>obfuscated</cc> the real meaning of the report. (Những thuật ngữ kỹ thuật đã làm rối rắm ý nghĩa thực sự của báo cáo.)"
+      ],
+      ["prevaricate - prevaricated - prevaricated", "nói quanh co, lảng tránh",
+        "•The politician <cc>prevaricated</cc> when asked about the scandal. (Chính trị gia đã nói lảng tránh khi được hỏi về vụ bê bối.)<br>•She has <cc>prevaricated</cc> for years about her involvement in the project. (Cô ấy đã nói quanh co suốt nhiều năm về sự tham gia của mình trong dự án.)"
+      ],
+      ["quixotize - quixotized - quixotized", "theo đuổi những điều viển vông",
+        "•He <cc>quixotized</cc> his dreams of changing the world without a clear plan. (Anh ấy đã theo đuổi những ước mơ viển vông về việc thay đổi thế giới mà không có kế hoạch rõ ràng.)<br>•She has <cc>quixotized</cc> her goals, leading to repeated failures. (Cô ấy đã theo đuổi những mục tiêu viển vông, dẫn đến những thất bại liên tiếp.)"
+      ],
+      ["wheedle - wheedled - wheedled", "nịnh hót, nài nỉ",
+        "•She <cc>wheedled</cc> him into lending her money. (Cô ấy đã nịnh hót anh ấy để vay tiền.)<br>•He has <cc>wheedled</cc> his way into the company with flattering remarks. (Anh ấy đã nài nỉ để vào công ty bằng những lời tâng bốc.)"
+      ], ["abjure - abjured - abjured", "từ bỏ, từ chối (một quan điểm, niềm tin)",
+        "•He <cc>abjured</cc> his earlier beliefs after the scandal broke. (Anh ấy đã từ bỏ niềm tin trước đó sau khi vụ bê bối nổ ra.)<br>•She has <cc>abjured</cc> her old way of life. (Cô ấy đã từ bỏ cách sống cũ của mình.)"
+      ],
+      ["apocryphal - apocryphalized - apocryphalized", "mang tính nghi ngờ, không xác thực",
+        "•The legend of the haunted house is often <cc>apocryphalized</cc> to make it more interesting. (Huyền thoại về ngôi nhà ma thường được thêu dệt để làm nó hấp dẫn hơn.)<br>•He has <cc>apocryphalized</cc> his story to gain sympathy. (Anh ấy đã thêu dệt câu chuyện của mình để thu hút sự cảm thông.)"
+      ],
+      ["beguile - beguiled - beguiled", "lôi cuốn, quyến rũ, đánh lừa",
+        "•The salesman <cc>beguiled</cc> her into buying a more expensive model. (Người bán hàng đã lôi cuốn cô ấy mua một mẫu đắt tiền hơn.)<br>•She has <cc>beguiled</cc> many with her charm. (Cô ấy đã quyến rũ nhiều người bằng sự duyên dáng của mình.)"
+      ],
+      ["bloviate - bloviated - bloviated", "nói luyên thuyên, nói dông dài",
+        "•He <cc>bloviated</cc> for hours without making a real point. (Anh ấy đã nói luyên thuyên suốt hàng giờ mà không đưa ra điểm chính thực sự.)<br>•The politician has <cc>bloviated</cc> about the same topic for too long. (Chính trị gia đã nói dông dài về cùng một chủ đề quá lâu.)"
+      ],
+      ["captivate - captivated - captivated", "lôi cuốn, thu hút sự chú ý",
+        "•The performance <cc>captivated</cc> the audience from start to finish. (Buổi biểu diễn đã lôi cuốn khán giả từ đầu đến cuối.)<br>•She has <cc>captivated</cc> him with her intelligence and wit. (Cô ấy đã thu hút anh ấy bằng trí thông minh và sự khéo léo.)"
+      ],
+      ["chasten - chastened - chastened", "trừng phạt, làm nhục, làm hạ nhục",
+        "•The harsh criticism <cc>chastened</cc> him into being more careful in the future. (Lời chỉ trích gay gắt đã làm anh ấy hạ nhục và trở nên cẩn thận hơn trong tương lai.)<br>•He has been <cc>chastened</cc> by the failure of his business venture. (Anh ấy đã bị trừng phạt bởi sự thất bại trong kế hoạch kinh doanh của mình.)"
+      ],
+      ["cogitate - cogitated - cogitated", "suy nghĩ, suy ngẫm",
+        "•She <cc>cogitated</cc> over the problem for hours before coming to a conclusion. (Cô ấy đã suy nghĩ suốt nhiều giờ về vấn đề trước khi đưa ra kết luận.)<br>•They have <cc>cogitated</cc> long and hard about the decision. (Họ đã suy ngẫm rất lâu về quyết định đó.)"
+      ],
+      ["compunge - compunged - compunged", "hối hận, ân hận",
+        "•He <cc>compunged</cc> his actions after realizing the consequences. (Anh ấy đã hối hận về hành động của mình sau khi nhận ra hậu quả.)<br>•She has <cc>compunged</cc> for the mistakes she made in the past. (Cô ấy đã ân hận vì những sai lầm đã làm trong quá khứ.)"
+      ],
+      ["decant - decanted - decanted", "rót ra, chuyển sang (bình khác)",
+        "•The wine was <cc>decanted</cc> before being served to enhance its flavor. (Rượu đã được rót ra trước khi phục vụ để tăng hương vị.)<br>•She has <cc>decanted</cc> the contents of the bottle into a new jar. (Cô ấy đã rót ra nội dung của chai vào một lọ mới.)"
+      ],
+      ["elucidate - elucidated - elucidated", "làm sáng tỏ, giải thích",
+        "•The professor <cc>elucidated</cc> the complex theory during the lecture. (Giáo sư đã giải thích rõ ràng lý thuyết phức tạp trong buổi giảng.)<br>•He has <cc>elucidated</cc> the technical aspects of the project. (Anh ấy đã làm sáng tỏ các khía cạnh kỹ thuật của dự án.)"
+      ],
+      ["exacerbate - exacerbated - exacerbated", "làm trầm trọng thêm",
+        "•The new policy <cc>exacerbated</cc> the economic crisis. (Chính sách mới đã làm trầm trọng thêm cuộc khủng hoảng kinh tế.)<br>•His actions have <cc>exacerbated</cc> the situation. (Hành động của anh ấy đã làm tình hình trở nên tồi tệ hơn.)"
+      ],
+      ["extemporize - extemporized - extemporized", "ứng biến, làm mà không chuẩn bị",
+        "•The speaker <cc>extemporized</cc> his speech due to a last-minute change in the agenda. (Người phát biểu đã ứng biến bài nói của mình do sự thay đổi phút cuối trong chương trình.)<br>•She has <cc>extemporized</cc> several presentations in the past. (Cô ấy đã ứng biến nhiều buổi thuyết trình trong quá khứ.)"
+      ],
+      ["foment - fomented - fomented", "khơi gợi, kích động (bạo lực hoặc xung đột)",
+        "•The politician <cc>fomented</cc> the unrest by spreading rumors. (Chính trị gia đã kích động sự bất ổn bằng cách tung tin đồn.)<br>•He has <cc>fomented</cc> division within the organization. (Anh ấy đã khơi gợi sự chia rẽ trong tổ chức.)"
+      ],
+      ["harangue - harangued - harangued", "diễn thuyết một cách cuồng nhiệt, bài phát biểu dài và giận dữ",
+        "•He <cc>harangued</cc> the audience about the dangers of climate change. (Anh ấy đã diễn thuyết một cách cuồng nhiệt về mối nguy hiểm của biến đổi khí hậu.)<br>•She has <cc>harangued</cc> her colleagues for hours about their performance. (Cô ấy đã có bài phát biểu giận dữ suốt hàng giờ về hiệu suất làm việc của các đồng nghiệp.)"
+      ],
+      ["ignominious - ignominiated - ignominiated", "sự sỉ nhục, nhục nhã",
+        "•His defeat was an <cc>ignominious</cc> end to his political career. (Sự thất bại của anh ấy là một kết thúc nhục nhã cho sự nghiệp chính trị.)<br>•They have <cc>ignominiated</cc> themselves through their actions. (Họ đã tự làm nhục mình qua hành động của họ.)"
+      ],
+      ["inscrutable - inscrutablized - inscrutablized", "khó hiểu, bí ẩn",
+        "•The ancient text remains <cc>inscrutable</cc> despite years of study. (Văn bản cổ vẫn khó hiểu mặc dù đã có nhiều năm nghiên cứu.)<br>•He has <cc>inscrutablized</cc> his motives, making it difficult for anyone to understand. (Anh ấy đã làm cho động cơ của mình trở nên bí ẩn, khiến cho bất kỳ ai cũng khó hiểu.)"
+      ],
+      ["inveigle - inveigled - inveigled", "dụ dỗ, lôi kéo",
+        "•He <cc>inveigled</cc> her into joining the risky business venture. (Anh ấy đã dụ dỗ cô ấy tham gia vào kế hoạch kinh doanh mạo hiểm.)<br>•She has <cc>inveigled</cc> him into signing the contract. (Cô ấy đã lôi kéo anh ấy ký hợp đồng.)"
+      ],
+      ["subjugate - subjugated - subjugated", "khuất phục, chinh phục",
+        "•The empire <cc>subjugated</cc> many small tribes to expand its territory. (Đế chế đã chinh phục nhiều bộ lạc nhỏ để mở rộng lãnh thổ của mình.)<br>•The dictator has <cc>subjugated</cc> the entire nation under his rule. (Nhà độc tài đã khuất phục toàn bộ quốc gia dưới sự cai trị của mình.)"
+      ],
+      ["supersede - superseded - superseded", "thay thế, thay vì",
+        "•The new technology <cc>superseded</cc> the older methods of production. (Công nghệ mới đã thay thế các phương pháp sản xuất cũ.)<br>•His leadership has <cc>superseded</cc> that of his predecessors. (Lãnh đạo của anh ấy đã thay thế lãnh đạo của những người tiền nhiệm.)"
+      ],
+      ["transmogrify - transmogrified - transmogrified", "biến hình, biến dạng",
+        "•The wizard <cc>transmogrified</cc> the prince into a frog. (Phù thủy đã biến hoàng tử thành một con ếch.)<br>•She has <cc>transmogrified</cc> her old house into a modern mansion. (Cô ấy đã biến ngôi nhà cũ thành một biệt thự hiện đại.)"
+      ],
+      ["vacillate - vacillated - vacillated", "do dự, phân vân",
+        "•He <cc>vacillated</cc> between accepting the offer and staying with his current job. (Anh ấy đã phân vân giữa việc chấp nhận lời mời và ở lại với công việc hiện tại.)<br>•She has <cc>vacillated</cc> over the decision for weeks. (Cô ấy đã do dự về quyết định đó suốt vài tuần qua.)"
+      ],
+      ["vitiate - vitiated - vitiated", "làm hỏng, làm suy yếu",
+        "•The contract was <cc>vitiated</cc> due to a clause that was deemed illegal. (Hợp đồng đã bị hủy bỏ vì một điều khoản bị coi là bất hợp pháp.)<br>•He has <cc>vitiated</cc> the integrity of the argument with his false claims. (Anh ấy đã làm suy yếu tính chính xác của lập luận bằng những cáo buộc sai lệch.)"
+      ],
+      ["x-ray - x-rayed - x-rayed", "chụp X-quang",
+        "•The doctor <cc>x-rayed</cc> my leg to check for fractures. (Bác sĩ đã chụp X-quang chân tôi để kiểm tra vết gãy.)<br>•I have <cc>x-rayed</cc> the patient's chest for any abnormalities. (Tôi đã chụp X-quang ngực bệnh nhân để kiểm tra sự bất thường.)"
+      ],
+      ["xenogeny - xenogenied - xenogenied", "sự sinh ra từ một giống loài khác",
+        "•The process of <cc>xenogeny</cc> can result in unusual traits. (Quá trình xenogeny có thể tạo ra những đặc điểm lạ thường.)<br>•They have <cc>xenogenied</cc> a new breed of plant. (Họ đã sinh ra một giống cây mới.)"
+      ],
+      ["xerox - xeroxed - xeroxed", "sao chép",
+        "•I <cc>xeroxed</cc> the documents for the meeting. (Tôi đã sao chép các tài liệu cho cuộc họp.)<br>•He has <cc>xeroxed</cc> the entire report. (Anh ấy đã sao chép toàn bộ báo cáo.)"
+      ],
+      ["xenial - xenialed - xenialed", "thể hiện lòng hiếu khách",
+        "•The host <cc>xenialed</cc> the guests with great hospitality. (Chủ nhà đã thể hiện lòng hiếu khách tuyệt vời với các khách mời.)<br>•They have <cc>xenialed</cc> their visitors from abroad. (Họ đã thể hiện lòng hiếu khách với khách nước ngoài.)"
       ]
+
     ];
 
     const sections = {
@@ -934,7 +1103,7 @@
         ${convertToHTML2(dataBase2)}
       `,
       features: `
-      <button href="#" aria-label="Tra động từ (Cơ bản) " onclick="showContent('tradongtu')" class="glow-on-hover">Tra động từ</button>
+      <button href="#" aria-label="Tra động từ" onclick="showContent('tradongtu')" class="glow-on-hover">Tra động từ</button>
       <button href="#" aria-label="Tra tính từ đồng nghĩa" onclick="showContent('tratinhtu')" class="glow-on-hover2">Tra tính từ đồng nghĩa</button>
       <button href="#" aria-label="Tra trạng tứ" onclick="showContent('tratrangtu')" class="glow-on-hover3">Tra trạng từ</button>
       <button href="#" aria-label="Tạo bài tập" onclick="showContent('taobaitap')" class="glow-on-hover1">Tạo bài tập</button>
@@ -954,16 +1123,12 @@
           <td>${item[0]}</td>
           <td>${item[1]}</td>
           <td>${item[2]}</td>
-          <td>${item[3]}</td>
-          <td>${item[4]}</td>
         </tr>`).join('');
       return `
         <table>
           <thead>
             <tr>
-              <th>Động từ nguyên mẫu</th>
-              <th>Quá khứ đơn</th>
-              <th>Quá khứ phân từ</th>
+              <th>Động từ nguyên mẫu - Quá khứ đơn - Quá khứ phân từ</th> 
               <th>Nghĩa</th>
               <th>Ví Dụ</th>
             </tr>
@@ -1034,6 +1199,28 @@
       }
     }
 
+
+    function search() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+      const filteredResults = dataBase.filter(item =>
+        item[0].toLowerCase().replace(/\s/g, '').includes(input.replace(/\s/g, '')) ||
+        item[1].toLowerCase().replace(/\s/g, '').includes(input.replace(/\s/g, '')) ||
+        item[2].toLowerCase().replace(/\s/g, '').includes(input.replace(/\s/g, ''))
+      );
+
+
+      if (filteredResults.length > 0) {
+        filteredResults.forEach(item => {
+          resultsDiv.innerHTML += `
+            <p>${item[0]}  : ${item[1]}<br>Vd: ${item[2]}</p>
+          `;
+        });
+      } else {
+        resultsDiv.innerHTML = "<p>Không tìm thấy kết quả nào.</p>";
+      }
+    }
     function showContent(section) {
       const mainContent = document.querySelector("main");
       mainContent.innerHTML = sections[section] || "Nội dung không có sẵn.";
