@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConstantineRatio</title>
+  <style>
+    body,
+    h1,
+    p,
+    ul,
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .glow-on-hover3 {
+      width: 250px;
+      height: 50px;
+      border: none;
+      outline: none;
+      background: #111;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(128, 0, 128, 0.5), 0 0 20px rgba(128, 0, 128, 0.5), 0 0 30px rgba(128, 0, 128, 0.5);
+      transition: 0.5s;
+    } 
+    .glow-on-hover3:hover {
+      background: #111;
+      box-shadow: 0 0 20px rgb(128, 0, 128), 0 0 30px rgba(128, 0, 128, 0.8), 0 0 40px rgba(128, 0, 128, 0.8);
+      transform: scale(1.1);
+    }
+ 
+    .glow-on-hover3:before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, #8a2be2, #9400d3, #9932cc);
+      /* Purple gradient */
+      animation: glowing 20s linear infinite;
+      border-radius: 50%;
+    }
+
+    .glow-on-hover1 {
+      width: 250px;
+      height: 50px;
+      border: none;
+      outline: none;
+      background: #111;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 0, 255, 0.5), 0 0 20px rgba(0, 0, 255, 0.5), 0 0 30px rgba(0, 0, 255, 0.5);
+      transition: 0.5s;
+    }
+
+
+    /* Hiệu ứng ánh sáng khi hover */
+    .glow-on-hover1:hover {
+      background: #111;
+      box-shadow: 0 0 20px rgb(0, 0, 255), 0 0 30px rgba(0, 0, 255, 0.8), 0 0 40px rgba(0, 0, 255, 0.8);
+      transform: scale(1.1);
+    }
+
+    /* Tạo ánh sáng bao quanh nút */
+    .glow-on-hover1:before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, #4c4cff, #0000ff, #0000b3);
+      /* Blue gradient */
+      animation: glowing 20s linear infinite;
+      border-radius: 50%;
+    }
+
+
+
+    .glow-on-hover {
+      width: 250px;
+      height: 50px;
+      border: none;
+      outline: none;
+      background: #111;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.5), 0 0 30px rgba(0, 255, 0, 0.5);
+      transition: 0.5s;
+    }
+
+    /* Hiệu ứng ánh sáng khi hover */
+    .glow-on-hover:hover {
+      background: #111;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 1), 0 0 30px rgba(0, 255, 0, 1), 0 0 40px rgba(0, 255, 0, 1);
+      transform: scale(1.1);
+    }
+
+    /* Tạo ánh sáng bao quanh nút */
+    .glow-on-hover:before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, #00ff00, #008000, #00ff00);
+      animation: glowing 20s linear infinite;
+      border-radius: 50%;
+    }
+    .glow-on-hover2 {
+      width: 250px;
+      height: 50px;
+      border: none;
+      outline: none;
+      background: #111;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255, 223, 0, 0.5), 0 0 20px rgba(255, 223, 0, 0.5), 0 0 30px rgba(255, 223, 0, 0.5);
+      transition: 0.5s;
+    }
+
+    /* Hiệu ứng ánh sáng khi hover */
+    .glow-on-hover2:hover {
+      background: #111;
+      box-shadow: 0 0 20px rgb(255, 223, 0), 0 0 30px rgba(255, 223, 0, 0.8), 0 0 40px rgba(255, 223, 0, 0.8);
+      transform: scale(1.1);
+    }
+
+    /* Tạo ánh sáng bao quanh nút */
+    .glow-on-hover2:before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, #ffcc00, #ffd700, #ffb300);
+      /* Gold gradient */
+      animation: glowing 20s linear infinite;
+      border-radius: 50%;
+    }
+
+    /* Animation ánh sáng */
+    @keyframes glowing {
+      0% {
+        transform: scale(1);
+        opacity: 0.5;
+      }
+
+      50% {
+        transform: scale(1.5);
+        opacity: 0.76;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 0.5;
+      }
+    }
+
+    /* Cải tiến thanh tìm kiếm */
+    .search-bar {
+      display: flex;
+      border: 2px solid #ccc;
+      border-radius: 25px;
+      padding: 5px;
+      width: 350px;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    /* Biểu tượng tìm kiếm */
+    .search-bar .icon {
+      font-size: 18px;
+      color: #aaa;
+      padding: 10px;
+    }
+
+    /* Ô input tìm kiếm */
+    .search-bar input {
+      border: none;
+      outline: none;
+      padding: 10px;
+      flex: 1;
+      border-radius: 25px;
+      font-size: 16px;
+      transition: border-color 0.3s ease, padding 0.3s ease;
+    }
+
+    /* Khi ô input được focus */
+    .search-bar input:focus {
+      border-color: #4CAF50;
+      padding-left: 12px;
+    }
+
+    /* Chỉnh sửa màu viền khi hover */
+    .search-bar:hover {
+      border-color: #4CAF50;
+    }
+
+    /* Nút tìm kiếm (nếu cần) */
+    .search-bar button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 25px;
+      padding: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .search-bar button:hover {
+      background-color: #45a049;
+    }
+
+    body {
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      color: #222;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(8px);
+      z-index: -1;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+      opacity: 0.9;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 1rem;
+    }
+
+    nav a {
+      color: #fff;
+      padding: 0.8rem 1.2rem;
+      text-decoration: none;
+      transition: transform 0.2s, background-color 0.2s;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+
+    nav a:hover {
+      transform: scale(1.1);
+      background-color: #444;
+    }
+
+    nav a:focus {
+      outline: 2px solid #aaa;
+      background-color: #555;
+    }
+
+    .center-content {
+      padding: 20px;
+      max-width: 900px;
+      margin: 20px auto;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .center-content img {
+      max-width: 100%;
+      border-radius: 10px;
+      opacity: 0.95;
+    }
+
+    .rainbow-text {
+      animation: rainbow 3s linear infinite;
+      background-image: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    @keyframes rainbow {
+
+      0%,
+      100% {
+        color: red;
+      }
+
+      16% {
+        color: orange;
+      }
+
+      32% {
+        color: yellow;
+      }
+
+      48% {
+        color: green;
+      }
+
+      64% {
+        color: blue;
+      }
+
+      80% {
+        color: indigo;
+      }
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #ddd;
+    }
+
+    .results {
+      margin-top: 20px;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .results p {
+      background: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin: 5px 0;
+    }
+
+    cc {
+      font-weight: bold;
+      text-align: center;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="minecraft_title.png" alt="Logo Constantine Ratio" height="1660" , width="700" />
+  </header>
+  <nav>
+    <a href="#" aria-label="Trang chủ" onclick="showContent('home')">Trang chủ</a>
+    <a href="#" aria-label="Giới thiệu" onclick="showContent('about')">Giới thiệu</a>
+    <a href="#" aria-label="Trợ năng" onclick="showContent('features')">Trợ năng
+    </a>
+    <a href="#" aria-label="Liên hệ" onclick="showContent('connect')">Liên Hệ</a>
+  </nav>
+  <main class="center-content"></main>
+  <footer>
+    <p>&copy; 2024 Constantine Ratio. All rights reserved.</p>
+  </footer>
+  <audio id="click-sound" src="click-sound.mp3" preload="auto"></audio>
+  <script>
+    const dataBase2 = [
+      ["Rarely", "Hiếm khi", "• I <cc>rarely</cc> eat junk food. (Tôi hiếm khi ăn đồ ăn vặt.) <br> He <cc>rarely</cc> goes out at night. (Anh ấy hiếm khi ra ngoài vào ban đêm.)"],
+      ["Sometimes", "Đôi khi", "• I <cc>sometimes</cc> go for a walk in the evening. (Đôi khi tôi đi dạo vào buổi tối.) <br> She <cc>sometimes</cc> skips breakfast. (Cô ấy đôi khi bỏ bữa sáng.)"],
+      ["Always", "Luôn luôn", "• She <cc>always</cc> helps her parents with the housework. (Cô ấy luôn luôn giúp đỡ bố mẹ với công việc nhà.) <br> He <cc>always</cc> wakes up early. (Anh ấy luôn luôn thức dậy sớm.)"],
+      ["Seldom", "Ít khi", "• I <cc>seldom</cc> travel for work. (Tôi ít khi đi công tác.) <br> They <cc>seldom</cc> eat out. (Họ ít khi ăn ngoài.)"],
+      ["Hardly", "Hầu như không", "• I <cc>hardly</cc> get any free time during the week. (Tôi hầu như không có thời gian rảnh vào tuần.) <br> She <cc>hardly</cc> ever complains. (Cô ấy hầu như không bao giờ phàn nàn.)"],
+      ["Totally", "Hoàn toàn", "• I <cc>totally</cc> agree with you. (Tôi hoàn toàn đồng ý với bạn.) <br> He was <cc>totally</cc> exhausted after the hike. (Anh ấy hoàn toàn kiệt sức sau chuyến đi bộ.)"],
+      ["Rarely", "Hiếm khi", "• I <cc>rarely</cc> eat junk food. (Tôi hiếm khi ăn đồ ăn vặt.) <br> He <cc>rarely</cc> goes out at night. (Anh ấy hiếm khi ra ngoài vào ban đêm.)"],
+      ["Normally", "Thông thường", "• She <cc>normally</cc> wakes up at 6 AM. (Cô ấy thông thường thức dậy lúc 6 giờ sáng.) <br> We <cc>normally</cc> go on vacation in summer. (Chúng tôi thông thường đi nghỉ vào mùa hè.)"],
+      ["Constantly", "Liên tục", "• He is <cc>constantly</cc> checking his phone. (Anh ấy liên tục kiểm tra điện thoại.) <br> She <cc>constantly</cc> improves her skills. (Cô ấy liên tục cải thiện kỹ năng của mình.)"],
+      ["Totally", "Hoàn toàn", "• I <cc>totally</cc> agree with your opinion. (Tôi hoàn toàn đồng ý với ý kiến của bạn.) <br> She <cc>totally</cc> forgot about the meeting. (Cô ấy hoàn toàn quên cuộc họp.)"],
+      ["Clearly", "Rõ ràng", "• The directions were <cc>clearly</cc> written on the sign. (Các chỉ dẫn được viết rõ ràng trên biển hiệu.) <br> She spoke <cc>clearly</cc> during her presentation. (Cô ấy nói rõ ràng trong bài thuyết trình của mình.)"],
+      ["Closely", "Chặt chẽ", "• The team worked <cc>closely</cc> together on the project. (Nhóm làm việc chặt chẽ với nhau trong dự án.) <br> He <cc>closely</cc> observed the experiment. (Anh ấy quan sát chặt chẽ thí nghiệm.)"],
+      ["Actually", "Thực sự", "• I <cc>actually</cc> enjoyed the movie. (Tôi thực sự thích bộ phim này.) <br> She <cc>actually</cc> lives in New York. (Cô ấy thực sự sống ở New York.)"],
+      ["Unusually", "Khác thường", "• The weather is <cc>unusually</cc> warm for this time of year. (Thời tiết khác thường ấm áp vào thời điểm này trong năm.) <br> He was <cc>unusually</cc> quiet during the meeting. (Anh ấy khác thường im lặng trong cuộc họp.)"],
+      ["Deliberately", "Cố tình", "• He <cc>deliberately</cc> made the situation worse. (Anh ấy cố tình làm tình huống tồi tệ hơn.) <br> She <cc>deliberately</cc> chose a difficult task. (Cô ấy cố tình chọn một công việc khó khăn.)"],
+      ["Partially", "Một phần", "• The job was <cc>partially</cc> done by the time we arrived. (Công việc đã được hoàn thành một phần khi chúng tôi đến nơi.) <br> He <cc>partially</cc> agrees with your proposal. (Anh ấy đồng ý một phần với đề xuất của bạn.)"],
+      ["Slightly", "Một chút", "• The temperature has <cc>slightly</cc> increased. (Nhiệt độ đã tăng một chút.) <br> He <cc>slightly</cc> changed his plans. (Anh ấy đã thay đổi một chút kế hoạch của mình.)"],
+      ["Loudly", "To", "• She spoke <cc>loudly</cc> during the meeting. (Cô ấy nói to trong cuộc họp.) <br> The music was playing <cc>loudly</cc> at the party. (Nhạc đang phát to trong buổi tiệc.)"],
+      ["Frequently", "Thường xuyên", "• I <cc>frequently</cc> go to the gym. (Tôi thường xuyên đi đến phòng gym.) <br> She <cc>frequently</cc> visits her grandparents. (Cô ấy thường xuyên thăm ông bà.)"],
+      ["Impressively", "Ấn tượng", "• The team performed <cc>impressively</cc> in the competition. (Nhóm đã trình diễn ấn tượng trong cuộc thi.) <br> His work was <cc>impressively</cc> detailed. (Công việc của anh ấy rất ấn tượng về độ chi tiết.)"],
+      ["Temporarily", "Tạm thời", "• He is <cc>temporarily</cc> out of the office. (Anh ấy tạm thời vắng mặt ở văn phòng.) <br> The road is closed <cc>temporarily</cc> for maintenance. (Con đường bị đóng tạm thời để bảo trì.)"],
+      ["Surprisingly", "Ngạc nhiên", "• She <cc>surprisingly</cc> passed the test. (Cô ấy ngạc nhiên khi vượt qua bài kiểm tra.) <br> The team <cc>surprisingly</cc> won the game. (Đội đã ngạc nhiên khi thắng trận.)"],
+      ["Substantially", "Đáng kể", "• The price of the product has <cc>substantially</cc> increased. (Giá sản phẩm đã tăng đáng kể.) <br> The company has <cc>substantially</cc> improved its services. (Công ty đã cải thiện dịch vụ đáng kể.)"],
+      ["Extensively", "Rộng rãi", "• The area has been <cc>extensively</cc> developed. (Khu vực đã được phát triển rộng rãi.) <br> She has <cc>extensively</cc> researched the topic. (Cô ấy đã nghiên cứu rộng rãi về chủ đề này.)"],
+      ["Generally", "Thông thường", "• <cc>Generally</cc>, I prefer tea over coffee. (Thông thường, tôi thích trà hơn cà phê.) <br> <cc>Generally</cc>, people follow the rules. (Thông thường, mọi người tuân theo các quy tắc.)"],
+      ["Dramatically", "Mạnh mẽ", "• The weather changed <cc>dramatically</cc> in the last hour. (Thời tiết thay đổi mạnh mẽ trong giờ vừa qua.) <br> His attitude changed <cc>dramatically</cc>. (Thái độ của anh ấy thay đổi mạnh mẽ.)"],
+      ["Completely", "Hoàn toàn", "• The project was <cc>completely</cc> finished on time. (Dự án đã hoàn thành hoàn toàn đúng thời hạn.) <br> She <cc>completely</cc> forgot about the meeting. (Cô ấy hoàn toàn quên buổi họp.)"],
+      ["Occasionally", "Thỉnh thoảng", "• I <cc>occasionally</cc> go out for dinner with friends. (Thỉnh thoảng tôi đi ăn tối với bạn bè.) <br> We <cc>occasionally</cc> have family gatherings. (Chúng tôi thỉnh thoảng tổ chức các cuộc tụ họp gia đình.)"],
+      ["Incredibly", "Không thể tin được", "• She is <cc>incredibly</cc> talented at playing the piano. (Cô ấy tài năng không thể tin được trong việc chơi đàn piano.) <br> The weather was <cc>incredibly</cc> hot yesterday. (Thời tiết hôm qua nóng không thể tin được.)"],
+      ["Excessively", "Quá mức", "• He works <cc>excessively</cc> long hours. (Anh ấy làm việc quá mức với thời gian dài.) <br> She talks <cc>excessively</cc> during meetings. (Cô ấy nói quá mức trong các cuộc họp.)"],
+      ["Vividly", "Sống động", "• I <cc>vividly</cc> remember our trip to the beach. (Tôi nhớ rõ ràng chuyến đi biển của chúng ta.) <br> He described the event <cc>vividly</cc>. (Anh ấy miêu tả sự kiện một cách sống động.)"],
+      ["Primarily", "Chủ yếu", "• The restaurant <cc>primarily</cc> serves Italian food. (Nhà hàng chủ yếu phục vụ món ăn Ý.) <br> She is <cc>primarily</cc> responsible for marketing. (Cô ấy chủ yếu chịu trách nhiệm về marketing.)"],
+      ["Partially", "Một phần", "• The report was <cc>partially</cc> completed. (Báo cáo đã được hoàn thành một phần.) <br> He <cc>partially</cc> agrees with the proposal. (Anh ấy đồng ý một phần với đề xuất.)"],
+      ["Infrequently", "Không thường xuyên", "• They <cc>infrequently</cc> visit their relatives. (Họ không thường xuyên thăm bà con.) <br> She <cc>infrequently</cc> uses social media. (Cô ấy không thường xuyên sử dụng mạng xã hội.)"],
+      ["Clearly", "Rõ ràng", "• He <cc>clearly</cc> explained the instructions. (Anh ấy giải thích rõ ràng các hướng dẫn.) <br> The solution was <cc>clearly</cc> written in the guide. (Giải pháp đã được viết rõ ràng trong hướng dẫn.)"],
+      ["Visibly", "Rõ ràng", "• She was <cc>visibly</cc> upset after the meeting. (Cô ấy rõ ràng là buồn sau cuộc họp.) <br> He was <cc>visibly</cc> tired after the long trip. (Anh ấy rõ ràng mệt mỏi sau chuyến đi dài.)"],
+      ["Fiercely", "Dữ dội", "• The wind was blowing <cc>fiercely</cc> during the storm. (Gió thổi dữ dội trong cơn bão.) <br> She <cc>fiercely</cc> defended her opinions. (Cô ấy dữ dội bảo vệ quan điểm của mình.)"],
+      ["Consequently", "Do đó", "• She forgot to bring her homework, <cc>consequently</cc> she received a warning. (Cô ấy quên mang bài tập về nhà, do đó cô ấy nhận được một lời cảnh báo.) <br> The company faced losses, <cc>consequently</cc> they had to cut down on costs. (Công ty gặp phải thua lỗ, do đó họ phải cắt giảm chi phí.)"],
+      ["Typically", "Thường xuyên", "• I <cc>typically</cc> have breakfast at 7 AM. (Tôi thường xuyên ăn sáng vào lúc 7 giờ sáng.) <br> She <cc>typically</cc> spends her weekends with family. (Cô ấy thường xuyên dành cuối tuần với gia đình.)"],
+      ["Instantly", "Ngay lập tức", "• He <cc>instantly</cc> knew what to do. (Anh ấy ngay lập tức biết phải làm gì.) <br> The teacher <cc>instantly</cc> responded to the student's question. (Giáo viên ngay lập tức phản hồi câu hỏi của học sinh.)"],
+      ["Clearly", "Rõ ràng", "• The path was <cc>clearly</cc> marked with signs. (Con đường đã được đánh dấu rõ ràng với các biển báo.) <br> She explained the rules <cc>clearly</cc> so everyone understood. (Cô ấy giải thích các quy tắc một cách rõ ràng để mọi người hiểu.)"],
+      ["Fully", "Hoàn toàn", "• I <cc>fully</cc> support your decision. (Tôi hoàn toàn ủng hộ quyết định của bạn.) <br> The system is <cc>fully</cc> operational now. (Hệ thống đã hoạt động hoàn toàn.)"],
+      ["Deliberately", "Cố tình", "• He <cc>deliberately</cc> ignored the warning signs. (Anh ấy cố tình bỏ qua các dấu hiệu cảnh báo.) <br> She <cc>deliberately</cc> chose a difficult route. (Cô ấy cố tình chọn một con đường khó khăn.)"],
+      ["Eagerly", "Hăm hở", "• The children waited <cc>eagerly</cc> for the game to start. (Lũ trẻ hăm hở chờ trò chơi bắt đầu.) <br> He <cc>eagerly</cc> accepted the invitation. (Anh ấy hăm hở chấp nhận lời mời.)"],
+      ["Smoothly", "Suôn sẻ", "• The event went <cc>smoothly</cc> without any issues. (Sự kiện diễn ra suôn sẻ mà không gặp bất kỳ vấn đề gì.) <br> The project ran <cc>smoothly</cc> after the adjustments. (Dự án diễn ra suôn sẻ sau khi điều chỉnh.)"],
+      ["Eventually", "Cuối cùng", "• They <cc>eventually</cc> found a solution to the problem. (Cuối cùng họ đã tìm ra giải pháp cho vấn đề.) <br> The train <cc>eventually</cc> arrived after a long delay. (Chuyến tàu cuối cùng đã đến sau một sự trì hoãn dài.)"],
+      ["Completely", "Hoàn toàn", "• The building was <cc>completely</cc> renovated. (Tòa nhà đã được cải tạo hoàn toàn.) <br> He <cc>completely</cc> forgot about the meeting. (Anh ấy hoàn toàn quên buổi họp.)"],
+      ["Anxiously", "Lo âu", "• She waited <cc>anxiously</cc> for the test results. (Cô ấy lo âu chờ đợi kết quả bài kiểm tra.) <br> He <cc>anxiously</cc> watched the clock. (Anh ấy lo âu nhìn đồng hồ.)"],
+      ["Regularly", "Đều đặn", "• I <cc>regularly</cc> go to the gym. (Tôi đều đặn đi đến phòng gym.) <br> He <cc>regularly</cc> attends meetings every week. (Anh ấy đều đặn tham gia các cuộc họp mỗi tuần.)"],
+      ["Frequently", "Thường xuyên", "• We <cc>frequently</cc> visit our grandparents. (Chúng tôi thường xuyên thăm ông bà.) <br> She <cc>frequently</cc> travels abroad for work. (Cô ấy thường xuyên đi công tác nước ngoài.)"],
+      ["Eventually", "Cuối cùng", "• They <cc>eventually</cc> found a solution to the problem. (Cuối cùng họ đã tìm ra giải pháp cho vấn đề.) <br> The train <cc>eventually</cc> arrived after a long delay. (Chuyến tàu cuối cùng đã đến sau một sự trì hoãn dài.)"],
+      ["Visibly", "Rõ ràng", "• He was <cc>visibly</cc> upset after the news. (Anh ấy rõ ràng buồn sau khi nghe tin.) <br> She was <cc>visibly</cc> relieved after hearing the good news. (Cô ấy rõ ràng nhẹ nhõm sau khi nghe tin tốt.)"],
+      ["Practically", "Hầu như", "• The task was <cc>practically</cc> impossible to complete. (Công việc gần như không thể hoàn thành.) <br> He <cc>practically</cc> lived at the office. (Anh ấy hầu như sống ở văn phòng.)"],
+      ["Surprisingly", "Ngạc nhiên", "• She <cc>surprisingly</cc> passed the exam. (Cô ấy ngạc nhiên khi vượt qua kỳ thi.) <br> The team <cc>surprisingly</cc> won the championship. (Đội đã ngạc nhiên khi giành chức vô địch.)"],
+      ["Hardly", "Hầu như không", "• I <cc>hardly</cc> ever watch TV. (Tôi hầu như không bao giờ xem TV.) <br> He <cc>hardly</cc> speaks during meetings. (Anh ấy hầu như không nói gì trong các cuộc họp.)"],
+      ["Mostly", "Chủ yếu", "• I <cc>mostly</cc> drink water during the day. (Tôi chủ yếu uống nước trong suốt ngày.) <br> They <cc>mostly</cc> work from home. (Họ chủ yếu làm việc tại nhà.)"],
+      ["Suddenly", "Đột ngột", "• The weather changed <cc>suddenly</cc>. (Thời tiết thay đổi đột ngột.) <br> He <cc>suddenly</cc> shouted in surprise. (Anh ấy đột ngột hét lên vì ngạc nhiên.)"],
+      ["Easily", "Dễ dàng", "• She <cc>easily</cc> solved the problem. (Cô ấy dễ dàng giải quyết vấn đề.) <br> The task was <cc>easily</cc> completed in under an hour. (Công việc đã được hoàn thành dễ dàng trong vòng chưa đầy một giờ.)"]
+
+    ];
+    const dataBase1 = [
+      ["Very sad", "Heartbroken , Miserable , Despondent , Melancholy , Sorrowful , Grief-stricken , Dejected , Downcast , Disheartened", "Rất buồn"],
+      ["Very happy", "Ecstatic , Joyful , Delighted , Elated , Overjoyed , Jubilant , Exhilarated , Radiant , Beaming", "Rất vui"],
+      ["Very good", "Excellent , Outstanding , Superb , Exceptional , Remarkable , Terrific , Fantastic , Phenomenal , First-rate", "Rất tốt"],
+      ["Very bad", "Terrible , Awful , Horrible , Atrocious , Dreadful , Appalling , Abysmal , Ghastly , Lousy", "Rất tệ"],
+      ["Very big", "Enormous , Gigantic , Huge , Massive , Colossal , Monstrous , Immense , Vast , Titanic", "Rất lớn"],
+      ["Very small", "Tiny , Minuscule , Petite , Diminutive , Compact , Microscopic , Minute , Miniature , Puny", "Rất nhỏ"],
+      ["Very fast", "Speedy , Swift , Quick , Rapid , Breakneck , Lightning-fast , Fleet , Hasty , Accelerated", "Rất nhanh"],
+      ["Very slow", "Sluggish , Languid , Leisurely , Unhurried , Deliberate , Lethargic , Tardy , Crawling , Plodding", "Rất chậm"],
+      ["Very strong", "Powerful , Mighty , Sturdy , Robust , Formidable , Indomitable , Invincible , Unyielding , Brawny", "Rất mạnh"],
+      ["Very weak", "Fragile , Feeble , Frail , Delicate , Infirm , Puny , Wobbly , Weakling , Decrepit", "Rất yếu"],
+      ["Very beautiful", "Stunning , Gorgeous , Breathtaking , Exquisite , Radiant , Glamorous , Mesmerizing , Enchanting , Alluring", "Rất đẹp"],
+      ["Very ugly", "Hideous , Repulsive , Grotesque , Unattractive , Disfigured , Unsightly , Monstrous , Revolting , Horrendous", "Rất xấu"],
+      ["Very rich", "Wealthy , Affluent , Opulent , Well-off , Prosperous , Loaded , Moneyed , Flush , Affluent", "Rất giàu"],
+      ["Very poor", "Destitute , Impoverished , Penniless , Needy , Broke , Indigent , Deprived , Underprivileged , Penurious", "Rất nghèo"],
+      ["Very bright", "Radiant , Luminous , Dazzling , Brilliant , Vivid , Glowing , Shining , Blinding , Incandescent", "Rất sáng"],
+      ["Very dark", "Pitch-black , Shadowy , Dim , Murky , Obscure , Gloomy , Dusky , Blackened , Tenebrous", "Rất tối"],
+      ["Very cold", "Freezing , Icy , Chilly , Arctic , Frosty , Gelid , Bitterly cold , Frigid , Glacial", "Rất lạnh"],
+      ["Very hot", "Scorching , Sweltering , Searing , Boiling , Blazing , Scalding , Broiling , Stifling , Infernal", "Rất nóng"],
+      ["Very old", "Ancient , Aged , Old-fashioned , Vintage , Antiquated , Timeworn , Venerable , Mature , Elderly", "Rất cũ"],
+      ["Very young", "Infantile , Youthful , Juvenile , Adolescent , Newborn , Teenage , Fresh , Baby-faced , Puppyish", "Rất trẻ"],
+      ["Very smart", "Intelligent , Brilliant , Bright , Clever , Sharp , Quick-witted , Astute , Wise , Perceptive", "Rất thông minh"],
+      ["Very dumb", "Stupid , Foolish , Dull , Dim-witted , Slow-witted , Unintelligent , Clueless , Ignorant , Brainless", "Rất ngu"],
+      ["Very clean", "Spotless , Immaculate , Pristine , Unsoiled , Tidy , Neat , Squeaky clean , Sterile , Sanitary", "Rất sạch"],
+      ["Very dirty", "Filthy , Grimy , Soiled , Muddy , Polluted , Messy , Squalid , Smutty , Unkempt", "Rất bẩn"],
+      ["Very funny", "Hilarious , Comical , Amusing , Side-splitting , Witty , Entertaining , Laugh-out-loud , Humorous , Funny-bone tickling", "Rất hài hước"],
+      ["Very serious", "Solemn , Grave , Earnest , Weighty , Important , Intense , Deep , Significant , Somber", "Rất nghiêm túc"]
+
+    ];
+    const dataBase = [
+      ["adopt", "adopted", "adopted", "nhận nuôi, chấp nhận, thông qua, áp dụng (phương pháp, ý tưởng, luật lệ, phong cách, v.v.)",
+        "•I want to <cc>adopt</cc> a dog(Tôi muốn nuôi một con chó)<br>•The new policy has been <cc>adopted</cc> by the company."],
+      ["awake", "awoke", "awoken", "thức giấc",
+        "•I <cc>awake</cc> early every morning<br>•He <cc>awoke</cc> to the sound of thunder."],
+      ["be", "was/were", "been", "thì, là, ở",
+        "•She <cc>is</cc> a teacher. (Cô ấy là một giáo viên.)<br>•They <cc>were</cc> at the park yesterday. (Họ đã ở công viên hôm qua.)"
+      ],
+      ["bear", "bore", "borne", "chịu đựng",
+        "•He <cc>bore</cc> the pain bravely. (Anh ấy chịu đựng nỗi đau một cách dũng cảm.)<br>•The burden was hard to <cc>bear</cc>. (Gánh nặng thật khó chịu đựng.)"
+      ],
+      ["beat", "beat", "beaten", "đánh, đập",
+        "•She <cc>beat</cc> the drum loudly. (Cô ấy đánh trống rất to.)<br>•He was <cc>beaten</cc> by his opponent in the game. (Anh ấy bị đối thủ đánh bại trong trò chơi.)"
+      ],
+      ["become", "became", "become", "trở thành, trở nên",
+        "•She <cc>became</cc> a doctor after years of studying. (Cô ấy trở thành bác sĩ sau nhiều năm học tập.)<br>•The weather <cc>became</cc> colder as the night approached. (Thời tiết trở nên lạnh hơn khi đêm đến.)"
+      ],
+      ["begin", "began", "begun", "bắt đầu",
+        "•I <cc>began</cc> my career as a teacher. (Tôi bắt đầu sự nghiệp của mình với tư cách là một giáo viên.)<br>•The movie has already <cc>begun</cc>. (Bộ phim đã bắt đầu.)"
+      ],
+      ["bite", "bit", "bitten", "cắn",
+        "•The dog <cc>bit</cc> me on the hand. (Con chó đã cắn tôi vào tay.)<br>•I was <cc>bitten</cc> by a mosquito. (Tôi đã bị muỗi cắn.)"
+      ],
+      ["block", "blocked", "blocked", "chặn, ngăn cản",
+        "•He <cc>blocked</cc> the door to keep people out. (Anh ấy đã chặn cửa để ngăn không cho người khác vào.)<br>•The road was <cc>blocked</cc> by a fallen tree. (Con đường đã bị chặn lại bởi một cây đổ.)"
+      ],
+      ["blow", "blew", "blown", "thổi",
+        "•She <cc>blew</cc> out the candles on her birthday cake. (Cô ấy thổi tắt nến trên bánh sinh nhật.)<br>•The wind has <cc>blown</cc> the leaves across the street. (Gió đã thổi lá cây qua đường.)"
+      ],
+      ["break", "broke", "broken", "làm vỡ",
+        "•I accidentally <cc>broke</cc> the glass. (Tôi vô tình làm vỡ chiếc ly.)<br>•The vase is <cc>broken</cc>. (Chậu hoa bị vỡ.)"
+      ],
+      ["bring", "brought", "brought", "mang đến",
+        "•He <cc>brought</cc> a gift for her birthday. (Anh ấy mang một món quà cho sinh nhật cô ấy.)<br>•They have already <cc>brought</cc> the food. (Họ đã mang đồ ăn đến.)"
+      ],
+      ["build", "built", "built", "xây dựng",
+        "•They <cc>built</cc> a new house last year. (Họ đã xây dựng một ngôi nhà mới vào năm ngoái.)<br>•The bridge was <cc>built</cc> in 1995. (Cây cầu được xây dựng vào năm 1995.)"
+      ],
+      ["burn", "burnt/burned", "burnt/burned", "cháy",
+        "•The paper <cc>burnt</cc> in the fire. (Tờ giấy cháy trong lửa.)<br>•He accidentally <cc>burned</cc> his hand. (Anh ấy vô tình làm bỏng tay.)"
+      ],
+      ["buy", "bought", "bought", "mua",
+        "•She <cc>bought</cc> a new phone. (Cô ấy mua một chiếc điện thoại mới.)<br>•I have <cc>bought</cc> some groceries. (Tôi đã mua một số thực phẩm.)"
+      ],
+      ["catch", "caught", "caught", "bắt, chụp lấy",
+        "•He <cc>caught</cc> the ball. (Anh ấy bắt bóng.)<br>•I <cc>caught</cc> a cold last week. (Tôi bị cảm lạnh tuần trước.)"
+      ],
+
+
+      ["chase", "chased", "chased", "đuổi theo, săn bắt, lùa",
+        "•The farmer <cc>chased</cc> the cows into the barn. (Người nông dân đã lùa những con bò vào chuồng.)<br>•He <cc>loves</cc> to chase deer in the forest. (Anh ấy thích săn hươu trong rừng.)"
+      ],
+      ["choose", "chose", "chosen", "lựa chọn",
+        "•I <cc>chose</cc> the red dress for the party. (Tôi chọn chiếc váy đỏ cho buổi tiệc.)<br>•She has already <cc>chosen</cc> her team members. (Cô ấy đã chọn các thành viên cho đội của mình.)"
+      ],
+      ["come", "came", "come", "đến, đi đến",
+        "•She <cc>came</cc> to the party late. (Cô ấy đến bữa tiệc muộn.)<br>•We will <cc>come</cc> to your house tomorrow. (Chúng tôi sẽ đến nhà bạn vào ngày mai.)"
+      ],
+      ["cost", "cost", "cost", "có giá",
+        "•The book <cc>cost</cc> 20 dollars. (Cuốn sách có giá 20 đô la.)<br>•How much did the car <cc>cost</cc>? (Chiếc xe có giá bao nhiêu?)"
+      ],
+      ["creep", "crept", "crept", "bò, trườn",
+        "•The cat <cc>crept</cc> slowly toward the mouse. (Con mèo bò chậm chạp về phía con chuột.)<br>•He <cc>crept</cc> around the corner cautiously. (Anh ấy bò quanh góc một cách thận trọng.)"
+      ],
+      ["deal", "dealt", "dealt", "thoả thuận",
+        "•They <cc>dealt</cc> with the situation calmly. (Họ đã xử lý tình huống một cách bình tĩnh.)<br>•We have <cc>dealt</cc> with this problem before. (Chúng tôi đã giải quyết vấn đề này trước đây.)"
+      ],
+      ["disprove", "disproved", "disproven", "bác bỏ",
+        "•She <cc>disproved</cc> the theory with new evidence. (Cô ấy đã bác bỏ giả thuyết bằng bằng chứng mới.)<br>•The accusations were <cc>disproven</cc> in court. (Những cáo buộc đã bị bác bỏ tại tòa.)"
+      ],
+      ["dive", "dived/dove", "dived", "lặn",
+        "•He <cc>dove</cc> into the pool to save the child. (Anh ấy lặn xuống hồ để cứu đứa trẻ.)<br>•She <cc>dived</cc> into the water from the cliff. (Cô ấy lặn xuống nước từ vách đá.)"
+      ],
+      ["do", "did", "done", "làm",
+        "•I <cc>did</cc> my homework last night. (Tôi đã làm bài tập về nhà tối qua.)<br>•They have <cc>done</cc> all the work for the project. (Họ đã hoàn thành tất cả công việc cho dự án.)"
+      ],
+      ["draw", "drew", "drawn", "vẽ",
+        "•She <cc>drew</cc> a beautiful picture of the sunset. (Cô ấy vẽ một bức tranh đẹp về hoàng hôn.)<br>•His work has been <cc>drawn</cc> from various sources. (Công việc của anh ấy đã được vẽ từ nhiều nguồn khác nhau.)"
+      ],
+      ["drink", "drank", "drunk", "uống",
+        "•He <cc>drank</cc> a glass of water after the run. (Anh ấy đã uống một ly nước sau khi chạy.)<br>•She had <cc>drunk</cc> all the juice before I arrived. (Cô ấy đã uống hết nước trái cây trước khi tôi đến.)"
+      ],
+      ["drive", "drove", "driven", "lái xe",
+        "•She <cc>drove</cc> to the beach for the weekend. (Cô ấy lái xe đến bãi biển vào cuối tuần.)<br>•He has <cc>driven</cc> for hours to reach the destination. (Anh ấy đã lái xe hàng giờ để đến nơi.)"
+      ],
+      ["eat", "ate", "eaten", "ăn",
+        "•I <cc>ate</cc> lunch at noon. (Tôi đã ăn trưa lúc 12 giờ.)<br>•They have <cc>eaten</cc> all the cake. (Họ đã ăn hết tất cả bánh.)"
+      ],
+      ["fall", "fell", "fallen", "rơi, ngã",
+        "•The book <cc>fell</cc> from the shelf. (Cuốn sách rơi xuống từ kệ.)<br>•He has <cc>fallen</cc> asleep on the couch. (Anh ấy đã ngủ quên trên ghế.)"
+      ],
+      ["feed", "fed", "fed", "cho ăn",
+        "•She <cc>fed</cc> the dog before leaving for work. (Cô ấy cho chó ăn trước khi đi làm.)<br>•The animals were <cc>fed</cc> early in the morning. (Các con vật được cho ăn sớm vào buổi sáng.)"
+      ],
+      ["feel", "felt", "felt", "cảm thấy",
+        "•He <cc>felt</cc> sick after eating too much. (Anh ấy cảm thấy đau bụng sau khi ăn quá nhiều.)<br>•She has <cc>felt</cc> very tired lately. (Cô ấy cảm thấy rất mệt mỏi gần đây.)"
+      ],
+      ["find", "found", "found", "tìm thấy",
+        "•I <cc>found</cc> my keys in the kitchen. (Tôi tìm thấy chìa khóa của mình trong nhà bếp.)<br>•They have <cc>found</cc> a solution to the problem. (Họ đã tìm ra giải pháp cho vấn đề.)"
+      ],
+      ["fight", "fought", "fought", "chiến đấu",
+        "•The two soldiers <cc>fought</cc> bravely in the battle. (Hai người lính đã chiến đấu dũng cảm trong trận chiến.)<br>•He has <cc>fought</cc> for justice all his life. (Anh ấy đã chiến đấu cho công lý suốt cuộc đời.)"
+      ],
+      ["fly", "flew", "flown", "bay",
+        "•The bird <cc>flew</cc> across the sky. (Con chim bay qua bầu trời.)<br>•We have <cc>flown</cc> to Paris several times. (Chúng tôi đã bay đến Paris vài lần.)"
+      ], ["follow", "followed", "followed", "theo",
+        "•She <cc>followed</cc> him through the crowd. (Cô ấy đã theo anh ấy qua đám đông.)<br>•They have <cc>followed</cc> the instructions carefully. (Họ đã làm theo hướng dẫn một cách cẩn thận.)"
+      ],
+      ["forbid", "forbade", "forbidden", "cấm",
+        "•He <cc>forbade</cc> them from entering the room. (Anh ấy đã cấm họ vào phòng.)<br>•Smoking is <cc>forbidden</cc> in the building. (Hút thuốc bị cấm trong tòa nhà.)"
+      ],
+      ["forget", "forgot", "forgotten", "quên",
+        "•I <cc>forgot</cc> to bring my book. (Tôi quên mang sách của mình.)<br>•She had <cc>forgotten</cc> her friend's birthday. (Cô ấy đã quên sinh nhật của bạn mình.)"
+      ],
+      ["foresee", "foresaw", "foreseen", "thấy trước",
+        "•I <cc>foresaw</cc> the difficulties ahead. (Tôi đã thấy trước những khó khăn phía trước.)<br>•The problem was <cc>foreseen</cc> by the experts. (Vấn đề đã được các chuyên gia thấy trước.)"
+      ],
+      ["freeze", "froze", "frozen", "làm đông lại",
+        "•The pond <cc>froze</cc> during the night. (Cái ao đã đóng băng trong đêm.)<br>•They have <cc>frozen</cc> all the food for preservation. (Họ đã đông lạnh tất cả thực phẩm để bảo quản.)"
+      ],
+      ["get", "got", "got/gotten", "có được",
+        "•He <cc>got</cc> a new job last week. (Anh ấy có một công việc mới tuần trước.)<br>•We have <cc>gotten</cc> all the information needed. (Chúng tôi đã có tất cả thông tin cần thiết.)"
+      ],
+      ["hunt", "hunted", "hunted", "săn bắt",
+        "•They <cc>hunted</cc> wild animals in the forest. (Họ đã săn bắt động vật hoang dã trong rừng.)<br>•He has <cc>hunted</cc> for many years. (Anh ấy đã săn bắt suốt nhiều năm.)"
+      ],
+      ["hope", "hoped", "hoped", "hy vọng",
+        "•I <cc>hope</cc> you have a nice day. (Tôi hy vọng bạn có một ngày tốt lành.)<br>•We <cc>hoped</cc> for good weather. (Chúng tôi đã hy vọng có thời tiết đẹp.)"
+      ],
+      ["hurt", "hurt", "hurt", "làm đau, tổn thương",
+        "•He <cc>hurt</cc> his leg while playing football. (Anh ấy bị đau chân khi chơi bóng đá.)<br>•She has <cc>hurt</cc> my feelings. (Cô ấy đã làm tổn thương cảm xúc của tôi.)"
+      ],
+      ["hold", "held", "held", "cầm, giữ",
+        "•She <cc>holds</cc> the cup tightly. (Cô ấy cầm chặt chiếc cốc.)<br>•They <cc>held</cc> a meeting yesterday. (Họ đã tổ chức một cuộc họp vào ngày hôm qua.)"
+      ],
+      ["hinder", "hindered", "hindered", "cản trở, gây khó khăn",
+        "•The heavy rain <cc>hindered</cc> our travel plans. (Cơn mưa to đã cản trở kế hoạch du lịch của chúng tôi.)<br>•She has <cc>hindered</cc> my progress at work. (Cô ấy đã gây khó khăn cho tiến độ công việc của tôi.)"
+      ],
+      ["happen", "happened", "happened", "xảy ra",
+        "•The accident <cc>happened</cc> late at night. (Vụ tai nạn đã xảy ra vào cuối đêm.)<br>•What <cc>happened</cc> at the party yesterday? (Chuyện gì đã xảy ra ở bữa tiệc hôm qua?)"
+      ],
+      ["hit", "hit", "hit", "đánh",
+        "•He <cc>hit</cc> the ball over the fence. (Anh ấy đánh bóng qua hàng rào.)<br>•She has <cc>hit</cc> a milestone in her career. (Cô ấy đã đạt được một cột mốc trong sự nghiệp.)"
+      ],
+      ["hide", "hid", "hidden", "ẩn, trốn",
+        "•She <cc>hides</cc> the key under the mat. (Cô ấy giấu chìa khóa dưới thảm.)<br>•They <cc>hid</cc> in the closet to surprise him. (Họ đã trốn trong tủ để tạo bất ngờ cho anh ấy.)"
+      ],
+      ["hear", "heard", "heard", "nghe",
+        "•I <cc>hear</cc> a strange noise. (Tôi nghe thấy một tiếng động lạ.)<br>•He <cc>heard</cc> the news yesterday. (Anh ấy đã nghe tin tức vào ngày hôm qua.)"
+      ],
+      ["show", "showed", "shown", "cho xem, trình diễn",
+        "•She <cc>showed</cc> me how to cook the dish. (Cô ấy đã cho tôi xem cách nấu món ăn.)<br>•The teacher has <cc>shown</cc> us many interesting facts. (Giáo viên đã trình diễn cho chúng ta nhiều thông tin thú vị.)"
+      ], ["run", "ran", "run", "chạy , vận hành, điều khiển, quản lý, điều hành ",
+        "•He <cc>runs</cc> the company with great efficiency. (Anh ấy điều hành công ty một cách hiệu quả.)<br>•I <cc>ran</cc> to catch the bus. (Tôi đã chạy để bắt xe buýt.)"
+      ],
+      ["sing", "sang", "sung", "hát",
+        "•He <cc>sang</cc> a beautiful song at the concert. (Anh ấy đã hát một bài hát tuyệt vời trong buổi hòa nhạc.)<br>•She has <cc>sung</cc> in many performances. (Cô ấy đã hát trong nhiều buổi biểu diễn.)"
+      ],
+      ["sink", "sank", "sunk", "chìm, lặn",
+        "•The ship <cc>sank</cc> after hitting an iceberg. (Con tàu đã chìm sau khi va phải một tảng băng.)<br>•The ship has <cc>sunk</cc> to the bottom of the ocean. (Con tàu đã chìm xuống đáy đại dương.)"
+      ],
+      ["sit", "sat", "sat", "ngồi",
+        "•I <cc>sat</cc> on the bench for an hour. (Tôi đã ngồi trên ghế một giờ.)<br>•They have <cc>sat</cc> in the same spot for the whole meeting. (Họ đã ngồi cùng một chỗ suốt cuộc họp.)"
+      ],
+      ["sleep", "slept", "slept", "ngủ",
+        "•He <cc>slept</cc> for eight hours last night. (Anh ấy đã ngủ tám giờ tối qua.)<br>•She has <cc>slept</cc> through the entire flight. (Cô ấy đã ngủ suốt chuyến bay.)"
+      ],
+      ["smell", "smelt/smelled", "smelt/smelled", "ngửi",
+        "•I <cc>smelt</cc> something burning in the kitchen. (Tôi đã ngửi thấy mùi cháy trong bếp.)<br>•The flowers have <cc>smelt</cc> so sweet today. (Những bông hoa hôm nay ngửi thật ngọt ngào.)"
+      ],
+      ["speak", "spoke", "spoken", "nói",
+        "•She <cc>spoke</cc> with a calm voice. (Cô ấy đã nói bằng một giọng điềm tĩnh.)<br>•They have <cc>spoken</cc> about the issue many times. (Họ đã nói về vấn đề này nhiều lần.)"
+      ],
+      ["spend", "spent", "spent", "tiêu xài",
+        "•I <cc>spent</cc> all my money on books. (Tôi đã tiêu hết tiền vào sách.)<br>•She has <cc>spent</cc> a lot of time working on the project. (Cô ấy đã dành rất nhiều thời gian để làm việc với dự án.)"
+      ],
+      ["spread", "spread", "spread", "lan truyền, lan tỏa",
+        "News of the event <cc>spread</cc> quickly. (Tin tức về sự kiện đã lan truyền nhanh chóng.)<br>•The rumor has <cc>spread</cc> to everyone in the office. (Tin đồn đã lan tỏa đến tất cả mọi người trong văn phòng.)"
+      ],
+      ["stand", "stood", "stood", "đứng",
+        "•He <cc>stood</cc> near the door waiting for his turn. (Anh ấy đã đứng gần cửa chờ đến lượt.)<br>•She has <cc>stood</cc> at the podium for an hour. (Cô ấy đã đứng tại bục giảng một giờ.)"
+      ],
+      ["steal", "stole", "stolen", "đánh cắp",
+        "•The thief <cc>stole</cc> my wallet. (Kẻ trộm đã đánh cắp ví của tôi.)<br>•He has <cc>stolen</cc> several cars in the past. (Anh ta đã đánh cắp một vài chiếc ô tô trong quá khứ.)"
+      ],
+      ["stick", "stuck", "stuck", "ghim vào, dính vào",
+        "•The note <cc>stuck</cc> to the fridge. (Mẩu giấy đã dính vào tủ lạnh.)<br>•She has <cc>stuck</cc> with the plan despite the difficulties. (Cô ấy đã kiên trì với kế hoạch mặc dù có khó khăn.)"
+      ],
+      ["swear", "swore", "sworn", "tuyên thệ",
+        "•He <cc>swore</cc> to tell the truth. (Anh ấy đã tuyên thệ sẽ nói sự thật.)<br>•She has <cc>sworn</cc> an oath to protect her country. (Cô ấy đã tuyên thệ sẽ bảo vệ đất nước.)"
+      ],
+      ["sweep", "swept", "swept", "quét",
+        "•She <cc>swept</cc> the floor before the guests arrived. (Cô ấy đã quét sàn trước khi khách đến.)<br>•They have <cc>swept</cc> the room clean. (Họ đã quét dọn sạch sẽ căn phòng.)"
+      ],
+      ["swim", "swam", "swum", "bơi lội",
+        "•He <cc>swam</cc> across the river. (Anh ấy đã bơi qua sông.)<br>•We have <cc>swum</cc> in that lake every summer. (Chúng tôi đã bơi trong hồ đó mỗi mùa hè.)"
+      ],
+      ["take", "took", "taken", "cầm, lấy",
+        "•She <cc>took</cc> the book from the shelf. (Cô ấy đã lấy cuốn sách từ kệ.)<br>•He has <cc>taken</cc> the wrong bus. (Anh ấy đã đi nhầm xe buýt.)"
+      ],
+      ["teach", "taught", "taught", "dạy",
+        "•She <cc>taught</cc> me how to solve the math problem. (Cô ấy đã dạy tôi cách giải bài toán.)<br>•He has <cc>taught</cc> at this school for ten years. (Anh ấy đã dạy ở trường này mười năm.)"
+      ],
+      ["tear", "tore", "torn", "xé rách",
+        "•He <cc>tore</cc> the letter in half. (Anh ấy đã xé lá thư làm đôi.)<br>•She has <cc>torn</cc> the paper into pieces. (Cô ấy đã xé giấy thành nhiều mảnh.)"
+      ],
+      ["tell", "told", "told", "nói, kể",
+        "•I <cc>told</cc> him the truth. (Tôi đã nói với anh ấy sự thật.)<br>•They have <cc>told</cc> everyone about the event. (Họ đã kể cho mọi người về sự kiện.)"
+      ],
+      ["think", "thought", "thought", "nghĩ",
+        "•She <cc>thought</cc> it was a good idea. (Cô ấy đã nghĩ đó là một ý tưởng hay.)<br>•They have <cc>thought</cc> of a new solution. (Họ đã nghĩ ra một giải pháp mới.)"
+      ],
+      ["throw", "threw", "thrown", "ném",
+        "•He <cc>threw</cc> the ball to me. (Anh ấy ném quả bóng cho tôi.)<br>•She has <cc>thrown</cc> away all the old clothes. (Cô ấy đã ném hết tất cả quần áo cũ.)"
+      ],
+      ["understand", "understood", "understood", "hiểu",
+        "•I <cc>understood</cc> the lesson clearly. (Tôi đã hiểu bài học một cách rõ ràng.)<br>•They have <cc>understood</cc> the concept after the explanation. (Họ đã hiểu khái niệm sau khi giải thích.)"
+      ],
+      ["wear", "wore", "worn", "mặc",
+        "•She <cc>wore</cc> a red dress to the party. (Cô ấy mặc một chiếc váy đỏ đến bữa tiệc.)<br>•He has <cc>worn</cc> this shirt for days. (Anh ấy đã mặc chiếc áo này mấy ngày rồi.)"
+      ],
+      ["weep", "wept", "wept", "khóc",
+        "•She <cc>wept</cc> when she heard the bad news. (Cô ấy đã khóc khi nghe tin xấu.)<br>•He has <cc>wept</cc> for hours after the loss. (Anh ấy đã khóc suốt nhiều giờ sau khi mất.)"
+      ],
+      ["win", "won", "won", "thắng",
+        "•They <cc>won</cc> the match yesterday. (Họ đã thắng trận đấu hôm qua.)<br>•We have <cc>won</cc> three competitions this year. (Chúng tôi đã thắng ba cuộc thi năm nay.)"
+      ],
+      ["write", "wrote", "written", "viết", "•He <cc>wrote</cc> a letter to his friend. (Anh ấy đã viết một bức thư cho bạn.)<br>•She has <cc>written</cc> several books on the subject. (Cô ấy đã viết vài cuốn sách về chủ đề này.)"],
+      ["abhor", "abhorred", "abhorred", "ghét cay ghét đắng",
+        "•She <cc>abhorred</cc> the idea of cheating in exams. (Cô ấy ghét cay ghét đắng ý tưởng gian lận trong kỳ thi.)<br>•They had never <cc>abhorred</cc> anything so much before. (Họ chưa bao giờ ghét điều gì đến vậy.)"
+      ],
+      ["besiege", "besieged", "besieged", "bao vây, vây hãm",
+        "•The castle was <cc>besieged</cc> for weeks by enemy forces. (Lâu đài đã bị vây hãm trong nhiều tuần bởi lực lượng thù địch.)<br>•The city was <cc>besieged</cc> by protesters. (Thành phố bị bao vây bởi những người biểu tình.)"
+      ],
+      ["concoct", "concocted", "concocted", "bịa đặt, chế tạo (một câu chuyện)",
+        "•He <cc>concocted</cc> a story to cover up his mistake. (Anh ấy bịa ra một câu chuyện để che đậy sai lầm của mình.)<br>•The chef <cc>concocted</cc> a delicious new dish. (Đầu bếp đã chế tạo một món ăn mới tuyệt vời.)"
+      ],
+      ["diminish", "diminished", "diminished", "giảm bớt, làm giảm đi",
+        "•His authority was <cc>diminished</cc> after the scandal. (Quyền lực của anh ấy đã giảm bớt sau vụ bê bối.)<br>•The medicine <cc>diminished</cc> the pain significantly. (Thuốc đã làm giảm đáng kể cơn đau.)"
+      ],
+      ["exacerbate", "exacerbated", "exacerbated", "làm trầm trọng thêm",
+        "•The new law only <cc>exacerbated</cc> the problem. (Luật mới chỉ làm vấn đề trở nên trầm trọng hơn.)<br>•His actions <cc>exacerbated</cc> the tension between the two groups. (Hành động của anh ta đã làm trầm trọng thêm căng thẳng giữa hai nhóm.)"
+      ],
+      ["flounder", "floundered", "floundered", "vật lộn, khó khăn",
+        "•The company <cc>floundered</cc> after the market crash. (Công ty gặp khó khăn sau khi thị trường sụp đổ.)<br>•He <cc>floundered</cc> in the interview, struggling to answer questions. (Anh ấy vật lộn trong cuộc phỏng vấn, gặp khó khăn khi trả lời các câu hỏi.)"
+      ],
+      ["galvanize", "galvanized", "galvanized", "kích động, khuyến khích hành động",
+        "•The speech <cc>galvanized</cc> the crowd into action. (Bài phát biểu đã kích động đám đông hành động.)<br>•The news of the crisis <cc>galvanized</cc> the community to help. (Tin tức về cuộc khủng hoảng đã khuyến khích cộng đồng hành động.)"
+      ],
+      ["harangue", "harangued", "harangued", "diễn thuyết dài dòng, chỉ trích kịch liệt",
+        "•He <cc>harangued</cc> his team for failing to meet expectations. (Anh ấy đã diễn thuyết dài dòng chỉ trích đội của mình vì không đạt kỳ vọng.)<br>•The manager <cc>harangued</cc> the employees about their performance. (Quản lý đã chỉ trích nhân viên về hiệu suất công việc của họ.)"
+      ],
+      ["impede", "impeded", "impeded", "cản trở, ngăn chặn",
+        "•The heavy traffic <cc>impeded</cc> our progress. (Giao thông đông đúc đã cản trở tiến trình của chúng tôi.)<br>•The lack of funding <cc>impeded</cc> the research. (Thiếu hụt kinh phí đã ngăn chặn nghiên cứu.)"
+      ],
+      ["juxtapose", "juxtaposed", "juxtaposed", "đặt cạnh nhau để so sánh",
+        "•The artist <cc>juxtaposed</cc> modern and traditional elements in her work. (Nghệ sĩ đã đặt các yếu tố hiện đại và truyền thống cạnh nhau trong tác phẩm của cô ấy.)<br>•The movie <cc>juxtaposed</cc> love and war in an interesting way. (Bộ phim đã đặt tình yêu và chiến tranh cạnh nhau một cách thú vị.)"
+      ], ["languish", "languished", "languished", "buồn rầu, uể oải",
+        "•The prisoner <cc>languished</cc> in his cell for years. (Tù nhân đã buồn rầu trong phòng giam của mình suốt nhiều năm.)<br>•The flowers <cc>languished</cc> without water in the hot sun. (Những bông hoa đã uể oải vì không có nước dưới ánh mặt trời gay gắt.)"
+      ],
+      ["mollify", "mollified", "mollified", "làm dịu đi, xoa dịu",
+        "•The manager <cc>mollified</cc> the angry customer with a refund. (Quản lý đã xoa dịu khách hàng tức giận bằng một khoản hoàn tiền.)<br>•She <cc>mollified</cc> her mother by promising to help around the house. (Cô ấy đã làm dịu mẹ mình bằng cách hứa sẽ giúp đỡ việc nhà.)"
+      ],
+      ["nebulize", "nebulized", "nebulized", "xịt, phun sương",
+        "•The doctor <cc>nebulized</cc> the medication for the patient with asthma. (Bác sĩ đã phun thuốc cho bệnh nhân bị hen suyễn.)<br>•The machine <cc>nebulized</cc> the disinfectant throughout the room. (Máy đã phun sương chất khử trùng khắp phòng.)"
+      ],
+      ["obfuscate", "obfuscated", "obfuscated", "làm khó hiểu, làm mờ đi",
+        "•The politician <cc>obfuscated</cc> the issue with misleading statements. (Chính trị gia đã làm mờ vấn đề bằng những tuyên bố sai lệch.)<br>•The technical jargon <cc>obfuscated</cc> the explanation. (Thuật ngữ kỹ thuật đã làm cho lời giải thích trở nên khó hiểu.)"
+      ],
+      ["placate", "placated", "placated", "xoa dịu, làm nguôi ngoai",
+        "•The teacher <cc>placated</cc> the upset student by offering extra help. (Giáo viên đã làm nguôi ngoai học sinh đang bực bội bằng cách đề nghị giúp đỡ thêm.)<br>•He <cc>placated</cc> his boss with a sincere apology. (Anh ta đã xoa dịu sếp bằng một lời xin lỗi chân thành.)"
+      ],
+      ["quell", "quelled", "quelled", "dẹp yên, làm dịu đi",
+        "•The police <cc>quelled</cc> the riot before it spread. (Cảnh sát đã dẹp yên cuộc bạo động trước khi nó lan rộng.)<br>•The new medication <cc>quelled</cc> his anxiety. (Thuốc mới đã làm dịu đi sự lo âu của anh ấy.)"
+      ],
+      ["rejuvenate", "rejuvenated", "rejuvenated", "làm trẻ lại, làm mới lại",
+        "•A good night's sleep <cc>rejuvenated</cc> her energy. (Một giấc ngủ ngon đã làm mới lại năng lượng của cô ấy.)<br>•The spa treatment <cc>rejuvenated</cc> his tired body. (Chữa trị tại spa đã làm trẻ lại cơ thể mệt mỏi của anh ấy.)"
+      ],
+      ["subjugate", "subjugated", "subjugated", "chinh phục, thống trị",
+        "•The empire <cc>subjugated</cc> its neighboring lands. (Đế chế đã chinh phục các vùng đất lân cận.)<br>•He tried to <cc>subjugate</cc> his employees through fear. (Anh ta đã cố gắng thống trị các nhân viên của mình bằng sự sợ hãi.)"
+      ],
+      ["transcend", "transcended", "transcended", "vượt qua, siêu việt",
+        "•The artist's work <cc>transcended</cc> traditional boundaries. (Tác phẩm của nghệ sĩ đã vượt qua ranh giới truyền thống.)<br>•Her courage <cc>transcended</cc> all expectations. (Lòng dũng cảm của cô ấy đã vượt qua mọi kỳ vọng.)"
+      ],
+      ["abscond", "absconded", "absconded", "biến mất, trốn thoát",
+        "•The thief <cc>absconded</cc> with the stolen money. (Tên trộm đã trốn thoát với số tiền ăn cắp.)<br>•He had <cc>absconded</cc> before the police arrived. (Anh ấy đã trốn mất trước khi cảnh sát đến.)"
+      ],
+      ["ameliorate", "ameliorated", "ameliorated", "cải thiện",
+        "•The government has <cc>ameliorated</cc> the living conditions in the area. (Chính phủ đã cải thiện điều kiện sống trong khu vực.)<br>•The situation has <cc>ameliorated</cc> significantly since the reforms. (Tình hình đã cải thiện rõ rệt kể từ khi cải cách.)"
+      ],
+      ["commemorate", "commemorated", "commemorated", "tưởng nhớ, kỷ niệm",
+        "•The statue was erected to <cc>commemorate</cc> the heroes of the war. (Tượng đài được dựng lên để tưởng nhớ các anh hùng trong cuộc chiến.)<br>•We <cc>commemorated</cc> the anniversary of his death with a special ceremony. (Chúng tôi đã kỷ niệm ngày mất của ông bằng một buổi lễ đặc biệt.)"
+      ],
+      ["coerce", "coerced", "coerced", "ép buộc",
+        "•They <cc>coerced</cc> him into signing the contract. (Họ đã ép buộc anh ấy ký hợp đồng.)<br>•She was <cc>coerced</cc> into confessing to the crime. (Cô ấy đã bị ép buộc thú nhận tội ác.)"
+      ],
+      ["contradict", "contradicted", "contradicted", "mâu thuẫn, phản bác",
+        "•His actions <cc>contradicted</cc> his words. (Hành động của anh ấy mâu thuẫn với lời nói.)<br>•The evidence <cc>contradicted</cc> her testimony. (Chứng cứ đã phản bác lời khai của cô ấy.)"
+      ],
+      ["debase", "debased", "debased", "hạ thấp, làm giảm giá trị",
+        "•The scandal <cc>debased</cc> his reputation. (Vụ bê bối đã làm hạ thấp danh tiếng của anh ấy.)<br>•The leader's corrupt actions <cc>debased</cc> the ideals of the movement. (Hành động tham nhũng của nhà lãnh đạo đã làm giảm giá trị lý tưởng của phong trào.)"
+      ],
+      ["elucidate", "elucidated", "elucidated", "làm sáng tỏ, giải thích",
+        "•The professor <cc>elucidated</cc> the complex theory in simple terms. (Giáo sư đã giải thích lý thuyết phức tạp một cách đơn giản.)<br>•He <cc>elucidated</cc> the reasons behind the decision. (Anh ấy đã làm sáng tỏ lý do đằng sau quyết định.)"
+      ],
+      ["exacerbate", "exacerbated", "exacerbated", "làm trầm trọng thêm",
+        "•The new law <cc>exacerbated</cc> the economic situation. (Luật mới đã làm tình hình kinh tế trở nên trầm trọng hơn.)<br>•His rude behavior only <cc>exacerbated</cc> the conflict. (Thái độ thô lỗ của anh ấy chỉ làm xung đột trở nên nghiêm trọng hơn.)"
+      ],
+      ["exonerate", "exonerated", "exonerated", "minh oan",
+        "•The evidence <cc>exonerated</cc> him from all charges. (Chứng cứ đã minh oan cho anh ấy khỏi tất cả các cáo buộc.)<br>•The investigation <cc>exonerated</cc> the suspect after finding new proof. (Cuộc điều tra đã minh oan cho nghi phạm sau khi tìm thấy bằng chứng mới.)"
+      ],
+      ["galvanize", "galvanized", "galvanized", "kích thích, thôi thúc",
+        "•The tragedy <cc>galvanized</cc> the community into action. (Thảm kịch đã thôi thúc cộng đồng hành động.)<br>•Her speech <cc>galvanized</cc> the audience into supporting the cause. (Bài phát biểu của cô ấy đã kích thích khán giả tham gia ủng hộ sự nghiệp này.)"
+      ],
+      ["impede", "impeded", "impeded", "cản trở, ngăn chặn",
+        "•The heavy traffic <cc>impeded</cc> our progress. (Giao thông đông đúc đã cản trở tiến độ của chúng tôi.)<br>•The lack of funding <cc>impeded</cc> the research project. (Thiếu kinh phí đã cản trở dự án nghiên cứu.)"
+      ],
+      ["abide", "abode", "abode", "chấp nhận, tuân theo",
+        "•He <cc>abode</cc> by the rules despite the challenges. (Anh ấy đã tuân thủ các quy tắc dù gặp khó khăn.)<br>•They have <cc>abode</cc> by their promises for years. (Họ đã giữ lời hứa của mình suốt nhiều năm.)"
+      ],
+      ["bestow", "bestowed", "bestowed", "ban tặng, trao tặng",
+        "•The king <cc>bestowed</cc> titles upon his loyal servants. (Nhà vua đã trao tặng danh hiệu cho các tôi tớ trung thành.)<br>•He has <cc>bestowed</cc> a great honor on me. (Anh ấy đã trao cho tôi một vinh dự lớn.)"
+      ],
+      ["forsake", "forsook", "forsaken", "từ bỏ",
+        "•She <cc>forsook</cc> her family to pursue her dreams. (Cô ấy đã từ bỏ gia đình để theo đuổi ước mơ của mình.)<br>•He has <cc>forsaken</cc> his old habits. (Anh ấy đã từ bỏ những thói quen cũ.)"
+      ],
+      ["seethe", "seethed", "seethed", "sôi sục, giận dữ",
+        "•He <cc>seethed</cc> with anger after hearing the news. (Anh ấy sôi sục với cơn giận sau khi nghe tin.)<br>•She has <cc>seethed</cc> silently at the injustice. (Cô ấy đã âm thầm giận dữ vì sự bất công.)"
+      ],
+      ["slink", "slunk", "slunk", "lén lút đi, đi rón rén",
+        "•The cat <cc>slinked</cc> through the shadows to catch its prey. (Con mèo lén lút qua bóng tối để bắt con mồi.)<br>•He has <cc>slunk</cc> out of the room to avoid being seen. (Anh ấy đã lén lút ra khỏi phòng để tránh bị phát hiện.)"
+      ],
+      ["shriek", "shrieked", "shrieked", "hét lên, kêu la",
+        "•She <cc>shrieked</cc> when she saw the spider on her desk. (Cô ấy hét lên khi thấy con nhện trên bàn.)<br>•He has <cc>shrieked</cc> in excitement when the event began. (Anh ấy đã hét lên vì phấn khích khi sự kiện bắt đầu.)"
+      ],
+      ["scorn", "scorned", "scorned", "khinh bỉ",
+        "•He <cc>scorned</cc> the idea of quitting his job. (Anh ấy đã khinh bỉ ý tưởng bỏ việc.)<br>•They have <cc>scorned</cc> his efforts despite his hard work. (Họ đã khinh bỉ nỗ lực của anh ấy mặc dù anh ấy làm việc chăm chỉ.)"
+      ],
+      ["beget", "begot", "begotten", "sinh ra, tạo ra",
+        "•His actions <cc>begot</cc> a series of unfortunate events. (Hành động của anh ấy đã sinh ra một loạt các sự kiện không may.)<br>•She has <cc>begotten</cc> a child who will carry on the legacy. (Cô ấy đã sinh ra một đứa trẻ sẽ tiếp nối di sản.)"
+      ],
+      ["dwell", "dwelled", "dwelled", "sống, cư trú",
+        "•He <cc>dwelled</cc> in a small village near the mountains. (Anh ấy sống trong một ngôi làng nhỏ gần núi.)<br>•They have <cc>dwelled</cc> in this city for generations. (Họ đã cư trú ở thành phố này qua nhiều thế hệ.)"
+      ], ["ingrain", "ingrained", "ingrained", "khắc sâu, ghi vào tâm trí",
+        "•Her kindness was <cc>ingrained</cc> in the community. (Lòng tốt của cô ấy đã khắc sâu vào cộng đồng.)<br>•These values have been <cc>ingrained</cc> in him since childhood. (Những giá trị này đã được ghi vào tâm trí anh ấy từ khi còn nhỏ.)"
+      ],
+      ["induce", "induced", "induced", "kích thích, gây ra",
+        "•The drug <cc>induced</cc> a feeling of relaxation. (Thuốc đã gây ra cảm giác thư giãn.)<br>•They have <cc>induced</cc> him to make a decision. (Họ đã kích thích anh ấy đưa ra quyết định.)"
+      ],
+      ["languish", "languished", "languished", "mệt mỏi, suy yếu",
+        "•The prisoners <cc>languished</cc> in the harsh conditions. (Các tù nhân đã suy yếu trong điều kiện khắc nghiệt.)<br>•He <cc>languished</cc> for years without any opportunity for advancement. (Anh ấy đã mệt mỏi suốt nhiều năm mà không có cơ hội thăng tiến.)"
+      ],
+      ["meditate", "meditated", "meditated", "suy ngẫm, thiền",
+        "•He <cc>meditated</cc> for hours to clear his mind. (Anh ấy đã thiền suốt hàng giờ để xua tan mọi lo âu.)<br>•She has <cc>meditated</cc> on the issue for several days. (Cô ấy đã suy ngẫm về vấn đề này suốt vài ngày.)"
+      ],
+      ["obliterate", "obliterated", "obliterated", "xóa bỏ, phá hủy",
+        "•The explosion <cc>obliterated</cc> the building. (Vụ nổ đã phá hủy tòa nhà.)<br>•All traces of the old town have been <cc>obliterated</cc>. (Tất cả dấu vết của thị trấn cũ đã bị xóa bỏ.)"
+      ],
+      ["perpetuate", "perpetuated", "perpetuated", "làm cho tồn tại mãi mãi",
+        "•Their actions <cc>perpetuated</cc> the myth. (Hành động của họ đã làm cho huyền thoại đó tồn tại mãi mãi.)<br>•The tradition was <cc>perpetuated</cc> through generations. (Truyền thống đã được duy trì qua các thế hệ.)"
+      ],
+      ["rejuvenate", "rejuvenated", "rejuvenated", "làm trẻ lại, hồi sinh",
+        "•The spa treatment <cc>rejuvenated</cc> her skin. (Liệu trình spa đã làm trẻ lại làn da của cô ấy.)<br>•The new leadership <cc>rejuvenated</cc> the company. (Lãnh đạo mới đã làm hồi sinh công ty.)"
+      ],
+      ["relinquish", "relinquished", "relinquished", "từ bỏ, nhường lại",
+        "•He <cc>relinquished</cc> his claim to the throne. (Anh ấy đã từ bỏ quyền đòi lại ngai vàng.)<br>•She <cc>relinquished</cc> control of the project to her colleague. (Cô ấy đã nhường quyền kiểm soát dự án cho đồng nghiệp.)"
+      ],
+      ["subjugate", "subjugated", "subjugated", "chinh phục, nô dịch",
+        "•The conquerors <cc>subjugated</cc> the native tribes. (Những kẻ xâm lược đã chinh phục các bộ tộc bản địa.)<br>•The people were <cc>subjugated</cc> by a harsh regime. (Nhân dân đã bị nô dịch dưới một chế độ tàn bạo.)"
+      ],
+      ["vex", "vexed", "vexed", "làm phiền, làm khó chịu",
+        "•The constant noise <cc>vexed</cc> him. (Tiếng ồn liên tục đã làm phiền anh ấy.)<br>•She was <cc>vexed</cc> by the constant interruptions. (Cô ấy cảm thấy khó chịu vì sự gián đoạn liên tục.)"
+      ]
+    ];
+
+    const sections = {
+      home: `
+        <h1>Chào mừng đến với Constantine Ratio!</h1>
+        <p>Trang web giúp bạn cải thiện ngữ pháp tiếng Anh một cách hiệu quả.</p>
+        <img src="background1.jpg" alt="Học tiếng Anh hiệu quả" />
+      `,
+      about: `
+        <h1>Giới thiệu</h1>
+        <p>Trang web được lập trình và thiết kế bởi <strong>Thuật Đặng</strong>.</p>
+        <img src="Thuat.png" alt="Thuật Đặng - Người sáng lập" height="122" width="122" /> 
+      `,
+      tradongtu: `
+      <h1>Tra động từ </h1>
+        <div>
+          <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Nhập động từ..." />
+            <button onclick="search()">Tìm kiếm</button>
+          </div>
+          <div class="results" id="results"></div>
+        </div>
+        <p>Danh sách động từ bất quy tắc tiếng Anh:</p>
+        ${convertToHTML(dataBase)}
+      `,
+      tratinhtu: `
+      <h1>Tra tính từ đồng nghĩa</h1>
+        <div>
+          <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Nhập tính từ..." />
+            <button onclick="search()">Tìm kiếm</button>
+          </div>
+          <div class="results" id="results"></div>
+        </div>
+        <p>Danh sách tính từ đồng nghĩa thường xuất hiện trong tiếng Anh:</p>
+        ${convertToHTML1(dataBase1)}
+      `, tratrangtu: `
+      <h1>Tra trạng từ</h1>
+        <div>
+          <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Nhập trạng từ..." />
+            <button onclick="search()">Tìm kiếm</button>
+          </div>
+          <div class="results" id="results"></div>
+        </div>
+        <p>Danh sách trạng từ thường xuất hiện trong tiếng Anh:</p>
+        ${convertToHTML2(dataBase2)}
+      `,
+      features: `
+      <button href="#" aria-label="Tra động từ (Cơ bản) " onclick="showContent('tradongtu')" class="glow-on-hover">Tra động từ</button>
+      <button href="#" aria-label="Tra tính từ đồng nghĩa" onclick="showContent('tratinhtu')" class="glow-on-hover2">Tra tính từ đồng nghĩa</button>
+      <button href="#" aria-label="Tra trạng tứ" onclick="showContent('tratrangtu')" class="glow-on-hover3">Tra trạng từ</button>
+      <button href="#" aria-label="Tạo bài tập" onclick="showContent('taobaitap')" class="glow-on-hover1">Tạo bài tập</button>
+ 
+      `,
+      connect: `
+        <h1>Liên hệ</h1>
+        <p>Facebook: <a href="https://www.facebook.com/hieze.ninet/" class="rainbow-text" target="_blank">Thuật Đặng</a></p>
+        <p>YouTube: <a href="https://www.youtube.com/HiezeGaming" class="rainbow-text" target="_blank">Hieze Gaming</a></p>
+        <p>Discord: <a href="https://discord.com/users/thuatdang" class="rainbow-text" target="_blank">thuatdang</a></p>
+      `
+    };
+
+    function convertToHTML(data) {
+      let rows = data.map(item => `
+        <tr>
+          <td>${item[0]}</td>
+          <td>${item[1]}</td>
+          <td>${item[2]}</td>
+          <td>${item[3]}</td>
+          <td>${item[4]}</td>
+        </tr>`).join('');
+      return `
+        <table>
+          <thead>
+            <tr>
+              <th>Động từ nguyên mẫu</th>
+              <th>Quá khứ đơn</th>
+              <th>Quá khứ phân từ</th>
+              <th>Nghĩa</th>
+              <th>Ví Dụ</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    }
+
+    function convertToHTML1(data) {
+      let rows = data.map(item => `
+        <tr>
+          <td>${item[0]}</td>
+          <td>${item[1]}</td>
+          <td>${item[2]}</td>
+        </tr>`).join('');
+      return `
+        <table>
+          <thead>
+            <tr>
+              <th>Very + Tính từ</th>
+              <th>Từ đồng nghĩa</th>
+              <th>nghĩa</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    }
+    function convertToHTML2(data) {
+      let rows = data.map(item => `
+        <tr>
+          <td>${item[0]}</td>
+          <td>${item[1]}</td> 
+          <td>${item[2]}</td> 
+        </tr>`).join('');
+      return `
+        <table>
+          <thead>
+            <tr>
+              <th>Trạng từ</th>
+              <th>Nghĩa</th> 
+              <th>Ví dụ</th> 
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    }
+
+    function search() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+      const filteredResults = dataBase.filter(item =>
+        item[0].toLowerCase().replace(/\s/g, '').includes(input.replace(/\s/g, '')) ||
+        item[1].toLowerCase().replace(/\s/g, '').includes(input.replace(/\s/g, '')) ||
+        item[2].toLowerCase().replace(/\s/g, '').includes(input.replace(/\s/g, '')) ||
+        item[3].toLowerCase().replace(/\s/g, '').includes(input.replace(/\s/g, ''))
+      );
+
+
+      if (filteredResults.length > 0) {
+        filteredResults.forEach(item => {
+          resultsDiv.innerHTML += `
+            <p>${item[0]} - ${item[1]} - ${item[2]} : ${item[3]}<br>Vd: ${item[4]}</p>
+          `;
+        });
+      } else {
+        resultsDiv.innerHTML = "<p>Không tìm thấy kết quả nào.</p>";
+      }
+    }
+
+    function showContent(section) {
+      const mainContent = document.querySelector("main");
+      mainContent.innerHTML = sections[section] || "Nội dung không có sẵn.";
+    }
+
+    showContent("home");
+  </script>
+
+</html>
