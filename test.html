@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banana Rush Shop - Noel Edition</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Snow Animation */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: url('') repeat top center;
+            animation: snow 30s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes snow {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Body */
+       
+        body {
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Background container with blur */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://scontent.fvca4-1.fna.fbcdn.net/v/t1.15752-9/462546923_1697414780825563_8522346012495669982_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeF2HsCD1TVDDN2xGtS2v4eIgftPkwEWFhSB-0-TARYWFFpGmt28amMqH0Ox6Lo0qiEIKXGMj8uszR0IgnQsmT_1&_nc_ohc=A_3n1z1Kve4Q7kNvgEIri4t&_nc_zt=23&_nc_ht=scontent.fvca4-1.fna&oh=03_Q7cD1QGvFcsD0jJ7YdqKRBj76-KbhIYUPW1NM2ZK6RYJGEcWEQ&oe=677F7A04');
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px); /* Adjust blur intensity */
+            z-index: -1;
+        }
+
+        /* Content on top of the blurred background */
+        .content {
+            text-align: center;
+            z-index: 1;
+        }
+        /* Header */
+        header {
+            background: linear-gradient(to right, #ff0000, #008000);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        header::before {
+            content: '🎄';
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            font-size: 1.5rem;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Navigation */
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+
+        /* Main Sections */
+        .blurred-section {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ff0000;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .blurred-section:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            color: #333;
+            font-size: 2rem;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+        }
+
+        p {
+            color: #555;
+            font-size: 1.2rem;
+        }
+
+        /* Button */
+        .buy-btn {
+            background: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .buy-btn:hover {
+            background: #ffd700;
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        footer p {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Banana Rush Shop - Noel Edition</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="blurred-section">
+        <div>
+            <h2>Chuối Nhào Đường || 8k</h2>
+            <p>Hương vị ngọt ngào hoàn hảo cho mùa Giáng Sinh!</p>
+        </div>
+        <button class="buy-btn">Mua Ngay</button>
+    </section>
+
+    <section id="about" class="blurred-section">
+        <div>
+            <h2>Sữa Chua || 5k</h2>
+            <p>Sữa chua tươi ngon, thêm hương vị lễ hội!</p>
+        </div>
+        <button class="buy-btn">Mua Ngay</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Banana Rush Shop | Đón Noel cùng chúng tôi!</p>
+    </footer>
+</body>
+</html>
