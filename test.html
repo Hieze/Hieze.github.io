@@ -134,7 +134,13 @@
             transform: scale(1.05);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
-
+        .section-image {
+    max-width: 150px; /* Đặt chiều rộng tối đa cho hình ảnh */
+    max-height: 150px; /* Đặt chiều cao tối đa cho hình ảnh */
+    border-radius: 10px; /* Tùy chọn: Bo tròn các góc */
+    object-fit: cover; /* Giữ tỷ lệ mà không bị méo hình */
+    margin-right: 20px; /* Khoảng cách giữa ảnh và nội dung */
+}
         h2 {
             color: #333;
             font-size: 2rem;
@@ -192,21 +198,23 @@
     </header>
 
     <section id="home" class="blurred-section">
+        <img src="https://scontent.fvca4-1.fna.fbcdn.net/v/t1.15752-9/462646776_830322899122702_8903884126594298705_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGRRNBW50cDfSuH2s3_-Jf6zhEyxr1ZYYjOETLGvVlhiM8lRtAlY-XhnOCk13okuf3JVcoDFiZniZSw0QnIXMQa&_nc_ohc=QqAGG7qn0dgQ7kNvgGPtA_3&_nc_zt=23&_nc_ht=scontent.fvca4-1.fna&oh=03_Q7cD1QHRkU7f6ThsKyUEogt8Km-fqxTLHQ7MbnlTBnVinGVr4Q&oe=677FC0AD" alt="Chuối Nhào Đường" class="section-image">
         <div>
             <h2>Chuối Nhào Đường || 8k</h2>
             <p>Hương vị ngọt ngào hoàn hảo cho mùa Giáng Sinh!</p>
         </div>
         <button class="buy-btn">Mua Ngay</button>
     </section>
-
+    
     <section id="about" class="blurred-section">
+        <img src="https://scontent.fvca4-1.fna.fbcdn.net/v/t1.15752-9/462654337_1690753104834293_4194282297441542934_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGtQiZuAvjY2t4exanJ382NbAwUMMTfBj9sDBQwxN8GP19_az1gAwiTu5M9Cb7Gpd-q-KmE60VyhpGBRAcqeDdM&_nc_ohc=HZk2XkuElk0Q7kNvgGz3sqe&_nc_zt=23&_nc_ht=scontent.fvca4-1.fna&oh=03_Q7cD1QG6V3AfI-vN7OEx_5e_ALGVvEHUVOHciKBWQPExdzoGyw&oe=677FA3AE" alt="Sữa Chua" class="section-image">
         <div>
-            <h2>Sữa Chua || 5k</h2>
+            <h2>Sữa Chua || 4k</h2>
             <p>Sữa chua tươi ngon, thêm hương vị lễ hội!</p>
         </div>
         <button class="buy-btn">Mua Ngay</button>
     </section>
-
+    
     <footer>
         <p>&copy; 2024 Banana Rush Shop | Đón Noel cùng chúng tôi!</p>
     </footer>
