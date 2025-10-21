@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cỗ máy đạo hàm — Web</title>
+  <!-- math.js for symbolic differentiation -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjs@11.8.0/lib/browser/math.js"></script>
+  <!-- MathJax for nice math rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;display:flex;align-items:flex-start;justify-content:center;padding:24px;background:#f7fafc}
+    .card{width:100%;max-width:880px;background:white;border-radius:12px;box-shadow:0 6px 24px rgba(20,20,40,0.08);padding:20px}
+    h1{margin:0 0 8px;font-size:20px}
+    label{display:block;margin-top:12px;font-weight:600}
+    input[type=text], select, textarea{width:100%;padding:8px 10px;margin-top:6px;border:1px solid #e6e9ef;border-radius:8px;font-size:14px}
+    button{margin-top:12px;padding:10px 14px;border-radius:10px;border:0;background:#2563eb;color:white;font-weight:700;cursor:pointer}
+    pre{background:#0f172a;color:#e6eef8;padding:12px;border-radius:8px;overflow:auto}
+    .row{display:flex;gap:12px}
+    .col{flex:1}
+    .small{font-size:13px;color:#6b7280}
+    .examples button{margin-right:8px;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Cỗ máy đạo hàm — Web (biểu thức dạng toán học)</h1>
+    <div class="small">Hỗ trợ: +, -, *, /, ^, sin, cos, tan, exp, ln, sqrt, và biến (ví dụ: x). Sử dụng math.js để tính toán ký hiệu.</div>
+
+    <label for="expr">Biểu thức f(x)</label>
+    <input id="expr" type="text" value="sin(x)^2 + x^3/3 + exp(2*x)" />
+
+    <label for="var">Biến</label>
+    <input id="var" type="text" value="x" />
+
+    <div class="row">
+      <div class="col">
+        <button id="diffBtn">Tính đạo hàm</button>
+        <button id="simplBtn">Rút gọn (simplify)</button>
+        <button id="clearBtn" style="background:#ef4444">Xóa</button>
+      </div>
+      <div class="col small examples">
+        Ví dụ: <br/>
+        <button onclick="useExample('x^2')">x^2</button>
+        <button onclick="useExample('sin(x)')">sin(x)</button>
+        <button onclick="useExample('ln(x)')">ln(x)</button>
+        <button onclick="useExample('x^x')">x^x</button>
+      </div>
+    </div>
+
+    <label>Kết quả (ký hiệu)</label>
+    <pre id="result">—</pre>
+
+    <label>Hiển thị LaTeX</label>
+    <div id="latex">\(\;\)</div>
+
+    <label>Đánh giá số (nếu muốn): đánh giá đạo hàm tại điểm</label>
+    <div class="row">
+      <input id="numPoint" type="text" placeholder="ví dụ: 1.5" />
+      <button id="evalBtn">Đánh giá</button>
+    </div>
+    <div id="numeric" class="small">—</div>
+
+    <hr />
+    <div class="small">Ghi chú: math.js thực hiện đạo hàm ký hiệu tốt với hầu hết biểu thức thông dụng. Nếu biểu thức quá phức tạp có thể cần rút gọn thêm hoặc chuyển đổi. Bạn có thể chỉnh sửa code để kết hợp các hàm khác (ví dụ: plot).</div>
+  </div>
+
+<script>
+  const exprIn = document.getElementById('expr');
+  const varIn = document.getElementById('var');
+  const resultPre = document.getElementById('result');
+  const latexDiv = document.getElementById('latex');
+  const numPoint = document.getElementById('numPoint');
+  const numericDiv = document.getElementById('numeric');
+
+  function useExample(e){ exprIn.value = e; compute(); }
+
+  function safeParse(s){ try{ return math.parse(s); } catch(e){ return null; } }
+
+  function compute(){
+    const s = exprIn.value.trim();
+    const v = varIn.value.trim() || 'x';
+    if(!s){ resultPre.textContent = 'Vui lòng nhập biểu thức.'; latexDiv.innerHTML='\\(\\ \)'; return; }
+    try{
+      const node = math.parse(s);
+      const deriv = math.derivative(node, v);
+      // string form
+      const derivStr = deriv.toString({parenthesis: 'auto'});
+      resultPre.textContent = derivStr;
+      // latex
+      const derivTex = deriv.toTex({parenthesis: 'auto'});
+      latexDiv.innerHTML = '\\(' + derivTex + '\\)';
+      if(window.MathJax && window.MathJax.typesetPromise){ MathJax.typesetClear(); MathJax.typesetPromise([latexDiv]).catch(()=>{}); }
+      numericDiv.textContent = '—';
+    }catch(err){
+      resultPre.textContent = 'Lỗi: ' + err.toString();
+      latexDiv.innerHTML='\\(\\ \)';
+    }
+  }
+
+  document.getElementById('diffBtn').addEventListener('click', compute);
+
+  document.getElementById('simplBtn').addEventListener('click', ()=>{
+    try{
+      const s = exprIn.value.trim(); if(!s){ resultPre.textContent='Nhập biểu thức.'; return; }
+      const node = math.simplify(s);
+      exprIn.value = node.toString(); compute();
+    }catch(e){ resultPre.textContent='Lỗi rút gọn: '+e;
+    }
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', ()=>{ exprIn.value=''; resultPre.textContent='—'; latexDiv.innerHTML='\\(\\ \)'; numericDiv.textContent='—'; });
+
+  document.getElementById('evalBtn').addEventListener('click', ()=>{
+    const p = parseFloat(numPoint.value);
+    const v = varIn.value.trim() || 'x';
+    if(Number.isFinite(p)){
+      try{
+        const deriv = math.derivative(exprIn.value, v);
+        const f = deriv.compile();
+        const val = f.evaluate({[v]: p});
+        numericDiv.textContent = 'f\' + '('+p+') = ' + String(val);
+      }catch(e){ numericDiv.textContent = 'Lỗi khi đánh giá: '+e; }
+    }else numericDiv.textContent = 'Nhập số hợp lệ.';
+  });
+
+  // auto compute on load
+  compute();
+</script>
+</body>
+</html>
