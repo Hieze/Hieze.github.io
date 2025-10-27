@@ -1,188 +1,214 @@
 <!doctype html>
 <html lang="vi">
-
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CarboStudy — Tổng hợp lý thuyết Carbohydrate</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CarboStudy</title>
   <style>
-    :root {
-      --bg: #0b0f13;
-      --card: #0f1720;
-      --muted: #9aa4b2;
-      --accent: #ff7b72;
-      --accent2: #ffd166;
-      --glass: rgba(255, 255, 255, 0.04);
-      --radius: 14px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono";
-    }
-
-    .props {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap
-    }
-
-    .tag {
-      background: rgba(255, 255, 255, 0.03);
-      padding: 6px 10px;
-      border-radius: 999px;
-      color: var(--muted);
-      font-size: 13px
-    }
-
-    .accordion {
-      margin-top: 10px
-    }
-
-    .acc-item {
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.02)
-    }
-
-    .content {
-      overflow: auto;
-      padding: 0 4px
-    }
-
-    .acc-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 12px;
-      cursor: pointer
-    }
-
-    .acc-body {
-      padding: 12px;
-      border-top: 1px solid rgba(255, 255, 255, 0.02);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent)
-    }
-
-    .box {
-      display: flex;
-
-      flex-direction: column;
-      gap: 8px
-    }
-
-    code {
-      background: #071018;
-      padding: 6px;
-      border-radius: 6px;
-      color: var(--accent2)
-    }
-
-    .formula {
-      font-family: var(--mono);
-      background: rgba(255, 255, 255, 0.02);
-      padding: 6px 8px;
-      border-radius: 8px;
-      display: inline-block;
-      color: #fff
-    }
-
-    h3 {
-      margin: 0 1 7px 0;
-      color: var(--accent2);
-      font-size: 15px
-    }
-
     body {
       margin: 0;
-      font-family: Inter, system-ui;
-      background: var(--bg);
-      color: #e6eef6;
       display: flex;
-      min-height: 100vh
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0f141a;
+      color: #ddd;
     }
 
     aside {
       width: 260px;
-      background: #0d131a;
-      padding: 20px;
+      background-color: #151b22;
+      padding: 24px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between
+      border-right: 1px solid #222;
+    }
+
+    h2 {
+      color: #fff;
+      font-size: 1.5em;
+      margin-bottom: 5px;
+    }
+
+    h3 {
+      color: #fff;
     }
 
     nav ul {
       list-style: none;
       padding: 0;
-      margin: 0
+      margin-top: 20px;
     }
 
     nav li {
-      margin: 8px 0
+      margin-bottom: 10px;
     }
 
     nav a {
       display: block;
-      padding: 10px 14px;
-      border-radius: 10px;
       text-decoration: none;
-      color: var(--muted);
-      transition: 0.2s
+      color: #bbb;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: 0.2s;
     }
 
     nav a:hover,
     nav a.active {
-      background: var(--glass);
-      color: #fff
+      background-color: #222b36;
+      color: #fff;
     }
 
     main {
       flex: 1;
-      padding: 30px;
-      overflow-y: auto
+      padding: 40px;
+      overflow-y: auto;
     }
 
     .card {
-      background: var(--card);
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5)
+      background-color: #151b22;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+      display: none;
     }
 
-    h1,
-    h2 {
-      color: var(--accent)
+    .card.active {
+      display: block;
     }
 
-    p {
-      color: var(--muted);
-      line-height: 1.6
+    .box {
+      margin-bottom: 10px;
     }
 
-    .hidden {
-      display: none
+    .tag {
+      background-color: #222;
+      border: 1px solid #00ffff44;
+      padding: 3px 8px;
+      margin-right: 4px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      color: #9cf;
+    }
+
+    .accordion {
+      margin-top: 16px;
+    }
+
+    .acc-item {
+      border-top: 1px solid #333;
+    }
+
+    .acc-head {
+      padding: 10px;
+      cursor: pointer;
+      color: #0ff;
+    }
+
+    .acc-head:hover {
+      background-color: #1a222b;
+    }
+
+    .acc-body {
+      display: none;
+      padding: 10px 16px;
+      color: #ccc;
+    }
+
+    .acc-item.active .acc-body {
+      display: block;
+    }
+
+    strong {
+      color: #fff;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+      margin: 15px auto;
+      border: 2px solid #444;
+      box-shadow: 0 0 10px #00ffff;
+    }
+
+    /* ======= Responsive fix for mobile ======= */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      aside {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 16px;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+
+      nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0;
+      }
+
+      nav li {
+        margin: 0;
+      }
+
+      nav a {
+        padding: 6px 10px;
+        font-size: 13px;
+      }
+
+      main {
+        padding: 16px;
+      }
+
+      .card {
+        margin-top: 10px;
+        padding: 16px;
+      }
+
+      img {
+        width: 100% !important;
+        height: auto !important;
+      }
+
+      h2 {
+        font-size: 1.2em;
+      }
     }
   </style>
 </head>
 
+ 
 <body>
   <aside>
     <div>
-      <div style="margin-bottom:16px">
-        <h2 style="margin:0;color:#fff">CarboStudy</h3>
-          <p style="color:var(--muted);font-size:13px">Ôn tập Hóa 12</p>
-      </div>
+      <h2>CarboStudy</h2>
+      <p style="font-size: 0.9em; color: #888;">Ôn tập Hóa 12</p>
       <nav>
         <ul>
-          <li><a href="#home" class="active">Trang chủ</a></li>
-          <li><a href="#glucose">Glucose</a></li>
-          <li><a href="#fructose">Fructose</a></li>
-          <li><a href="#maltose">Maltose</a></li>
-          <li><a href="#saccharose">Saccharose</a></li>
-          <li><a href="#tinhbot">Tinh bột</a></li>
-          <li><a href="#cellulose">Cellulose</a></li>
+          <li><a href="#" class="active" data-target="home">Trang chủ</a></li>
+          <li><a href="#" data-target="glucose">Glucose</a></li>
+          <li><a href="#" data-target="fructose">Fructose</a></li>
+          <li><a href="#" data-target="maltose">Maltose</a></li>
+          <li><a href="#" data-target="saccharose">Saccharose</a></li>
+          <li><a href="#" data-target="tinhbot">Tinh bột</a></li>
+          <li><a href="#" data-target="cellulose">Cellulose</a></li>
         </ul>
       </nav>
     </div>
-    <div style="font-size:13px;color:var(--muted);margin-top:20px">Dành cho ôn tập chương 2 Carbohydrate - Hóa 12 </div>
   </aside>
-
+</body>
   <main>
     <section id="home" class="card">
       <h1>Web được làm bởi Công Thuật</h1>
@@ -479,19 +505,31 @@
   </main>
 
   <script>
-    const links = document.querySelectorAll('nav a');
-    const sections = document.querySelectorAll('main section');
-    links.forEach(a => {
-      a.addEventListener('click', e => {
+    // Ẩn/hiện card
+    const links = document.querySelectorAll("nav a");
+    const cards = document.querySelectorAll(".card");
+
+    links.forEach(link => {
+      link.addEventListener("click", e => {
         e.preventDefault();
-        links.forEach(x => x.classList.remove('active'));
-        a.classList.add('active');
-        const id = a.getAttribute('href').substring(1);
-        sections.forEach(sec => sec.classList.add('hidden'));
-        document.getElementById(id).classList.remove('hidden');
+        links.forEach(l => l.classList.remove("active"));
+        link.classList.add("active");
+        const target = link.getAttribute("data-target");
+        cards.forEach(card => {
+          card.classList.toggle("active", card.id === target);
+        });
+      });
+    });
+
+    // Accordion toggle
+    document.querySelectorAll(".acc-head").forEach(head => {
+      head.addEventListener("click", () => {
+        head.parentElement.classList.toggle("active");
       });
     });
   </script>
 </body>
-
+</html>
+</body>
+  
 </html>
