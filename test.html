@@ -1,222 +1,492 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="vi">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banana Rush Shop - Noel Edition</title>
-    <style>
-        /* Basic Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CarboStudy — Tổng hợp lý thuyết Carbohydrate</title>
+  <style>
+    :root {
+      --bg: #0b0f13;
+      --card: #0f1720;
+      --muted: #9aa4b2;
+      --accent: #ff7b72;
+      --accent2: #ffd166;
+      --glass: rgba(255, 255, 255, 0.04);
+      --radius: 14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono";
+    }
 
-        /* Snow Animation */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            background: url('') repeat top center;
-            animation: snow 30s linear infinite;
-            z-index: 0;
-        }
+    .props {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap
+    }
 
-        @keyframes snow {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(100vh); }
-        }
+    .tag {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 13px
+    }
 
-        /* Body */
-       
-        body {
-            background-size: cover;
-            background-position: center;
-            color: #fff;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            z-index: 1;
-        }
+    .accordion {
+      margin-top: 10px
+    }
 
-        /* Background container with blur */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://scontent.fvca4-1.fna.fbcdn.net/v/t1.15752-9/462546923_1697414780825563_8522346012495669982_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeF2HsCD1TVDDN2xGtS2v4eIgftPkwEWFhSB-0-TARYWFFpGmt28amMqH0Ox6Lo0qiEIKXGMj8uszR0IgnQsmT_1&_nc_ohc=A_3n1z1Kve4Q7kNvgEIri4t&_nc_zt=23&_nc_ht=scontent.fvca4-1.fna&oh=03_Q7cD1QGvFcsD0jJ7YdqKRBj76-KbhIYUPW1NM2ZK6RYJGEcWEQ&oe=677F7A04');
-            background-size: cover;
-            background-position: center;
-            filter: blur(10px); /* Adjust blur intensity */
-            z-index: -1;
-        }
+    .acc-item {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.02)
+    }
 
-        /* Content on top of the blurred background */
-        .content {
-            text-align: center;
-            z-index: 1;
-        }
-        /* Header */
-        header {
-            background: linear-gradient(to right, #ff0000, #008000);
-            color: white;
-            text-align: center;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            position: relative;
-        }
+    .content {
+      overflow: auto;
+      padding: 0 4px
+    }
 
-        header::before {
-            content: '🎄';
-            position: absolute;
-            top: -10px;
-            right: 10px;
-            font-size: 1.5rem;
-        }
+    .acc-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      cursor: pointer
+    }
 
-        header h1 {
-            font-size: 3rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-        }
+    .acc-body {
+      padding: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent)
+    }
 
-        /* Navigation */
-        nav ul {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            margin-top: 10px;
-        }
+    .box {
+      display: flex;
 
-        nav ul li {
-            margin: 0 15px;
-        }
+      flex-direction: column;
+      gap: 8px
+    }
 
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 1.2rem;
-            transition: color 0.3s ease;
-        }
+    code {
+      background: #071018;
+      padding: 6px;
+      border-radius: 6px;
+      color: var(--accent2)
+    }
 
-        nav ul li a:hover {
-            color: #ffd700;
-        }
+    .formula {
+      font-family: var(--mono);
+      background: rgba(255, 255, 255, 0.02);
+      padding: 6px 8px;
+      border-radius: 8px;
+      display: inline-block;
+      color: #fff
+    }
 
-        /* Main Sections */
-        .blurred-section {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #ff0000;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 20px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+    h3 {
+      margin: 0 1 7px 0;
+      color: var(--accent2);
+      font-size: 15px
+    }
 
-        .blurred-section:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-        .section-image {
-    max-width: 150px; /* Đặt chiều rộng tối đa cho hình ảnh */
-    max-height: 150px; /* Đặt chiều cao tối đa cho hình ảnh */
-    border-radius: 10px; /* Tùy chọn: Bo tròn các góc */
-    object-fit: cover; /* Giữ tỷ lệ mà không bị méo hình */
-    margin-right: 20px; /* Khoảng cách giữa ảnh và nội dung */
-}
-        h2 {
-            color: #333;
-            font-size: 2rem;
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
-        }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui;
+      background: var(--bg);
+      color: #e6eef6;
+      display: flex;
+      min-height: 100vh
+    }
 
-        p {
-            color: #555;
-            font-size: 1.2rem;
-        }
+    aside {
+      width: 260px;
+      background: #0d131a;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between
+    }
 
-        /* Button */
-        .buy-btn {
-            background: #ff0000;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 15px 25px;
-            font-size: 1rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.3s;
-        }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0
+    }
 
-        .buy-btn:hover {
-            background: #ffd700;
-            transform: scale(1.1);
-        }
+    nav li {
+      margin: 8px 0
+    }
 
-        /* Footer */
-        footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
+    nav a {
+      display: block;
+      padding: 10px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--muted);
+      transition: 0.2s
+    }
 
-        footer p {
-            font-size: 1.2rem;
-        }
-    </style>
+    nav a:hover,
+    nav a.active {
+      background: var(--glass);
+      color: #fff
+    }
+
+    main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto
+    }
+
+    .card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5)
+    }
+
+    h1,
+    h2 {
+      color: var(--accent)
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.6
+    }
+
+    .hidden {
+      display: none
+    }
+  </style>
 </head>
-<body>
-    <header>
-        <h1>Banana Rush Shop - Noel Edition</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <section id="home" class="blurred-section">
-        <img src="https://scontent.fvca4-1.fna.fbcdn.net/v/t1.15752-9/462646776_830322899122702_8903884126594298705_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGRRNBW50cDfSuH2s3_-Jf6zhEyxr1ZYYjOETLGvVlhiM8lRtAlY-XhnOCk13okuf3JVcoDFiZniZSw0QnIXMQa&_nc_ohc=QqAGG7qn0dgQ7kNvgGPtA_3&_nc_zt=23&_nc_ht=scontent.fvca4-1.fna&oh=03_Q7cD1QHRkU7f6ThsKyUEogt8Km-fqxTLHQ7MbnlTBnVinGVr4Q&oe=677FC0AD" alt="Chuối Nhào Đường" class="section-image">
-        <div>
-            <h2>Chuối Nhào Đường || 8k</h2>
-            <p>Hương vị ngọt ngào hoàn hảo cho mùa Giáng Sinh!</p>
-        </div>
-        <button class="buy-btn">Mua Ngay</button>
+<body>
+  <aside>
+    <div>
+      <div style="margin-bottom:16px">
+        <h2 style="margin:0;color:#fff">CarboStudy</h3>
+          <p style="color:var(--muted);font-size:13px">Ôn tập Hóa 12</p>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#home" class="active">Trang chủ</a></li>
+          <li><a href="#glucose">Glucose</a></li>
+          <li><a href="#fructose">Fructose</a></li>
+          <li><a href="#maltose">Maltose</a></li>
+          <li><a href="#saccharose">Saccharose</a></li>
+          <li><a href="#tinhbot">Tinh bột</a></li>
+          <li><a href="#cellulose">Cellulose</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-top:20px">Dành cho ôn tập chương 2 Carbohydrate - Hóa 12 </div>
+  </aside>
+
+  <main>
+    <section id="home" class="card">
+      <h1>Web được làm bởi Công Thuật</h1>
+      <p>Chào mừng bạn đến với trang tổng hợp lý thuyết Carbohydrate. Hãy chọn một chất ở thanh bên trái để xem phần lý
+        thuyết tương ứng.</p>
     </section>
-    
-    <section id="about" class="blurred-section">
-        <img src="https://scontent.fvca4-1.fna.fbcdn.net/v/t1.15752-9/462654337_1690753104834293_4194282297441542934_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGtQiZuAvjY2t4exanJ382NbAwUMMTfBj9sDBQwxN8GP19_az1gAwiTu5M9Cb7Gpd-q-KmE60VyhpGBRAcqeDdM&_nc_ohc=HZk2XkuElk0Q7kNvgGz3sqe&_nc_zt=23&_nc_ht=scontent.fvca4-1.fna&oh=03_Q7cD1QG6V3AfI-vN7OEx_5e_ALGVvEHUVOHciKBWQPExdzoGyw&oe=677FA3AE" alt="Sữa Chua" class="section-image">
-        <div>
-            <h2>Sữa Chua || 4k</h2>
-            <p>Sữa chua tươi ngon, thêm hương vị lễ hội!</p>
+    <section id="glucose" class="card hidden">
+      <h3>Glucose C₆H₁₂O₆</h3>
+      <div class="box">
+        <div class="formula">C₆H₁₂O₆</div>
+        <p class="props"><span class="tag">monosaccharide</span><span class="tag">polyalcohol</span><span
+            class="tag">hở/vòng , hemiacetal</span><span class="tag">5 hydroxy và 1 aldehyde</span><span
+            class="tag">dạng α/β</span></p>
+      </div>
+      <p><strong>Cấu tạo phân tử :</strong> <img
+          src="https://vietjack.com/hoa-hoc-lop-12/images/ly-thuyet-glucozo-1.PNG" alt="Cấu trúc glucose" width="569"
+          height="214"
+          style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+      <p>● Glucose tồn tại ở dạng mạch hở và mạch vòng.</p>
+      <p>● OH hemiacetal quay xuống: alpha.</p>
+      <p>● OH hemiacetal quay lên: beta.</p> <br>
+      <p><strong>Trạng thái tự nhiên:</strong></p>
+      <p>● Chất rắn, tan trong nước, có vị ngọt</p>
+      <p>● Glucose được hình thành nhờ quá trình quang hợp, có nhiều trong quá chín.</p>
+      <p></p>
+      <p><strong>Ứng dụng:</strong> ● Cung cấp năng lượng cho tế bào, dung dịch truyền tĩnh mạch glucose 5%, sx ethanol.
+      </p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất polyalcohol<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Glucose có nhiều nhóm hydroxy liền kề nên có thể hòa tan Copper(II) hydroxide trong môi trường kiềm,
+              tạo thành dung dịch màu xanh</p>
+            <p>C₆H₁₂O₆ + Cu(OH)₂ -> (C₆H₁₂O₆)₂Cu + 2H₂O</p>
+          </div>
         </div>
-        <button class="buy-btn">Mua Ngay</button>
+      </div>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất nhóm -OH hemiacetal<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Nhóm -OH hemiacetal của glucose tác dụng methanol khi có mặt HCl khan, tạo thành methyl alpha hoặc beta
+              glucoside</p> <img src="https://tailieumoi.vn/storage/uploads/images/46963/1-44-1722184510.png"
+              alt="Cấu trúc glucose" width="569" height="180"
+              style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+            <p>C₆H₁₂O₆ + Cu(OH)₂ -> (C₆H₁₂O₆)₂Cu + 2H₂O</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất aldehyde <span>▸</span></div>
+          <div class="acc-body">
+            <p>● <b>Phản ứng với Cu(OH)₂ (thuốc thử Fehling):</b> Nhóm –CHO của glucose bị oxi hóa trong <b>môi trường
+                kiềm (NaOH)</b>, khi <b>đun nóng</b>, tạo kết tủa đỏ gạch Cu₂O.</p>
+            <p class="reaction">C₆H₁₂O₆ + 2Cu(OH)₂ <span style="color:#aaa;">(NaOH, t°)</span> → Cu₂O↓ + C₆H₁₂O₇ + 2H₂O
+            </p><br>
+            <p>● <b>Phản ứng với AgNO₃/NH₃ (thuốc thử Tollens):</b> Glucose khử ion bạc [Ag(NH₃)₂]⁺ thành Ag kim loại,
+              tạo gương bạc sáng trên thành ống nghiệm.</p>
+            <p class="reaction">C₆H₁₂O₆ + 2[Ag(NH₃)₂]OH → C₆H₁₂O₇ + 2Ag↓ + 4NH₃ + H₂O</p><br>
+            <p>● <b>Phản ứng khử:</b> Nhóm –CHO bị khử bởi H₂ (xúc tác Ni) → tạo sorbitol (C₆H₁₄O₆).</p>
+            <p class="reaction">C₆H₁₂O₆ + H₂ → C₆H₁₄O₆</p><br>
+            <p>● <b>Tính khử chung:</b> Glucose là chất khử nhẹ, có thể khử ion Cu²⁺, Ag⁺ trong môi trường kiềm.</p>
+          </div>
+        </div>
+      </div>
     </section>
-    
-    <footer>
-        <p>&copy; 2024 Banana Rush Shop | Đón Noel cùng chúng tôi!</p>
-    </footer>
+    <section id="fructose" class="card hidden">
+      <h3>Fructose C₆H₁₂O₆</h3>
+      <div class="box">
+        <div class="formula">C₆H₁₂O₆</div>
+        <p class="props"><span class="tag">monosaccharide</span><span class="tag">polyalcohol</span><span
+            class="tag">hở/vòng, hemiketal</span><span class="tag">5 hydroxy và 1 cetone</span><span class="tag">dạng
+            α/β</span></p>
+      </div>
+      <p><strong>Cấu tạo phân tử :</strong> <img src="https://tailieumoi.vn/storage/uploads/images/46963/1-41-1722184562.png" alt="Cấu trúc fructose (mạch hở và mạch vòng)" width="569"
+          height="345"
+          style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+      </p>
+      <p>● Fructose tồn tại ở dạng mạch hở và mạch vòng .</p>
+      <p>● OH hemiketal (c trên C2) quay xuống: α-fructose; quay lên: β-fructose.</p>
+      <p><strong>Trạng thái tự nhiên:</strong></p>
+      <p>● Chất rắn, tan nhiều trong nước, vị ngọt gấp đôi glucose.</p>
+      <p>● Có nhiều trong quả chín, mật ong; được sản xuất từ đường mía và hydrolyzates của tinh bột.</p>
+      <p><strong>Ứng dụng:</strong> ● Chất làm ngọt trong thực phẩm (đường hoa quả, high-fructose syrup); cung cấp năng
+        lượng; trong y học (truyền dịch; lên men cồn).</p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất polyalcohol<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Fructose có nhiều nhóm –OH liền kề nên hoà tan được Cu(OH)₂ trong môi trường kiềm, tạo dung dịch màu
+              xanh lam.</p>
+            <p class="reaction">C₆H₁₂O₆ + Cu(OH)₂ → (C₆H₁₂O₆)₂Cu + H₂O</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất nhóm -OH hemiketal<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Fructose có nhóm –OH hemiketal nên tác dụng với ancol (methanol, acid HCl) tạo methyl α,β-fructoside.
+            </p>
+            <p class="reaction">C₆H₁₂O₆ + CH₃OH → CH₃O–C₆H₁₁O₅ + H₂O</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất nhóm cetone<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Fructose là đường khử do có nhóm -C=O; tác dụng với Cu(OH)₂ (Fehling) và AgNO₃/NH₃ (Tollens) trong môi
+              trường kiềm, đun nóng, tạo kết tủa Cu₂O đỏ gạch hoặc gương bạc.</p>
+            <p class="reaction">C₆H₁₂O₆ + 2Cu(OH)₂ <span style="color:#aaa;">(NaOH, t°)</span> → Cu₂O↓ + C₆H₁₂O₇ + 2H₂O
+            </p><br>
+            <p class="reaction">C₆H₁₂O₆ + 2[Ag(NH₃)₂]OH → C₆H₁₂O₇ + 2Ag↓ + 4NH₃ + H₂O</p><br>
+            <p>● Fructose không phản ứng với dung dịch brom (không có nhóm –CHO).<br> ● <b>Phản ứng khử:</b> Fructose +
+              H₂ (Ni) → sorbitol (C₆H₁₄O₆) và mannitol.</p>
+            <p class="reaction">C₆H₁₂O₆ + H₂ → C₆H₁₄O₆</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="maltose" class="card hidden">
+      <h3>Maltose C₁₂H₂₂O₁₁</h3>
+      <div class="box">
+        <div class="formula">C₁₂H₂₂O₁₁</div>
+        <p class="props"><span class="tag">disaccharide</span><span class="tag">polyalcohol</span><span
+            class="tag">α-1,4-glycoside</span><span class="tag">có phản ứng khử</span></p>
+      </div>
+      <p><strong>Cấu tạo phân tử :</strong> <img src="https://vietjack.com/hoa-hoc-12-kn/images/ly-thuyet-bai-5-saccharose-va-maltose-1.PNG" alt="Cấu trúc maltose" width="569" height="214"
+          style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+      </p>
+      <p>● Maltose gồm 2 đơn vị α-glucose liên kết α-1,4-glycoside; có một nhóm –OH hemicetal tự do ở đầu mạch.</p>
+      <p><strong>Trạng thái tự nhiên:</strong></p>
+      <p>● Chất rắn tinh thể, tan trong nước, vị ngọt nhẹ.</p>
+      <p>● Có trong mạch nha, tinh bột lên men một phần.</p>
+      <p><strong>Ứng dụng:</strong> ● Làm đường malt trong công nghiệp bia, rượu; nguyên liệu sản xuất mạch nha và cồn
+        công nghiệp.</p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất polyalcohol<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Maltose có nhiều nhóm –OH nên hoà tan Cu(OH)₂ trong môi trường kiềm, tạo dung dịch xanh (tương tự
+              glucose).</p>
+            <p class="reaction">C₁₂H₂₂O₁₁ + Cu(OH)₂ → (C₁₂H₂₂O₁₁)Cu + H₂O</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất nhóm -OH hemicetal<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Maltose có nhóm –OH hemicetal ở đầu mạch nên tác dụng với ancol (CH₃OH, HCl) tạo methyl maltoside.</p>
+            <p class="reaction">C₁₂H₂₂O₁₁ + CH₃OH → CH₃O–C₁₂H₂₁O₁₀ + H₂O</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất khử<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Maltose là đường khử: có thể khử ion bạc [Ag(NH₃)₂]⁺ hoặc Cu²⁺ tạo gương bạc hoặc kết tủa Cu₂O đỏ gạch.
+            </p>
+            <p class="reaction">C₁₂H₂₂O₁₁ + 2Cu(OH)₂ <span style="color:#aaa;">(NaOH, t°)</span> → Cu₂O↓ + C₁₂H₂₂O₁₂ +
+              2H₂O</p><br>
+            <p class="reaction">C₁₂H₂₂O₁₁ + 2[Ag(NH₃)₂]OH → C₁₂H₂₂O₁₂ + 2Ag↓ + 4NH₃ + H₂O</p><br>
+            <p>● <b>Phản ứng thủy phân:</b> Maltose bị thủy phân (H₂SO₄ loãng hoặc enzyme amylase) thành 2 glucose.</p>
+            <p class="reaction">C₁₂H₂₂O₁₁ + H₂O → 2 C₆H₁₂O₆</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="saccharose" class="card hidden">
+      <h3>Saccharose C₁₂H₂₂O₁₁</h3>
+      <div class="box">
+        <div class="formula">C₁₂H₂₂O₁₁</div>
+        <p class="props"><span class="tag">disaccharide</span><span class="tag">polyalcohol</span><span
+            class="tag">α-1,2-glycoside</span><span class="tag">không khử</span></p>
+      </div>
+      <p><strong>Cấu tạo phân tử :</strong> <img src="https://vietjack.com/hoa-hoc-12-kn/images/ly-thuyet-bai-5-saccharose-va-maltose.PNG" alt="Cấu trúc saccharose" width="569" height="214"
+          style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+      </p>
+      <p>● Saccharose gồm 1 đơn vị α-glucose liên kết với 1 đơn vị β-fructose qua liên kết α-1,2-glycoside. Không có
+        nhóm –OH hemicetal tự do ở vị trí khử.</p>
+      <p><strong>Trạng thái tự nhiên:</strong></p>
+      <p>● Chất rắn tinh thể, màu trắng, tan trong nước, vị ngọt.</p>
+      <p>● Phổ biến trong mía, củ cải đường, mật ong; thành phần chính của đường ăn.</p>
+      <p><strong>Ứng dụng:</strong> ● Chất làm ngọt trong thực phẩm, sản xuất cồn, rượu; nguyên liệu công nghiệp (đường
+        hoá, khử đường).</p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất polyalcohol<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Saccharose có nhiều nhóm –OH nên hoà tan Cu(OH)₂ tạo dung dịch xanh lam trong môi trường kiềm (tương tự
+              đường khử).</p>
+            <p class="reaction">C₁₂H₂₂O₁₁ + Cu(OH)₂ → (C₁₂H₂₂O₁₁)Cu + H₂O</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất nhóm glycosid<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Saccharose không có nhóm –OH tự do ở vị trí hemicetal nên <b>không phản ứng</b> với thuốc thử Fehling
+              hay Tollens (không tạo kết tủa Cu₂O hay gương bạc), cũng không bị oxi hóa bởi dung dịch Br₂.</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất thủy phân<span>▸</span></div>
+          <div class="acc-body">
+            <p>● <b>Phản ứng thủy phân:</b> Saccharose thủy phân (H₂SO₄ loãng hoặc enzym invertase) thành 1 glucose và 1
+              fructose (đường đơn).</p>
+            <p class="reaction">C₁₂H₂₂O₁₁ + H₂O → C₆H₁₂O₆ + C₆H₁₂O₆</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="cellulose" class="card hidden">
+      <h3>Cellulose (C₆H₁₀O₅)<sup>ₙ</sup></h3>
+      <div class="box">
+        <div class="formula">(C₆H₁₀O₅)ₙ</div>
+        <p class="props"><span class="tag">polysaccharide</span><span class="tag">β-1,4-glycoside</span><span
+            class="tag">mạch thẳng</span><span class="tag">không tan</span></p>
+      </div>
+      <p><strong>Cấu tạo phân tử :</strong> <img src="https://img.loigiaihay.com/picture/2024/0301/1_9.png" alt="Cấu trúc cellulose" width="569" height="214"
+          style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+      </p>
+      <p>● Cellulose là polysaccharide gồm nhiều đơn vị β-glucose liên kết β-1,4 (mạch không nhánh, kéo dài), không chứa
+        nhóm –OH hemicetal tự do (ít có tính khử).</p>
+      <p><strong>Trạng thái tự nhiên:</strong></p>
+      <p>● Chất rắn dạng sợi, màu trắng, rất bền, không tan trong nước hay dung môi hữu cơ.</p>
+      <p>● Thành phần chính của vỏ cây, gỗ, bông vải; có trong thành tế bào thực vật.</p>
+      <p><strong>Ứng dụng:</strong> ● Vật liệu xây dựng (gỗ, ván ép), giấy, bông vải, sợi cellulose; sản xuất ethanol
+        (lên men) và cellulose nitrate (pháo hoa, phim).</p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất polyalcohol<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Cellulose có nhiều nhóm –OH nên tan được trong dung dịch amoniacal Cu(OH)₂ (nước Schweizer), tạo dung
+              dịch trong suốt (màu xanh tím nhẹ).</p>
+            <p class="reaction">(Cellulose) + Cu(OH)₂ + NH₃ → [Cu-cellulose] (dung dịch Schweizer)</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất phân hủy<span>▸</span></div>
+          <div class="acc-body">
+            <p>● <b>Phản ứng thủy phân:</b> Cellulose thủy phân (HCl/H₂SO₄ đun nóng) tạo glucose.</p>
+            <p class="reaction">C₆H₁₀O₅ + H₂O (HCl đun) → C₆H₁₂O₆</p><br>
+            <p>● <b>Phản ứng hóa học khác:</b> Cellulose tác dụng với HNO₃ đặc (có xúc tác H₂SO₄) tạo cellulose nitrate
+              (xenluloit).</p>
+            <p class="reaction">C₆H₁₀O₅ + 3HNO₃ → C₆H₇O₂(ONO₂)₃ + 3H₂O</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="tinhbot" class="card hidden">
+      <h3>Tinh bột (C₆H₁₀O₅)<sup>ₙ</sup></h3>
+      <div class="box">
+        <div class="formula">(C₆H₁₀O₅)ₙ</div>
+        <p class="props"><span class="tag">polysaccharide</span><span class="tag">amylose + amylopectin</span><span
+            class="tag">α-1,4/1,6-glycoside</span><span class="tag">nguồn năng lượng</span></p>
+      </div>
+      <p><strong>Cấu tạo phân tử :</strong> <img src="https://img.loigiaihay.com/picture/2024/0301/1_8.png" alt="Cấu trúc tinh bột (amylose và amylopectin)" width="569"
+          height="214"
+          style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+      </p>
+      <p>● Tinh bột là polysaccharide gồm hai thành phần: amylose (mạch thẳng xoắn, liên kết α-1,4) và amylopectin (cấu
+        trúc nhánh, liên kết α-1,4 và α-1,6). Công thức tổng quát (C₆H₁₀O₅)ₙ.</p>
+      <p><strong>Trạng thái tự nhiên:</strong></p>
+      <p>● Chất rắn tinh thể không màu (hoặc trắng), hầu như không tan trong nước lạnh, tan trong nước nóng tạo hồ nhớt.
+      </p>
+      <p>● Có nhiều trong gạo, ngô, khoai (nguồn lương thực chính).</p>
+      <p><strong>Ứng dụng:</strong> ● Nguồn năng lượng (lương thực); công nghiệp thực phẩm (chất kết dính, làm đặc); sản
+        xuất ethanol, keo dán, công nghiệp giấy, dệt.</p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất polyalcohol<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Tinh bột có nhiều nhóm –OH nên cũng hoà tan Cu(OH)₂ trong môi trường kiềm, tạo dung dịch xanh lam.</p>
+            <p class="reaction">Tinh bột + Cu(OH)₂ → (Tinh bột)Cu + H₂O</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất màu với iodine<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Tinh bột tác dụng với dung dịch Iod/P tạo màu xanh tím đặc trưng (do amylose xoắn với I₂).</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất thủy phân<span>▸</span></div>
+          <div class="acc-body">
+            <p>● <b>Phản ứng thủy phân:</b> Tinh bột bị thủy phân (H₂SO₄ loãng hoặc enzyme amylase) thành dextrin,
+              maltose, cuối cùng thành glucose.</p>
+            <p class="reaction">(C₆H₁₀O₅)ₙ + nH₂O → n C₆H₁₂O₆</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const links = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('main section');
+    links.forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        links.forEach(x => x.classList.remove('active'));
+        a.classList.add('active');
+        const id = a.getAttribute('href').substring(1);
+        sections.forEach(sec => sec.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+      });
+    });
+  </script>
 </body>
+
 </html>
