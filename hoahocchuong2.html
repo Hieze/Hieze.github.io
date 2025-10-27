@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CarboStudy — Tổng hợp lý thuyết Carbohydrate</title>
+  <style>
+    :root {
+      --bg: #0b0f13;
+      --card: #0f1720;
+      --muted: #9aa4b2;
+      --accent: #ff7b72;
+      --accent2: #ffd166;
+      --glass: rgba(255, 255, 255, 0.04);
+      --radius: 14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono";
+    }
+
+    .props {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    .accordion {
+      margin-top: 10px
+    }
+
+    .acc-item {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.02)
+    }
+
+    .content {
+      overflow: auto;
+      padding: 0 4px
+    }
+
+    .acc-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      cursor: pointer
+    }
+
+    .acc-body {
+      padding: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent)
+    }
+
+    .box {
+      display: flex;
+
+      flex-direction: column;
+      gap: 8px
+    }
+
+    code {
+      background: #071018;
+      padding: 6px;
+      border-radius: 6px;
+      color: var(--accent2)
+    }
+
+    .formula {
+      font-family: var(--mono);
+      background: rgba(255, 255, 255, 0.02);
+      padding: 6px 8px;
+      border-radius: 8px;
+      display: inline-block;
+      color: #fff
+    }
+
+    h3 {
+      margin: 0 1 7px 0;
+      color: var(--accent2);
+      font-size: 15px
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui;
+      background: var(--bg);
+      color: #e6eef6;
+      display: flex;
+      min-height: 100vh
+    }
+
+    aside {
+      width: 260px;
+      background: #0d131a;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0
+    }
+
+    nav li {
+      margin: 8px 0
+    }
+
+    nav a {
+      display: block;
+      padding: 10px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--muted);
+      transition: 0.2s
+    }
+
+    nav a:hover,
+    nav a.active {
+      background: var(--glass);
+      color: #fff
+    }
+
+    main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto
+    }
+
+    .card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5)
+    }
+
+    h1,
+    h2 {
+      color: var(--accent)
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.6
+    }
+
+    .hidden {
+      display: none
+    }
+  </style>
+</head>
+
+<body>
+  <aside>
+    <div>
+      <div style="margin-bottom:16px">
+        <h2 style="margin:0;color:#fff">CarboStudy</h3>
+          <p style="color:var(--muted);font-size:13px">Ôn tập Hóa 12</p>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#home" class="active">Trang chủ</a></li>
+          <li><a href="#glucose">Glucose</a></li>
+          <li><a href="#fructose">Fructose</a></li>
+          <li><a href="#maltose">Maltose</a></li>
+          <li><a href="#saccharose">Saccharose</a></li>
+          <li><a href="#tinhbot">Tinh bột</a></li>
+          <li><a href="#cellulose">Cellulose</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-top:20px">Dành cho ôn tập chương 2 Carbohydrate - Hóa 12 </div>
+  </aside>
+
+  <main>
+    <section id="home" class="card">
+      <h1>Web được làm bởi Công Thuật</h1>
+      <p>Chào mừng bạn đến với trang tổng hợp lý thuyết Carbohydrate. Hãy chọn một chất ở thanh bên trái để xem phần lý
+        thuyết tương ứng.</p>
+    </section>
+    <section id="glucose" class="card hidden">
+      <h3>Glucose C₆H₁₂O₆</h3>
+      <div class="box">
+        <div class="formula">C₆H₁₂O₆</div>
+        <p class="props"><span class="tag">monosaccharide</span><span class="tag">polyalcohol</span><span
+            class="tag">hở/vòng , hemiacetal</span><span class="tag">5 hydroxy và 1 aldehyde</span><span
+            class="tag">dạng α/β</span></p>
+      </div>
+      <p><strong>Cấu tạo phân tử :</strong> <img
+          src="https://vietjack.com/hoa-hoc-lop-12/images/ly-thuyet-glucozo-1.PNG" alt="Cấu trúc glucose" width="569"
+          height="214"
+          style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+      <p>● Glucose tồn tại ở dạng mạch hở và mạch vòng.</p>
+      <p>● OH hemiacetal quay xuống: alpha.</p>
+      <p>● OH hemiacetal quay lên: beta.</p> <br>
+      <p><strong>Trạng thái tự nhiên:</strong></p>
+      <p>● Chất rắn, tan trong nước, có vị ngọt</p>
+      <p>● Glucose được hình thành nhờ quá trình quang hợp, có nhiều trong quá chín.</p>
+      <p></p>
+      <p><strong>Ứng dụng:</strong> ● Cung cấp năng lượng cho tế bào, dung dịch truyền tĩnh mạch glucose 5%, sx ethanol.
+      </p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất polyalcohol<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Glucose có nhiều nhóm hydroxy liền kề nên có thể hòa tan Copper(II) hydroxide trong môi trường kiềm,
+              tạo thành dung dịch màu xanh</p>
+            <p>C₆H₁₂O₆ + Cu(OH)₂ -> (C₆H₁₂O₆)₂Cu + 2H₂O</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất nhóm -OH hemiacetal<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Nhóm -OH hemiacetal của glucose tác dụng methanol khi có mặt HCl khan, tạo thành methyl alpha hoặc beta
+              glucoside</p> <img src="https://tailieumoi.vn/storage/uploads/images/46963/1-44-1722184510.png"
+              alt="Cấu trúc glucose" width="569" height="180"
+              style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+            <p>C₆H₁₂O₆ + Cu(OH)₂ -> (C₆H₁₂O₆)₂Cu + 2H₂O</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất aldehyde <span>▸</span></div>
+          <div class="acc-body">
+            <p>● <b>Phản ứng với Cu(OH)₂ (thuốc thử Fehling):</b> Nhóm –CHO của glucose bị oxi hóa trong <b>môi trường
+                kiềm (NaOH)</b>, khi <b>đun nóng</b>, tạo kết tủa đỏ gạch Cu₂O.</p>
+            <p class="reaction">C₆H₁₂O₆ + 2Cu(OH)₂ <span style="color:#aaa;">(NaOH, t°)</span> → Cu₂O↓ + C₆H₁₂O₇ + 2H₂O
+            </p><br>
+            <p>● <b>Phản ứng với AgNO₃/NH₃ (thuốc thử Tollens):</b> Glucose khử ion bạc [Ag(NH₃)₂]⁺ thành Ag kim loại,
+              tạo gương bạc sáng trên thành ống nghiệm.</p>
+            <p class="reaction">C₆H₁₂O₆ + 2[Ag(NH₃)₂]OH → C₆H₁₂O₇ + 2Ag↓ + 4NH₃ + H₂O</p><br>
+            <p>● <b>Phản ứng khử:</b> Nhóm –CHO bị khử bởi H₂ (xúc tác Ni) → tạo sorbitol (C₆H₁₄O₆).</p>
+            <p class="reaction">C₆H₁₂O₆ + H₂ → C₆H₁₄O₆</p><br>
+            <p>● <b>Tính khử chung:</b> Glucose là chất khử nhẹ, có thể khử ion Cu²⁺, Ag⁺ trong môi trường kiềm.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="fructose" class="card hidden">
+      <h3>Fructose C₆H₁₂O₆</h3>
+      <div class="box">
+        <div class="formula">C₆H₁₂O₆</div>
+        <p class="props"><span class="tag">monosaccharide</span><span class="tag">polyalcohol</span><span
+            class="tag">hở/vòng, hemiketal</span><span class="tag">5 hydroxy và 1 cetone</span><span class="tag">dạng
+            α/β</span></p>
+      </div>
+      <p><strong>Cấu tạo phân tử :</strong> <img src="https://tailieumoi.vn/storage/uploads/images/46963/1-41-1722184562.png" alt="Cấu trúc fructose (mạch hở và mạch vòng)" width="569"
+          height="345"
+          style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+      </p>
+      <p>● Fructose tồn tại ở dạng mạch hở và mạch vòng .</p>
+      <p>● OH hemiketal (c trên C2) quay xuống: α-fructose; quay lên: β-fructose.</p>
+      <p><strong>Trạng thái tự nhiên:</strong></p>
+      <p>● Chất rắn, tan nhiều trong nước, vị ngọt gấp đôi glucose.</p>
+      <p>● Có nhiều trong quả chín, mật ong; được sản xuất từ đường mía và hydrolyzates của tinh bột.</p>
+      <p><strong>Ứng dụng:</strong> ● Chất làm ngọt trong thực phẩm (đường hoa quả, high-fructose syrup); cung cấp năng
+        lượng; trong y học (truyền dịch; lên men cồn).</p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất polyalcohol<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Fructose có nhiều nhóm –OH liền kề nên hoà tan được Cu(OH)₂ trong môi trường kiềm, tạo dung dịch màu
+              xanh lam.</p>
+            <p class="reaction">C₆H₁₂O₆ + Cu(OH)₂ → (C₆H₁₂O₆)₂Cu + H₂O</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất nhóm -OH hemiketal<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Fructose có nhóm –OH hemiketal nên tác dụng với ancol (methanol, acid HCl) tạo methyl α,β-fructoside.
+            </p>
+            <p class="reaction">C₆H₁₂O₆ + CH₃OH → CH₃O–C₆H₁₁O₅ + H₂O</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất nhóm cetone<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Fructose là đường khử do có nhóm -C=O; tác dụng với Cu(OH)₂ (Fehling) và AgNO₃/NH₃ (Tollens) trong môi
+              trường kiềm, đun nóng, tạo kết tủa Cu₂O đỏ gạch hoặc gương bạc.</p>
+            <p class="reaction">C₆H₁₂O₆ + 2Cu(OH)₂ <span style="color:#aaa;">(NaOH, t°)</span> → Cu₂O↓ + C₆H₁₂O₇ + 2H₂O
+            </p><br>
+            <p class="reaction">C₆H₁₂O₆ + 2[Ag(NH₃)₂]OH → C₆H₁₂O₇ + 2Ag↓ + 4NH₃ + H₂O</p><br>
+            <p>● Fructose không phản ứng với dung dịch brom (không có nhóm –CHO).<br> ● <b>Phản ứng khử:</b> Fructose +
+              H₂ (Ni) → sorbitol (C₆H₁₄O₆) và mannitol.</p>
+            <p class="reaction">C₆H₁₂O₆ + H₂ → C₆H₁₄O₆</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="maltose" class="card hidden">
+      <h3>Maltose C₁₂H₂₂O₁₁</h3>
+      <div class="box">
+        <div class="formula">C₁₂H₂₂O₁₁</div>
+        <p class="props"><span class="tag">disaccharide</span><span class="tag">polyalcohol</span><span
+            class="tag">α-1,4-glycoside</span><span class="tag">có phản ứng khử</span></p>
+      </div>
+      <p><strong>Cấu tạo phân tử :</strong> <img src="https://vietjack.com/hoa-hoc-12-kn/images/ly-thuyet-bai-5-saccharose-va-maltose-1.PNG" alt="Cấu trúc maltose" width="569" height="214"
+          style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+      </p>
+      <p>● Maltose gồm 2 đơn vị α-glucose liên kết α-1,4-glycoside; có một nhóm –OH hemicetal tự do ở đầu mạch.</p>
+      <p><strong>Trạng thái tự nhiên:</strong></p>
+      <p>● Chất rắn tinh thể, tan trong nước, vị ngọt nhẹ.</p>
+      <p>● Có trong mạch nha, tinh bột lên men một phần.</p>
+      <p><strong>Ứng dụng:</strong> ● Làm đường malt trong công nghiệp bia, rượu; nguyên liệu sản xuất mạch nha và cồn
+        công nghiệp.</p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất polyalcohol<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Maltose có nhiều nhóm –OH nên hoà tan Cu(OH)₂ trong môi trường kiềm, tạo dung dịch xanh (tương tự
+              glucose).</p>
+            <p class="reaction">C₁₂H₂₂O₁₁ + Cu(OH)₂ → (C₁₂H₂₂O₁₁)Cu + H₂O</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất nhóm -OH hemicetal<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Maltose có nhóm –OH hemicetal ở đầu mạch nên tác dụng với ancol (CH₃OH, HCl) tạo methyl maltoside.</p>
+            <p class="reaction">C₁₂H₂₂O₁₁ + CH₃OH → CH₃O–C₁₂H₂₁O₁₀ + H₂O</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất khử<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Maltose là đường khử: có thể khử ion bạc [Ag(NH₃)₂]⁺ hoặc Cu²⁺ tạo gương bạc hoặc kết tủa Cu₂O đỏ gạch.
+            </p>
+            <p class="reaction">C₁₂H₂₂O₁₁ + 2Cu(OH)₂ <span style="color:#aaa;">(NaOH, t°)</span> → Cu₂O↓ + C₁₂H₂₂O₁₂ +
+              2H₂O</p><br>
+            <p class="reaction">C₁₂H₂₂O₁₁ + 2[Ag(NH₃)₂]OH → C₁₂H₂₂O₁₂ + 2Ag↓ + 4NH₃ + H₂O</p><br>
+            <p>● <b>Phản ứng thủy phân:</b> Maltose bị thủy phân (H₂SO₄ loãng hoặc enzyme amylase) thành 2 glucose.</p>
+            <p class="reaction">C₁₂H₂₂O₁₁ + H₂O → 2 C₆H₁₂O₆</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="saccharose" class="card hidden">
+      <h3>Saccharose C₁₂H₂₂O₁₁</h3>
+      <div class="box">
+        <div class="formula">C₁₂H₂₂O₁₁</div>
+        <p class="props"><span class="tag">disaccharide</span><span class="tag">polyalcohol</span><span
+            class="tag">α-1,2-glycoside</span><span class="tag">không khử</span></p>
+      </div>
+      <p><strong>Cấu tạo phân tử :</strong> <img src="https://vietjack.com/hoa-hoc-12-kn/images/ly-thuyet-bai-5-saccharose-va-maltose.PNG" alt="Cấu trúc saccharose" width="569" height="214"
+          style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+      </p>
+      <p>● Saccharose gồm 1 đơn vị α-glucose liên kết với 1 đơn vị β-fructose qua liên kết α-1,2-glycoside. Không có
+        nhóm –OH hemicetal tự do ở vị trí khử.</p>
+      <p><strong>Trạng thái tự nhiên:</strong></p>
+      <p>● Chất rắn tinh thể, màu trắng, tan trong nước, vị ngọt.</p>
+      <p>● Phổ biến trong mía, củ cải đường, mật ong; thành phần chính của đường ăn.</p>
+      <p><strong>Ứng dụng:</strong> ● Chất làm ngọt trong thực phẩm, sản xuất cồn, rượu; nguyên liệu công nghiệp (đường
+        hoá, khử đường).</p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất polyalcohol<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Saccharose có nhiều nhóm –OH nên hoà tan Cu(OH)₂ tạo dung dịch xanh lam trong môi trường kiềm (tương tự
+              đường khử).</p>
+            <p class="reaction">C₁₂H₂₂O₁₁ + Cu(OH)₂ → (C₁₂H₂₂O₁₁)Cu + H₂O</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất nhóm glycosid<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Saccharose không có nhóm –OH tự do ở vị trí hemicetal nên <b>không phản ứng</b> với thuốc thử Fehling
+              hay Tollens (không tạo kết tủa Cu₂O hay gương bạc), cũng không bị oxi hóa bởi dung dịch Br₂.</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất thủy phân<span>▸</span></div>
+          <div class="acc-body">
+            <p>● <b>Phản ứng thủy phân:</b> Saccharose thủy phân (H₂SO₄ loãng hoặc enzym invertase) thành 1 glucose và 1
+              fructose (đường đơn).</p>
+            <p class="reaction">C₁₂H₂₂O₁₁ + H₂O → C₆H₁₂O₆ + C₆H₁₂O₆</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="cellulose" class="card hidden">
+      <h3>Cellulose (C₆H₁₀O₅)<sup>ₙ</sup></h3>
+      <div class="box">
+        <div class="formula">(C₆H₁₀O₅)ₙ</div>
+        <p class="props"><span class="tag">polysaccharide</span><span class="tag">β-1,4-glycoside</span><span
+            class="tag">mạch thẳng</span><span class="tag">không tan</span></p>
+      </div>
+      <p><strong>Cấu tạo phân tử :</strong> <img src="https://img.loigiaihay.com/picture/2024/0301/1_9.png" alt="Cấu trúc cellulose" width="569" height="214"
+          style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+      </p>
+      <p>● Cellulose là polysaccharide gồm nhiều đơn vị β-glucose liên kết β-1,4 (mạch không nhánh, kéo dài), không chứa
+        nhóm –OH hemicetal tự do (ít có tính khử).</p>
+      <p><strong>Trạng thái tự nhiên:</strong></p>
+      <p>● Chất rắn dạng sợi, màu trắng, rất bền, không tan trong nước hay dung môi hữu cơ.</p>
+      <p>● Thành phần chính của vỏ cây, gỗ, bông vải; có trong thành tế bào thực vật.</p>
+      <p><strong>Ứng dụng:</strong> ● Vật liệu xây dựng (gỗ, ván ép), giấy, bông vải, sợi cellulose; sản xuất ethanol
+        (lên men) và cellulose nitrate (pháo hoa, phim).</p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất polyalcohol<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Cellulose có nhiều nhóm –OH nên tan được trong dung dịch amoniacal Cu(OH)₂ (nước Schweizer), tạo dung
+              dịch trong suốt (màu xanh tím nhẹ).</p>
+            <p class="reaction">(Cellulose) + Cu(OH)₂ + NH₃ → [Cu-cellulose] (dung dịch Schweizer)</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất phân hủy<span>▸</span></div>
+          <div class="acc-body">
+            <p>● <b>Phản ứng thủy phân:</b> Cellulose thủy phân (HCl/H₂SO₄ đun nóng) tạo glucose.</p>
+            <p class="reaction">C₆H₁₀O₅ + H₂O (HCl đun) → C₆H₁₂O₆</p><br>
+            <p>● <b>Phản ứng hóa học khác:</b> Cellulose tác dụng với HNO₃ đặc (có xúc tác H₂SO₄) tạo cellulose nitrate
+              (xenluloit).</p>
+            <p class="reaction">C₆H₁₀O₅ + 3HNO₃ → C₆H₇O₂(ONO₂)₃ + 3H₂O</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="tinhbot" class="card hidden">
+      <h3>Tinh bột (C₆H₁₀O₅)<sup>ₙ</sup></h3>
+      <div class="box">
+        <div class="formula">(C₆H₁₀O₅)ₙ</div>
+        <p class="props"><span class="tag">polysaccharide</span><span class="tag">amylose + amylopectin</span><span
+            class="tag">α-1,4/1,6-glycoside</span><span class="tag">nguồn năng lượng</span></p>
+      </div>
+      <p><strong>Cấu tạo phân tử :</strong> <img src="https://img.loigiaihay.com/picture/2024/0301/1_8.png" alt="Cấu trúc tinh bột (amylose và amylopectin)" width="569"
+          height="214"
+          style="display:block; margin:20px auto; border:2px solid #444; border-radius:10px; box-shadow:0 0 10px #00ffff; width:569px;">
+      </p>
+      <p>● Tinh bột là polysaccharide gồm hai thành phần: amylose (mạch thẳng xoắn, liên kết α-1,4) và amylopectin (cấu
+        trúc nhánh, liên kết α-1,4 và α-1,6). Công thức tổng quát (C₆H₁₀O₅)ₙ.</p>
+      <p><strong>Trạng thái tự nhiên:</strong></p>
+      <p>● Chất rắn tinh thể không màu (hoặc trắng), hầu như không tan trong nước lạnh, tan trong nước nóng tạo hồ nhớt.
+      </p>
+      <p>● Có nhiều trong gạo, ngô, khoai (nguồn lương thực chính).</p>
+      <p><strong>Ứng dụng:</strong> ● Nguồn năng lượng (lương thực); công nghiệp thực phẩm (chất kết dính, làm đặc); sản
+        xuất ethanol, keo dán, công nghiệp giấy, dệt.</p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-head">Tính chất polyalcohol<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Tinh bột có nhiều nhóm –OH nên cũng hoà tan Cu(OH)₂ trong môi trường kiềm, tạo dung dịch xanh lam.</p>
+            <p class="reaction">Tinh bột + Cu(OH)₂ → (Tinh bột)Cu + H₂O</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất màu với iodine<span>▸</span></div>
+          <div class="acc-body">
+            <p>● Tinh bột tác dụng với dung dịch Iod/P tạo màu xanh tím đặc trưng (do amylose xoắn với I₂).</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head">Tính chất thủy phân<span>▸</span></div>
+          <div class="acc-body">
+            <p>● <b>Phản ứng thủy phân:</b> Tinh bột bị thủy phân (H₂SO₄ loãng hoặc enzyme amylase) thành dextrin,
+              maltose, cuối cùng thành glucose.</p>
+            <p class="reaction">(C₆H₁₀O₅)ₙ + nH₂O → n C₆H₁₂O₆</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const links = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('main section');
+    links.forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        links.forEach(x => x.classList.remove('active'));
+        a.classList.add('active');
+        const id = a.getAttribute('href').substring(1);
+        sections.forEach(sec => sec.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+      });
+    });
+  </script>
+</body>
+
+</html>
