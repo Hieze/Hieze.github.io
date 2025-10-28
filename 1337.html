@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Memory 6×4 — Lật thẻ (số vị trí lớn)</title>
+  <style>
+    :root{
+      --card-w:96px; --card-h:120px;
+      --accent1:#06b6d4; --accent2:#7c3aed;
+      --bg1:#e6f5ff; --bg2:#ffffff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; padding:28px; min-height:100vh;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto;
+      display:flex; flex-direction:column; align-items:center;
+      background: linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:#0f172a;
+    }
+    header{ width:100%; max-width:1100px; display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px}
+    h1{ font-size:20px; margin:0; letter-spacing:0.2px; }
+    .controls{ display:flex; gap:10px; align-items:center }
+    .btn{
+      padding:8px 12px; border-radius:10px; border:0; cursor:pointer; font-weight:700;
+      background: linear-gradient(90deg,var(--accent1),var(--accent2)); color:white;
+      box-shadow: 0 8px 30px rgba(124,58,237,0.12);
+    }
+
+    /* board */
+    #board{ display:grid; grid-template-columns: repeat(6, var(--card-w)); grid-auto-rows: var(--card-h); gap:12px; align-items:center; justify-content:center; }
+
+    .card{ width:var(--card-w); height:var(--card-h); perspective:900px; position:relative; }
+    .inner{
+      width:100%; height:100%; border-radius:12px; position:relative; transform-style:preserve-3d;
+      transition: transform 0.55s cubic-bezier(.2,.9,.3,1), box-shadow 180ms;
+      box-shadow: 0 8px 22px rgba(2,6,23,0.06);
+    }
+    .inner.flipped{ transform: rotateY(180deg) translateY(-2px) scale(1.02); box-shadow: 0 18px 40px rgba(2,6,23,0.12); }
+
+    .face, .back {
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+      border-radius:12px; font-weight:800; user-select:none;
+    }
+
+    /* front (mặt úp) shows position 1..24 (LỚN) */
+    .front{
+      background: linear-gradient(180deg,#ffffff,#fbfdff);
+      border: 1px solid rgba(2,6,23,0.04);
+      color:#0f172a;
+      font-size:34px; /* <- Tăng kích thước số vị trí */
+      letter-spacing:1px;
+      display:flex; align-items:center; justify-content:center;
+      transform: translateZ(0.5px);
+    }
+    /* back (mặt lật) shows value 1..12 */
+    .back{
+      transform: rotateY(180deg);
+      background: linear-gradient(135deg,var(--accent1),var(--accent2));
+      color:white; font-size:30px;
+      display:flex; flex-direction:column; gap:4px;
+    }
+    .back .sub{ font-size:12px; opacity:0.85; font-weight:600; }
+
+    /* matched state */
+    .matched .inner{ outline:4px solid rgba(16,185,129,0.12); box-shadow:0 22px 60px rgba(16,185,129,0.08); transform: scale(1.03); }
+    .matched .back{ filter: drop-shadow(0 8px 20px rgba(16,185,129,0.12)); }
+
+    /* hover */
+    .card:hover .inner{ transform: translateY(-6px); }
+
+    /* confetti pieces & ripple */
+    .confetti { position:fixed; pointer-events:none; left:50%; top:30%; transform-origin:center; z-index:9999; }
+    @keyframes ripple { 0%{transform:scale(0.6);opacity:0.8}70%{transform:scale(1.6);opacity:0.3}100%{transform:scale(2.2);opacity:0} }
+    .ripple { position:fixed; left:50%; top:45%; transform:translate(-50%,-50%); width:200px;height:200px;border-radius:50%; background:radial-gradient(circle at center, rgba(124,58,237,0.18), rgba(124,58,237,0.02)); z-index:900; animation:ripple 800ms ease-out forwards; pointer-events:none; }
+
+    @media (max-width:720px){
+      :root{ --card-w:72px; --card-h:92px }
+      .front{ font-size:26px } /* responsive size */
+      .back{ font-size:22px }
+    }
+
+    footer{ margin-top:16px; color:#475569; font-size:13px }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Congthuat1337's Game</h1>
+    <div class="controls">
+      <button id="btnRestart" class="btn">🔄 Chơi lại</button>
+    </div>
+  </header>
+
+  <main id="board" aria-live="polite"></main>
+
+  <div id="effects"></div>
+
+  <footer>Nhóm 6 - GDKT 12</footer>
+
+  <script>
+    // --- Game state
+    const BOARD_LEN = 24, PAIRS = 12;
+    let deck = [], flipped = [], lock = false;
+
+    const boardEl = document.getElementById('board');
+    const effectsEl = document.getElementById('effects');
+    const btnRestart = document.getElementById('btnRestart');
+
+    // Audio (WebAudio)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playFlipSound(){
+      const now = audioCtx.currentTime;
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(900, now);
+      o.frequency.exponentialRampToValueAtTime(1400, now + 0.06);
+      g.gain.setValueAtTime(0.0001, now);
+      g.gain.exponentialRampToValueAtTime(0.18, now + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start(now); o.stop(now + 0.14);
+    }
+
+    function playMatchSound(){
+      const now = audioCtx.currentTime;
+      const g = audioCtx.createGain();
+      g.connect(audioCtx.destination);
+      g.gain.setValueAtTime(0.0001, now);
+      const freqs = [520, 660, 880];
+      freqs.forEach((f, i) => {
+        const o = audioCtx.createOscillator();
+        o.type = 'triangle';
+        o.frequency.setValueAtTime(f, now + i*0.01);
+        const eq = audioCtx.createBiquadFilter();
+        eq.type = 'lowpass'; eq.frequency.value = 2000;
+        o.connect(eq); eq.connect(g);
+        o.start(now + i*0.01);
+        o.stop(now + 0.28 + i*0.02);
+      });
+      g.gain.exponentialRampToValueAtTime(0.18, now + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + 0.5);
+    }
+
+    // helpers
+    function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } }
+
+    function initDeck(){
+      const vals = [];
+      for(let v=1; v<=PAIRS; v++){ vals.push(v); vals.push(v); }
+      shuffle(vals);
+      deck = vals.map((value, idx)=>({ id: idx+1, value, flipped:false, matched:false }));
+      flipped = []; lock=false;
+      render();
+    }
+
+    function render(){
+      boardEl.innerHTML = '';
+      deck.forEach(card=>{
+        const cardWrap = document.createElement('div');
+        cardWrap.className = 'card';
+        cardWrap.setAttribute('data-id', card.id);
+
+        const inner = document.createElement('div');
+        inner.className = 'inner' + (card.flipped ? ' flipped' : '');
+        if(card.matched) inner.classList.add('matched');
+
+        const front = document.createElement('div');
+        front.className = 'front';
+        front.textContent = card.id; // position number (now large)
+
+        const back = document.createElement('div');
+        back.className = 'back';
+        back.innerHTML = `<div>${card.value}</div><div class="sub">Giá trị</div>`;
+
+        inner.appendChild(front); inner.appendChild(back);
+        cardWrap.appendChild(inner);
+
+        cardWrap.addEventListener('click', ()=> onCardClick(card.id));
+        boardEl.appendChild(cardWrap);
+      });
+    }
+
+    function onCardClick(id){
+      if(lock) return;
+      const card = deck.find(c=>c.id===id);
+      if(!card || card.matched) return;
+
+      if(card.flipped){
+        // flip back
+        card.flipped = false;
+        flipped = flipped.filter(x=>x!==id);
+        render();
+        return;
+      }
+
+      if(flipped.length===2) return;
+
+      card.flipped = true;
+      flipped.push(id);
+      playFlipSound();
+      render();
+
+      if(flipped.length===2){
+        const c1 = deck.find(d=>d.id===flipped[0]);
+        const c2 = deck.find(d=>d.id===flipped[1]);
+        if(c1.value === c2.value){
+          lock = true;
+          setTimeout(()=>{
+            c1.matched = c2.matched = true;
+            c1.flipped = c2.flipped = true;
+            flipped = [];
+            lock = false;
+            render();
+            playMatchSound();
+            showMatchEffects();
+            checkFinish();
+          }, 420);
+        } else {
+          lock = true;
+          setTimeout(()=>{
+            c1.flipped = c2.flipped = false;
+            flipped = [];
+            lock = false;
+            render();
+          }, 800);
+        }
+      }
+    }
+
+    function showMatchEffects(){
+      const ripple = document.createElement('div');
+      ripple.className = 'ripple';
+      document.body.appendChild(ripple);
+      setTimeout(()=> ripple.remove(), 900);
+      createConfetti(18);
+    }
+
+    function createConfetti(n){
+      const colors = ['#ef4444','#f59e0b','#10b981','#3b82f6','#a78bfa','#ff6bcb'];
+      for(let i=0;i<n;i++){
+        const el = document.createElement('div');
+        el.className = 'confetti';
+        const size = Math.floor(Math.random()*10)+6;
+        el.style.width = size + 'px';
+        el.style.height = size*0.6 + 'px';
+        el.style.background = colors[Math.floor(Math.random()*colors.length)];
+        el.style.borderRadius = '2px';
+        const startX = window.innerWidth/2 + (Math.random()*200 - 100);
+        el.style.left = startX + 'px';
+        el.style.top = (window.innerHeight*0.3 + (Math.random()*60 - 30)) + 'px';
+        el.style.opacity = Math.random()*0.9+0.6;
+        el.style.transform = `translate(-50%,-50%) rotate(${Math.random()*360}deg)`;
+        el.style.transition = 'transform 1200ms cubic-bezier(.2,.9,.2,1), top 1200ms linear, left 1200ms linear, opacity 900ms linear';
+        document.body.appendChild(el);
+        setTimeout(()=>{
+          const endX = startX + (Math.random()*800 - 400);
+          const endY = window.innerHeight + 200;
+          el.style.left = endX + 'px';
+          el.style.top = endY + 'px';
+          el.style.transform = `translate(-50%,-50%) rotate(${Math.random()*720}deg)`;
+          el.style.opacity = 0.9;
+        }, 20);
+        setTimeout(()=> el.remove(), 1500 + Math.random()*400);
+      }
+    }
+
+    function checkFinish(){
+      if(deck.every(d=>d.matched)){
+        setTimeout(()=> {
+          alert('🎉 Hoàn tất! Các bạn đã ghép xong 12 cặp!');
+        }, 250);
+      }
+    }
+
+    btnRestart.addEventListener('click', ()=> initDeck());
+
+    // init
+    initDeck();
+
+    // resume audio on first user interaction
+    function resumeAudio(){ if(audioCtx.state === 'suspended') audioCtx.resume(); window.removeEventListener('pointerdown', resumeAudio); }
+    window.addEventListener('pointerdown', resumeAudio);
+  </script>
+</body>
+</html>
