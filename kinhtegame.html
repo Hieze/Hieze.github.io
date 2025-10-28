@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Trò chơi lật thẻ: Bảo hiểm - An sinh xã hội</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    #game-board {
+      display: grid;
+      grid-template-columns: repeat(6, 100px);
+      grid-template-rows: repeat(4, 130px);
+      grid-gap: 15px;
+      perspective: 1000px;
+      margin-top: 20px;
+    }
+    .card {
+      width: 100px;
+      height: 130px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+      cursor: pointer;
+    }
+    .card.is-flipped {
+      transform: rotateY(180deg);
+      cursor: default;
+    }
+    .card-inner {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+    }
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      font-weight: bold;
+      color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    .card-back {
+      background: #4caf50;
+    }
+    .card-front {
+      background: #2196f3;
+      transform: rotateY(180deg);
+    }
+    #question-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+    #question-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      width: 80%;
+      max-height: 400px;
+      max-width: 1000px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+    #question-container h2 {
+      margin-top: 0;
+      font-size: 26px;
+    }
+    #question-container ul {
+      list-style: none;
+      padding: 0;
+    }
+    #question-container li {
+      margin: 10px 0;
+    }
+    #question-container li button {
+      width: 100%;
+      padding: 20px;
+      font-size: 25px;
+      text-align: left;
+      border: 1px solid #333;
+      border-radius: 4px;
+      background: #f9f9f9;
+      cursor: pointer;
+    }
+    #question-container li button:hover {
+      background: #e0f7fa;
+    }
+    #question-container li button.correct {
+      border-color: #4caf50;
+      background: #c8e6c9;
+    }
+    #question-container li button.wrong {
+      border-color: #f44336;
+      background: #ffcdd2;
+    }
+    #question-result {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+    #close-question {
+      margin-top: 15px;
+      padding: 8px 16px;
+      font-size: 16px;
+      background: #2196f3;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #close-question:hover {
+      background: #1976d2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Trò chơi lật thẻ: Bảo hiểm & An sinh xã hội</h1>
+  <div id="game-board"></div>
+
+  <div id="question-overlay">
+    <div id="question-container">
+      <h2 id="question-text"></h2>
+      <ul id="options-list"></ul>
+      <div id="question-result"></div>
+      <button id="close-question">Đóng</button>
+    </div>
+  </div>
+
+  <script>
+    // Danh sách 12 câu hỏi trắc nghiệm (Bảo hiểm và An sinh xã hội)
+    const questions = [
+      {
+        question: "Thuật ngữ “Bảo hiểm” dùng để chỉ:",
+        options: [
+          "một biện pháp nhằm chuyển giao rủi ro.",
+          "một biện pháp nhằm né tránh rủi ro.",
+          "một biện pháp nhằm quản trị rủi ro.",
+          "một biện pháp nhằm loại trừ rủi ro."
+        ],
+        correct: 0,
+        explanation: "Bảo hiểm là một biện pháp nhằm chuyển giao rủi ro từ người tham gia sang tổ chức bảo hiểm."
+      },
+      {
+        question: "Bảo hiểm bao gồm các loại hình nào sau đây?",
+        options: [
+          "Bảo hiểm y tế, bảo hiểm nhân thọ, bảo hiểm phi nhân thọ, bảo hiểm trách nhiệm.",
+          "Bảo hiểm xã hội, bảo hiểm y tế, bảo hiểm thất nghiệp, bảo hiểm thương mại.",
+          "Bảo hiểm xã hội, bảo hiểm sức khỏe, bảo hiểm thất nghiệp, bảo hiểm tín dụng.",
+          "Bảo hiểm thương mại, bảo hiểm xã hội, bảo hiểm sức khỏe, bảo hiểm nhân thọ."
+        ],
+        correct: 1,
+        explanation: "Bảo hiểm gồm các loại hình: bảo hiểm xã hội, bảo hiểm y tế, bảo hiểm thất nghiệp và bảo hiểm thương mại (phi nhân thọ và nhân thọ)."
+      },
+      {
+        question: "Loại hình bảo hiểm nào được mô tả: \"Người tham gia được lựa chọn mức đóng phù hợp với thu nhập và Nhà nước hỗ trợ tiền đóng\"?",
+        options: [
+          "Bảo hiểm xã hội bắt buộc.",
+          "Bảo hiểm xã hội tự nguyện.",
+          "Bảo hiểm xã hội thương mại.",
+          "Bảo hiểm xã hội toàn dân."
+        ],
+        correct: 1,
+        explanation: "Đây là mô tả của bảo hiểm xã hội tự nguyện, do Nhà nước tổ chức và hỗ trợ đóng để người tham gia hưởng chế độ hưu trí và tử tuất."
+      },
+      {
+        question: "Bảo hiểm tài sản bao gồm:",
+        options: [
+          "Bảo hiểm nhân thọ.",
+          "Bảo hiểm du lịch.",
+          "Bảo hiểm cho xe cộ và nhà cửa.",
+          "Bảo hiểm y tế."
+        ],
+        correct: 2,
+        explanation: "Bảo hiểm tài sản thông thường bao gồm bảo hiểm tài sản như xe cộ, nhà cửa, hàng hóa,..."
+      },
+      {
+        question: "Nhóm đối tượng nào sau đây KHÔNG được Nhà nước đóng bảo hiểm y tế bắt buộc?",
+        options: [
+          "Người có công với cách mạng.",
+          "Trẻ em dưới 6 tuổi.",
+          "Người thuộc hộ gia đình nghèo.",
+          "Người lao động đang đi làm."
+        ],
+        correct: 3,
+        explanation: "Người lao động tham gia BHYT bắt buộc do doanh nghiệp đóng, nên KHÔNG thuộc nhóm Nhà nước đóng."
+      },
+      {
+        question: "Bảo hiểm nhân thọ là gì?",
+        options: [
+          "Bảo hiểm cho xe cộ.",
+          "Bảo hiểm tài sản doanh nghiệp.",
+          "Bảo hiểm cho trường hợp người được bảo hiểm sống hoặc chết.",
+          "Bảo hiểm du lịch."
+        ],
+        correct: 2,
+        explanation: "Bảo hiểm nhân thọ bảo vệ rủi ro liên quan đến sự sống còn của người được bảo hiểm."
+      },
+      {
+        question: "Bảo hiểm thất nghiệp là:",
+        options: [
+          "Loại hình bảo hiểm cho trường hợp người được bảo hiểm sống hoặc chết.",
+          "Loại hình bảo hiểm cho trường hợp người được bảo hiểm bị thương tật hoặc tai nạn.",
+          "Chế độ bù đắp một phần thu nhập của người lao động khi bị mất việc làm.",
+          "Hình thức bảo hiểm để chăm sóc sức khỏe."
+        ],
+        correct: 2,
+        explanation: "Bảo hiểm thất nghiệp cung cấp trợ cấp tài chính cho người lao động khi mất việc."
+      },
+      {
+        question: "Bảo hiểm thương mại có lợi ích gì cho doanh nghiệp?",
+        options: [
+          "Bảo vệ tài sản khỏi rủi ro như cháy nổ, trộm cắp.",
+          "Cung cấp bảo hiểm y tế cho nhân viên.",
+          "Giảm thuế thu nhập doanh nghiệp.",
+          "Đầu tư vào bất động sản."
+        ],
+        correct: 0,
+        explanation: "Bảo hiểm thương mại giúp doanh nghiệp bảo vệ tài sản khỏi các rủi ro như hỏa hoạn, trộm cắp..."
+      },
+      {
+        question: "\"Bảo hiểm\" là:",
+        options: [
+          "Hình thức đầu tư tài chính.",
+          "Hợp đồng pháp lý giữa hai bên để đổi lấy các cam kết.",
+          "Một dạng tiết kiệm dài hạn.",
+          "Chương trình phúc lợi của chính phủ."
+        ],
+        correct: 1,
+        explanation: "Bảo hiểm là hợp đồng giữa người mua bảo hiểm và tổ chức bảo hiểm, theo đó người mua trả phí và tổ chức bảo hiểm cam kết bồi thường rủi ro."
+      },
+      {
+        question: "Khái niệm nào sau đây định nghĩa \"An sinh xã hội\"?",
+        options: [
+          "Hệ thống các chính sách can thiệp của Nhà nước và xã hội nhằm giảm nghèo, nâng cao khả năng tự bảo vệ của người dân trước rủi ro và đảm bảo phát triển xã hội.",
+          "Chương trình cho vay sinh viên của Nhà nước.",
+          "Chính sách bảo vệ môi trường do Nhà nước thực hiện.",
+          "Hình thức tiết kiệm an ninh tài chính."
+        ],
+        correct: 0,
+        explanation: "An sinh xã hội là hệ thống chính sách nhằm đảm bảo ổn định cuộc sống, giảm nghèo và bảo vệ người dân trước rủi ro."
+      },
+      {
+        question: "Trong trường hợp thiên tai gây thiệt hại, chính quyền xã B kịp thời trợ cấp cho dân để họ ổn định cuộc sống. Đây là chính sách an sinh xã hội nào?",
+        options: [
+          "Chính sách bảo hiểm xã hội.",
+          "Chính sách việc làm và giảm nghèo.",
+          "Chính sách trợ giúp xã hội.",
+          "Chính sách dịch vụ xã hội cơ bản."
+        ],
+        correct: 2,
+        explanation: "Trợ cấp khẩn cấp do thiên tai thuộc chính sách trợ giúp xã hội (hỗ trợ hộ nghèo, gia đình khó khăn)."
+      },
+      {
+        question: "Chính sách an sinh xã hội nào bao gồm trợ cấp thường xuyên cho người khó khăn và đột xuất khi gặp rủi ro để ổn định cuộc sống?",
+        options: [
+          "Chính sách trợ giúp xã hội.",
+          "Chính sách bảo hiểm xã hội.",
+          "Chính sách dịch vụ xã hội cơ bản.",
+          "Chính sách việc làm và giảm nghèo."
+        ],
+        correct: 0,
+        explanation: "Chính sách trợ giúp xã hội cung cấp trợ cấp thường xuyên và đột xuất cho người dân gặp khó khăn và rủi ro."
+      }
+    ];
+
+    // Hàm trộn ngẫu nhiên mảng
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+    shuffleArray(questions);
+
+    // Tạo mảng giá trị cặp (1..12, lặp hai lần) và trộn
+    const pairValues = [];
+    for (let i = 1; i <= 12; i++) { pairValues.push(i); pairValues.push(i); }
+    shuffleArray(pairValues);
+
+    const gameBoard = document.getElementById('game-board');
+    let firstCard = null, secondCard = null;
+    let lockBoard = false;
+    let questionQueue = [...questions]; // bản sao của câu hỏi
+
+    // Tạo phần tử thẻ và thêm vào bảng
+    for (let i = 0; i < 24; i++) {
+      const card = document.createElement('div');
+      card.classList.add('card');
+      card.dataset.value = pairValues[i];
+      card.dataset.index = i;
+      card.innerHTML = '<div class="card-inner">'
+        + '<div class="card-face card-back">' + (i+1) + '</div>'
+        + '<div class="card-face card-front">' + pairValues[i] + '</div>'
+        + '</div>';
+      gameBoard.appendChild(card);
+      card.addEventListener('click', onCardClick);
+    }
+
+    // Hàm xử lý khi click vào thẻ
+    function onCardClick(e) {
+      if (lockBoard) return;
+      const clicked = e.currentTarget;
+      if (clicked === firstCard || clicked.classList.contains('is-flipped')) return;
+      clicked.classList.add('is-flipped');
+      if (!firstCard) {
+        firstCard = clicked;
+        return;
+      }
+      secondCard = clicked;
+      lockBoard = true;
+      // Kiểm tra trùng hay không
+      if (firstCard.dataset.value === secondCard.dataset.value) {
+        // Nếu đúng cặp, hiển thị câu hỏi
+        setTimeout(() => { 
+          showQuestion(); 
+        }, 300);
+      } else {
+        // Nếu sai, lật lại sau 1 giây
+        setTimeout(() => {
+          firstCard.classList.remove('is-flipped');
+          secondCard.classList.remove('is-flipped');
+          resetSelection();
+        }, 1000);
+      }
+    }
+    function resetSelection() {
+      [firstCard, secondCard] = [null, null];
+      lockBoard = false;
+    }
+
+    // Hiển thị cửa sổ câu hỏi
+    function showQuestion() {
+      if (questionQueue.length === 0) {
+        resetSelection();
+        lockBoard = false;
+        return;
+      }
+      const q = questionQueue.shift();
+      document.getElementById('question-text').textContent = q.question;
+      const optionsList = document.getElementById('options-list');
+      optionsList.innerHTML = '';
+      document.getElementById('question-result').textContent = '';
+      // Tạo các nút lựa chọn
+      q.options.forEach((opt, idx) => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.textContent = (["A","B","C","D"][idx] + ". " + opt);
+        btn.addEventListener('click', function() {
+          // Vô hiệu hóa nút khác sau khi chọn
+          Array.from(optionsList.children).forEach(li => li.firstChild.disabled = true);
+          if (idx === q.correct) {
+            btn.classList.add('correct');
+            document.getElementById('question-result').innerHTML = "<span style='color: green;'>Bạn trả lời đúng!</span>";
+          } else {
+            btn.classList.add('wrong');
+            document.getElementById('question-result').innerHTML = "<span style='color: red;'>Sai. " + q.explanation + "</span>";
+          }
+        });
+        li.appendChild(btn);
+        optionsList.appendChild(li);
+      });
+      document.getElementById('question-overlay').style.display = 'flex';
+    }
+
+    // Đóng cửa sổ câu hỏi và tiếp tục trò chơi
+    document.getElementById('close-question').addEventListener('click', function() {
+      document.getElementById('question-overlay').style.display = 'none';
+      resetSelection();
+    });
+  </script>
+</body>
+</html>
