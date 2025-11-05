@@ -1,287 +1,345 @@
-<!doctype html>
-<html lang="vi">
+
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Memory 6×4 — Lật thẻ (số vị trí lớn)</title>
-  <style>
-    :root{
-      --card-w:96px; --card-h:120px;
-      --accent1:#06b6d4; --accent2:#7c3aed;
-      --bg1:#e6f5ff; --bg2:#ffffff;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; padding:28px; min-height:100vh;
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto;
-      display:flex; flex-direction:column; align-items:center;
-      background: linear-gradient(180deg,var(--bg1),var(--bg2));
-      color:#0f172a;
-    }
-    header{ width:100%; max-width:1100px; display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px}
-    h1{ font-size:20px; margin:0; letter-spacing:0.2px; }
-    .controls{ display:flex; gap:10px; align-items:center }
-    .btn{
-      padding:8px 12px; border-radius:10px; border:0; cursor:pointer; font-weight:700;
-      background: linear-gradient(90deg,var(--accent1),var(--accent2)); color:white;
-      box-shadow: 0 8px 30px rgba(124,58,237,0.12);
-    }
-
-    /* board */
-    #board{ display:grid; grid-template-columns: repeat(6, var(--card-w)); grid-auto-rows: var(--card-h); gap:12px; align-items:center; justify-content:center; }
-
-    .card{ width:var(--card-w); height:var(--card-h); perspective:900px; position:relative; }
-    .inner{
-      width:100%; height:100%; border-radius:12px; position:relative; transform-style:preserve-3d;
-      transition: transform 0.55s cubic-bezier(.2,.9,.3,1), box-shadow 180ms;
-      box-shadow: 0 8px 22px rgba(2,6,23,0.06);
-    }
-    .inner.flipped{ transform: rotateY(180deg) translateY(-2px) scale(1.02); box-shadow: 0 18px 40px rgba(2,6,23,0.12); }
-
-    .face, .back {
-      position:absolute; inset:0; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; -webkit-backface-visibility:hidden;
-      border-radius:12px; font-weight:800; user-select:none;
-    }
-
-    /* front (mặt úp) shows position 1..24 (LỚN) */
-    .front{
-      background: linear-gradient(180deg,#ffffff,#fbfdff);
-      border: 1px solid rgba(2,6,23,0.04);
-      color:#0f172a;
-      font-size:34px; /* <- Tăng kích thước số vị trí */
-      letter-spacing:1px;
-      display:flex; align-items:center; justify-content:center;
-      transform: translateZ(0.5px);
-    }
-    /* back (mặt lật) shows value 1..12 */
-    .back{
-      transform: rotateY(180deg);
-      background: linear-gradient(135deg,var(--accent1),var(--accent2));
-      color:white; font-size:30px;
-      display:flex; flex-direction:column; gap:4px;
-    }
-    .back .sub{ font-size:12px; opacity:0.85; font-weight:600; }
-
-    /* matched state */
-    .matched .inner{ outline:4px solid rgba(16,185,129,0.12); box-shadow:0 22px 60px rgba(16,185,129,0.08); transform: scale(1.03); }
-    .matched .back{ filter: drop-shadow(0 8px 20px rgba(16,185,129,0.12)); }
-
-    /* hover */
-    .card:hover .inner{ transform: translateY(-6px); }
-
-    /* confetti pieces & ripple */
-    .confetti { position:fixed; pointer-events:none; left:50%; top:30%; transform-origin:center; z-index:9999; }
-    @keyframes ripple { 0%{transform:scale(0.6);opacity:0.8}70%{transform:scale(1.6);opacity:0.3}100%{transform:scale(2.2);opacity:0} }
-    .ripple { position:fixed; left:50%; top:45%; transform:translate(-50%,-50%); width:200px;height:200px;border-radius:50%; background:radial-gradient(circle at center, rgba(124,58,237,0.18), rgba(124,58,237,0.02)); z-index:900; animation:ripple 800ms ease-out forwards; pointer-events:none; }
-
-    @media (max-width:720px){
-      :root{ --card-w:72px; --card-h:92px }
-      .front{ font-size:26px } /* responsive size */
-      .back{ font-size:22px }
-    }
-
-    footer{ margin-top:16px; color:#475569; font-size:13px }
-  </style>
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#F5F5F5">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trắc nghiệm</title>
+  <link rel="stylesheet" href="tncss.css">
 </head>
 <body>
-  <header>
-    <h1>Congthuat1337's Game</h1>
-    <div class="controls">
-      <button id="btnRestart" class="btn">🔄 Chơi lại</button>
+
+  <div id="inputStr" class="">
+    <header>
+      Nạp Trắc Nghiệm
+    </header>
+
+    <div class="help" onclick="help()">
+      ?
     </div>
-  </header>
+    <div style="display: flex">
+      <textarea style="" id="text" placeholder="Dán nội dung ôn tập vào đây theo hướng dẫn"></textarea>
+      <button style="margin-top: 80px; height: 200px" onclick="pasteFromClipboard()">Dán<br>văn<br>bản</button>
+    </div>
+    <div class="centered" style="">
+      <button onclick="run()">Bắt đầu kiểm tra</button>
+      <br> Cài đặt:<br>
+      <div>
+        <input checked id="shuffleQ" type="checkbox" style=""><label for="shuffleQ">Xáo trộn câu hỏi</label>
+        <br>
+        <input checked id="shuffleA" type="checkbox" style="">
 
-  <main id="board" aria-live="polite"></main>
+        <label for="shuffleA">Xáo trộn câu trả lời</label>
+        <br><input checked id="autoStr" type="checkbox" style=""><label for="autoStr">Tự động cuộn</label>
+        <br>
+      </div>
+    </div>
+  </div>
+  <div class="progress-container">
+    <div class="progress-bar"></div>
+  </div>
 
-  <div id="effects"></div>
+  <div class="scroll-percentage" id="scrollPercentage">0%</div>
 
-  <footer>Nhóm 6 - GDKT 12</footer>
-
+  <div id="main" class="hide">
+    <span style="color: green">Good Luck!</span>
+    <div class="" id="container">
+      Đang xử lí câu hỏi..
+    </div>
+    <br>
+    <div class="container">
+      <div id="timer">
+        Thời gian làm bài: <span id="time">00:00:00</span>
+      </div>
+      <pre id="result"></pre>
+      <button id="start" onclick="calculateScore()">Nộp bài</button>
+      <button id="reload" style="" class="hide" onclick="reload()">Làm lại những câu sai</button>
+      <div class="floating-buttons hide" id="floating-buttons">
+        <button id="prevButton">Prev</button><br>
+        <button id="nextButton">Next</button>
+      </div>
+    </div>
+  </div>
+  <br>
+      <sub>Web tạo bởi Thanh Ngà, không được sao chép khi chưa có sự cho phép!</sub>
   <script>
-    // --- Game state
-    const BOARD_LEN = 24, PAIRS = 12;
-    let deck = [], flipped = [], lock = false;
+    var inputElement = document.getElementById('text');
+    inputElement.value = `Câu 1. Một trong những khu vực được Hội nghị I-an-ta (tháng 2 – 1945) quy định thuộc
+phạm vi ảnh hưởng của Liên Xô là
+A. Tây Âu,	/B. Đông Âu.	C. Nhật Bản.	D. Triều Tiên.
 
-    const boardEl = document.getElementById('board');
-    const effectsEl = document.getElementById('effects');
-    const btnRestart = document.getElementById('btnRestart');
+Câu 2. Một trong những khu vực được Hội nghị I-an-ta (tháng 2 – 1945) quy định thuộc phạm vi ảnh hưởng của Mỹ là
+/A. Tây Âu.	B. Đông Âu.	C. Mông Cổ	D. Trung Đông.
+Câu 3. Đâu là ranh giới phân chia phạm vi chiếm đóng Triều Tiên của Mỹ và Liên Xô
+được Hội nghị I-an-ta (tháng 2 – 1945) quy định?
+/A. Vĩ tuyến 38.	B. Sông Áp Lục.	C. Vĩ tuyến 17	D. Cảng Icheon.
+Câu 4. Trật tự thế giới mới được hình thành sau Chiến tranh TG thứ hai (1939 – 1945) là
+A. đơn cực.	/B. I-an-ta.	C. Vec-xai.	D. đa cực.
+Câu 5. Quốc gia đứng đầu khối TBCN sau Chiến tranh thế giới thứ hai (1939 – 1945) là
+A. Anh.	B. Pháp.	/C. Mỹ.	D. Đức.
+Câu 6. Quốc gia đứng đầu khối XHCN sau Chiến tranh thế giới hai (1939 – 1945) là
+A.Trung Quốc.              B. Việt Nam.               C. Triều Tiên.         /D. Liên Xô. 
+Câu 7. Những quốc gia nào sau đây tham dự Hội nghị I-an-ta (tháng 2 – 1945)
+A. Liên Xô, Mỹ, Pháp.	                            /B. Liên Xô, Mỹ, Anh.
+C. Trung Quốc, Mỹ, Anh.	D. Liên Xô, Anh, Pháp.
 
-    // Audio (WebAudio)
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+Câu 8. Liên Xô và Mỹ đẩy mạnh đối thoại hợp tác từ
+/A. nửa sau những năm 80.	B. nửa sau những năm 90.
+C. nửa đầu những năm 90.	D. nửa đầu những năm 80.
+Câu 9. Năm 1989, tại đảo Man-ta Mỹ và Liên Xô đã có hành động nào sau đây?
+A. Tuyên bố chung về vũ khí chiến lược.
 
-    function playFlipSound(){
-      const now = audioCtx.currentTime;
-      const o = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      o.type = 'sine';
-      o.frequency.setValueAtTime(900, now);
-      o.frequency.exponentialRampToValueAtTime(1400, now + 0.06);
-      g.gain.setValueAtTime(0.0001, now);
-      g.gain.exponentialRampToValueAtTime(0.18, now + 0.02);
-      g.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
-      o.connect(g); g.connect(audioCtx.destination);
-      o.start(now); o.stop(now + 0.14);
-    }
+B. Ký nhiều hiệp định thương mại tự do.
 
-    function playMatchSound(){
-      const now = audioCtx.currentTime;
-      const g = audioCtx.createGain();
-      g.connect(audioCtx.destination);
-      g.gain.setValueAtTime(0.0001, now);
-      const freqs = [520, 660, 880];
-      freqs.forEach((f, i) => {
-        const o = audioCtx.createOscillator();
-        o.type = 'triangle';
-        o.frequency.setValueAtTime(f, now + i*0.01);
-        const eq = audioCtx.createBiquadFilter();
-        eq.type = 'lowpass'; eq.frequency.value = 2000;
-        o.connect(eq); eq.connect(g);
-        o.start(now + i*0.01);
-        o.stop(now + 0.28 + i*0.02);
-      });
-      g.gain.exponentialRampToValueAtTime(0.18, now + 0.01);
-      g.gain.exponentialRampToValueAtTime(0.0001, now + 0.5);
-    }
+/C. Tuyên bố chấm dứt Chiến tranh lạnh.
 
-    // helpers
-    function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } }
+D. Cam kết hòa bình giữa Mỹ và Liên Xô.
 
-    function initDeck(){
-      const vals = [];
-      for(let v=1; v<=PAIRS; v++){ vals.push(v); vals.push(v); }
-      shuffle(vals);
-      deck = vals.map((value, idx)=>({ id: idx+1, value, flipped:false, matched:false }));
-      flipped = []; lock=false;
-      render();
-    }
+Câu 10. Sự kiện nào sau đây đánh dấu trật tự hai cực I-an-ta chấm dứt?
+/A. Liên Xô chính thức tan rã (1991).	B. Chiến tranh lạnh kết thúc (1989).
 
-    function render(){
-      boardEl.innerHTML = '';
-      deck.forEach(card=>{
-        const cardWrap = document.createElement('div');
-        cardWrap.className = 'card';
-        cardWrap.setAttribute('data-id', card.id);
+C. Bức tường Béc-lin sụp đổ (1989).	              D. Khủng hoảng năng lượng (1973).
+Câu 11. Sự kiện nào sau đây có ý nghĩa mở ra bước đột phá đầu tiên đối với trật tự thế giới hai cực I-an-ta?
 
-        const inner = document.createElement('div');
-        inner.className = 'inner' + (card.flipped ? ' flipped' : '');
-        if(card.matched) inner.classList.add('matched');
+/A. Thắng lợi của cách mạng Trung Quốc (1949).
 
-        const front = document.createElement('div');
-        front.className = 'front';
-        front.textContent = card.id; // position number (now large)
+B. Cách mạng tháng Tám ở Việt Nam (1945).
 
-        const back = document.createElement('div');
-        back.className = 'back';
-        back.innerHTML = `<div>${card.value}</div><div class="sub">Giá trị</div>`;
+C. Chế độ độc tài thân Mỹ thất bại ở Cuba (1959).
 
-        inner.appendChild(front); inner.appendChild(back);
-        cardWrap.appendChild(inner);
+D.Anh, Pháp rút quân khỏi kênh đào Xuy-ê (1956).
 
-        cardWrap.addEventListener('click', ()=> onCardClick(card.id));
-        boardEl.appendChild(cardWrap);
-      });
-    }
+Câu 12. Nội dung tranh cãi gay gắt quyết liệt nhất trong Hội nghị I-an-ta (tháng 2 – 1945) là
 
-    function onCardClick(id){
-      if(lock) return;
-      const card = deck.find(c=>c.id===id);
-      if(!card || card.matched) return;
+A. quốc gia nào sẽ tham chống Nhật ở châu Á.
 
-      if(card.flipped){
-        // flip back
-        card.flipped = false;
-        flipped = flipped.filter(x=>x!==id);
-        render();
-        return;
-      }
+/B. phân chia phạm vi ảnh hưởng sau chiến tranh.
 
-      if(flipped.length===2) return;
+C. ranh giới phân chia để chiếm đóng Triều Tiên.
 
-      card.flipped = true;
-      flipped.push(id);
-      playFlipSound();
-      render();
+D. số phận của các nước phát xít sau chiến tranh.
 
-      if(flipped.length===2){
-        const c1 = deck.find(d=>d.id===flipped[0]);
-        const c2 = deck.find(d=>d.id===flipped[1]);
-        if(c1.value === c2.value){
-          lock = true;
-          setTimeout(()=>{
-            c1.matched = c2.matched = true;
-            c1.flipped = c2.flipped = true;
-            flipped = [];
-            lock = false;
-            render();
-            playMatchSound();
-            showMatchEffects();
-            checkFinish();
-          }, 420);
-        } else {
-          lock = true;
-          setTimeout(()=>{
-            c1.flipped = c2.flipped = false;
-            flipped = [];
-            lock = false;
-            render();
-          }, 800);
-        }
-      }
-    }
+Câu 13. Xu thế hoà hoãn Đông – Tây xuất hiện có tác động như thế nào đến Trật tự hai
 
-    function showMatchEffects(){
-      const ripple = document.createElement('div');
-      ripple.className = 'ripple';
-      document.body.appendChild(ripple);
-      setTimeout(()=> ripple.remove(), 900);
-      createConfetti(18);
-    }
+cực I-an-ta?
 
-    function createConfetti(n){
-      const colors = ['#ef4444','#f59e0b','#10b981','#3b82f6','#a78bfa','#ff6bcb'];
-      for(let i=0;i<n;i++){
-        const el = document.createElement('div');
-        el.className = 'confetti';
-        const size = Math.floor(Math.random()*10)+6;
-        el.style.width = size + 'px';
-        el.style.height = size*0.6 + 'px';
-        el.style.background = colors[Math.floor(Math.random()*colors.length)];
-        el.style.borderRadius = '2px';
-        const startX = window.innerWidth/2 + (Math.random()*200 - 100);
-        el.style.left = startX + 'px';
-        el.style.top = (window.innerHeight*0.3 + (Math.random()*60 - 30)) + 'px';
-        el.style.opacity = Math.random()*0.9+0.6;
-        el.style.transform = `translate(-50%,-50%) rotate(${Math.random()*360}deg)`;
-        el.style.transition = 'transform 1200ms cubic-bezier(.2,.9,.2,1), top 1200ms linear, left 1200ms linear, opacity 900ms linear';
-        document.body.appendChild(el);
-        setTimeout(()=>{
-          const endX = startX + (Math.random()*800 - 400);
-          const endY = window.innerHeight + 200;
-          el.style.left = endX + 'px';
-          el.style.top = endY + 'px';
-          el.style.transform = `translate(-50%,-50%) rotate(${Math.random()*720}deg)`;
-          el.style.opacity = 0.9;
-        }, 20);
-        setTimeout(()=> el.remove(), 1500 + Math.random()*400);
-      }
-    }
+A. Đã xuất hiện xu thế đa cực.	B. Các mâu thuẫn càng sâu sắc.
 
-    function checkFinish(){
-      if(deck.every(d=>d.matched)){
-        setTimeout(()=> {
-          alert('🎉 Hoàn tất! Các bạn đã ghép xong 12 cặp!');
-        }, 250);
-      }
-    }
+/C. Làm suy yếu trật tự hai cực.	D. Đã củng cố trật tự hai cực.
 
-    btnRestart.addEventListener('click', ()=> initDeck());
+Câu 14. Một trong những biểu hiện của xu thế hoà hoãn Đông – Tây là
 
-    // init
-    initDeck();
+/A. các cuộc gặp gỡ cấp cao Xô – Mỹ.	B. khủng hoảng năng lượng, dầu mỏ.
 
-    // resume audio on first user interaction
-    function resumeAudio(){ if(audioCtx.state === 'suspended') audioCtx.resume(); window.removeEventListener('pointerdown', resumeAudio); }
-    window.addEventListener('pointerdown', resumeAudio);
+C. Cách mạng Trung Quốc thắng lợi.	D. sự vươn lên mạnh mẽ của Nhật Bản.
+
+Câu 15. Một trong những mục đích của Mỹ khi triển khai thực hiện kế hoạch Mác-san (tháng 6 – 1947) đối với các nước Tây Âu là
+
+A. phát xít hóa cho nước Đức.	B. tiêu diệt Đảng Cộng sản Ý.
+
+/C. hỗ trợ khôi phục kinh tế.	D. chiếm thuộc địa của Tây Âu.
+
+Câu 16. Một trong những mục đích của Mỹ khi thành lập khối quân sự Bắc Đại Tây Dương (NATO) năm 1949 là
+
+/A. chống lại Liên Xô và các nước Đông Âu.
+
+B. muốn bán vũ khí cho các nước đồng minh.
+
+C. chuẩn bị phát động chiến tranh chống Đức.
+
+D. tấn công tyêu diệt các nước tư bản chủ nghĩa.
+
+Câu 17. Sự kiện đánh dấu Chiến tranh lạnh bao trùm thế giới là
+
+A. thắng lợi của cách mạng Cuba (1959).
+
+B. Liên Xô đã thành lập khối SEV (1949).
+
+C. thông điệp của Tổng thống Mỹ (1947).
+
+/D.sự ra đời của NATO và Vác-sa-va (1955).
+
+Câu 18. Vì sao từ sau Chiến tranh thế giới thứ hai (1939 – 1945), Mỹ và Liên Xô đối đầu gay gắt?
+/A. Khác nhau về mục tiêu và đường lối chiến lược.
+
+B. Do những mâu thuẫn trong hội nghị I-an-ta.
+
+C. Mâu thuẫn gay gắt về vấn đề thị trường, thuộc địa.
+D. Sự cạnh tranh gay gắt về ngành công nghiệp vũ trụ.
+
+Câu 19. Năm 1947, Mỹ phát động Chiến tranh lạnh nhằm mục đích chủ yếu là
+A. cướp đoạt thuộc địa.	              /B. chống lại Liên Xô.
+
+C. cướp đoạt tài nguyên.	D. thống trị châu  Âu.
+
+Câu 20. Một trong những mục đích của Tổng thống Ních-xơn khi tiến hành chuyến thăm chính thức đến Trung Quốc, Liên Xô năm 1972 là
+/A. hạn chế sự giúp đỡ của Trung Quốc và Liên Xô cho Việt Nam.
+
+B. nhằm bình thường hóa quan hệ với các nước xã hội chủ nghĩa.
+
+C. tiến hành hợp tác trên diện rộng với Liên Xô và Trung Quốc.
+
+D. ký các hiệp ước đối tác chiến lược về kinh tế và quốc phòng.
+Câu 21. Mục đích chủ yếu của Mỹ khi triển khai chiến lược toàn cầu từ sau Chiến tranh
+
+thế giới thứ hai là
+/A. bá chủ, lãnh đạo thế giới.	C. khống chế Đức, Italia, Nhật.
+
+B. tiêu diệt các nước Tây Âu.	D. bảo vệ các nước đồng minh.
+
+Câu 22. Trong thời kì Chiến tranh lạnh (1947 – 1989), vì sao Mỹ và Liên Xô tránh xung đột trực tiếp về quân sự?
+
+A. Cả Mỹ và Liên Xô đều không đủ lực lượng chiến đấu.
+
+/B. Ngăn ngừa nguy cơ nổ ra cuộc chiến tranh thế giới mới.
+
+C. Liên Xô đã khủng hoảng kinh tế, chính trị trầm trọng.
+
+D. Sự phản đối chiến tranh của nhân dân Mỹ và Liên Xô.
+
+Câu 23. Đâu là một trong những nguyên nhân Mỹ và Liên Xô quyết định chấm dứt cuộc Chiến tranh lạnh (1947 – 1989)?
+/A. Sự vươn lên mạnh mẽ của Nhật Bản, Tây Âu.
+
+B. Các nước Cộng hoà trong liên bang đòi ly khai.
+
+C. Nước Mỹ khủng hoảng kinh tế, chính trị sâu sắc.
+
+D. Nhân dân hai nước đều phản đối Chiến tranh lạnh.
+
+Câu 24. Đâu là biện pháp chủ yếu mà Mỹ và Liên Xô sử dụng để kết thúc các cuộc
+chiến tranh cục bộ trong thời kì Chiến tranh lạnh (1947 – 1989)?
+A. Kinh tế.	B. Chính trị.	/C. Ngoại giao.	D. Quân sự.
+
+Câu 25. Nội dung nào không phản ánh đúng bản chất của Chiến tranh lạnh?
+A. Do Mỹ phát động nhằm chống Liên Xô và các nước xã hội chủ nghĩa.
+
+B. Đối đầu căng thẳng giữa hai phe tư bản chủ nghĩa và xã hội chủ nghĩa.
+
+/C. Là cuộc đổi đầu trực tiếp trên lĩnh vực quân sự giữa hai nước Xô - Mỹ.
+
+D. Thế giới đã bị chia thành hai phe tư bản chủ nghĩa và xã hội chủ nghĩa.
+
+Câu 26. Nguyên nhân chủ yếu dẫn tới cục diện hai cực, hai phe sau Chiến tranh thế giới thứ hai là gì?
+
+/A. Do sự đối lập về mục tiêu và chiến lược giữa hai cường quốc Liên Xô và Mỹ.
+
+B. Mâu thuẫn về vấn đề thị trường và thuộc địa của các nước tư bản chủ nghĩa.
+
+C. Trật tự thế giới có quá nhiều mâu thuẫn của các nước bại trận và thắng trận.
+
+D. Ý muốn tiêu diệt Liên Xô của giới tư bản ở Mỹ để độc chiếm nguồn dầu mỏ.
+
+Câu 27. Sự ra đời của khối NATO (1949) và Tổ chức Hiệp ước Vác-sa-va (1955) dẫn đến hệ quả gì trong quan hệ quốc tế.
+
+A. Đã đánh dấu sự phát triển vượt bậc của hai nước.
+
+B. Chấm dứt mối quan hệ đồng minh giữa Xô - Mỹ.
+
+C. Hàng loạt các tổ chức quân sự trên thế giới ra đời.
+
+/D. Đánh dấu sự xác lập của cục diện hai cực, hai phe.
+
+Câu 28: Một trong những nguyên nhân nào sau đây đã dẫn đến sự sụp đổ của Trật tự thế giới hai cực I-an-ta?
+A.Thắng lợi của phong trào giải phóng dân tộc và ra đời của các quốc gia độc lập.
+B.Các nước tư bản chạy đua sản xuất hàng hóa ồ ạt, dẫn đến lượng cầu ít hơn cung.
+
+C.Sự phát triển không đồng đều về kinh tế và chính trị của các nước tư bản chủ nghĩa.
+/D.Mâu thuẫn về quyền lợi, thuộc địa và thị trường giữa các nước đế quốc thắng trận. 
+Câu 29: Nguyên nhân nào sau đây đã dẫn đến sự sụp đổ của Trật tự thế giới hai cực I-an-ta?
+/A.Mỹ và Liên Xô đều bị suy giảm sức mạnh trên nhiều mặt.
+B.Công cuộc cải tổ của Goóc-ba-chốp (Liên Xô) thành công.
+C.Sự suy giảm về kinh tế của Nhật Bản, các nước Tây Âu.
+D.Mỹ và Liên Xô đã tận dụng cơ hội để phát triển nhanh.
+
+Câu 30: Một trong các nguyên nhân buộc Mĩ và Liên Xô chấm dứt Chiến tranh lạnh
+A.Công cuộc cải tổ của Goóc-ba-chốp thất bại, Liên Xô sụp đổ năm 1991.
+
+/B.chạy đua vũ trang làm cho hai nước Mĩ và Xô tốn kém, suy giảm nhiều mặt.
+
+C.Tháng 12/1989 Gooc-ba- chốp và Bus gặp gỡ không chính thức tại đảo Man-ta
+
+D.Phạm vi ảnh hưởng của Mĩ trên thế giới nhiều nơi bị thu hẹp do thất bại.
+
+Câu 31: Một trong các nguyên nhân buộc Mĩ và Liên Xô chấm dứt Chiến tranh lạnh
+/A.sự phát triển mạnh của khoa học-kĩ thuật và xu thế toàn cầu hóa.
+
+B.Phạm vi ảnh hưởng của Mĩ trên thế giới nhiều nơi bị thu hẹp do thất bại.
+
+C.Tháng 12-1989, Gooc-ba-chốp và Busơ gặp gỡ không chính thức tại đảo Man-ta.
+
+D.Công cuộc cải tổ của Goóc-ba-chốp thất bại, Liên Xô sụp đổ năm 1991..
+
+Câu 32: Một trong các nguyên nhân buộc Mĩ và Liên Xô chấm dứt Chiến tranh lạnh
+A.Phạm vi ảnh hưởng của Mĩ trên thế giới nhiều nơi bị thu hẹp do thất bại.
+
+B.Tháng 12-1989, Gooc-ba-chốp và Busơ gặp gỡ không chính thức tại đảo Man-ta.
+
+C.Công cuộc cải tổ của Goóc-ba-chốp thất bại dẫn đến sự sụp đổ của Liên Xô.
+
+/D.sự vươn lên của các nước nhằm thoát khỏi ảnh hưởng của hai cực.
+Câu 33: Một trong các nguyên nhân buộc Mĩ và Liên Xô chấm dứt Chiến tranh lạnh
+A.Phạm vi ảnh hưởng của Mĩ trên thế giới nhiều nơi bị thu hẹp do thất bại.
+
+B.Tháng 12-1989 Gooc-ba- chốp và Busơ gặp gỡ không chính thức tại đảo Man-ta.
+
+/C.sự lớn mạnh Trung Quốc, Ấn Độ và phong trào giải phóng dân tộc thế giới.
+
+D.Công cuộc cải tổ của Goóc-ba-chốp thất bại dẫn đến sự sụp đổ của Liên Xô.
+
+Câu 34: Trật tự thế giới hai cực I-an-ta sụp đổ năm 1991, tác động như thế nào đến quan hệ quốc tế?
+A.Ảnh hưởng của Mĩ và Liên Xô bị thu hẹp ở nhiều nơi.
+
+/B.Tác động lớn đến thế giới, đưa tới xu thế phát triển mới.
+
+C.Quan hệ Liên Xô và Mĩ chuyển từ đối đầu sang đối thoại.
+
+D.So sánh lực lượng trên thế giới tạm thời có lợi cho Tư bản.
+
+Câu 35: Trật tự thế giới hai cực I-an-ta sụp đổ năm 1991, tác động như thế nào đến quan hệ quốc tế?
+/A.Trật tự thế giới mới đang dần hình thành theo xu thế đa cực.
+
+B.Phạm vi Ảnh hưởng của Mĩ và Liên Xô bị thu hẹp ở nhiều nơi
+
+C.Quan hệ Liên Xô và Mĩ chuyển từ đối đầu sang đối thoại.
+
+D.So sánh lực lượng trên thế giới tạm thời có lợi cho Tư bản.
+
+Câu 36: Trật tự thế giới hai cực I-an-ta sụp đổ năm 1991, tác động như thế nào đến quan hệ quốc tế?
+/A.Mở ra chiều hướng và điều kiện giải quyết hòa bình các cuộc tranh chấp xung đột.
+
+B.Phạm vi Ảnh hưởng của Mĩ và Liên Xô bị thu hẹp ở nhiều nơi trên thế giới.
+
+C.Quan hệ Liên Xô và Mĩ chuyển từ đối đầu sang đối thoại.
+
+D.So sánh lực lượng trên thế giới tạm thời có lợi cho Tư bản.
+
+Câu 37: Trật tự thế giới hai cực I-an-ta sụp đổ năm 1991, tác động như thế nào đến quan hệ quốc tế?
+/A.tạo điều kiện cho các cường quốc mới nổi có vị trí vai trò lớn hơn trong quan hệ quốc tế.
+
+B.Phạm vi Ảnh hưởng của Mĩ và Liên Xô bị thu hẹp ở nhiều nơi trên thế giới.
+
+C.Quan hệ Liên Xô và Mĩ chuyển từ đối đầu sang đối thoại.
+
+D.So sánh lực lượng trên thế giới tạm thời có lợi cho Tư bản.
+
+Câu 38: Trật tự thế giới hai cực I-an-ta sụp đổ năm 1991, tác động như thế nào đến quan hệ quốc tế?
+/A.tác động đến vấn đề dân tộc, bản sắc cộng đồng dân tộc, tôn giáo…đặc biệt châu Âu.
+
+B.Phạm vi Ảnh hưởng của Mĩ và Liên Xô bị thu hẹp ở nhiều nơi trên thế giới.
+
+C.Quan hệ Liên Xô và Mĩ chuyển từ đối đầu sang đối thoại.
+
+D.So sánh lực lượng trên thế giới tạm thời có lợi cho tư bản.
+
+Câu 39. Vì sao khi Trật tự thế giới hai cực I-an-ta sụp đổ năm 1991, giới cầm quyền Mĩ ra sức thiết lập trật tự thế giới “một cực” nhưng không thực hiện được? 
+A. Do sự lớn mạnh của Trung Quốc
+B. Sự vươn lên mạnh mẽ của Nhật Bản.
+
+C. Sự phát triển mạnh mẽ của Tây Âu.
+
+/D. Sự vươn lên của các cường quốc.`
   </script>
+  <script src="tnjs.js"></script>
 </body>
 </html>
