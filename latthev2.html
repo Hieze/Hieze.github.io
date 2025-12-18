@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Trò chơi lật thẻ V2</title>
+    <style>
+        /* ===== BODY ===== */
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: radial-gradient(circle at bottom, #020111, #000);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* ===== SPACE ===== */
+        .space {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* ===== STAR PARALLAX ===== */
+        .stars {
+            position: absolute;
+            inset: -200%;
+            background-repeat: repeat;
+        }
+
+        .stars.small {
+            background-image:
+                radial-gradient(1px 1px at 10% 20%, #fff, transparent),
+                radial-gradient(1px 1px at 30% 80%, #fff, transparent),
+                radial-gradient(1px 1px at 70% 40%, #fff, transparent),
+                radial-gradient(1px 1px at 90% 10%, #fff, transparent);
+            background-size: 260px 260px;
+            opacity: .35;
+            animation: starsSlow 240s linear infinite;
+        }
+
+        .stars.medium {
+            background-image:
+                radial-gradient(2px 2px at 15% 25%, #ffeb3b, transparent),
+                radial-gradient(2px 2px at 35% 85%, #03a9f4, transparent),
+                radial-gradient(2px 2px at 75% 45%, #e91e63, transparent);
+            background-size: 200px 200px;
+            opacity: .6;
+            animation: starsMedium 140s linear infinite;
+        }
+
+        .stars.big {
+            background-image:
+                radial-gradient(3px 3px at 20% 30%, #ffffff, transparent),
+                radial-gradient(3px 3px at 60% 70%, #00e5ff, transparent),
+                radial-gradient(3px 3px at 85% 50%, #ff1744, transparent);
+            background-size: 160px 160px;
+            opacity: .85;
+            animation: starsFast 80s linear infinite;
+        }
+
+        @keyframes starsSlow {
+            to {
+                transform: translate(-600px, 600px)
+            }
+        }
+
+        @keyframes starsMedium {
+            to {
+                transform: translate(-900px, 900px)
+            }
+        }
+
+        @keyframes starsFast {
+            to {
+                transform: translate(-1200px, 1200px)
+            }
+        }
+
+        /* ===== PLANETS ===== */
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            animation: spin linear infinite;
+            filter: drop-shadow(0 0 40px rgba(255, 255, 255, .6));
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .planet-1 {
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle at 30% 30%, #ffeb3b, #ff5722, #e91e63);
+            top: 8%;
+            left: 4%;
+            animation-duration: 60s;
+        }
+
+        .planet-2 {
+            width: 130px;
+            height: 130px;
+            background: radial-gradient(circle at 30% 30%, #00e5ff, #2979ff, #651fff);
+            bottom: 14%;
+            right: 6%;
+            animation-duration: 90s;
+        }
+
+        .planet-3 {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 30%, #69f0ae, #00c853, #1b5e20);
+            top: 60%;
+            left: 12%;
+            animation-duration: 120s;
+        }
+
+        .planet::after {
+            content: "";
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, .4), transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                transform: scale(1.05);
+                opacity: .6
+            }
+        }
+
+        /* ===== TITLE ===== */
+        h1 {
+            z-index: 2;
+            font-size: 32px;
+            background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbowText 6s linear infinite;
+            text-shadow: 0 0 25px rgba(255, 255, 255, .6);
+        }
+
+        @keyframes rainbowText {
+            to {
+                filter: hue-rotate(360deg)
+            }
+        }
+
+        /* ===== BOARD ===== */
+        #game-board {
+            z-index: 2;
+            display: grid;
+            grid-template-columns: repeat(9, 110px);
+            gap: 18px;
+            margin-top: 25px;
+        }
+
+        /* ===== CARD ===== */
+        .card {
+            width: 110px;
+            height: 150px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform .6s, box-shadow .3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 255, 255, .4);
+        }
+
+        .card.is-flipped {
+            transform: rotateY(180deg);
+            box-shadow:
+                0 0 15px rgba(255, 255, 255, .5),
+                0 0 30px rgba(0, 255, 255, .6);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            font-weight: bold;
+            backface-visibility: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .7);
+        }
+
+        /* BACK */
+        .card-back {
+            background: linear-gradient(135deg,
+                    #00e5ff,
+                    #1de9b6,
+                    #00bcd4);
+            box-shadow:
+                inset 0 0 30px rgba(0, 0, 0, .35),
+                0 0 12px rgba(0, 229, 255, .35);
+        }
+
+        @keyframes rainbowBG {
+            50% {
+                background-position: 100% 50%
+            }
+        }
+
+        /* FRONT */
+        .card-front {
+            background: linear-gradient(135deg,
+                    #ff004c,
+                    #ffea00,
+                    #00ff87,
+                    #ff0000,
+                    #2d0954);
+            background-size: 400% 400%;
+            animation: rainbowBG 6s ease infinite;
+            transform: rotateY(180deg);
+        }
+
+        /* ===== MATCHED CARD ===== */
+        .card.matched {
+            animation: vanish .8s forwards;
+            pointer-events: none;
+        }
+
+        @keyframes vanish {
+            0% {
+                opacity: 1;
+                transform: scale(1) rotateY(180deg);
+                filter: brightness(1);
+            }
+
+            60% {
+                opacity: .6;
+                transform: scale(1.3) rotateY(180deg);
+                filter: brightness(2) blur(2px);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0) rotateY(180deg);
+                filter: blur(8px);
+            }
+        }
+
+        /* ===== QUESTION ===== */
+        #question-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(0, 40, 80, .85), rgba(0, 0, 0, .92));
+            backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            animation: fadeIn .4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        /* ===== QUESTION BOX ===== */
+        #question-container {
+            width: 866px;
+            max-width: 144%;
+            padding: 43px 43px 43px;
+            border-radius: 24px;
+            background:
+                linear-gradient(#081826, #081826) padding-box,
+                linear-gradient(135deg, #00e5ff, #7c4dff, #ff1744) border-box;
+            border: 3px solid transparent;
+            box-shadow:
+                0 0 40px rgba(0, 255, 255, .35),
+                inset 0 0 30px rgba(255, 255, 255, .04);
+            animation: popUp .45s ease;
+        }
+
+        @keyframes popUp {
+            from {
+                transform: scale(.85);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        /* ===== QUESTION TEXT ===== */
+        #question-text {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(90deg, #ffeb3b, #00e5ff, #ff1744);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 12px rgba(255, 255, 255, .25);
+        }
+
+        /* ===== OPTIONS ===== */
+        #options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        #options-list button {
+            padding: 14px 18px;
+            font-size: 17px;
+            border-radius: 16px;
+            border: none;
+            cursor: pointer;
+            color: white;
+            background: linear-gradient(135deg, #1a237e, #0d47a1, #1565c0);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .5);
+            transition: .25s;
+        }
+
+        #options-list button:hover {
+            transform: translateY(-3px) scale(1.02);
+            filter: brightness(1.25);
+            box-shadow: 0 0 22px rgba(0, 229, 255, .45);
+        }
+
+        /* ===== ANSWER STATE ===== */
+        button.correct {
+            background: linear-gradient(135deg, #00e676, #2e7d32);
+            box-shadow: 0 0 25px rgba(0, 230, 118, .7);
+        }
+
+        button.wrong {
+            background: linear-gradient(135deg, #ff1744, #b71c1c);
+            box-shadow: 0 0 25px rgba(255, 23, 68, .7);
+        }
+
+        /* ===== RESULT TEXT ===== */
+        #question-result {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 16px;
+            opacity: .9;
+        }
+
+        /* ===== CONTINUE BUTTON ===== */
+        #question-container>button {
+            margin-top: 22px;
+            padding: 12px 30px;
+            border-radius: 22px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            background: linear-gradient(90deg, #00e5ff, #2979ff, #7c4dff);
+            color: white;
+            box-shadow: 0 0 22px rgba(0, 229, 255, .55);
+            transition: .3s;
+        }
+
+        #question-container>button:hover {
+            transform: scale(1.08);
+            filter: brightness(1.2);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="space">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+
+        <div class="planet planet-1"></div>
+        <div class="planet planet-2"></div>
+        <div class="planet planet-3"></div>
+    </div>
+
+
+    <h1>🚀 Trò chơi lật thẻ – Vũ trụ</h1>
+    <div id="game-board"></div>
+
+    <div id="question-overlay">
+        <div id="question-container">
+            <h2 id="question-text"></h2>
+            <ul id="options-list"></ul>
+            <div id="question-result"></div>
+            <button onclick="closeQuestion()">Tiếp tục</button>
+        </div>
+    </div>
+
+    <script>
+        /* ===== QUESTIONS (RÚT GỌN MẪU – BẠN DÁN FULL CỦA BẠN VÀO) ===== */
+        const questions = [
+            {
+                question: "Thuật ngữ “Bảo hiểm” dùng để chỉ:",
+                options: [
+                    "Một biện pháp nhằm chuyển giao rủi ro",
+                    "Một biện pháp né tránh rủi ro",
+                    "Một biện pháp loại trừ rủi ro",
+                    "Một biện pháp đầu tư tài chính"
+                ],
+                correct: 0,
+                explanation: "Bảo hiểm là biện pháp chuyển giao rủi ro."
+            },
+            {
+                question: "Bảo hiểm bao gồm các loại hình nào?",
+                options: [
+                    "Y tế, nhân thọ, trách nhiệm",
+                    "Xã hội, y tế, thất nghiệp, thương mại",
+                    "Xã hội, tín dụng, đầu tư",
+                    "Nhân thọ, tiết kiệm, tài chính"
+                ],
+                correct: 1,
+                explanation: "Bảo hiểm gồm BHXH, BHYT, BHTN và bảo hiểm thương mại."
+            },
+            {
+                question: "Bảo hiểm xã hội tự nguyện cho phép người tham gia:",
+                options: [
+                    "Đóng theo mức cố định",
+                    "Tự chọn mức đóng phù hợp thu nhập",
+                    "Không cần đóng tiền",
+                    "Chỉ dành cho công chức"
+                ],
+                correct: 1,
+                explanation: "Người dân được tự chọn mức đóng phù hợp."
+            },
+            {
+                question: "Điện phân dung dịch CuSO₄ với điện cực trơ, sản phẩm thu được ở catot là:",
+                options: [
+                    "H₂",
+                    "Cu",
+                    "O₂",
+                    "SO₂"
+                ],
+                correct: 1,
+                explanation: "Ion Cu²⁺ nhận electron tại catot: Cu²⁺ + 2e → Cu."
+            },
+            {
+                question: "Khi điện phân dung dịch NaCl có màng ngăn, sản phẩm thu được ở anot là:",
+                options: [
+                    "H₂",
+                    "Na",
+                    "Cl₂",
+                    "O₂"
+                ],
+                correct: 2,
+                explanation: "Ion Cl⁻ bị oxi hóa tại anot: 2Cl⁻ → Cl₂ + 2e."
+            },
+            {
+                question: "Điện phân dung dịch chứa NaCl và CuCl₂ (điện cực trơ), tại catot ưu tiên xảy ra:",
+                options: [
+                    "Na⁺ nhận electron",
+                    "H₂O bị khử tạo H₂",
+                    "Cu²⁺ nhận electron",
+                    "Cl⁻ nhường electron"
+                ],
+                correct: 2,
+                explanation: "Ion Cu²⁺ có tính oxi hóa mạnh hơn H₂O nên được khử trước tại catot."
+            },
+            {
+                question: "Định luật Boyle – Mariotte áp dụng cho khối khí nào sau đây?",
+                options: [
+                    "Khối khí xác định, nhiệt độ không đổi",
+                    "Khối khí xác định, áp suất không đổi",
+                    "Khối khí không xác định, nhiệt độ không đổi",
+                    "Khối khí xác định, thể tích không đổi"
+                ],
+                correct: 0,
+                explanation: "Định luật Boyle – Mariotte áp dụng cho một lượng khí xác định ở nhiệt độ không đổi."
+            },
+            {
+                question: "Theo định luật Boyle – Mariotte, khi thể tích của một khối khí giảm một nửa (nhiệt độ không đổi) thì áp suất:",
+                options: [
+                    "Giảm một nửa",
+                    "Không đổi",
+                    "Tăng gấp đôi",
+                    "Tăng gấp bốn"
+                ],
+                correct: 2,
+                explanation: "Theo pV = hằng số, khi V giảm một nửa thì p tăng gấp đôi."
+            },
+            {
+                question: "Đạo hàm của hàm số f(x) = (x + 1)/(x − 1) là:",
+                options: [
+                    "2/(x − 1)²",
+                    "1/(x − 1)²",
+                    "-2/(x − 1)²",
+                    "0"
+                ],
+                correct: 2,
+                explanation: "Áp dụng đạo hàm thương: f' = [(x−1) − (x+1)]/(x−1)² = −2/(x−1)²."
+            },
+            {
+                question: "Đạo hàm của hàm số f(x) = √(x² + 3) là:",
+                options: [
+                    "1/√(x² + 3)",
+                    "x/√(x² + 3)",
+                    "2x/√(x² + 3)",
+                    "3 đáp án trên sai"
+                ],
+                correct: 1,
+                explanation: "Viết √(x²+3) = (x²+3)¹ᐟ² ⇒ f' = (1/2)(x²+3)⁻¹ᐟ²·2x = x/√(x²+3)."
+            },
+
+            {
+                question: "Este được tạo thành từ phản ứng giữa:",
+                options: [
+                    "Ancol và axit",
+                    "Ancol và bazơ",
+                    "Axit và muối",
+                    "Anđehit và ancol"
+                ],
+                correct: 0,
+                explanation: "Este được tạo thành từ phản ứng giữa ancol và axit."
+            },
+            {
+                question: "Dung dịch nào sau đây làm quỳ tím hóa đỏ?",
+                options: ["NaCl", "NaOH", "HCl", "KNO₃"],
+                correct: 2,
+                explanation: "HCl là axit làm quỳ tím hóa đỏ."
+            },
+            {
+                question: "Chất nào sau đây là hiđrocacbon no?",
+                options: ["C₂H₄", "C₂H₂", "CH₄", "C₆H₆"],
+                correct: 2,
+                explanation: "CH₄ là hiđrocacbon no (ankan)."
+            },
+            {
+                question: "Polime được điều chế bằng phản ứng trùng hợp là:",
+                options: ["PVC", "Nilon-6,6", "Protein", "Tinh bột"],
+                correct: 0,
+                explanation: "PVC được điều chế bằng phản ứng trùng hợp."
+            },
+            {
+                question: "Đơn vị của công trong hệ SI là:",
+                options: ["Jun (J)", "Oát (W)", "Niutơn (N)", "Vôn (V)"],
+                correct: 0,
+                explanation: "Đơn vị của công là Jun (J)."
+            },
+            {
+                question: "Một vật chuyển động thẳng đều thì:",
+                options: [
+                    "Vận tốc thay đổi theo thời gian",
+                    "Gia tốc khác 0",
+                    "Vận tốc không đổi",
+                    "Quãng đường bằng 0"
+                ],
+                correct: 2,
+                explanation: "Chuyển động thẳng đều có vận tốc không đổi."
+            },
+            {
+                question: "Một lượng khí xác định biến đổi đẳng nhiệt từ trạng thái (p₁, V₁) đến (p₂, V₂). Trên đồ thị p–V, nếu điểm (p₂, V₂) nằm gần trục áp suất hơn so với (p₁, V₁) thì có thể kết luận:",
+                options: [
+                    "p₂ < p₁ và V₂ > V₁",
+                    "p₂ > p₁ và V₂ < V₁",
+                    "p₂ = p₁ và V₂ < V₁",
+                    "p₂ < p₁ và V₂ = V₁"
+                ],
+                correct: 1,
+                explanation: "Điểm gần trục áp suất nghĩa là thể tích nhỏ hơn. Theo pV = hằng số, khi V giảm thì p tăng ⇒ p₂ > p₁, V₂ < V₁."
+            }
+        ];
+        const emojis = [
+            "🚀", "🌙", "🪐", "👽", "☄️", "🌟",
+            "🌌", "🛰️", "🌞", "🌍", "🧲", "⚡",
+            "🔥", "💎", "🧪", "📐", "📘", "🧠"
+        ];
+        /* ===== GAME LOGIC ===== */
+        function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { let j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]] } }
+
+
+        shuffle(questions);
+
+        const values = [];
+        emojis.forEach(e => values.push(e, e));
+        shuffle(values);
+
+
+
+
+        const board = document.getElementById("game-board");
+        let first = null, second = null, lock = false, queue = [...questions];
+        let matchedPair = [];
+        for (let i = 0; i < 36; i++) {
+            const c = document.createElement("div");
+            c.className = "card";
+            c.dataset.value = values[i];
+            c.innerHTML = `
+  <div class="card-face card-back">${i + 1}</div>
+  <div class="card-face card-front">
+    <span class="emoji">${values[i]}</span>
+  </div>
+`;
+            c.onclick = () => clickCard(c);
+            board.appendChild(c);
+        }
+
+        function clickCard(card) {
+            if (lock || card === first || card.classList.contains("is-flipped")) return;
+            card.classList.add("is-flipped");
+            if (!first) { first = card; return; }
+            second = card; lock = true;
+
+            if (first.dataset.value === second.dataset.value) {
+                matchedPair = [first, second];
+                setTimeout(showQuestion, 300);
+            } else {
+                setTimeout(() => {
+                    first.classList.remove("is-flipped");
+                    second.classList.remove("is-flipped");
+                    reset();
+                }, 800);
+            }
+        }
+        function reset() { first = second = null; lock = false }
+        
+        function showQuestion() {
+            const q = queue.shift(); if (!q) return reset();
+            document.getElementById("question-text").textContent = q.question;
+            const list = document.getElementById("options-list");
+            const res = document.getElementById("question-result");
+            list.innerHTML = ""; res.textContent = "";
+            q.options.forEach((o, i) => {
+                const b = document.createElement("button");
+                b.textContent = o;
+                b.onclick = () => {
+                    b.className = i === q.correct ? "correct" : "wrong";
+                    res.textContent = q.explanation;
+                };
+                list.appendChild(b);
+            });
+            document.getElementById("question-overlay").style.display = "flex";
+        }
+
+        function closeQuestion() {
+            document.getElementById("question-overlay").style.display = "none";
+
+            if (matchedPair.length) {
+                matchedPair.forEach(card => {
+                    card.classList.add("matched");
+                });
+                matchedPair = [];
+            }
+            reset();
+        }
+    </script>
+
+</body>
+
+</html>
