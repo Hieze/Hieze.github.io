@@ -1,0 +1,214 @@
+ 
+
+
+ <!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 10 - Môi trường nuôi thủy sản</title>
+<style>
+body{
+    font-family: "Segoe UI", Arial;
+    background: #f4f6f8;
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+h2{text-align:center;color:#2c3e50;}
+.section-title{
+    background:#3498db;
+    color:white;
+    padding:10px;
+    border-radius:8px;
+    margin-top:25px;
+}
+.question{
+    background:white;
+    border-radius:10px;
+    padding:15px;
+    margin:15px 0;
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+.option{display:block;padding:6px;border-radius:6px;}
+.correct{background:#d4edda;color:#155724;font-weight:bold;}
+.wrong{background:#f8d7da;color:#721c24;font-weight:bold;}
+.answer{margin-top:8px;font-style:italic;}
+button{
+    display:block;margin:30px auto;
+    padding:12px 30px;font-size:16px;
+    background:#27ae60;color:white;
+    border:none;border-radius:8px;cursor:pointer;
+}
+button:hover{background:#219150;}
+#result{text-align:center;font-size:20px;font-weight:bold;}
+</style>
+</head>
+<body>
+
+<h2>BÀI 10 – GIỚI THIỆU VỀ MÔI TRƯỜNG NUÔI THỦY SẢN</h2>
+<div id="quiz"></div>
+<button onclick="submitQuiz()">Nộp bài</button>
+<div id="result"></div>
+
+<script>
+
+let mcq = [
+
+{q:"Nhóm thực vật thủy sinh thường gặp trong ao nuôi thủy sản là",o:["Rong đuôi chó","Bèo lục bình","Thực vật phù du","Cây sen"],a:2},
+{q:"Mật độ thực vật phù du trong ao nuôi được đánh giá qua",o:["Độ trong và màu nước","pH","Độ mặn","Oxygen hòa tan"],a:0},
+{q:"Loài sinh trưởng tốt trong nhiệt độ ấm",o:["Cá tầm","Cá hồi vân","Cua tuyết","Tôm càng xanh"],a:3},
+{q:"Dụng cụ không dùng đo ammonia",o:["Máy đo điện tử","KIT so màu","Chuẩn độ","Đĩa Secchi"],a:3},
+{q:"Độ mặn thích hợp cho cá nước ngọt",o:["<5‰",">10‰","<20‰",">30‰"],a:0},
+{q:"Sinh vật cung cấp oxygen cho nước",o:["Động vật","Thực vật thủy sinh","Vi khuẩn","Cá tôm"],a:1},
+{q:"Khoảng pH phù hợp",o:["4,5–10,5","4,5–6,5","8,5–10,5","6,5–8,5"],a:3},
+{q:"Mưa lớn làm giảm độ mặn ao tôm sú cần",o:["Bón vôi","Thêm nước ngọt","Tháo nước mặt","Bổ sung vi sinh"],a:2},
+{q:"Vi khuẩn phân giải hữu cơ",o:["Nitrosomonas","Aeromonas","Vibrio","Bacillus"],a:3},
+{q:"Thực vật thủy sinh không có vai trò",o:["Tăng độ mặn","Hấp thụ CO2","Cung cấp oxygen","Hấp thụ NH3"],a:0},
+{q:"Ao tôm sú cần bổ sung nước ngọt khi",o:["pH thấp","Độ mặn thấp","Độ mặn cao","NH3 cao"],a:2},
+{q:"Không phải mục tiêu vi sinh xử lý môi trường",o:["Xử lí hữu cơ","Xử lí khí độc","Xử lí vi sinh hại","Điều chỉnh độ mặn"],a:3},
+{q:"Oxygen hòa tan tối ưu",o:["≤3","≥5","≤2","≤1"],a:1},
+{q:"Màu nước ao tôm mặn phù hợp",o:["Xanh lam","Vàng nâu","Vàng chanh","Nâu đen"],a:1},
+{q:"Màu nước ao cá nước ngọt phù hợp",o:["Xanh lam","Xanh nõn chuối","Vàng nâu","Hồng"],a:1},
+{q:"Giảm biến động nhiệt độ ao",o:["Bổ sung khoáng","Bón vi sinh","Bón vôi","Duy trì mực nước"],a:3},
+{q:"Màu nước do nhóm nào quyết định",o:["Vi khuẩn","ĐV phù du","TV phù du","TV bậc cao"],a:2},
+{q:"Nhiệt độ tối ưu thủy sản nhiệt đới",o:["25–30°C","13–18°C","32–37°C","13–37°C"],a:0},
+{q:"Vi sinh tăng cao khi",o:["Nước trong","pH cao","Oxygen thấp","Hữu cơ nhiều"],a:3},
+{q:"Không phải yêu cầu môi trường",o:["Thủy lí","Thủy hóa","Thủy sinh","Thủy vực"],a:3},
+{q:"Nhiệt độ phù hợp cá rô phi",o:["25–30","23–28","18–25","10–39"],a:1},
+{q:"Cho các yêu cầu nào sau đây: (1) Độ pH. (2) Hàm lượng NH3. (3) Độ trong và màu nước. (4) Hàm lượng oxygen hoà tan. (5) Độ mặn. Các nhận định đúng về yêu cầu thuỷ hoá của môi trường nuôi thuỷ sản là",o:["1,2,4,5","1,3,4,5","1,2,3,4","2,3,4,5"],a:2},
+{q:"Không phải yêu cầu thủy hóa",o:["pH","NH3","Nhiệt độ","Oxygen"],a:2},
+{q:"Không phải yêu cầu thủy lí",o:["Độ trong","Màu nước","Oxygen","Nhiệt độ"],a:2},
+{q:"Độ trong, màu nước do",o:["SV phù du + hữu cơ","ĐV phù du","TV phù du + vô cơ","Động vật"],a:0},
+{q:"Màu nước phù hợp nhất cá ngọt",o:["Vàng cam","Đỏ gạch","Xanh nõn chuối","Xanh rêu"],a:2},
+{q:"Màu vàng nâu phù hợp cho",o:["Ngọt","Lợ – mặn","Ngọt – lợ","Ngọt – mặn"],a:1},
+{q:"Màu xanh nhạt do tảo",o:["Lam","Lục","Silic","Đỏ"],a:1},
+{q:"Độ trong ao cá",o:["20–30","10–30","25–40","30–45"],a:2},
+{q:"Độ trong ao tôm",o:["20–30","10–30","25–40","30–45"],a:3},
+{q:"Độ trong 30–45cm phù hợp",o:["Ao cá ngọt","Ao cá mặn","Ao tôm","Ao ngao"],a:2},
+{q:"Khoảng pH phù hợp",o:["6–7","6,5–7,5","5–8","6,5–8,5"],a:3},
+{q:"Độ mặn tôm thẻ",o:["0–35‰","0–30‰","0–40‰","5–50‰"],a:0},
+{q:"Độ mặn cá rô phi",o:["0–5%","0–3%","0–3‰","0–5‰"],a:3},
+{q:"Nước mặn tự nhiên",o:["0,01–0,5‰","0,5–30‰",">40‰","30–40‰"],a:3},
+{q:"Phân loại nước dựa vào",o:["Độ trong","Độ mặn","Oxygen","Nhiệt độ"],a:1},
+{q:"Oxygen chủ yếu từ",o:["Khí quyển","TV phù du","VK lam","Tảo lam"],a:1},
+{q:"Oxygen phù hợp cá",o:["4–5","<3","1–5","<1"],a:0},
+{q:"Sai về TV thủy sinh",o:["Cung cấp O2","Nơi trú","Cạnh tranh O2","Hấp thụ kim loại"],a:2},
+{q:"Vai trò quan trọng SV phù du",o:["Cung cấp O2","Thức ăn cá bột","Ổn định hệ","Giảm độc"],a:1},
+{q:"Vi sinh có lợi KHÔNG",o:["Phân giải thức ăn","Phân hủy chất thải","Chuyển khí độc","Sinh khí độc"],a:3},
+{q:"Vi khuẩn gây bệnh phổ biến",o:["Bacillus","Nitrosomonas","Nitrobacter","Vibrio"],a:3},
+{q:"Yếu tố quan trọng nhất",o:["Thời tiết","Nguồn nước","Thổ nhưỡng","Quá trình nuôi"],a:1},
+{q:"Nguồn nước nuôi VN",o:["Ngọt + biển","Chảy + đứng","Ngọt + lợ","Biển + máy"],a:2},
+{q:"Ảnh hưởng rõ nhất",o:["Mật độ","Quy trình","Chất thải","Hóa chất"],a:1},
+{q:"Yếu tố tạo chất thải chính",o:["Thức ăn","Vi sinh","Hóa chất","Thuốc"],a:0}
+];
+
+// ========= ĐÚNG / SAI =========
+// ===== ĐÚNG / SAI – GIỮ NGUYÊN CÂU HỎI =====
+let tf = [
+{
+title:"Câu 1. Nhà trường tổ chức cho học sinh đi trải nghiệm ở trại nuôi thuỷ sản, nhóm học sinh thảo luận về lựa chọn nguồn nước và điều kiện thổ nhưỡng để xây dựng trại nuôi để viết báo cáo thu hoạch. Sau đây là một số ý kiến thảo luận:",
+items:[
+{t:"a) Trại nuôi cần có nguồn nước cấp có chất lượng tốt và đảm bảo trữ lượng phù hợp.",a:true},
+{t:"b) Tránh lựa chọn vị trí nuôi có nguồn nước bị xả thải từ dân cư, trong trọt và chăn nuôi.",a:true},
+{t:"c) Trong ao, tuy nước luôn tiếp xúc với nền đây nhưng không có sự trao đổi vật chất với nền đây.",a:false},
+{t:"d) Ao nuôi có nền đậy bị chua phèn không ảnh hưởng đến chất lượng nước ao.",a:false}
+]
+},
+{
+title:"Câu 2. Một nhóm học sinh được giao nhiệm vụ thuyết trình về chủ đề các yếu tố ảnh hưởng đến chất lượng môi trường nuôi thuỷ sản. Liên quan đến tác động thời tiết, khi hậu, các thành viên trong nhóm đưa ra một số ý kiến sau:",
+items:[
+{t:"a) Thời tiết, khi hậu ảnh hưởng đến mức nhiệt trung bình và biến động nhiệt độ theo các mùa trong năm.",a:true},
+{t:"b) Các loài động vật thuỷ sản nói chung đều có khoảng nhiệt độ phù hợp cho sinh trưởng giống nhau.",a:false},
+{t:"c) Việc xác định đối tượng nuôi không bị ảnh hưởng bởi điều kiện thời tiết, khi hậu.",a:false},
+{t:"d) Mùa vụ thả nuôi và sở vụ nuôi trong năm không bị ảnh hưởng bởi đặc trưng thời tiết, khí hậu.",a:false}
+]
+},
+{
+title:"Câu 3. Một nhóm học sinh được giao nhiệm vụ thuyết trình về chủ đề “Các yếu tố ảnh hưởng đến môi trường nuôi thuỷ sản”. Trước khi báo cáo, nhóm đã thảo luận thống nhất một số nội dung còn vướng mắc. Sau đây là một số ý kiến:",
+items:[
+{t:"a) Các nguồn nước khác nhau sẽ phù hợp với việc nuôi những nhóm thuỷ sản khác nhau.",a:true},
+{t:"b) Các vùng địa lí khác nhau đều có các đặc điểm thổ nhưỡng giống nhau, chúng ảnh hưởng trực tiếp và thường xuyên tới môi trường nuôi thuỷ sản.",a:false},
+{t:"c) Mỗi nhóm động vật thuỷ sản có khả năng sống sót, sinh trưởng và sinh sản ở cá khoảng nhiệt độ khác nhau.",a:true},
+{t:"d) Đặc trưng thời tiết, khí hậu từng vùng khác nhau là cơ sở xác định đối tượng nuôi phù hợp, mùa vụ thả giống và số vụ nuôi trong năm.",a:true}
+]
+},
+{
+title:"Câu 4. Khi thực hành tập quan sát màu nước của một số ao thuỷ sản, nhóm học sinh đưa ra một số nhận định sau:",
+items:[
+{t:"a) Màu nước nuôi phù hợp nhất cho các loài thuỷ sản nước ngọt là màu xanh nhạt (xanh nõn chuối) do sự phát triển của tảo lục.",a:true},
+{t:"b) Đối với các loài thuỷ sản nước lợ và nước mặn, màu nước nuôi thích hợp là vàng nâu (màu nước trà) và xanh rêu.",a:true},
+{t:"c) Quan sát màu nước ao nuôi giúp đánh giá chính xác chất lượng nước, từ đó có biện pháp điều chỉnh kịp thời, tạo điều kiện tốt nhất cho tôm, cá sinh trưởng, phát triển.",a:true},
+{t:"d) Các màu nước không phù hợp cho nuôi thuỷ sản như nước có màu xanh rêu, màu vàng cam, màu đỏ gạch.",a:true}
+]
+}
+];
+ 
+
+
+
+
+// ========= HIỂN THỊ =========
+let quiz=document.getElementById("quiz");
+let idx=0;
+
+// Trắc nghiệm
+quiz.innerHTML+=`<div class="section-title">I. Trắc nghiệm</div>`;
+mcq.forEach(c=>{
+idx++;
+quiz.innerHTML+=`
+<div class="question" data-answer="${c.a}">
+<b>Câu ${idx}:</b> ${c.q}<br>
+${c.o.map((x,i)=>`
+<label class="option">
+<input type="radio" name="q${idx}" value="${i}"> ${x}
+</label>`).join("")}
+<div class="answer"></div>
+</div>`;
+});
+
+// Đúng / Sai
+quiz.innerHTML+=`<div class="section-title">II. Đúng / Sai</div>`;
+tf.forEach(group=>{
+quiz.innerHTML+=`<div class="question"><b>${group.title}</b></div>`;
+group.items.forEach(it=>{
+idx++;
+quiz.innerHTML+=`
+<div class="question" data-answer="${it.a}">
+${it.t}<br>
+<label class="option"><input type="radio" name="q${idx}" value="true"> Đúng</label>
+<label class="option"><input type="radio" name="q${idx}" value="false"> Sai</label>
+<div class="answer"></div>
+</div>`;
+});
+});
+
+// ========= CHẤM BÀI =========
+function submitQuiz(){
+let score=0;
+let questions=document.querySelectorAll(".question[data-answer]");
+
+questions.forEach(q=>{
+let correct=q.dataset.answer;
+let selected=q.querySelector("input:checked");
+let ans=q.querySelector(".answer");
+
+if(selected){
+if(selected.value===correct){
+score++;
+selected.parentElement.classList.add("correct");
+}else{
+selected.parentElement.classList.add("wrong");
+ans.innerHTML="✔ Đáp án đúng: <b>"+(correct==="true"?"Đúng":"Sai")+"</b>";
+}
+}else{
+ans.innerHTML="✔ Đáp án đúng: <b>"+(correct==="true"?"Đúng":"Sai")+"</b>";
+}
+});
+
+document.getElementById("result").innerText=
+`Bạn làm đúng ${score}/${questions.length} câu`;
+}
+</script>
+
+</body>
+</html>
