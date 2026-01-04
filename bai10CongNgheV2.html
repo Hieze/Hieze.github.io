@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Kiểm tra trắc nghiệm môi trường nuôi thuỷ sản</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f2f2f2; padding:20px; }
+    h1 { text-align:center; }
+    .question { background:#fff; padding:15px; margin-bottom:15px; border-radius:8px; box-shadow:0 2px 4px rgba(0,0,0,0.1); }
+    label { display:block; margin:5px 0; }
+    button { padding:12px 25px; font-size:16px; }
+  </style>
+</head>
+<body>
+<h1>BÀI KIỂM TRA TRẮC NGHIỆM<br>MÔI TRƯỜNG NUÔI THUỶ SẢN</h1>
+
+<form id="quiz">
+
+<script>
+const answers = [
+  'C','A','D','D','A','B','D','C','D','A',
+  'C','D','B','B','B','D','C','A','D','D',
+  'A','A','C','C','A','C','B','B','A','D',
+  'C','D','C','D','D','B','A','A','C','B',
+  'D','D','B','A','A','A'
+];
+
+function submitQuiz(){
+  let score = 0;
+  for(let i=1;i<=46;i++){
+    const q = document.querySelector(`input[name=q${i}]:checked`);
+    if(q && q.value === answers[i-1]) score++;
+  }
+  alert(`Bạn trả lời đúng ${score}/46 câu`);
+}
+</script>
+
+<!-- CÂU 1 -->
+<div class="question"><h3>Câu 1. Nhóm thực vật thuỷ sinh thường gặp trong ao nuôi thuỷ sản là</h3>
+<label><input type="radio" name="q1" value="A"> A. rong đuôi chó.</label>
+<label><input type="radio" name="q1" value="B"> B. bèo lục bình.</label>
+<label><input type="radio" name="q1" value="C"> C. thực vật phù du (các loài vi tảo).</label>
+<label><input type="radio" name="q1" value="D"> D. cây sen.</label></div>
+
+<!-- CÂU 2 -->
+<div class="question"><h3>Câu 2. Mật độ thực vật phù du, động vật phù du trong ao nuôi thường được đánh giá gián tiếp thông qua</h3>
+<label><input type="radio" name="q2" value="A"> A. độ trong và màu nước ao nuôi.</label>
+<label><input type="radio" name="q2" value="B"> B. độ pH.</label>
+<label><input type="radio" name="q2" value="C"> C. độ mặn.</label>
+<label><input type="radio" name="q2" value="D"> D. hàm lượng oxygen hoà tan.</label></div>
+
+<!-- CÂU 3 -->
+<div class="question"><h3>Câu 3. Loại thuỷ sản nào sau đây sinh trưởng tốt trong điều kiện nhiệt độ ấm áp?</h3>
+<label><input type="radio" name="q3" value="A"> A. Cá tầm.</label>
+<label><input type="radio" name="q3" value="B"> B. Cá hồi vân.</label>
+<label><input type="radio" name="q3" value="C"> C. Cua tuyết.</label>
+<label><input type="radio" name="q3" value="D"> D. Tôm càng xanh.</label></div>
+
+<!-- CÂU 4 -->
+<div class="question"><h3>Câu 4. Phương pháp hoặc dụng cụ nào không sử dụng để xác định hàm lượng ammonia trong nước?</h3>
+<label><input type="radio" name="q4" value="A"> A. Máy đo điện tử.</label>
+<label><input type="radio" name="q4" value="B"> B. KIT so màu.</label>
+<label><input type="radio" name="q4" value="C"> C. Phân tích, chuẩn độ trong phòng thí nghiệm.</label>
+<label><input type="radio" name="q4" value="D"> D. Đĩa secchi.</label></div>
+
+<!-- CÂU 5 -->
+<div class="question"><h3>Câu 5. Độ mặn thích hợp cho hầu hết các loài cá nước ngọt là bao nhiêu?</h3>
+<label><input type="radio" name="q5" value="A"> A. Dưới 5‰.</label>
+<label><input type="radio" name="q5" value="B"> B. Trên 10‰.</label>
+<label><input type="radio" name="q5" value="C"> C. Dưới 20‰.</label>
+<label><input type="radio" name="q5" value="D"> D. Trên 30‰.</label></div>
+
+<!-- CÂU 6 -->
+<div class="question"><h3>Câu 6. Thành phần sinh vật nào trong ao nuôi thuỷ sản có khả năng cung cấp oxygen cho nước</h3>
+<label><input type="radio" name="q6" value="A"> A. Động vật thuỷ sinh.</label>
+<label><input type="radio" name="q6" value="B"> B. Thực vật thuỷ sinh.</label>
+<label><input type="radio" name="q6" value="C"> C. Vi khuẩn.</label>
+<label><input type="radio" name="q6" value="D"> D. Cá, tôm nuôi.</label></div>
+<!-- CÂU 7 -->
+<div class="question"><h3>Câu 7. Khoảng pH môi trường nước phù hợp cho các loài động vật thuỷ sản sinh trưởng là</h3>
+<label><input type="radio" name="q7" value="A"> A. từ 4,5 đến 10,5.</label>
+<label><input type="radio" name="q7" value="B"> B. từ 4,5 đến 6,5.</label>
+<label><input type="radio" name="q7" value="C"> C. từ 8,5 đến 10,5.</label>
+<label><input type="radio" name="q7" value="D"> D. từ 6,5 đến 8,5.</label></div>
+
+<!-- CÂU 8 -->
+<div class="question"><h3>Câu 8. Khi ao nuôi tôm sú gặp trời mưa lớn làm độ mặn giảm thấp người cần làm gì?</h3>
+<label><input type="radio" name="q8" value="A"> A. Bổ sung vôi bột.</label>
+<label><input type="radio" name="q8" value="B"> B. Bổ sung thêm nước ngọt.</label>
+<label><input type="radio" name="q8" value="C"> C. Tháo bớt nước tầng mặt.</label>
+<label><input type="radio" name="q8" value="D"> D. Bổ sung chế phẩm sinh học.</label></div>
+
+<!-- CÂU 9 -->
+<div class="question"><h3>Câu 9. Đâu là một trong số các nhóm vi khuẩn dị dưỡng có tác dụng phân chất hữu cơ thường được sử dụng để tạo chế phẩm sinh học xử lí môi trường nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q9" value="A"> A. Nitrosomonas.</label>
+<label><input type="radio" name="q9" value="B"> B. Aeromonas.</label>
+<label><input type="radio" name="q9" value="C"> C. Vibrio.</label>
+<label><input type="radio" name="q9" value="D"> D. Bacillus.</label></div>
+
+<!-- CÂU 10 -->
+<div class="question"><h3>Câu 10. Trong nước ao nuôi thuỷ sản, thực vật thuỷ sinh không có vai trò nào sau đây?</h3>
+<label><input type="radio" name="q10" value="A"> A. Tăng độ mặn.</label>
+<label><input type="radio" name="q10" value="B"> B. Hấp thụ carbon dioxide.</label>
+<label><input type="radio" name="q10" value="C"> C. Cung cấp oxygen.</label>
+<label><input type="radio" name="q10" value="D"> D. Hấp thụ ammonia.</label></div>
+
+<!-- CÂU 11 -->
+<div class="question"><h3>Câu 11. Đối với ao nuôi tôm sú, người nuôi tiến hành bổ sung nước ngọt trong trường hợp</h3>
+<label><input type="radio" name="q11" value="A"> A. độ pH quá thấp.</label>
+<label><input type="radio" name="q11" value="B"> B. độ mặn quá thấp.</label>
+<label><input type="radio" name="q11" value="C"> C. độ mặn quá cao.</label>
+<label><input type="radio" name="q11" value="D"> D. hàm lượng ammonia quá cao.</label></div>
+
+<!-- CÂU 12 -->
+<div class="question"><h3>Câu 12. Đâu không phải là mục tiêu của việc ứng dụng vi sinh vật trong xử lí môi trường nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q12" value="A"> A. Xử lí chất thải hữu cơ.</label>
+<label><input type="radio" name="q12" value="B"> B. Xử lí khí độc.</label>
+<label><input type="radio" name="q12" value="C"> C. Xử lí vi sinh vật gây hại.</label>
+<label><input type="radio" name="q12" value="D"> D. Điều chỉnh độ mặn.</label></div>
+
+<!-- CÂU 13 -->
+<div class="question"><h3>Câu 13. Hàm lượng oxygen hoà tan tối ưu cho các đối tượng nuôi thuỷ sản là</h3>
+<label><input type="radio" name="q13" value="A"> A. ≤3 mg/L.</label>
+<label><input type="radio" name="q13" value="B"> B. ≥ 5 mg/L.</label>
+<label><input type="radio" name="q13" value="C"> C. ≤2 mg/L.</label>
+<label><input type="radio" name="q13" value="D"> D. ≤1 mg/L.</label></div>
+
+<!-- CÂU 14 -->
+<div class="question"><h3>Câu 14. Màu nước phù hợp cho ao nuôi tôm nước lợ, mặn là</h3>
+<label><input type="radio" name="q14" value="A"> A. màu xanh lam.</label>
+<label><input type="radio" name="q14" value="B"> B. màu vàng nâu (màu nước trà).</label>
+<label><input type="radio" name="q14" value="C"> C. màu vàng chanh.</label>
+<label><input type="radio" name="q14" value="D"> D. màu nâu đen.</label></div>
+
+<!-- CÂU 15 -->
+<div class="question"><h3>Câu 15. Màu nước phù hợp cho ao nuôi cá nước ngọt là</h3>
+<label><input type="radio" name="q15" value="A"> A. màu xanh lam.</label>
+<label><input type="radio" name="q15" value="B"> B. màu xanh nõn chuối.</label>
+<label><input type="radio" name="q15" value="C"> C. màu vàng nâu.</label>
+<label><input type="radio" name="q15" value="D"> D. màu hồng nhạt.</label></div>
+
+<!-- CÂU 16 -->
+<div class="question"><h3>Câu 16. Biện pháp nào giúp giảm biến động nhiệt độ cho ao nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q16" value="A"> A. Bổ sung khoáng.</label>
+<label><input type="radio" name="q16" value="B"> B. Bón chế phẩm sinh học.</label>
+<label><input type="radio" name="q16" value="C"> C. Bón nước vôi trong.</label>
+<label><input type="radio" name="q16" value="D"> D. Duy trì mực nước ao nuôi phù hợp.</label></div>
+
+<!-- CÂU 17 -->
+<div class="question"><h3>Câu 17. Màu nước cho ao nuôi thuỷ sản chủ yếu do nhóm thuỷ sinh vật nào gây ra?</h3>
+<label><input type="radio" name="q17" value="A"> A. Vi khuẩn.</label>
+<label><input type="radio" name="q17" value="B"> B. Động vật phù du.</label>
+<label><input type="radio" name="q17" value="C"> C. Thực vật phù du.</label>
+<label><input type="radio" name="q17" value="D"> D. Thực vật thuỷ sinh bậc cao.</label></div>
+
+<!-- CÂU 18 -->
+<div class="question"><h3>Câu 18. Khoảng nhiệt độ tối ưu để nuôi các loài thuỷ sản vùng nhiệt đới là</h3>
+<label><input type="radio" name="q18" value="A"> A. từ 25 đến 30°C.</label>
+<label><input type="radio" name="q18" value="B"> B. từ 13 đến 18°C.</label>
+<label><input type="radio" name="q18" value="C"> C. từ 32 đến 37°C.</label>
+<label><input type="radio" name="q18" value="D"> D. từ 13 đến 37°C.</label></div>
+
+<!-- CÂU 19 -->
+<div class="question"><h3>Câu 19. Mật độ vi sinh vật trong ao nuôi thuỷ sản thường tăng cao khi</h3>
+<label><input type="radio" name="q19" value="A"> A. độ trong ao nuôi cao.</label>
+<label><input type="radio" name="q19" value="B"> B. độ pH tăng cao.</label>
+<label><input type="radio" name="q19" value="C"> C. hàm lượng oxygen giảm thấp.</label>
+<label><input type="radio" name="q19" value="D"> D. môi trường tích luỹ nhiều chất hữu cơ.</label></div>
+
+<!-- CÂU 20 -->
+<div class="question"><h3>Câu 20. Trong các yêu cầu sau, đâu không phải là yêu cầu chính của môi trường nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q20" value="A"> A. Yêu cầu về thuỷ lí.</label>
+<label><input type="radio" name="q20" value="B"> B. Yêu cầu về thuỷ hoá.</label>
+<label><input type="radio" name="q20" value="C"> C. Yêu cầu về thuỷ sinh vật.</label>
+<label><input type="radio" name="q20" value="D"> D. Yêu cầu về thuỷ vực.</label></div>
+
+<!-- CÂU 21 -->
+<div class="question"><h3>Câu 21. Khoảng nhiệt độ trong nước thích hợp để cá rô phi sinh trưởng phát triển là</h3>
+<label><input type="radio" name="q21" value="A"> A. từ 25 đến 30 °C.</label>
+<label><input type="radio" name="q21" value="B"> B. từ 23 đến 28 °C.</label>
+<label><input type="radio" name="q21" value="C"> C. từ 18 đến 25 °C.</label>
+<label><input type="radio" name="q21" value="D"> D. từ 10 đến 39 °C.</label></div>
+
+<!-- CÂU 22 -->
+<div class="question"><h3>Câu 22. Cho các yêu cầu nào sau đây: (1) Độ pH. (2) Hàm lượng NH3. (3) Độ trong và màu nước. (4) Hàm lượng oxygen hoà tan. (5) Độ mặn. Các nhận định đúng về yêu cầu thuỷ hoá của môi trường nuôi thuỷ sản là:</h3>
+<label><input type="radio" name="q22" value="A"> A. (1), (2), (4), (5).</label>
+<label><input type="radio" name="q22" value="B"> B. (1), (3), (4), (5).</label>
+<label><input type="radio" name="q22" value="C"> C. (1), (2), (3), (4).</label>
+<label><input type="radio" name="q22" value="D"> D. (2), (3), (4), (5).</label></div>
+
+<!-- CÂU 23 -->
+<div class="question"><h3>Câu 23. Ý nào sau đây không phải là yêu cầu về thuỷ hoá của môi trường nước nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q23" value="A"> A. Độ pH.</label>
+<label><input type="radio" name="q23" value="B"> B. Hàm lượng NH3.</label>
+<label><input type="radio" name="q23" value="C"> C. Nhiệt độ nước.</label>
+<label><input type="radio" name="q23" value="D"> D. Hàm lượng oxygen hoà tan.</label></div>
+
+<!-- CÂU 24 -->
+<div class="question"><h3>Câu 24. Yếu tố nào sau đây không phải là yêu cầu về thuỷ lí của môi trường nước nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q24" value="A"> A. Độ trong.</label>
+<label><input type="radio" name="q24" value="B"> B. Màu nước.</label>
+<label><input type="radio" name="q24" value="C"> C. Hàm lượng oxygen hoà tan.</label>
+<label><input type="radio" name="q24" value="D"> D. Nhiệt độ nước.</label></div>
+
+<!-- CÂU 25 -->
+<div class="question"><h3>Câu 25. Độ trong và màu nước ao nuôi thuỷ sản chủ yếu do thành phần nào quyết định?</h3>
+<label><input type="radio" name="q25" value="A"> A. Sự phân tán của sinh vật phù du, các chất hữu cơ, các hoá chất có màu.</label>
+<label><input type="radio" name="q25" value="B"> B. Sự phân tán của động vật phù du, các chất vô cơ, các hoá chất khác.</label>
+<label><input type="radio" name="q25" value="C"> C. Sự phân tán của thực vật phù du, các chất vô cơ, các hoá chất khác.</label>
+<label><input type="radio" name="q25" value="D"> D. Sự phân tán của động vật, các chất hữu cơ, các hoá chất khác.</label></div>
+
+<!-- CÂU 26 -->
+<div class="question"><h3>Câu 26. Màu nước nuôi thuỷ sản phù hợp nhất cho các loài thuỷ sản nước ngọt là</h3>
+<label><input type="radio" name="q26" value="A"> A. màu vàng cam.</label>
+<label><input type="radio" name="q26" value="B"> B. màu đỏ gạch.</label>
+<label><input type="radio" name="q26" value="C"> C. màu xanh nõn chuối.</label>
+<label><input type="radio" name="q26" value="D"> D. màu xanh rêu.</label></div>
+
+<!-- CÂU 27 -->
+<div class="question"><h3>Câu 27. Màu vàng nâu là màu nước nuôi thích hợp cho nhóm loài thuỷ sản nào sau đây?</h3>
+<label><input type="radio" name="q27" value="A"> A. Thuỷ sản nước ngọt.</label>
+<label><input type="radio" name="q27" value="B"> B. Thuỷ sản nước lợ và nước mặn.</label>
+<label><input type="radio" name="q27" value="C"> C. Thuỷ sản nước ngọt và nước lợ.</label>
+<label><input type="radio" name="q27" value="D"> D. Thuỷ sản nước ngọt và nước mặn.</label></div>
+
+<!-- CÂU 28 -->
+<div class="question"><h3>Câu 28. Màu xanh nhạt là màu nước nuôi phù hợp nhất cho các loài thuỷ sản nước ngọt do sự phát triển của nhóm sinh vật nào?</h3>
+<label><input type="radio" name="q28" value="A"> A. Tảo lam.</label>
+<label><input type="radio" name="q28" value="B"> B. Tảo lục.</label>
+<label><input type="radio" name="q28" value="C"> C. Tảo silic.</label>
+<label><input type="radio" name="q28" value="D"> D. Tảo đỏ.</label></div>
+
+<!-- CÂU 29 -->
+<div class="question"><h3>Câu 29. Độ trong của nước phù hợp cho hầu hết các ao nuôi cá nằm trong khoảng</h3>
+<label><input type="radio" name="q29" value="A"> A. từ 20 đến 30 cm.</label>
+<label><input type="radio" name="q29" value="B"> B. từ 10 đến 30 cm.</label>
+<label><input type="radio" name="q29" value="C"> C. từ 25 đến 40 cm.</label>
+<label><input type="radio" name="q29" value="D"> D. từ 30 đến 45 cm.</label></div>
+
+<!-- CÂU 30 -->
+<div class="question"><h3>Câu 30. Độ trong của nước phù hợp cho hầu hết các ao nuôi tôm là</h3>
+<label><input type="radio" name="q30" value="A"> A. từ 20 đến 30 cm.</label>
+<label><input type="radio" name="q30" value="B"> B. từ 10 đến 30 cm.</label>
+<label><input type="radio" name="q30" value="C"> C. từ 25 đến 40 cm.</label>
+<label><input type="radio" name="q30" value="D"> D. từ 30 đến 45 cm.</label></div>
+
+<!-- CÂU 31 -->
+<div class="question"><h3>Câu 31. Độ trong của nước có giá trị từ 30 đến 45 cm là phù hợp cho ao nuôi thuỷ sản nào?</h3>
+<label><input type="radio" name="q31" value="A"> A. Ao nuôi cá nước ngọt.</label>
+<label><input type="radio" name="q31" value="B"> B. Ao nuôi cá nước mặn.</label>
+<label><input type="radio" name="q31" value="C"> C. Ao nuôi tôm.</label>
+<label><input type="radio" name="q31" value="D"> D. Ao nuôi ngao.</label></div>
+
+<!-- CÂU 32 -->
+<div class="question"><h3>Câu 32. Khoảng pH phù hợp cho hầu hết các loài động vật thuỷ sản sinh trưởng là bao nhiêu?</h3>
+<label><input type="radio" name="q32" value="A"> A. từ 6 đến 7.</label>
+<label><input type="radio" name="q32" value="B"> B. từ 6,5 đến 7,5.</label>
+<label><input type="radio" name="q32" value="C"> C. từ 5 đến 8.</label>
+<label><input type="radio" name="q32" value="D"> D. từ 6,5 đến 8,5.</label></div>
+
+<!-- CÂU 33 -->
+<div class="question"><h3>Câu 33. Khoảng độ mặn giới hạn cho tôm thẻ chân trắng có thể sinh trưởng là</h3>
+<label><input type="radio" name="q33" value="A"> A. từ 0 đến 35‰.</label>
+<label><input type="radio" name="q33" value="B"> B. từ 0 đến 30‰.</label>
+<label><input type="radio" name="q33" value="C"> C. từ 0 đến 40‰.</label>
+<label><input type="radio" name="q33" value="D"> D. từ 5 đến 50‰.</label></div>
+
+<!-- CÂU 34 -->
+<div class="question"><h3>Câu 34. Khoảng độ mặn thích hợp cho cá rô phi sinh trưởng và phát triển tốt nhất là</h3>
+<label><input type="radio" name="q34" value="A"> A. từ 0 đến 5%.</label>
+<label><input type="radio" name="q34" value="B"> B. từ 0 đến 3%.</label>
+<label><input type="radio" name="q34" value="C"> C. từ 0 đến 3‰.</label>
+<label><input type="radio" name="q34" value="D"> D. từ 0 đến 5‰.</label></div>
+
+<!-- CÂU 35 -->
+<div class="question"><h3>Câu 35. Căn cứ vào độ mặn tự nhiên, nước mặn có hàm lượng muối chiếm tỉ lệ bao nhiêu?</h3>
+<label><input type="radio" name="q35" value="A"> A. từ 0,01 đến 0,5‰.</label>
+<label><input type="radio" name="q35" value="B"> B. từ 0,5 đến 30‰.</label>
+<label><input type="radio" name="q35" value="C"> C. trên 40‰.</label>
+<label><input type="radio" name="q35" value="D"> D. từ 30 đến 40‰.</label></div>
+
+<!-- CÂU 36 -->
+<div class="question"><h3>Câu 36. Dựa vào tiêu chí nào người ta phân chia các loại môi trường: nước ngọt, nước lợ, nước mặn?</h3>
+<label><input type="radio" name="q36" value="A"> A. Độ trong.</label>
+<label><input type="radio" name="q36" value="B"> B. Độ mặn.</label>
+<label><input type="radio" name="q36" value="C"> C. Hàm lượng oxygen hoà tan.</label>
+<label><input type="radio" name="q36" value="D"> D. Nhiệt độ.</label></div>
+
+<!-- CÂU 37 -->
+<div class="question"><h3>Câu 37. Hàm lượng oxygen hoà tan trong nước của các thuỷ vực nuôi thuỷ sản chủ yếu được cung cấp từ nguồn nào sau đây?</h3>
+<label><input type="radio" name="q37" value="A"> A. Nguồn oxygen khí quyển.</label>
+<label><input type="radio" name="q37" value="B"> B. Quang hợp của sinh vật phù du.</label>
+<label><input type="radio" name="q37" value="C"> C. Quang hợp của vi khuẩn lam.</label>
+<label><input type="radio" name="q37" value="D"> D. Quang hợp của tảo lam.</label></div>
+
+<!-- CÂU 38 -->
+<div class="question"><h3>Câu 38. Hàm lượng oxygen hoà tan trong nước thích hợp đối với các loài cá dao động trong khoảng</h3>
+<label><input type="radio" name="q38" value="A"> A. từ 4 đến 5 mg/L.</label>
+<label><input type="radio" name="q38" value="B"> B. dưới 3 mg/L.</label>
+<label><input type="radio" name="q38" value="C"> C. từ 1 đến 5 mg/L.</label>
+<label><input type="radio" name="q38" value="D"> D. dưới 1 mg/L.</label></div>
+
+<!-- CÂU 39 -->
+<div class="question"><h3>Câu 39. Phát biểu nào không đúng khi nói về vai trò của thực vật thuỷ sinh trong ao nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q39" value="A"> A. Thực vật thuỷ sinh cung cấp oxygen hoà tan cho nước nhờ quá trình quang hợp.</label>
+<label><input type="radio" name="q39" value="B"> B. Thực vật thuỷ sinh cung cấp nơi trú ngụ cho động vật thuỷ sản.</label>
+<label><input type="radio" name="q39" value="C"> C. Thực vật thuỷ sinh cạnh tranh oxygen hoà tan với động vật thuỷ sản.</label>
+<label><input type="radio" name="q39" value="D"> D. Thực vật thuỷ sinh sẽ hấp thụ một số kim loại nặng làm giảm ô nhiễm nguồn nước.</label></div>
+
+<!-- CÂU 40 -->
+<div class="question"><h3>Câu 40. Vai trò quan trọng nhất của sinh vật phù du trong ao nuôi thuỷ sản là</h3>
+<label><input type="radio" name="q40" value="A"> A. cung cấp oxygen hoà tan cho nước.</label>
+<label><input type="radio" name="q40" value="B"> B. cung cấp nguồn thức ăn chính cho các loài thuỷ sản tự nhiên trong giai đoạn cá bột, ấu trùng.</label>
+<label><input type="radio" name="q40" value="C"> C. ổn định hệ sinh thái môi trường nuôi thuỷ sản.</label>
+<label><input type="radio" name="q40" value="D"> D. làm giảm các chất độc hại trong nước.</label></div>
+
+<!-- CÂU 41 -->
+<div class="question"><h3>Câu 41. Phát biểu nào không đúng khi nói về vai trò của nhóm vi sinh vật có lợi trong ao nuôi thuỷ sản như Bacillus, Lactobacillus, Nitrosomonas?</h3>
+<label><input type="radio" name="q41" value="A"> A. Chúng có khả năng phân giải thức ăn dư thừa.</label>
+<label><input type="radio" name="q41" value="B"> B. Chúng phân huỷ chất thải của thuỷ sản nuôi.</label>
+<label><input type="radio" name="q41" value="C"> C. Chúng có khả năng chuyển hoá một số khí độc thành chất không độc.</label>
+<label><input type="radio" name="q41" value="D"> D. Chúng có thể sinh ra các khí độc như NH3, H2S.</label></div>
+
+<!-- CÂU 42 -->
+<div class="question"><h3>Câu 42. Nhóm vi sinh vật phổ biến có thể gây bệnh cho thuỷ sản nuôi là</h3>
+<label><input type="radio" name="q42" value="A"> A. Bacillus.</label>
+<label><input type="radio" name="q42" value="B"> B. Nitrosomonas.</label>
+<label><input type="radio" name="q42" value="C"> C. Nitrobacter.</label>
+<label><input type="radio" name="q42" value="D"> D. Vibrio.</label></div>
+
+<!-- CÂU 43 -->
+<div class="question"><h3>Câu 43. Trong các yếu tố ảnh hưởng đến môi trường nuôi thuỷ sản, yếu tố nào là quan trọng nhất?</h3>
+<label><input type="radio" name="q43" value="A"> A. Thời tiết, khí hậu.</label>
+<label><input type="radio" name="q43" value="B"> B. Nguồn nước.</label>
+<label><input type="radio" name="q43" value="C"> C. Thổ nhưỡng.</label>
+<label><input type="radio" name="q43" value="D"> D. Quá trình nuôi thuỷ sản.</label></div>
+
+<!-- CÂU 44 -->
+<div class="question"><h3>Câu 44. Môi trường nước nuôi trồng thuỷ sản ở Việt Nam hiện nay được chia thành các nguồn nước chính bao gồm:</h3>
+<label><input type="radio" name="q44" value="A"> A. Môi trường nước ngọt và nước biển ven bờ.</label>
+<label><input type="radio" name="q44" value="B"> B. Môi trường nước chảy và nước đứng.</label>
+<label><input type="radio" name="q44" value="C"> C. Môi trường nước ngọt và nước lợ.</label>
+<label><input type="radio" name="q44" value="D"> D. Môi trường nước biển và nước máy.</label></div>
+
+<!-- CÂU 45 -->
+<div class="question"><h3>Câu 45. Môi trường nuôi thuỷ sản chịu ảnh hưởng rõ rệt nhất của yếu tố nào sau đây?</h3>
+<label><input type="radio" name="q45" value="A"> A. Mật độ nuôi.</label>
+<label><input type="radio" name="q45" value="B"> B. Quy trình nuôi dưỡng, chăm sóc.</label>
+<label><input type="radio" name="q45" value="C"> C. Quản lí chất thải.</label>
+<label><input type="radio" name="q45" value="D"> D. Các hoá chất xử lí môi trường.</label></div>
+
+<!-- CÂU 46 -->
+<div class="question"><h3>Câu 46. Yếu tố chính tạo ra chất thải và gây ảnh hưởng lớn đến chất lượng môi trường nước nuôi thuỷ sản là</h3>
+<label><input type="radio" name="q46" value="A"> A. cung cấp thức ăn cho động vật thuỷ sản.</label>
+<label><input type="radio" name="q46" value="B"> B. bổ sung vào hệ thống nuôi các loại chế phẩm sinh học.</label>
+<label><input type="radio" name="q46" value="C"> C. bổ sung vào môi trường các hoá chất xử lí môi trường.</label>
+<label><input type="radio" name="q46" value="D"> D. bổ sung các loại thuốc phòng và điều trị bệnh.</label></div>
+<button type="button" onclick="submitQuiz()">Nộp bài</button>
+</form>
+</body>
+</html>
