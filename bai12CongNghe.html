@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Kiểm tra trắc nghiệm môi trường nuôi thuỷ sản - Bài 12</title>
+  
+ 
+<style>
+/* ÉP TO TOÀN TRANG */
+html {
+  font-size: 26px !important;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f2f2f2;
+  padding: 20px;
+  margin: 0;
+}
+
+/* TIÊU ĐỀ */
+h1 {
+  text-align: center;
+  font-size: 34px !important;
+  margin-bottom: 25px;
+}
+
+/* KHUNG CÂU HỎI */
+.question {
+  background: #ffffff;
+  padding: 22px;
+  margin-bottom: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* CHỮ CÂU HỎI */
+.question h3 {
+  font-size: 28px !important;
+  margin-bottom: 14px;
+}
+
+/* ĐÁP ÁN */
+label {
+  display: block;
+  font-size: 30px !important;   /* CHỮ ĐÁP ÁN RẤT TO */
+  font-weight: 600;
+  margin: 14px 0;
+  cursor: pointer;
+}
+
+/* NÚT TRÒN */
+input[type="radio"] {
+  transform: scale(2);          /* NÚT CHỌN CỰC TO */
+  margin-right: 14px;
+}
+
+/* NÚT NỘP BÀI */
+button {
+  font-size: 28px;
+  padding: 16px 36px;
+  border-radius: 12px;
+  border: none;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+</style>
+
+
+
+</head>
+<body>
+<h1>BÀI KIỂM TRA TRẮC NGHIỆM<br>MÔI TRƯỜNG NUÔI THUỶ SẢN - BÀI 12</h1>
+
+<form id="quiz">
+
+<script>
+const answers = [
+  'B', // Câu 1
+  'D', // Câu 2
+  'D', // Câu 3
+  'B', // Câu 4
+  'C', // Câu 5
+  'D', // Câu 6
+  'D', // Câu 7
+  'C', // Câu 8
+  'C', // Câu 9
+  'B', // Câu 10
+  'C', // Câu 11
+  'B', // Câu 12
+  'D', // Câu 13
+  'A', // Câu 14
+  'C', // Câu 15
+  'C', // Câu 16
+  'D', // Câu 17
+  'A', // Câu 18
+  'D', // Câu 19
+  'B'  // Câu 20
+];
+
+
+function submitQuiz(){
+  let score = 0;
+  for(let i=1;i<=46;i++){
+    const q = document.querySelector(`input[name=q${i}]:checked`);
+    if(q && q.value === answers[i-1]) score++;
+  }
+  alert(`Bạn trả lời đúng ${score}/46 câu`);
+}
+</script>
+
+ <div class="question"><h3>Câu 1. Nước dùng để ương nuôi ấu trùng tôm biển thường được khử trùng bằng chlorine, biện pháp nào sau đây thường được sử dụng để loại bỏ dư lượng chlorine trước khi cấp vào bể ương?</h3>
+<label><input type="radio" name="q1" value="A"> A. Tăng độ mặn.</label>
+<label><input type="radio" name="q1" value="B"> B. Sục khí mạnh.</label>
+<label><input type="radio" name="q1" value="C"> C. Giảm độ mặn.</label>
+<label><input type="radio" name="q1" value="D"> D. Tăng pH.</label></div>
+
+<div class="question"><h3>Câu 2. Đâu là một trong những nhóm vi khuẩn quang hoá tự dưỡng, có tác dụng chuyển hoá ammonia thường được sử dụng để tạo chế phẩm sinh học xử lí môi trường nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q2" value="A"> A. Nấm men.</label>
+<label><input type="radio" name="q2" value="B"> B. Bacillus.</label>
+<label><input type="radio" name="q2" value="C"> C. Vibrio.</label>
+<label><input type="radio" name="q2" value="D"> D. Nitrosomonas.</label></div>
+
+<div class="question"><h3>Câu 3. Đâu không phải là mục tiêu của việc ứng dụng vi sinh vật trong xử lí môi trường nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q3" value="A"> A. Xử lí chất thải hữu cơ.</label>
+<label><input type="radio" name="q3" value="B"> B. Xử lí khí độc.</label>
+<label><input type="radio" name="q3" value="C"> C. Xử lí vi sinh vật gây hại.</label>
+<label><input type="radio" name="q3" value="D"> D. Điều chỉnh độ mặn.</label></div>
+
+<div class="question"><h3>Câu 4. Trong quá trình chuẩn bị nước trước khi thả giống tôm, công việc “Tiến hành diệt rong, ấu trùng hàu, hà bằng TCCA với nồng độ 5 mg/L và chlorine với nồng độ 15 mg/L” thuộc bước xử lí nào?</h3>
+<label><input type="radio" name="q4" value="A"> A. Lắng lọc.</label>
+<label><input type="radio" name="q4" value="B"> B. Khử trùng, diệt tạp.</label>
+<label><input type="radio" name="q4" value="C"> C. Bổ sung chế phẩm vi sinh.</label>
+<label><input type="radio" name="q4" value="D"> D. Gây màu nước.</label></div>
+
+<div class="question"><h3>Câu 5. Biện pháp nào không phù hợp để giảm thiểu chất thải hữu cơ và khí độc cho ao nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q5" value="A"> A. Sử dụng thức ăn có kích cỡ phù hợp với từng giai đoạn độ tuổi của động vật thuỷ sản, thức ăn có độ kết dính tốt.</label>
+<label><input type="radio" name="q5" value="B"> B. Định kì siphon đáy kết hợp thay nước để loại bỏ thức ăn thừa, phân thải ra khỏi hệ thống nuôi.</label>
+<label><input type="radio" name="q5" value="C"> C. Cho ăn dư thừa.</label>
+<label><input type="radio" name="q5" value="D"> D. Định kì bón chế phẩm sinh học để tăng cường phân giải chất hữu cơ trong nước và nền đáy.</label></div>
+
+<div class="question"><h3>Câu 6. Phương pháp xử lí nào là phù hợp đối với bùn đáy ao nuôi cá tra sau khi thu hoạch cá?</h3>
+<label><input type="radio" name="q6" value="A"> A. Không cần nạo vét và tiếp tục sử dụng cho vụ nuôi sau.</label>
+<label><input type="radio" name="q6" value="B"> B. Nạo vét và đổ ra khu đất trống gần nhất để tiết kiệm công vận chuyển.</label>
+<label><input type="radio" name="q6" value="C"> C. Nạo vét đắp lên bờ ao.</label>
+<label><input type="radio" name="q6" value="D"> D. Nạo vét để bón cho cây trồng hoặc ủ tạo phân vi sinh.</label></div>
+
+<div class="question"><h3>Câu 7. Trong quá trình nuôi, nước vôi trong thường được bón vào ao trong trường hợp nào sau đây?</h3>
+<label><input type="radio" name="q7" value="A"> A. Độ mặn thấp.</label>
+<label><input type="radio" name="q7" value="B"> B. Độ pH cao.</label>
+<label><input type="radio" name="q7" value="C"> C. Độ mặn cao.</label>
+<label><input type="radio" name="q7" value="D"> D. Độ pH thấp.</label></div>
+
+<div class="question"><h3>Câu 8. Nước thải từ ao nuôi nào có thể được sử dụng trực tiếp để tưới cho cây trồng?</h3>
+<label><input type="radio" name="q8" value="A"> A. Ao nuôi cá nước ngọt đang xuất hiện bệnh truyền nhiễm.</label>
+<label><input type="radio" name="q8" value="B"> B. Ao nuôi tôm nước mặn không xuất hiện dịch bệnh.</label>
+<label><input type="radio" name="q8" value="C"> C. Ao nuôi thuỷ sản nước ngọt không xuất hiện dịch bệnh.</label>
+<label><input type="radio" name="q8" value="D"> D. Ao nuôi tôm nước mặn đang xuất hiện bệnh truyền nhiễm.</label></div>
+
+<div class="question"><h3>Câu 9. Biện pháp nào sau đây là không phù hợp để tăng cường hàm lượng oxygen hoà tan cho ao nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q9" value="A"> A. Quản lí mật độ tảo phù hợp để tảo quang hợp tạo oxygen cho ao.</label>
+<label><input type="radio" name="q9" value="B"> B. Sử dụng sục khí, quạt nước giúp tăng khả năng khuếch tán oxygen vào nước.</label>
+<label><input type="radio" name="q9" value="C"> C. Sử dụng vôi bột bón xuống ao.</label>
+<label><input type="radio" name="q9" value="D"> D. Thay nước mới giàu oxygen.</label></div>
+
+<div class="question"><h3>Câu 10. Phương pháp nào là không phù hợp để xử lí nước thải từ ao nuôi cá nước ngọt?</h3>
+<label><input type="radio" name="q10" value="A"> A. Dùng nước tưới cho cây trồng.</label>
+<label><input type="radio" name="q10" value="B"> B. Bơm nước thải ra kênh mương tự nhiên bên ngoài trại không cần xử lí.</label>
+<label><input type="radio" name="q10" value="C"> C. Xử lí trước khi thải ra thuỷ vực tự nhiên.</label>
+<label><input type="radio" name="q10" value="D"> D. Xử lí bằng hệ thống ao lắng thải để tái sử dụng cho vụ sau.</label></div>
+
+<div class="question"><h3>Câu 11. Tác dụng của việc bón vôi khi cải tạo đáy ao là</h3>
+<label><input type="radio" name="q11" value="A"> A. Khử trùng, diệt tạp, tăng hàm lượng ammonia.</label>
+<label><input type="radio" name="q11" value="B"> B. Khử trùng, diệt tạp, tăng độ mặn của nước.</label>
+<label><input type="radio" name="q11" value="C"> C. Khử trùng, diệt tạp, tăng pH môi trường nuôi.</label>
+<label><input type="radio" name="q11" value="D"> D. Khử trùng, diệt tạp, tăng mật độ tảo trong ao.</label></div>
+
+<div class="question"><h3>Câu 12. Quá trình xử lí nước trước khi nuôi thuỷ sản nước ngọt không có bước nào sau đây?</h3>
+<label><input type="radio" name="q12" value="A"> A. Lấy nước vào hệ thống nuôi qua túi lọc.</label>
+<label><input type="radio" name="q12" value="B"> B. Bổ sung muối ăn vào ao nuôi.</label>
+<label><input type="radio" name="q12" value="C"> C. Gây màu nước bằng chế phẩm sinh học và phân bón.</label>
+<label><input type="radio" name="q12" value="D"> D. Khử trùng nước bằng hoá chất tiệt trùng.</label></div>
+
+<div class="question"><h3>Câu 13. Thứ tự các bước cơ bản xử lí nguồn nước trước khi nuôi thuỷ sản là</h3>
+<label><input type="radio" name="q13" value="A"> A. Lắng lọc → Diệt tạp, khử khuẩn → Bón phân gây màu → Khử hoá chất.</label>
+<label><input type="radio" name="q13" value="B"> B. Diệt tạp, khử khuẩn → Lắng lọc → Bón phân gây màu → Khử hoá chất.</label>
+<label><input type="radio" name="q13" value="C"> C. Lắng lọc → Diệt tạp, khử khuẩn → Khử hoá chất → Bón phân gây màu.</label>
+<label><input type="radio" name="q13" value="D"> D. Lắng lọc → Khử hoá chất → Diệt tạp, khử khuẩn → Bón phân gây màu.</label></div>
+
+<div class="question"><h3>Câu 14. Ý nghĩa của bước bón phân gây màu khi xử lí nguồn nước trước khi nuôi thuỷ sản là</h3>
+<label><input type="radio" name="q14" value="A"> A. Bổ sung dinh dưỡng cho các loài sinh vật phù du phát triển.</label>
+<label><input type="radio" name="q14" value="B"> B. Loại trừ rác, cá tạp, các tạp chất lơ lửng trong nước.</label>
+<label><input type="radio" name="q14" value="C"> C. Tiêu diệt các vi sinh vật có hại, mầm bệnh, ấu trùng.</label>
+<label><input type="radio" name="q14" value="D"> D. Diệt tạp và giảm độ chua.</label></div>
+
+<div class="question"><h3>Câu 15. Các loại hoá chất thích hợp thường được sử dụng để diệt tạp, diệt khuẩn là</h3>
+<label><input type="radio" name="q15" value="A"> A. Chlorine, phèn nhôm.</label>
+<label><input type="radio" name="q15" value="B"> B. Chlorine, thuốc tím, phèn nhôm.</label>
+<label><input type="radio" name="q15" value="C"> C. Chlorine, thuốc tím, Iodine.</label>
+<label><input type="radio" name="q15" value="D"> D. Chlorine, phèn nhôm, nước vôi trong.</label></div>
+
+<div class="question"><h3>Câu 16. Nước sau quá trình nuôi thuỷ sản có chứa nhiều chất độc hại, chúng bao gồm các thành phần như sau:</h3>
+<p>(1) Thức ăn thừa. (2) Chất thải của động vật thuỷ sản. (3) Thực vật phù du và tảo. (4) Xác động vật thuỷ sản.</p>
+<label><input type="radio" name="q16" value="A"> A. (1), (2), (3), (4).</label>
+<label><input type="radio" name="q16" value="B"> B. (1), (3), (4).</label>
+<label><input type="radio" name="q16" value="C"> C. (1), (2), (4).</label>
+<label><input type="radio" name="q16" value="D"> D. (2), (3), (4).</label></div>
+
+<div class="question"><h3>Câu 17. Biện pháp nào sau đây không nên sử dụng khi xử lí nước sau khi nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q17" value="A"> A. Bổ sung thực vật phù du, tảo, rong, rêu để hấp thụ chất độc hại.</label>
+<label><input type="radio" name="q17" value="B"> B. Bổ sung vi sinh vật có lợi.</label>
+<label><input type="radio" name="q17" value="C"> C. Bổ sung hoá chất diệt tạp, diệt khuẩn.</label>
+<label><input type="radio" name="q17" value="D"> D. Nạo vét bùn đáy ao nuôi để bón cho cây trồng.</label></div>
+
+<div class="question"><h3>Câu 18. Một số ứng dụng của công nghệ sinh học trong xử lí môi trường nuôi thuỷ sản phổ biến là</h3>
+<label><input type="radio" name="q18" value="A"> A. Xử lí chất thải hữu cơ, xử lí khí độc và vi sinh vật gây hại.</label>
+<label><input type="radio" name="q18" value="B"> B. Xử lí chất thải vô cơ, xử lí khí độc và vi sinh vật gây hại.</label>
+<label><input type="radio" name="q18" value="C"> C. Xử lí chất thải vô cơ, xử lí khí độc và vi sinh vật có lợi.</label>
+<label><input type="radio" name="q18" value="D"> D. Xử lí chất thải hữu cơ, xử lí khí độc và vi sinh vật có lợi.</label></div>
+
+<div class="question"><h3>Câu 19. Một trong các hướng ứng dụng công nghệ sinh học trong xử lí chất thải hữu cơ trong hệ thống nuôi thuỷ sản như sau:</h3>
+<p>(1) Tách chiết enzyme phân giải chất hữu cơ. (2) Tuyển chọn vi sinh vật phân giải khí độc. (3) Tuyển chọn vi sinh vật có lợi ức chế vi sinh vật gây bệnh. (4) Tuyển chọn vi sinh vật phân giải chất thải hữu cơ.</p>
+<label><input type="radio" name="q19" value="A"> A. 3.</label>
+<label><input type="radio" name="q19" value="B"> B. 4.</label>
+<label><input type="radio" name="q19" value="C"> C. 1.</label>
+<label><input type="radio" name="q19" value="D"> D. 2.</label></div>
+
+<div class="question"><h3>Câu 20. Hai nhóm vi khuẩn phổ biến tham gia vào quá trình chuyển hoá nitrogen trong nước là</h3>
+<label><input type="radio" name="q20" value="A"> A. Lactobacillus và Nitrosomonas.</label>
+<label><input type="radio" name="q20" value="B"> B. Nitrosomonas và Nitrobacter.</label>
+<label><input type="radio" name="q20" value="C"> C. Vibrio và Nitrosomonas.</label>
+<label><input type="radio" name="q20" value="D"> D. Nitrosomonas và Bacillus.</label></div>
+
+<button type="button" onclick="submitQuiz()">Nộp bài</button>
+</form>
+</body>
+</html>

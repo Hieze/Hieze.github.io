@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Kiểm tra trắc nghiệm môi trường nuôi thuỷ sản</title>
+  
+ 
+<style>
+/* ÉP TO TOÀN TRANG */
+html {
+  font-size: 26px !important;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f2f2f2;
+  padding: 20px;
+  margin: 0;
+}
+
+/* TIÊU ĐỀ */
+h1 {
+  text-align: center;
+  font-size: 34px !important;
+  margin-bottom: 25px;
+}
+
+/* KHUNG CÂU HỎI */
+.question {
+  background: #ffffff;
+  padding: 22px;
+  margin-bottom: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* CHỮ CÂU HỎI */
+.question h3 {
+  font-size: 28px !important;
+  margin-bottom: 14px;
+}
+
+/* ĐÁP ÁN */
+label {
+  display: block;
+  font-size: 30px !important;   /* CHỮ ĐÁP ÁN RẤT TO */
+  font-weight: 600;
+  margin: 14px 0;
+  cursor: pointer;
+}
+
+/* NÚT TRÒN */
+input[type="radio"] {
+  transform: scale(2);          /* NÚT CHỌN CỰC TO */
+  margin-right: 14px;
+}
+
+/* NÚT NỘP BÀI */
+button {
+  font-size: 28px;
+  padding: 16px 36px;
+  border-radius: 12px;
+  border: none;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+</style>
+
+
+
+</head>
+<body>
+<h1>BÀI KIỂM TRA TRẮC NGHIỆM<br>MÔI TRƯỜNG NUÔI THUỶ SẢN</h1>
+
+<form id="quiz">
+
+<script>
+const answers = [
+  'C', // Câu 1
+  'B', // Câu 2
+  'A', // Câu 3
+  'B', // Câu 4
+  'A', // Câu 5
+  'A', // Câu 6
+  'C', // Câu 7
+  'B', // Câu 8
+  'D', // Câu 9
+  'B', // Câu 10
+  'D', // Câu 11
+  'B', // Câu 12
+  'A', // Câu 13
+  'D', // Câu 14
+  'C', // Câu 15
+  'A', // Câu 16
+  'C', // Câu 17
+  'D', // Câu 18
+  'A'  // Câu 19
+];
+
+function submitQuiz(){
+  let score = 0;
+  for(let i=1;i<=46;i++){
+    const q = document.querySelector(`input[name=q${i}]:checked`);
+    if(q && q.value === answers[i-1]) score++;
+  }
+  alert(`Bạn trả lời đúng ${score}/46 câu`);
+}
+</script>
+<div class="question"><h3>Câu 1. Trong nuôi tôm sú và tôm thẻ chân trắng, sàng cho ăn được sử dụng để</h3>
+<label><input type="radio" name="q1" value="A"> A. Quan sát khung phân thải.</label>
+<label><input type="radio" name="q1" value="B"> B. Quản lý tỉ lệ sống của tôm.</label>
+<label><input type="radio" name="q1" value="C"> C. Quản lí lượng thức ăn sử dụng.</label>
+<label><input type="radio" name="q1" value="D"> D. Quản lí độ pH của nước.</label></div>
+
+<div class="question"><h3>Câu 2. Nước thải sau nuôi thuỷ sản cần được quản lí như thế nào?</h3>
+<label><input type="radio" name="q2" value="A"> A. Thải trực tiếp ra kênh mương tự nhiên không cần xử lí.</label>
+<label><input type="radio" name="q2" value="B"> B. Thu gom để xử lí trước khi thải ra ngoài kênh mương tự nhiên hoặc tái sử dụng cho vụ nuôi sau.</label>
+<label><input type="radio" name="q2" value="C"> C. Bơm sang ao nuôi khác không cần xử lí.</label>
+<label><input type="radio" name="q2" value="D"> D. Chỉ thu gom để xử lí khi ao nuôi nhiễm bệnh.</label></div>
+
+<div class="question"><h3>Câu 3. Trong quá trình quản lí môi trường ao nuôi, cách xử lí nào sau đây là không phù hợp?</h3>
+<label><input type="radio" name="q3" value="A"> A. Sử dụng đồng thời hoá chất diệt tảo và chế phẩm sinh học.</label>
+<label><input type="radio" name="q3" value="B"> B. Thay nước từ 10–20% hằng ngày.</label>
+<label><input type="radio" name="q3" value="C"> C. Siphon loại bỏ thức ăn thừa, phân thải.</label>
+<label><input type="radio" name="q3" value="D"> D. Thường xuyên kiểm tra các thông số môi trường.</label></div>
+
+<div class="question"><h3>Câu 4. Phát biểu nào không đúng khi nói về vai trò của việc quản lí môi trường nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q4" value="A"> A. Duy trì điều kiện sống ổn định.</label>
+<label><input type="radio" name="q4" value="B"> B. Tăng cường sự phát sinh ô nhiễm môi trường.</label>
+<label><input type="radio" name="q4" value="C"> C. Giảm chi phí xử lí ô nhiễm môi trường.</label>
+<label><input type="radio" name="q4" value="D"> D. Đảm bảo thông số môi trường phù hợp.</label></div>
+
+<div class="question"><h3>Câu 5. Có bao nhiêu vai trò đúng của quản lí môi trường nuôi thuỷ sản?</h3>
+<label><input type="radio" name="q5" value="A"> A. 3</label>
+<label><input type="radio" name="q5" value="B"> B. 2</label>
+<label><input type="radio" name="q5" value="C"> C. 1</label>
+<label><input type="radio" name="q5" value="D"> D. 4</label></div>
+
+<div class="question"><h3>Câu 6. Phát biểu nào không đúng về các giai đoạn quản lí nguồn nước ao nuôi?</h3>
+<label><input type="radio" name="q6" value="A"> A. Trước khi thu hoạch.</label>
+<label><input type="radio" name="q6" value="B"> B. Trong quá trình nuôi.</label>
+<label><input type="radio" name="q6" value="C"> C. Sau khi nuôi.</label>
+<label><input type="radio" name="q6" value="D"> D. Trước khi nuôi.</label></div>
+
+<div class="question"><h3>Câu 7. Khi quản lí nguồn nước cấp trước khi nuôi cần lưu ý?</h3>
+<label><input type="radio" name="q7" value="A"> A. Nguồn nước bị động, được kiểm soát.</label>
+<label><input type="radio" name="q7" value="B"> B. Nguồn nước bị động, không kiểm soát.</label>
+<label><input type="radio" name="q7" value="C"> C. Nguồn nước chủ động, được kiểm soát.</label>
+<label><input type="radio" name="q7" value="D"> D. Nguồn nước chủ động, không kiểm soát.</label></div>
+
+<div class="question"><h3>Câu 8. Định kì đo pH, độ mặn, oxygen, NH3 thuộc phạm vi quản lí nào?</h3>
+<label><input type="radio" name="q8" value="A"> A. Thuỷ sinh.</label>
+<label><input type="radio" name="q8" value="B"> B. Thuỷ hoá.</label>
+<label><input type="radio" name="q8" value="C"> C. Thuỷ lí.</label>
+<label><input type="radio" name="q8" value="D"> D. Thuỷ vực.</label></div>
+
+<div class="question"><h3>Câu 9. Hoạt động nào quản lí yếu tố thuỷ lí?</h3>
+<label><input type="radio" name="q9" value="A"> A. Kiểm tra tảo.</label>
+<label><input type="radio" name="q9" value="B"> B. Kiểm tra thức ăn dư.</label>
+<label><input type="radio" name="q9" value="C"> C. Thay nước giảm độ mặn.</label>
+<label><input type="radio" name="q9" value="D"> D. Che nắng làm mát ao.</label></div>
+
+<div class="question"><h3>Câu 10. Sục khí, quạt nước dùng để điều chỉnh yếu tố nào?</h3>
+<label><input type="radio" name="q10" value="A"> A. Độ pH.</label>
+<label><input type="radio" name="q10" value="B"> B. Hàm lượng oxygen hoà tan.</label>
+<label><input type="radio" name="q10" value="C"> C. Độ mặn.</label>
+<label><input type="radio" name="q10" value="D"> D. NH3.</label></div>
+
+<div class="question"><h3>Câu 11. Khi pH giảm thấp, biện pháp nào không phù hợp?</h3>
+<label><input type="radio" name="q11" value="A"> A. Dùng nước vôi trong.</label>
+<label><input type="radio" name="q11" value="B"> B. Tăng sục khí.</label>
+<label><input type="radio" name="q11" value="C"> C. Quản lí mật độ tảo.</label>
+<label><input type="radio" name="q11" value="D"> D. Bổ sung acid.</label></div>
+
+<div class="question"><h3>Câu 12. Biện pháp giảm ô nhiễm do thức ăn dư thừa?</h3>
+<label><input type="radio" name="q12" value="A"> A. Hoá chất tăng oxygen.</label>
+<label><input type="radio" name="q12" value="B"> B. Siphon kết hợp thay nước.</label>
+<label><input type="radio" name="q12" value="C"> C. Bổ sung acid.</label>
+<label><input type="radio" name="q12" value="D"> D. Tăng mật độ nuôi.</label></div>
+
+<div class="question"><h3>Câu 13. Vì sao cần thay nước sau mỗi vụ nuôi?</h3>
+<label><input type="radio" name="q13" value="A"> A. Nước bị ô nhiễm, lây mầm bệnh.</label>
+<label><input type="radio" name="q13" value="B"> B. Nước dư dinh dưỡng.</label>
+<label><input type="radio" name="q13" value="C"> C. Ít vi sinh vật gây hại.</label>
+<label><input type="radio" name="q13" value="D"> D. pH và độ mặn phù hợp.</label></div>
+
+<div class="question"><h3>Câu 14. Biện pháp nào không phù hợp để tăng oxygen?</h3>
+<label><input type="radio" name="q14" value="A"> A. Quản lí mật độ tảo.</label>
+<label><input type="radio" name="q14" value="B"> B. Sục khí.</label>
+<label><input type="radio" name="q14" value="C"> C. Hoá chất tăng oxygen.</label>
+<label><input type="radio" name="q14" value="D"> D. Dùng nước vôi.</label></div>
+
+<div class="question"><h3>Câu 15. Khi độ mặn giảm thấp cần xử lí?</h3>
+<label><input type="radio" name="q15" value="A"> A. Thay nước.</label>
+<label><input type="radio" name="q15" value="B"> B. Bổ sung nước ngọt.</label>
+<label><input type="radio" name="q15" value="C"> C. Tháo nước tầng mặt.</label>
+<label><input type="radio" name="q15" value="D"> D. Sục khí.</label></div>
+
+<div class="question"><h3>Câu 16. Khi độ mặn quá cao cần xử lí?</h3>
+<label><input type="radio" name="q16" value="A"> A. Thay nước hoặc bổ sung nước ngọt.</label>
+<label><input type="radio" name="q16" value="B"> B. Sục khí.</label>
+<label><input type="radio" name="q16" value="C"> C. Bổ sung acid.</label>
+<label><input type="radio" name="q16" value="D"> D. Tháo nước tầng mặt.</label></div>
+
+<div class="question"><h3>Câu 17. Các nhận định đúng là:</h3>
+<label><input type="radio" name="q17" value="A"> A. (1), (2), (3), (4)</label>
+<label><input type="radio" name="q17" value="B"> B. (1), (3), (4), (5)</label>
+<label><input type="radio" name="q17" value="C"> C. (1), (2), (4), (5)</label>
+<label><input type="radio" name="q17" value="D"> D. (1), (2), (3), (5)</label></div>
+
+<div class="question"><h3>Câu 18. Biện pháp không phù hợp xử lí nước thải?</h3>
+<label><input type="radio" name="q18" value="A"> A. Bể lắng.</label>
+<label><input type="radio" name="q18" value="B"> B. Hoá chất.</label>
+<label><input type="radio" name="q18" value="C"> C. Chế phẩm sinh học.</label>
+<label><input type="radio" name="q18" value="D"> D. Thay nước nhanh nhiều lần.</label></div>
+
+<div class="question"><h3>Câu 19. Thứ tự đo độ mặn đúng là?</h3>
+<label><input type="radio" name="q19" value="A"> A. Bật máy → Nhúng → Đọc → Rửa.</label>
+<label><input type="radio" name="q19" value="B"> B. Nhúng → Đọc → Rửa → Bật.</label>
+<label><input type="radio" name="q19" value="C"> C. Bật → Đọc → Nhúng → Rửa.</label>
+<label><input type="radio" name="q19" value="D"> D. Đọc → Bật → Nhúng → Rửa.</label></div>
+
+<button type="button" onclick="submitQuiz()">Nộp bài</button>
+</form>
+</body>
+</html>
