@@ -157,14 +157,14 @@
             }
         }
 
-        /* ===== BOARD ===== */
-        #game-board {
-            z-index: 2;
-            display: grid;
-            grid-template-columns: repeat(9, 110px);
-            gap: 18px;
-            margin-top: 25px;
-        }
+   #game-board {
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(5, 110px); /* ✅ 5 cột */
+    gap: 18px;
+    margin-top: 25px;
+    justify-content: center;   /* căn giữa */
+}
 
         /* ===== CARD ===== */
         .card {
@@ -419,180 +419,125 @@
 
     <script>
         /* ===== QUESTIONS (RÚT GỌN MẪU – BẠN DÁN FULL CỦA BẠN VÀO) ===== */
-        const questions = [
-            {
-                question: "Thuật ngữ “Bảo hiểm” dùng để chỉ:",
-                options: [
-                    "Một biện pháp nhằm chuyển giao rủi ro",
-                    "Một biện pháp né tránh rủi ro",
-                    "Một biện pháp loại trừ rủi ro",
-                    "Một biện pháp đầu tư tài chính"
-                ],
-                correct: 0,
-                explanation: "Bảo hiểm là biện pháp chuyển giao rủi ro."
-            },
-            {
-                question: "Bảo hiểm bao gồm các loại hình nào?",
-                options: [
-                    "Y tế, nhân thọ, trách nhiệm",
-                    "Xã hội, y tế, thất nghiệp, thương mại",
-                    "Xã hội, tín dụng, đầu tư",
-                    "Nhân thọ, tiết kiệm, tài chính"
-                ],
-                correct: 1,
-                explanation: "Bảo hiểm gồm BHXH, BHYT, BHTN và bảo hiểm thương mại."
-            },
-            {
-                question: "Bảo hiểm xã hội tự nguyện cho phép người tham gia:",
-                options: [
-                    "Đóng theo mức cố định",
-                    "Tự chọn mức đóng phù hợp thu nhập",
-                    "Không cần đóng tiền",
-                    "Chỉ dành cho công chức"
-                ],
-                correct: 1,
-                explanation: "Người dân được tự chọn mức đóng phù hợp."
-            },
-            {
-                question: "Điện phân dung dịch CuSO₄ với điện cực trơ, sản phẩm thu được ở catot là:",
-                options: [
-                    "H₂",
-                    "Cu",
-                    "O₂",
-                    "SO₂"
-                ],
-                correct: 1,
-                explanation: "Ion Cu²⁺ nhận electron tại catot: Cu²⁺ + 2e → Cu."
-            },
-            {
-                question: "Khi điện phân dung dịch NaCl có màng ngăn, sản phẩm thu được ở anot là:",
-                options: [
-                    "H₂",
-                    "Na",
-                    "Cl₂",
-                    "O₂"
-                ],
-                correct: 2,
-                explanation: "Ion Cl⁻ bị oxi hóa tại anot: 2Cl⁻ → Cl₂ + 2e."
-            },
-            {
-                question: "Điện phân dung dịch chứa NaCl và CuCl₂ (điện cực trơ), tại catot ưu tiên xảy ra:",
-                options: [
-                    "Na⁺ nhận electron",
-                    "H₂O bị khử tạo H₂",
-                    "Cu²⁺ nhận electron",
-                    "Cl⁻ nhường electron"
-                ],
-                correct: 2,
-                explanation: "Ion Cu²⁺ có tính oxi hóa mạnh hơn H₂O nên được khử trước tại catot."
-            },
-            {
-                question: "Định luật Boyle – Mariotte áp dụng cho khối khí nào sau đây?",
-                options: [
-                    "Khối khí xác định, nhiệt độ không đổi",
-                    "Khối khí xác định, áp suất không đổi",
-                    "Khối khí không xác định, nhiệt độ không đổi",
-                    "Khối khí xác định, thể tích không đổi"
-                ],
-                correct: 0,
-                explanation: "Định luật Boyle – Mariotte áp dụng cho một lượng khí xác định ở nhiệt độ không đổi."
-            },
-            {
-                question: "Theo định luật Boyle – Mariotte, khi thể tích của một khối khí giảm một nửa (nhiệt độ không đổi) thì áp suất:",
-                options: [
-                    "Giảm một nửa",
-                    "Không đổi",
-                    "Tăng gấp đôi",
-                    "Tăng gấp bốn"
-                ],
-                correct: 2,
-                explanation: "Theo pV = hằng số, khi V giảm một nửa thì p tăng gấp đôi."
-            },
-            {
-                question: "Đạo hàm của hàm số f(x) = (x + 1)/(x − 1) là:",
-                options: [
-                    "2/(x − 1)²",
-                    "1/(x − 1)²",
-                    "-2/(x − 1)²",
-                    "0"
-                ],
-                correct: 2,
-                explanation: "Áp dụng đạo hàm thương: f' = [(x−1) − (x+1)]/(x−1)² = −2/(x−1)²."
-            },
-            {
-                question: "Đạo hàm của hàm số f(x) = √(x² + 3) là:",
-                options: [
-                    "1/√(x² + 3)",
-                    "x/√(x² + 3)",
-                    "2x/√(x² + 3)",
-                    "3 đáp án trên sai"
-                ],
-                correct: 1,
-                explanation: "Viết √(x²+3) = (x²+3)¹ᐟ² ⇒ f' = (1/2)(x²+3)⁻¹ᐟ²·2x = x/√(x²+3)."
-            },
+     const questions = [
+     {
+        question: "The Thrower, also known as the Spear Thrower, is one of the most dangerous <u>mob</u> in the Cong Thuat Addon for Minecraft. It has the appearance of a <u>cyclops</u> with a single large eye.This mob is very strong and attacks enemies from a long distance.The Thrower attacks by throwing massive spears, which are powerful enough to kill an <u>Iron Golem</u> with just one hit.Because of its strength and ranged attacks, <u>players</u> should be very careful when facing this mob.",
+        options: [
+         "A. mob",
+"B. cyclops",
+"C. Iron Golem",
+"D. players",
+        ],
+        correct: 0,
+        explanation: "Sau one of the most → danh từ phải ở số nhiều"
+    },
 
-            {
-                question: "Este được tạo thành từ phản ứng giữa:",
-                options: [
-                    "Ancol và axit",
-                    "Ancol và bazơ",
-                    "Axit và muối",
-                    "Anđehit và ancol"
-                ],
-                correct: 0,
-                explanation: "Este được tạo thành từ phản ứng giữa ancol và axit."
-            },
-            {
-                question: "Dung dịch nào sau đây làm quỳ tím hóa đỏ?",
-                options: ["NaCl", "NaOH", "HCl", "KNO₃"],
-                correct: 2,
-                explanation: "HCl là axit làm quỳ tím hóa đỏ."
-            },
-            {
-                question: "Chất nào sau đây là hiđrocacbon no?",
-                options: ["C₂H₄", "C₂H₂", "CH₄", "C₆H₆"],
-                correct: 2,
-                explanation: "CH₄ là hiđrocacbon no (ankan)."
-            },
-            {
-                question: "Polime được điều chế bằng phản ứng trùng hợp là:",
-                options: ["PVC", "Nilon-6,6", "Protein", "Tinh bột"],
-                correct: 0,
-                explanation: "PVC được điều chế bằng phản ứng trùng hợp."
-            },
-            {
-                question: "Đơn vị của công trong hệ SI là:",
-                options: ["Jun (J)", "Oát (W)", "Niutơn (N)", "Vôn (V)"],
-                correct: 0,
-                explanation: "Đơn vị của công là Jun (J)."
-            },
-            {
-                question: "Một vật chuyển động thẳng đều thì:",
-                options: [
-                    "Vận tốc thay đổi theo thời gian",
-                    "Gia tốc khác 0",
-                    "Vận tốc không đổi",
-                    "Quãng đường bằng 0"
-                ],
-                correct: 2,
-                explanation: "Chuyển động thẳng đều có vận tốc không đổi."
-            },
-            {
-                question: "Một lượng khí xác định biến đổi đẳng nhiệt từ trạng thái (p₁, V₁) đến (p₂, V₂). Trên đồ thị p–V, nếu điểm (p₂, V₂) nằm gần trục áp suất hơn so với (p₁, V₁) thì có thể kết luận:",
-                options: [
-                    "p₂ < p₁ và V₂ > V₁",
-                    "p₂ > p₁ và V₂ < V₁",
-                    "p₂ = p₁ và V₂ < V₁",
-                    "p₂ < p₁ và V₂ = V₁"
-                ],
-                correct: 1,
-                explanation: "Điểm gần trục áp suất nghĩa là thể tích nhỏ hơn. Theo pV = hằng số, khi V giảm thì p tăng ⇒ p₂ > p₁, V₂ < V₁."
-            }
-        ];
+{
+        question: "Yukio - Scarlet King is a strong mob in the Cong Thuat Addon. It can grow stronger over time and change to fit different places, such as land or mountains. Yukio is the second strongest Kaiser, and only Preyta is stronger than it. Yukio can create unlimited body parts. Most of the time, it creates a huge blood axe from its arm and uses it to attack enemies.",
+        options: [
+         "A. Yukio is a strong mob in the Cong Thuat Addon that can evolve.",
+"B. Yukio is a peaceful mob that helps players in Minecraft.",
+"C. The passage explains how to defeat Preyta in the Cong Thuat Addon.",
+"D. Yukio is a mob that only lives in one type of terrain.",
+        ],
+        correct: 0,
+        explanation: "bruh"
+    },
+
+
+    {
+        question: "Đạo hàm của hàm số f(x) = (x + 1)/(x − 1) là:",
+        options: [
+            "A. 2/(x − 1)²",
+            "B. 1/(x − 1)²",
+            "C. -2/(x − 1)²",
+            "D. 0"
+        ],
+        correct: 2,
+        explanation: "Áp dụng đạo hàm thương: f' = [(x−1) − (x+1)]/(x−1)² = −2/(x−1)²."
+    },
+    {
+        question: "Đạo hàm của hàm số f(x) = √(x² + 3) là:",
+        options: [
+            "A. 1/√(x² + 3)",
+            "B. x/√(x² + 3)",
+            "C. 2x/√(x² + 3)",
+            "D. 3 đáp án trên sai"
+        ],
+        correct: 1,
+        explanation: "Viết √(x²+3) = (x²+3)¹ᐟ² ⇒ f' = x/√(x²+3)."
+    },
+    {
+        question: "Ester được tạo thành từ phản ứng giữa:",
+        options: [
+            "A. acohol và axit",
+            "B. acohol và bazơ",
+            "C. Axit và muối",
+            "D. Anđehit và acohol"
+        ],
+        correct: 0,
+        explanation: "Ester được tạo thành từ phản ứng giữa acohol và axit."
+    },
+    {
+        question: "Dung dịch nào sau đây làm quỳ tím hóa đỏ?",
+        options: [
+            "A. NaCl",
+            "B. NaOH",
+            "C. HCl",
+            "D. KNO₃"
+        ],
+        correct: 2,
+        explanation: "HCl là axit làm quỳ tím hóa đỏ."
+    },
+    {
+        question: "Chất nào sau đây là hiđrocacbon no?",
+        options: [
+            "A. C₂H₄",
+            "B. C₂H₂",
+            "C. CH₄",
+            "D. C₆H₆"
+        ],
+        correct: 2,
+        explanation: "CH₄ là hiđrocacbon no (ankan)."
+    },
+    {
+        question: "Polime được điều chế bằng phản ứng trùng hợp là:",
+        options: [
+            "A. PVC",
+            "B. Nilon-6,6",
+            "C. Protein",
+            "D. Tinh bột"
+        ],
+        correct: 0,
+        explanation: "PVC được điều chế bằng phản ứng trùng hợp."
+    },
+    {
+        question: "Đơn vị của công trong hệ SI là:",
+        options: [
+            "A. Jun (J)",
+            "B. Oát (W)",
+            "C. Niutơn (N)",
+            "D. Vôn (V)"
+        ],
+        correct: 0,
+        explanation: "Đơn vị của công là Jun (J)."
+    },
+    {
+        question: "Một vật chuyển động thẳng đều thì:",
+        options: [
+            "A. Vận tốc thay đổi theo thời gian",
+            "B. Gia tốc khác 0",
+            "C. Vận tốc không đổi",
+            "D. Quãng đường bằng 0"
+        ],
+        correct: 2,
+        explanation: "Chuyển động thẳng đều có vận tốc không đổi."
+    }
+];
+
         const emojis = [
             "🚀", "🌙", "🪐", "👽", "☄️", "🌟",
-            "🌌", "🛰️", "🌞", "🌍", "🧲", "⚡",
-            "🔥", "💎", "🧪", "📐", "📘", "🧠"
+            "🌌", "🛰️", "🌞", "🌍"
         ];
         /* ===== GAME LOGIC ===== */
         function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { let j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]] } }
@@ -610,7 +555,7 @@
         const board = document.getElementById("game-board");
         let first = null, second = null, lock = false, queue = [...questions];
         let matchedPair = [];
-        for (let i = 0; i < 36; i++) {
+        for (let i = 0; i < 20; i++) {
             const c = document.createElement("div");
             c.className = "card";
             c.dataset.value = values[i];
@@ -652,10 +597,16 @@
             q.options.forEach((o, i) => {
                 const b = document.createElement("button");
                 b.textContent = o;
-                b.onclick = () => {
-                    b.className = i === q.correct ? "correct" : "wrong";
-                    res.textContent = q.explanation;
-                };
+            b.onclick = () => {
+    b.className = i === q.correct ? "correct" : "wrong";
+
+    const correctAnswer = q.options[q.correct]; // lấy đáp án đúng A/B/C/D
+    res.innerHTML = `
+        <b>Đáp án đúng:</b> ${correctAnswer}<br>
+        <i>Giải thích:</i> ${q.explanation}
+    `;
+};
+
                 list.appendChild(b);
             });
             document.getElementById("question-overlay").style.display = "flex";
