@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ice and Fire: Reflourished Wiki</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ice: #6dd5fa;
+  --fire: #ff6a00;
+  --bg: #020617;
+  --border: #1e293b;
+} 
+.app.fade-in {
+  opacity: 1;
+}
+.intro.hide {
+  opacity: 0;
+  transform: scale(1.05);
+  pointer-events: none;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: #e5e7eb;
+  font-family: "Inter", sans-serif;
+}
+
+/* ===== INTRO ===== */
+ 
+.intro {transition: opacity 0.8s ease, transform 0.8s ease;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(120deg, #5cc6ff44, #ff6a0044);
+}
+
+.intro h1 {
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  font-family: "Cinzel", serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  background: linear-gradient(120deg, var(--ice), var(--fire));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.intro button {
+  margin-top: 2rem;
+  padding: 0.8rem 2.5rem;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(120deg, var(--ice), var(--fire));
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ===== APP (ẨN BAN ĐẦU) ===== */
+ .intro.fade-out {
+  opacity: 0;
+  transform: scale(1.05);
+  pointer-events: none;
+}
+.app {  opacity: 0;
+  transition: opacity 0.8s ease;
+  display: none;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  background: #020617;
+  border-right: 1px solid var(--border);
+  padding: 1rem;
+}
+
+.part-btn {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 0.5rem;
+  background: #020617;
+  color: #e5e7eb;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.part-btn:hover {
+  background: linear-gradient(120deg, var(--ice), var(--fire));
+  color: #000;
+}
+
+/* ===== CONTENT ===== */
+.content {
+  padding: 2rem;
+}
+
+.part { display: none; }
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h2 {
+  border-left: 4px solid var(--fire);
+  padding-left: 1rem;
+}
+
+/* ===== TEAM ===== */
+.team-card {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO – CHỈ HIỆN LÚC ĐẦU -->
+<div class="intro" id="intro">
+  <div>
+    <h1>Ice and Fire<br>Reflourished</h1>
+    <p>Official Community Wiki</p>
+    <button onclick="enterWiki()">Enter the Archives</button>
+  </div>
+</div>
+
+<!-- APP – CHỈ HIỆN SAU KHI ENTER -->
+<div class="app" id="app">
+
+  <aside class="sidebar">
+    <h3>📦 Parts</h3>
+    <button class="part-btn" onclick="showPart(1)">Part 1 – Beta 4</button>
+    <button class="part-btn">Part 2 ⏳</button>
+    <button class="part-btn">Part 3 ⏳</button>
+
+    <h3>👥 Team</h3>
+    <div class="team-card"><strong>Creator</strong><br>Hieze 1337</div>
+    <div class="team-card"><strong>Artist</strong><br>Zekito, PTL, Trứng Dái Nhỏ</div>
+    <div class="team-card"><strong>Supporter</strong><br>SansYT,Khánh Nguyễn, Swellow Sparow, Gia Tấn</div>
+  </aside>
+
+  <main class="content">
+    <p id="placeholder">👉 Chọn một Part để xem nội dung</p>
+
+ <div id="part1" class="part">
+  <h1>🔥❄ Ice and Fire: Reflourished</h1>
+  <p><strong>📦 Part 1 – Beta 4</strong></p>
+
+  <!-- UPDATE -->
+  <div class="section">
+    <h2>🆕 Update Things</h2>
+    <p>Major content update introducing new creatures, equipment, and weapons.</p>
+  </div>
+
+  <!-- MOBS -->
+  <div class="section">
+    <h2>🐉 New Mobs / Creatures</h2>
+
+    <h3>🌊🐲 Abyss Sea Dragon <small>(Hell Path)</small></h3>
+
+    <h3>🌋🦎 Magma Drake Beast</h3>
+    <ul>
+      <li>Can be saddled</li>
+      <li>Walks on lava</li>
+      <li>Works similar to Strider</li>
+    </ul>
+
+    <h3>🐗 Tiberus</h3>
+    <ul>
+      <li>Can be tamed using 🍎 Golden Apple</li>
+    </ul>
+
+    <h3>👤 Julius</h3>
+
+    <h3>🔥🐦 Phoenix Bird</h3>
+    <ul>
+      <li>Behaves similar to 🦜 parrots</li>
+    </ul>
+
+    <h3>🦝 Raccoon</h3>
+    <h3>🐻 Black Bear</h3>
+    <h3>🦄🌊 Sea Unicorn</h3>
+    <h3>🦬 Bison</h3>
+    <h3>🐄❄ Tibetan Yak</h3>
+  </div>
+
+  <!-- EQUIPMENT -->
+  <div class="section">
+    <h2>🛡 New Equipment</h2>
+
+    <h3>🐎🛡 Romulus Armor</h3>
+    <ul>
+      <li>Temporarily uses horse armor</li>
+      <li><strong>When equipped:</strong></li>
+      <ul>
+        <li>⚔ Increased damage</li>
+        <li>🛡 Damage immunity</li>
+      </ul>
+    </ul>
+
+    <h3>🌑🛡 Abyssal Armor</h3>
+    <ul>
+      <li>Higher durability than Tide Armor</li>
+      <li>Provides more armor points than Tide Armor</li>
+      <li>Passive: reflects 💥 <strong>500%</strong> of damage taken back to the attacker</li>
+      <li>Counters ⚒ Mace & 🔱 Spear</li>
+    </ul>
+  </div>
+
+  <!-- WEAPON -->
+  <div class="section">
+    <h2>⚔ New Weapon</h2>
+
+    <h3>🌑⚔ Abyssal Saber</h3>
+    <ul>
+      <li>Passive: each slash creates ✨ <strong>3 extra sword waves</strong></li>
+    </ul>
+  </div>
+</div>
+
+  </main>
+
+</div>
+
+<script>
+function enterWiki() {
+  const intro = document.getElementById("intro");
+  const app = document.getElementById("app");
+
+  intro.classList.add("fade-out");
+
+  setTimeout(() => {
+    intro.style.display = "none";
+    app.style.display = "grid";
+
+    requestAnimationFrame(() => {
+      app.classList.add("fade-in");
+    });
+  }, 800);
+}
+function showPart(num) {
+  document.getElementById("placeholder").style.display = "none";
+  document.querySelectorAll(".part").forEach(p => p.style.display = "none");
+  document.getElementById("part" + num).style.display = "block";
+}
+</script>
+
+</body>
+</html>
