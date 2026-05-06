@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ice & Fire Codex</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+#dragon{
+
+  position:fixed;
+  top:35%;
+  left:-300px; /* bắt đầu ngoài màn hình */
+width:20vw;
+
+
+  z-index:10; /* CAO HƠN spark canvas */
+
+  pointer-events:none;
+
+  filter:
+    drop-shadow(0 0 10px rgba(255,106,0,0.6))
+    brightness(1.1);
+}
+/* ================= RESET ================= */
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ================= COLORS ================= */
+:root{
+  --fire:#ff6a00;
+  --ice:#00cfff;
+  --bg:#050505;
+  --panel:#0a0a0a;
+  --border:#222;
+}
+
+/* ================= BODY ================= */
+body{
+  font-family:'Cinzel',serif;
+  background:var(--bg);
+  color:#ddd;
+  overflow:hidden;
+}
+
+/* ================= INTRO ================= */
+#intro{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+  animation:fadeOut 4s forwards 3s;
+}
+
+#intro h1{
+  font-size:64px;
+  letter-spacing:10px;
+  color:var(--fire);
+  text-shadow:0 0 50px var(--fire);
+}
+
+@keyframes fadeOut{
+  to{opacity:0;visibility:hidden}
+}
+
+/* ================= DEPTH ================= */
+.depth{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(to right,
+    rgba(0,0,0,0.95),
+    rgba(0,0,0,0.6),
+    transparent 60%);
+}
+
+/* ================= FIRE ZONE ================= */
+.fire-zone{
+  position:fixed;
+  right:0;
+  top:0;
+  width:45%;
+  height:100%;
+  pointer-events:none;
+  background:radial-gradient(circle at right,
+    rgba(255,106,0,0.35),
+    transparent 70%);
+}
+
+/* ================= MENU ================= */
+.menu{
+  position:fixed;
+  left:40px;
+  top:50%;
+  transform:translateY(-50%);
+}
+
+.menu div{
+  margin:22px 0;
+  font-size:22px;
+  opacity:0.5;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.menu div.active,
+.menu div:hover{
+  opacity:1;
+  color:var(--fire);
+  text-shadow:0 0 15px var(--fire);
+  transform:translateX(10px);
+}
+
+/* ================= CONTENT ================= */
+.content{
+  position:absolute;
+  left:260px;
+  width:calc(100% - 260px);
+  height:100vh;
+  overflow-y:auto;
+  padding:50px;
+}
+
+.content::-webkit-scrollbar{width:6px}
+.content::-webkit-scrollbar-thumb{background:var(--fire)}
+
+/* ================= TITLE ================= */
+h2{
+  font-size:42px;
+  color:var(--fire);
+  margin-bottom:25px;
+}
+
+/* ================= GRID ================= */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:20px;
+}
+
+/* ================= CARD ================= */
+.card{
+  padding:20px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  transition:.3s;
+}
+
+.card:hover{
+  transform:scale(1.05);
+  border-color:var(--fire);
+  box-shadow:0 0 20px var(--fire);
+}
+
+/* ================= TYPE COLORS ================= */
+.card.fire{border-left:3px solid var(--fire)}
+.card.ice{border-left:3px solid var(--ice)}
+
+/* ================= PART GRID ================= */
+.parts{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:30px;
+}
+
+.part{
+  padding:12px;
+  text-align:center;
+  border:1px solid #333;
+  cursor:pointer;
+}
+
+.part:hover{
+  border-color:var(--fire);
+  color:var(--fire);
+}
+
+.part.locked{
+  opacity:0.25;
+  pointer-events:none;
+}
+
+/* ================= CANVAS ================= */
+#sparkCanvas{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+
+.hidden{display:none}
+
+</style>
+</head>
+
+<body>
+<img id="dragon" src="dragon.gif" />
+<div id="intro"><h1>ICE & FIRE</h1></div>
+<div class="depth"></div>
+<div class="fire-zone"></div>
+
+<canvas id="sparkCanvas"></canvas>
+
+<div class="menu">
+  <div id="btnAddons" class="active" onclick="show('addons')">ADDONS</div>
+  <div id="btnCreator" onclick="show('creator')">CREATOR</div>
+</div>
+
+<div class="content">
+
+<!-- ================= ADDONS ================= -->
+<div id="addons">
+
+<h2>ARCHIVE</h2>
+
+<div class="parts">
+<div class="part" onclick="openPart()">PART I</div>
+<div class="part locked">PART II</div>
+<div class="part locked">PART III</div>
+<div class="part locked">PART IV</div>
+<div class="part locked">PART V</div>
+<div class="part locked">PART VI</div>
+<div class="part locked">PART VII</div>
+<div class="part locked">PART VIII</div>
+<div class="part locked">PART IX</div>
+<div class="part locked">PART X</div>
+<div class="part locked">PART XI</div>
+<div class="part locked">PART XII</div>
+</div>
+
+<div id="part1" class="hidden">
+
+<h2>CREATURES</h2>
+<div class="grid">
+<div class="card ice">🌊 Hải Vực Long</div>
+<div class="card fire">🌋 Long Nham Thú</div>
+<div class="card fire">🐗 Tiberus</div>
+<div class="card">👤 Julius</div>
+<div class="card fire">🔥 Chim Hồng Hoàng</div>
+<div class="card">🦝 Gấu mèo</div>
+<div class="card">🐻 Gấu đen</div>
+<div class="card ice">🦄 Kỳ lân biển</div>
+<div class="card">🦬 Bison</div>
+<div class="card ice">🐄 Yak</div>
+</div>
+
+<h2>EQUIPMENT</h2>
+<div class="grid">
+<div class="card fire">🐎 Giáp Romulus</div>
+<div class="card fire">🌑 Abyssal Armor</div>
+</div>
+
+<h2>WEAPONS</h2>
+<div class="grid">
+<div class="card fire">🌑 Abyssal Saber</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= CREATOR ================= -->
+<div id="creator" class="hidden">
+
+<h2>HALL OF HEROES</h2>
+
+<div class="grid">
+<div class="card">Hieze 1337</div>
+<div class="card">Trứng Dái Nhỏ</div>
+<div class="card">Zekito</div>
+<div class="card">PTL</div>
+<div class="card">Ân Mai</div>
+<div class="card">SansYT</div>
+<div class="card">Khánh Nguyễn</div>
+<div class="card">Swellow Sparow</div>
+<div class="card">Gia Tấn</div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* ================= SWITCH ================= */
+function show(id){
+document.getElementById('addons').classList.add('hidden');
+document.getElementById('creator').classList.add('hidden');
+document.getElementById(id).classList.remove('hidden');
+
+document.getElementById('btnAddons').classList.remove('active');
+document.getElementById('btnCreator').classList.remove('active');
+
+if(id==="addons"){
+document.getElementById('btnAddons').classList.add('active');
+}else{
+document.getElementById('btnCreator').classList.add('active');
+}
+}
+
+/* ================= PART ================= */
+function openPart(){
+document.getElementById('part1').classList.remove('hidden');
+}
+
+/* ================= SPARK ================= */
+const c=document.getElementById("sparkCanvas");
+const ctx=c.getContext("2d");
+c.width=innerWidth;
+c.height=innerHeight;
+
+let sparks=[];
+for(let i=0;i<65;i++){
+
+sparks.push({
+x:Math.random()*c.width*1.2,
+y:Math.random()*c.height*1.2,
+s:2+Math.random()*2
+});
+}
+
+function draw(){
+ctx.clearRect(0,0,c.width,c.height);
+
+sparks.forEach(s=>{
+s.x+=s.s;
+if(s.x>c.width){s.x=0;s.y=Math.random()*c.height;}
+
+let i=s.x/c.width;
+ctx.fillStyle=`rgba(255,106,0,${0.3+i})`;
+ctx.shadowBlur=10*i;
+ctx.shadowColor="#ff6a00";
+
+ctx.fillRect(s.x,s.y,5,3);
+});
+
+requestAnimationFrame(draw);
+}
+draw();
+/* ================= DRAGON FLY ================= */
+
+const dragon = document.getElementById("dragon");
+
+let dx = -300;
+
+function flyDragon(){
+
+  dx += 2.5; // tốc độ bay
+
+  dragon.style.left = dx + "px";
+
+  /* reset khi bay hết */
+  if(dx > window.innerWidth + 200){
+    dx = -300;
+
+    /* random độ cao nhẹ cho tự nhiên */
+    let randomY = 30 + Math.random() * 20;
+    dragon.style.top = randomY + "%";
+  }
+
+  requestAnimationFrame(flyDragon);
+}
+
+flyDragon();
+</script>
+
+</body>
+</html>
