@@ -1,325 +1,1376 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <title>Integral Calculator – Nguyên Hàm</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MP3 → OGG Batch Converter</title>
 
-  <!-- MathJax -->
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+* {
+    box-sizing: border-box;
+}
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: radial-gradient(circle at top, #111827, #000000);
-      color: #e5e7eb;
-    }
-    header {
-      text-align: center;
-      padding: 30px 20px;
-    }
-    header h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-    }
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 24px;
+    background: #080808;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    width: min(900px, 100%);
+    margin: auto;
+}
+
+.card {
+    background: #111;
+    border: 1px solid #292929;
+    border-radius: 22px;
+    padding: 28px;
+    box-shadow: 0 20px 70px rgba(0,0,0,.5);
+}
+
+h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+.subtitle {
+    color: #888;
+    margin: 0 0 24px;
+}
+
+.drop {
+    border: 2px dashed #444;
+    border-radius: 18px;
+    padding: 42px 20px;
+    text-align: center;
+    cursor: pointer;
+    background: #0c0c0c;
+    transition: .2s;
+}
+
+.drop:hover,
+.drop.drag {
+    border-color: #aaa;
+    background: #151515;
+}
+
+.drop-icon {
+    font-size: 46px;
+    margin-bottom: 10px;
+}
+
+.drop strong {
+    display: block;
+    font-size: 18px;
+}
+
+.drop span {
+    display: block;
+    margin-top: 8px;
+    color: #666;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.toolbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    color: #aaa;
+    font-size: 13px;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background: #080808;
+    color: white;
+}
+
+button {
+    width: 100%;
+    padding: 13px 16px;
+    border: 0;
+    border-radius: 11px;
+    background: white;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .15s;
+}
+
+button:hover {
+    background: #ddd;
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.actions button {
+    flex: 1;
+}
+
+.info {
+    margin-top: 18px;
+    color: #888;
+    font-size: 13px;
+}
+
+.file-list {
+    margin-top: 20px;
+    display: none;
+}
+
+.file-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    background: #0b0b0b;
+    border: 1px solid #292929;
+    border-radius: 13px;
+}
+
+.file-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.file-number {
+    min-width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: #202020;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.file-name {
+    flex: 1;
+    min-width: 0;
+    word-break: break-all;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.file-status {
+    font-size: 12px;
+    color: #777;
+    white-space: nowrap;
+}
+
+.file-progress {
+    height: 6px;
+    background: #222;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 11px;
+}
+
+.file-progress-fill {
+    height: 100%;
+    width: 0;
+    background: white;
+    transition: width .15s;
+}
+
+.file-actions {
+    margin-top: 10px;
+}
+
+.file-actions a {
+    display: none;
+    color: white;
+    font-size: 13px;
+    text-decoration: none;
+    border: 1px solid #333;
+    padding: 7px 11px;
+    border-radius: 8px;
+}
+
+.file-error {
+    display: none;
+    margin-top: 8px;
+    padding: 9px;
+    border-radius: 8px;
+    background: #190909;
+    border: 1px solid #3b1717;
+    color: #ff7777;
+    font-size: 12px;
+    word-break: break-word;
+}
+
+.overall {
+    display: none;
+    margin-top: 22px;
+}
+
+.overall-bar {
+    height: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #222;
+}
+
+.overall-fill {
+    height: 100%;
+    width: 0;
+    background: white;
+    transition: width .2s;
+}
+
+.overall-text {
+    margin-top: 8px;
+    color: #888;
+    font-size: 13px;
+}
+
+.error {
+    display: none;
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #190909;
+    border: 1px solid #3b1717;
+    color: #ff7777;
+    font-size: 13px;
+    word-break: break-word;
+}
+
+.footer {
+    text-align: center;
+    color: #555;
+    font-size: 12px;
+    margin-top: 22px;
+    line-height: 1.6;
+}
+
+@media(max-width:650px) {
+
     .card {
-      background: rgba(31, 41, 55, 0.9);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        padding: 20px;
     }
-    .card h2 {
-      margin-top: 0;
-      font-size: 1.4rem;
-    }
-    input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      font-size: 1rem;
-      margin-bottom: 10px;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      background: linear-gradient(135deg, #6366f1, #22d3ee);
-      color: black;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    button:hover {
-      opacity: 0.9;
-    }
-    .result {
-      margin-top: 15px;
-      background: rgba(0,0,0,0.4);
-      padding: 12px;
-      border-radius: 10px;
-    }
-    .formula-section h3 {
-      margin-bottom: 5px;
-      margin-top: 15px;
-      color: #93c5fd;
-    }
-    ul {
-      padding-left: 18px;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.85rem;
-      color: #9ca3af;
-    }
-  </style>
-</head>
-<body>
 
-<header>
-  <h1>∫ Integral Calculator</h1>
-  <p>Công cụ học thuật tính nguyên hàm</p>
-</header>
+    .toolbar {
+        grid-template-columns: 1fr;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .file-header {
+        align-items: flex-start;
+    }
+
+    .file-status {
+        white-space: normal;
+    }
+}
+</style>
+</head>
+
+<body>
 
 <div class="container">
 
-  <!-- Calculator -->
-  <div class="card">
-    <h2>Tính nguyên hàm</h2>
-    <input id="expr" placeholder="Ví dụ: x^2, 1/x, sin(x), e^x" />
-    <button onclick="calculate()">Tính ∫ dx</button>
-    <div id="output" class="result"></div>
-  </div>
+<div class="card">
 
-  <!-- Formula table -->
-  <div class="card">
-    <h2>Bảng công thức nguyên hàm</h2>
+<h1>🎵 MP3 → OGG</h1>
 
-    <div class="formula-section">
-      <h3>Cơ bản</h3>
-      <ul>
-        <li>\(\int k\,dx = kx + C\)</li>
-        <li>\(\int x^n dx = \frac{x^{n+1}}{n+1} + C,\; n \neq -1\)</li>
-        <li>\(\int \frac{1}{x}dx = \ln|x| + C\)</li>
-      </ul>
-    </div>
+<p class="subtitle">
+    Batch converter — tối đa 30 file cùng lúc
+</p>
 
-    <div class="formula-section">
-      <h3>Mũ & Log</h3>
-      <ul>
-        <li>\(\int e^x dx = e^x + C\)</li>
-        <li>\(\int a^x dx = \frac{a^x}{\ln a} + C\)</li>
-        <li>\(\int \ln x dx = x\ln x - x + C\)</li>
-      </ul>
-    </div>
+<div id="drop" class="drop">
 
-    <div class="formula-section">
-      <h3>Lượng giác</h3>
-      <ul>
-        <li>\(\int \sin x dx = -\cos x + C\)</li>
-        <li>\(\int \cos x dx = \sin x + C\)</li> 
-      </ul>
-    </div>
+    <div class="drop-icon">🎧</div>
 
-    <div class="formula-section">
-      <h3>Nâng cao</h3>
-      <ul>
-        <li>\(\int \frac{f'(x)}{f(x)}dx = \ln|f(x)| + C\)</li>
-        <li>\(\int u\,dv = uv - \int v\,du\)</li>
-      </ul>
-    </div>
+    <strong>
+        Kéo & thả tối đa 30 file MP3
+    </strong>
 
-  </div>
+    <span>
+        hoặc click để chọn nhiều file
+    </span>
+
+    <input
+        id="fileInput"
+        type="file"
+        accept=".mp3,audio/mpeg"
+        multiple
+    >
+
 </div>
 
-<footer>
-  Thiết kế học thuật • Math UI • HTML thuần
-</footer>
+<div class="toolbar">
 
-<script>
-/***********************
- * TOKENIZER
- ***********************/
-function tokenize(input) {
-  const regex = /\s*(sin|cos|ln|e|x|\d+\.?\d*|\+|\-|\*|\/|\^|\(|\))\s*/g;
-  let tokens = [];
-  let m;
-  while ((m = regex.exec(input)) !== null) {
-    tokens.push(m[1]);
-  }
-  return tokens;
+<div>
+
+<label for="bitrate">
+    OGG Bitrate
+</label>
+
+<select id="bitrate">
+
+<option value="64">
+    64 kbps
+</option>
+
+<option value="96">
+    96 kbps
+</option>
+
+<option value="128" selected>
+    128 kbps
+</option>
+
+<option value="160">
+    160 kbps
+</option>
+
+<option value="192">
+    192 kbps
+</option>
+
+<option value="256">
+    256 kbps
+</option>
+
+<option value="320">
+    320 kbps
+</option>
+
+</select>
+
+</div>
+
+<div>
+
+<label>
+    Converter
+</label>
+
+<button id="convertBtn" disabled>
+    🔄 Convert tất cả
+</button>
+
+</div>
+
+</div>
+
+<div class="actions">
+
+<button id="clearBtn" disabled>
+    🗑️ Xóa danh sách
+</button>
+
+<button id="downloadAllBtn" disabled>
+    📦 Download All
+</button>
+
+</div>
+
+<div id="info" class="info">
+    Chưa chọn file.
+</div>
+
+<div id="overall" class="overall">
+
+<div class="overall-bar">
+
+<div
+    id="overallFill"
+    class="overall-fill">
+</div>
+
+</div>
+
+<div
+    id="overallText"
+    class="overall-text">
+    0 / 0
+</div>
+
+</div>
+
+<div id="error" class="error"></div>
+
+<div id="fileList" class="file-list"></div>
+
+<div class="footer">
+
+MP3 được xử lý trực tiếp trên trình duyệt.
+
+<br>
+
+Không upload file lên server.
+
+<br>
+
+FFmpeg WebAssembly được tải khi bắt đầu convert.
+
+</div>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+const MAX_FILES = 30;
+
+const FFmpegVersion = "0.12.10";
+
+const UtilVersion = "0.12.2";
+
+
+const drop =
+    document.getElementById("drop");
+
+const fileInput =
+    document.getElementById("fileInput");
+
+const bitrate =
+    document.getElementById("bitrate");
+
+const convertBtn =
+    document.getElementById("convertBtn");
+
+const clearBtn =
+    document.getElementById("clearBtn");
+
+const downloadAllBtn =
+    document.getElementById("downloadAllBtn");
+
+const fileList =
+    document.getElementById("fileList");
+
+const info =
+    document.getElementById("info");
+
+const overall =
+    document.getElementById("overall");
+
+const overallFill =
+    document.getElementById("overallFill");
+
+const overallText =
+    document.getElementById("overallText");
+
+const errorBox =
+    document.getElementById("error");
+
+
+let files = [];
+
+let results = [];
+
+let ffmpeg = null;
+
+let fetchFile = null;
+
+let toBlobURL = null;
+
+let ffmpegLoaded = false;
+
+
+function formatBytes(bytes) {
+
+    if (!bytes)
+        return "0 B";
+
+    const units = [
+        "B",
+        "KB",
+        "MB",
+        "GB"
+    ];
+
+    const index =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+    return (
+        bytes /
+        Math.pow(1024, index)
+    ).toFixed(
+        index ? 2 : 0
+    )
+    + " "
+    + units[index];
 }
 
-/***********************
- * PARSER (AST)
- ***********************/
-function parse(tokens) {
-  let pos = 0;
 
-  function peek() { return tokens[pos]; }
-  function next() { return tokens[pos++]; }
+function showError(message) {
 
-  function parsePrimary() {
-    const t = next();
+    errorBox.textContent =
+        message;
 
-    if (t === 'x') return { type: 'var' };
-    if (!isNaN(t)) return { type: 'num', value: Number(t) };
-    if (t === 'e') return { type: 'const', name: 'e' };
-
-    if (t === 'sin' || t === 'cos' || t === 'ln') {
-      next(); // (
-      const arg = parseExpr();
-      next(); // )
-      return { type: 'func', name: t, arg };
-    }
-
-    if (t === '(') {
-      const e = parseExpr();
-      next(); // )
-      return e;
-    }
-  }
-
-  function parsePower() {
-    let node = parsePrimary();
-    if (peek() === '^') {
-      next();
-      node = { type: 'pow', base: node, exp: parsePrimary() };
-    }
-    return node;
-  }
-
-  function parseTerm() {
-    let node = parsePower();
-    while (peek() === '*' || peek() === '/') {
-      node = { type: 'bin', op: next(), left: node, right: parsePower() };
-    }
-    return node;
-  }
-
-  function parseExpr() {
-    let node = parseTerm();
-    while (peek() === '+' || peek() === '-') {
-      node = { type: 'bin', op: next(), left: node, right: parseTerm() };
-    }
-    return node;
-  }
-
-  return parseExpr();
+    errorBox.style.display =
+        "block";
 }
 
-/***********************
- * INTEGRATOR + STEPS
- ***********************/
-function integrate(node, steps) {
 
-  if (node.type === 'var') {
-    steps.push("Áp dụng: ∫x dx = x²/2");
-    return "x^2/2";
-  }
+function clearError() {
 
-  if (node.type === 'num') {
-    steps.push(`Áp dụng: ∫${node.value} dx = ${node.value}x`);
-    return `${node.value}x`;
-  }
+    errorBox.textContent = "";
 
-  if (node.type === 'pow' && node.base.type === 'var' && node.exp.type === 'num') {
-    const n = node.exp.value;
-    steps.push(`Áp dụng công thức: ∫x^${n} dx = x^{${n+1}}/${n+1}`);
-    return `x^${n+1}/${n+1}`;
-  }
-
-  if (node.type === 'pow' && node.base.type === 'const' && node.base.name === 'e') {
-    steps.push("Áp dụng: ∫e^x dx = e^x");
-    return "e^x";
-  }
-
-  if (node.type === 'func' && node.name === 'sin') {
-    steps.push("Áp dụng: ∫sin(x) dx = -cos(x)");
-    return "-cos(x)";
-  }
-
-  if (node.type === 'func' && node.name === 'cos') {
-    steps.push("Áp dụng: ∫cos(x) dx = sin(x)");
-    return "sin(x)";
-  }
-
-  if (node.type === 'func' && node.name === 'ln') {
-    steps.push("Áp dụng: ∫ln(x) dx = x ln x − x");
-    return "x ln x - x";
-  }
-
-  steps.push("❌ Chưa hỗ trợ dạng này");
-  return "?";
+    errorBox.style.display =
+        "none";
 }
-function calculate() {
-  const expr = document.getElementById('expr').value.replace(/\s+/g, '');
-  let result = '';
 
-  // x
-  if (expr === 'x') {
-    result = 'x^2/2 + C';
-  }
 
-  // 1/x
-  else if (expr === '1/x') {
-    result = 'ln|x| + C';
-  }
+function escapeHTML(value) {
 
-  // e^x
-  else if (expr === 'e^x') {
-    result = 'e^x + C';
-  }
+    return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
 
-  // sin, cos
-  else if (expr === 'sin(x)') {
-    result = '-cos(x) + C';
-  }
-  else if (expr === 'cos(x)') {
-    result = 'sin(x) + C';
-  }
 
-  // ===== SỐ HẰNG (2, 1/2, 2/1, -3, 0, ...) =====
-  else if (/^-?\d+(\.\d+)?(\/\d+(\.\d+)?)?$/.test(expr)) {
-    if (Number(expr) === 0) {
-      result = 'C';
-    } else {
-      result = `${expr}x + C`;
+function isMP3(file) {
+
+    return (
+        file.type === "audio/mpeg" ||
+        file.type === "audio/mp3" ||
+        /\.mp3$/i.test(file.name)
+    );
+}
+
+
+function addFiles(fileArray) {
+
+    clearError();
+
+    const incoming =
+        Array.from(fileArray);
+
+    const valid =
+        incoming.filter(isMP3);
+
+    if (!valid.length) {
+
+        showError(
+            "Không tìm thấy file MP3 hợp lệ."
+        );
+
+        return;
     }
-  }
 
-  // ===== x^n =====
-  else if (/^x\^\d+$/.test(expr)) {
-    const n = parseInt(expr.split('^')[1]);
-    result = `x^${n + 1}/${n + 1} + C`;
-  }
 
-  // ===== a^x : 2^x, 6^x, 10^x, ... =====
-  else if (/^\d+(\.\d+)?\^x$/.test(expr)) {
-    const a = expr.split('^')[0];
-    result = `${a}^x / ln(${a}) + C`;
-  }
+    const remaining =
+        MAX_FILES - files.length;
 
-  // ===== NOT SUPPORTED =====
-  else {
-    result = 'Chưa hỗ trợ nguyên hàm này (phiên bản học thuật).';
-  }
 
-  document.getElementById('output').innerHTML =
-    `\\(\\int ${expr} \\, dx = ${result}\\)`;
-  MathJax.typeset();
+    if (remaining <= 0) {
+
+        showError(
+            `Đã đạt giới hạn ${MAX_FILES} file.`
+        );
+
+        return;
+    }
+
+
+    const selected =
+        valid.slice(
+            0,
+            remaining
+        );
+
+
+    files.push(
+        ...selected
+    );
+
+
+    if (valid.length > remaining) {
+
+        showError(
+            `Chỉ thêm được ${remaining} file. ` +
+            `Tối đa ${MAX_FILES} file.`
+        );
+
+    }
+
+
+    renderFiles();
 }
+
+
+function renderFiles() {
+
+    fileList.innerHTML = "";
+
+    if (!files.length) {
+
+        fileList.style.display =
+            "none";
+
+        info.textContent =
+            "Chưa chọn file.";
+
+        convertBtn.disabled =
+            true;
+
+        clearBtn.disabled =
+            true;
+
+        return;
+    }
+
+
+    fileList.style.display =
+        "block";
+
+
+    info.textContent =
+        `${files.length} / ${MAX_FILES} file đã chọn`;
+
+
+    convertBtn.disabled =
+        false;
+
+    clearBtn.disabled =
+        false;
+
+
+    files.forEach(
+        (file, index) => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.className =
+                "file-item";
+
+
+            item.innerHTML = `
+
+                <div class="file-header">
+
+                    <div class="file-number">
+                        ${index + 1}
+                    </div>
+
+                    <div class="file-name">
+                        ${escapeHTML(file.name)}
+                    </div>
+
+                    <div
+                        class="file-status"
+                        id="status-${index}">
+                        Chờ
+                    </div>
+
+                </div>
+
+                <div class="file-progress">
+
+                    <div
+                        id="progress-${index}"
+                        class="file-progress-fill">
+                    </div>
+
+                </div>
+
+                <div class="file-actions">
+
+                    <a
+                        id="download-${index}"
+                        href="#"
+                        download>
+                        ⬇️ Download OGG
+                    </a>
+
+                </div>
+
+                <div
+                    id="error-${index}"
+                    class="file-error">
+                </div>
+            `;
+
+
+            fileList.appendChild(item);
+
+        }
+    );
+}
+
+
+drop.addEventListener(
+    "click",
+    () => fileInput.click()
+);
+
+
+fileInput.addEventListener(
+    "change",
+    event => {
+
+        addFiles(
+            event.target.files
+        );
+
+        fileInput.value = "";
+
+    }
+);
+
+
+drop.addEventListener(
+    "dragover",
+    event => {
+
+        event.preventDefault();
+
+        drop.classList.add(
+            "drag"
+        );
+
+    }
+);
+
+
+drop.addEventListener(
+    "dragleave",
+    () => {
+
+        drop.classList.remove(
+            "drag"
+        );
+
+    }
+);
+
+
+drop.addEventListener(
+    "drop",
+    event => {
+
+        event.preventDefault();
+
+        drop.classList.remove(
+            "drag"
+        );
+
+        addFiles(
+            event.dataTransfer.files
+        );
+
+    }
+);
+
+
+clearBtn.addEventListener(
+    "click",
+    () => {
+
+        results.forEach(
+            item => {
+
+                if (item.url) {
+
+                    URL.revokeObjectURL(
+                        item.url
+                    );
+
+                }
+
+            }
+        );
+
+
+        files = [];
+
+        results = [];
+
+
+        clearError();
+
+        renderFiles();
+
+
+        overall.style.display =
+            "none";
+
+
+        downloadAllBtn.disabled =
+            true;
+
+    }
+);
+
+
+async function loadFFmpeg() {
+
+    if (
+        ffmpegLoaded &&
+        ffmpeg
+    ) {
+
+        return ffmpeg;
+    }
+
+
+    clearError();
+
+
+    overall.style.display =
+        "block";
+
+
+    overallText.textContent =
+        "Đang tải FFmpeg WebAssembly...";
+
+
+    overallFill.style.width =
+        "5%";
+
+
+    try {
+
+        const ffmpegModule =
+            await import(
+                `https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@${FFmpegVersion}/dist/esm/index.js`
+            );
+
+
+        const utilModule =
+            await import(
+                `https://cdn.jsdelivr.net/npm/@ffmpeg/util@${UtilVersion}/dist/esm/index.js`
+            );
+
+
+        const {
+            FFmpeg
+        } = ffmpegModule;
+
+
+        fetchFile =
+            utilModule.fetchFile;
+
+
+        toBlobURL =
+            utilModule.toBlobURL;
+
+
+        ffmpeg =
+            new FFmpeg();
+
+
+        const baseURL =
+            `https://cdn.jsdelivr.net/npm/@ffmpeg/core@${FFmpegVersion}/dist/esm`;
+
+
+        await ffmpeg.load({
+
+            coreURL:
+                await toBlobURL(
+                    `${baseURL}/ffmpeg-core.js`,
+                    "text/javascript"
+                ),
+
+            wasmURL:
+                await toBlobURL(
+                    `${baseURL}/ffmpeg-core.wasm`,
+                    "application/wasm"
+                )
+
+        });
+
+
+        ffmpegLoaded =
+            true;
+
+
+        overallFill.style.width =
+            "10%";
+
+
+        overallText.textContent =
+            "FFmpeg đã sẵn sàng.";
+
+
+        return ffmpeg;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "FFmpeg LOAD ERROR:",
+            error
+        );
+
+
+        throw new Error(
+            "Không thể tải FFmpeg WebAssembly: " +
+            (error?.message || error)
+        );
+
+    }
+}
+
+
+async function convertOne(
+    file,
+    index
+) {
+
+    const status =
+        document.getElementById(
+            `status-${index}`
+        );
+
+
+    const progress =
+        document.getElementById(
+            `progress-${index}`
+        );
+
+
+    const error =
+        document.getElementById(
+            `error-${index}`
+        );
+
+
+    status.textContent =
+        "Đang đọc...";
+
+
+    progress.style.width =
+        "5%";
+
+
+    try {
+
+        const inputName =
+            `input_${index}.mp3`;
+
+
+        const outputName =
+            `output_${index}.ogg`;
+
+
+        await ffmpeg.writeFile(
+            inputName,
+            await fetchFile(file)
+        );
+
+
+        progress.style.width =
+            "20%";
+
+
+        status.textContent =
+            "Đang encode OGG...";
+
+
+        const selectedBitrate =
+            bitrate.value;
+
+
+        /*
+         * libvorbis = OGG Vorbis encoder
+         */
+        const exitCode =
+            await ffmpeg.exec([
+
+                "-y",
+
+                "-i",
+                inputName,
+
+                "-vn",
+
+                "-c:a",
+                "libvorbis",
+
+                "-b:a",
+                `${selectedBitrate}k`,
+
+                outputName
+
+            ]);
+
+
+        if (
+            exitCode !== 0
+        ) {
+
+            throw new Error(
+                `FFmpeg exit code: ${exitCode}`
+            );
+
+        }
+
+
+        progress.style.width =
+            "80%";
+
+
+        const data =
+            await ffmpeg.readFile(
+                outputName
+            );
+
+
+        if (
+            !data ||
+            !data.length
+        ) {
+
+            throw new Error(
+                "FFmpeg không tạo được file OGG."
+            );
+
+        }
+
+
+        const blob =
+            new Blob(
+                [data],
+                {
+                    type:
+                        "audio/ogg"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        const outputFileName =
+            file.name.replace(
+                /\.[^/.]+$/,
+                ""
+            ) + ".ogg";
+
+
+        const link =
+            document.getElementById(
+                `download-${index}`
+            );
+
+
+        link.href =
+            url;
+
+        link.download =
+            outputFileName;
+
+        link.style.display =
+            "inline-block";
+
+
+        progress.style.width =
+            "100%";
+
+
+        status.textContent =
+            `✓ ${formatBytes(blob.size)}`;
+
+
+        results.push({
+
+            name:
+                outputFileName,
+
+            blob:
+                blob,
+
+            url:
+                url
+
+        });
+
+
+        error.style.display =
+            "none";
+
+
+        try {
+
+            await ffmpeg.deleteFile(
+                inputName
+            );
+
+        }
+
+        catch (_) {}
+
+
+        try {
+
+            await ffmpeg.deleteFile(
+                outputName
+            );
+
+        }
+
+        catch (_) {}
+
+
+        return true;
+
+    }
+
+    catch (err) {
+
+        console.error(
+            `CONVERT ERROR ${index}:`,
+            err
+        );
+
+
+        status.textContent =
+            "✗ Lỗi";
+
+
+        progress.style.width =
+            "0%";
+
+
+        error.textContent =
+            err?.message ||
+            String(err);
+
+
+        error.style.display =
+            "block";
+
+
+        return false;
+    }
+}
+
+
+convertBtn.addEventListener(
+    "click",
+    async () => {
+
+        if (!files.length)
+            return;
+
+
+        clearError();
+
+
+        convertBtn.disabled =
+            true;
+
+        clearBtn.disabled =
+            true;
+
+        downloadAllBtn.disabled =
+            true;
+
+
+        results.forEach(
+            item => {
+
+                if (item.url) {
+
+                    URL.revokeObjectURL(
+                        item.url
+                    );
+
+                }
+
+            }
+        );
+
+
+        results = [];
+
+
+        overall.style.display =
+            "block";
+
+
+        overallFill.style.width =
+            "0%";
+
+
+        overallText.textContent =
+            `0 / ${files.length}`;
+
+
+        try {
+
+            await loadFFmpeg();
+
+
+            for (
+                let i = 0;
+                i < files.length;
+                i++
+            ) {
+
+                const current =
+                    files[i];
+
+
+                overallText.textContent =
+                    `${i} / ${files.length} — ${current.name}`;
+
+
+                await convertOne(
+                    current,
+                    i
+                );
+
+
+                const percent =
+                    ((i + 1) /
+                    files.length) *
+                    100;
+
+
+                overallFill.style.width =
+                    percent + "%";
+
+
+                overallText.textContent =
+                    `${i + 1} / ${files.length}`;
+
+            }
+
+
+            if (
+                results.length
+            ) {
+
+                downloadAllBtn.disabled =
+                    false;
+
+            }
+
+
+            overallText.textContent =
+                `Hoàn tất: ${results.length} / ${files.length} file`;
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                error
+            );
+
+
+            showError(
+                error?.message ||
+                String(error)
+            );
+
+        }
+
+        finally {
+
+            convertBtn.disabled =
+                false;
+
+            clearBtn.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+downloadAllBtn.addEventListener(
+    "click",
+    async () => {
+
+        if (!results.length)
+            return;
+
+
+        for (
+            const item of results
+        ) {
+
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+
+            link.href =
+                item.url;
+
+            link.download =
+                item.name;
+
+
+            document.body.appendChild(
+                link
+            );
+
+
+            link.click();
+
+
+            link.remove();
+
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        400
+                    )
+            );
+
+        }
+
+    }
+);
+
 </script>
 
 </body>
