@@ -131,11 +131,12 @@ const R=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imu
 const rp=(r,a)=>a[Math.floor(r()*a.length)];
 const sh=(r,a)=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const cap=x=>x[0].toUpperCase()+x.slice(1);
-const nm=x=>x.toLowerCase().replace(/’/g,"'").replace(/won't/g,"will not").replace(/n't/g," not").replace(/[^a-z ]/g,"").replace(/\s+/g," ").trim();
-function init(){return{xp:0,streak:0,best:0,last:"",c:Array(12).fill(0),d:{},w:[],h:[],cur:null,perf:0}}
+const nmv=x=>{x=x.toLowerCase().replace(/[’`]/g,"'").replace(/won't/g,"will not").replace(/n't\b/g," not").replace(/'m\b/g," am").replace(/'re\b/g," are").replace(/'ve\b/g," have").replace(/'ll\b/g," will").replace(/'d\b/g," had");const f=y=>y.replace(/[^a-z0-9 ]/g,"").replace(/\blearnt\b/g,"learned").replace(/\s+/g," ").trim();return/'s\b/.test(x)?["is","has"].map(z=>f(x.replace(/'s\b/g," "+z))):[f(x)]};
+const nm=x=>nmv(x)[0];
+function init(){return{xp:0,streak:0,best:0,last:"",c:Array(12).fill(0),d:{},w:[],h:[],cur:null,perf:0,at:{}}}
 function load(){try{return Object.assign(init(),JSON.parse(localStorage.getItem("t12")))}catch(e){return init()}}
 function save(){try{localStorage.setItem("t12",JSON.stringify(st))}catch(e){}}
-let st=load(),ui={v:"home"},qs=[],qi=0,ok=0,gx=0,pk=-1,fb=null,val="",bd=[],pl=[],mode="lvl",res=null;
+let st=load(),ui={v:"home"},qs=[],qi=0,ok=0,gx=0,pk=-1,fb=null,val="",hint="",bd=[],pl=[],mode="lvl",res=null;
 const tot=()=>st.c.reduce((a,b)=>a+b,0);
 const bar=(p,c)=>`<div class="bar"><i style="width:${Math.min(100,p)}%;background:${c||"var(--p)"}"></i></div>`;
 const be=(p,past)=>past?(p==1?"were":"was"):(p==0?"am":p==2?"is":"are");
@@ -170,16 +171,19 @@ function gen(t,seed,l){
   const c=l>60?[...sh(r,same),...sh(r,rest)]:sh(r,o),ops=[a];
   for(const i of c){const z=sent(i,s,v,m,f);if(!ops.includes(z)&&ops.length<4)ops.push(z)}
   x.o=sh(r,ops);x.st=`Chọn câu đúng ở thì ${T[1]}:`}
- else if(k=="fill"){const[A,Rr]=conj(t,s[2],v,f);
+ else if(k=="fill"){const[A,Rr]=conj(t,s[2],v,f);x.sj=s[0];
   x.a=f=="aff"?(A?A+" ":"")+Rr:A+" not "+Rr;
-  x.st=`Chia động từ trong ngoặc ở thì ${T[1]}:`;
+  x.st=`Chia động từ trong ngoặc ở thì ${T[1]} (điền cả trợ động từ nếu có):`;
   x.stem=`${s[0]} ___ (${f=="neg"?"not ":""}${v[0]}) ${v[5]} ${m}.`}
  else{const tk=a.replace(/[.?]$/,"").split(" ");x.a=tk.join(" ");let z=sh(r,tk);if(z.join(" ")==x.a)z=z.reverse();x.tk=z;
   x.st=`Sắp xếp thành câu ở thì ${T[1]} (cụm chỉ thời gian đặt ở cuối câu):`}
  return x}
 const goal=l=>l<=20?"làm quen khái niệm cơ bản":l<=50?"nhận biết cấu trúc ngữ pháp":l<=100?"xây dựng câu đơn giản":l<=200?"áp dụng công thức vào nhiều tình huống":l<=300?"phân tích ngữ cảnh và chọn cấu trúc":l<=400?"xử lý câu phức tạp hơn":"thử thách tổng hợp, kiểm tra độ thành thạo";
 function go(v,p){ui=Object.assign({v},p);render();scrollTo(0,0)}
-function cont(){if(st.cur)open_(st.cur.t,st.cur.l);else go("map",{t:0,s:0})}
+function focusIn(){const i=$("in");if(i&&i.focus)i.focus()}
+document.addEventListener("keydown",e=>{if(e.key=="Enter"&&!e.repeat&&ui.v=="quiz"&&fb&&e.target.id!="in"&&e.target.tagName!="BUTTON"){e.preventDefault();nx()}});
+function mkQs(t,l,n,at){const o=[],u={};for(let i=1;o.length<n&&i<800;i++){const x=gen(t,(at*1000+l)*1000+i,l);if(!u[x.show]){u[x.show]=1;o.push(x)}}return o}
+function cont(){if(st.cur){const t=st.cur.t;open_(t,Math.min(500,st.c[t]+1))}else go("map",{t:0,s:0})}
 function open_(t,l){st.cur={t,l};save();go("learn",{t,l})}
 function home(){const n=tot();return`<section class="hero"><div class="ht"><h1>HÀNH TRÌNH CHINH PHỤC 12 THÌ TIẾNG ANH!</h1><p>Khám phá ngữ pháp tiếng Anh qua 6.000 cấp độ thú vị. Học từng chút một, tiến bộ mỗi ngày!</p><button class="btn go" onclick="cont()">BẮT ĐẦU HỌC</button></div><div class="mw">${MAS}<div class="say">Hôm nay mình học thì nào nhé?</div></div></section>
 <div class="stats"><div class="tile"><svg class="ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="none" stroke="var(--bd)" stroke-width="5"/><circle cx="22" cy="22" r="18" fill="none" stroke="var(--p)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(n/6000*113).toFixed(1)} 113" transform="rotate(-90 22 22)"/></svg><div><b>${n}</b><span>/6.000 level đã xong</span></div></div><div class="tile"><i>⚡</i><div><b>${st.xp}</b><span>điểm XP</span></div></div><div class="tile"><i>🔥</i><div><b>${st.streak}</b><span>ngày liên tiếp</span></div></div></div>
@@ -191,21 +195,21 @@ function map(){const t=ui.t,s=ui.s,c=st.c[t],T=TN[t];let n="";
  return`<h2>${T[0]} <small>${T[1]}</small></h2><p>${c}/500 level · mỗi chặng thưởng +200 XP</p>${bar(c/5,GC[t>>2])}<div class="tabs">${STG.map((x,i)=>`<button class="${i==s?"on":""}" onclick="go('map',{t:${t},s:${i}})">${x}</button>`).join("")}</div><div class="map" style="--c:${GC[t>>2]}">${n}</div><p class="mu">⭐ Boss mỗi 25 level (10 câu) · 🏆 Kiểm tra tổng hợp mỗi 100 level · Đạt từ 80% để mở khóa level tiếp theo.</p>`}
 function learn(){const t=ui.t,l=ui.l,T=TN[t],n=l%25==0?10:6,e=f=>sent(t,S[1],V[l%V.length],M[t][0],f);
  return`<p><button class="chip" onclick="go('map',{t:${t},s:${Math.floor((l-1)/100)}})">← Bản đồ</button></p><h2>Level ${l} · ${T[1]} ${l%100==0?"🏆 Kiểm tra tổng hợp":l%25==0?"⭐ Boss":""}</h2><div class="card" style="--c:${GC[t>>2]};cursor:default"><h3>📘 Phần 1: Kiến thức</h3><p><b>Dùng khi:</b> ${T[3]}.</p><p><b>Dấu hiệu nhận biết:</b> ${T[4]}</p><code>${T[2]}</code><p>Khẳng định: <i>${e("aff")}</i><br>Phủ định: <i>${e("neg")}</i><br>Nghi vấn: <i>${e("q")}</i></p><p>⚠️ <b>Lỗi thường gặp:</b> ${T[5]}</p><p class="mu">Mục tiêu level này: ${goal(l)}.</p><p>📝 Phần 2 và 3: ${n} câu luyện tập và thử thách. Cần đúng ${Math.ceil(n*.8)}/${n} câu để mở khóa level tiếp theo.</p><button class="btn" onclick="start()">Bắt đầu làm bài</button></div>`}
-function setup(){qi=0;ok=0;gx=0;pk=-1;fb=null;val="";ui.v="quiz";ord();render();scrollTo(0,0)}
+function setup(){qi=0;ok=0;gx=0;pk=-1;fb=null;val="";hint="";ui.v="quiz";ord();render();scrollTo(0,0);focusIn()}
 function ord(){const x=qs[qi];if(x&&x.k=="order"){bd=[];pl=x.tk.map((_,i)=>i)}}
-function start(){mode="lvl";const n=ui.l%25==0?10:6;qs=Array.from({length:n},(_,i)=>gen(ui.t,ui.l*100+i+1,ui.l));setup()}
+function start(){mode="lvl";const n=ui.l%25==0?10:6;const k=ui.t+"."+ui.l,at=st.at[k]||0;st.at[k]=at+1;save();qs=mkQs(ui.t,ui.l,n,at);setup()}
 function startRev(){mode="rev";qs=st.w.slice(0,8).map(w=>gen(w.t,w.seed,w.l));setup()}
-function sp(i){if(!fb){pk=i;render()}}
+function sp(i){if(!fb){pk=i;hint="";render()}}
 function ad(i){if(!fb){pl=pl.filter(j=>j!=i);bd.push(i);render()}}
 function un(i){if(!fb){bd=bd.filter(j=>j!=i);pl.push(i);render()}}
 function chk(){if(fb)return;const x=qs[qi];let g;
- if(x.k=="mc"){if(pk<0)return;g=x.o[pk]==x.a}
- else if(x.k=="fill"){val=$("in").value;if(!val.trim())return;g=nm(val)==nm(x.a)}
- else{if(bd.length<x.tk.length)return;g=bd.map(i=>x.tk[i]).join(" ")==x.a}
- fb={g};const w=st.w.findIndex(w=>w.t==x.t&&w.seed==x.seed);
+ if(x.k=="mc"){if(pk<0){hint="Hãy chọn một đáp án trước nhé.";return render()}g=x.o[pk]==x.a}
+ else if(x.k=="fill"){val=$("in").value;if(!val.trim()){hint="Hãy nhập đáp án trước nhé.";return render()}const u=nmv(val);g=[x.a,x.show,x.sj+" "+x.a].some(z=>u.includes(nm(z)))}
+ else{if(bd.length<x.tk.length){hint="Hãy xếp đủ các từ trước nhé.";return render()}g=bd.map(i=>x.tk[i]).join(" ")==x.a}
+ fb={g};hint="";const w=st.w.findIndex(w=>w.t==x.t&&w.seed==x.seed);
  if(g){ok++;gx+=10;st.xp+=10;if(w>=0)st.w.splice(w,1)}else if(w<0)st.w.push({t:x.t,seed:x.seed,l:x.l});
  save();render()}
-function nx(){if(qi+1<qs.length){qi++;pk=-1;fb=null;val="";ord();render();scrollTo(0,0)}else fin()}
+function nx(){if(qi+1<qs.length){qi++;pk=-1;fb=null;val="";hint="";ord();render();scrollTo(0,0);focusIn()}else fin()}
 function tick(){const d=new Date().toISOString().slice(0,10);if(st.last==d)return;const y=new Date(Date.now()-864e5).toISOString().slice(0,10);st.streak=st.last==y?st.streak+1:1;st.best=Math.max(st.best,st.streak);st.last=d}
 function fin(){const p=Math.round(ok/qs.length*100),pass=p>=80,b=ACH.map(a=>a[2]());let xp=gx;tick();
  if(mode=="lvl"){const k=ui.t+"."+ui.l;
@@ -215,10 +219,10 @@ function fin(){const p=Math.round(ok/qs.length*100),pass=p>=80,b=ACH.map(a=>a[2]
  res={p,pass:mode=="lvl"?pass:true,xp,nw:ACH.filter((a,i)=>!b[i]&&a[2]())};save();ui.v="res";render();scrollTo(0,0)}
 function quiz(){const x=qs[qi];let b="";
  if(x.k=="mc")b=x.o.map((o,i)=>`<button class="opt ${fb?(o==x.a?"ok":i==pk?"no":""):i==pk?"sel":""}" ${fb?"disabled":""} onclick="sp(${i})">${o}</button>`).join("");
- else if(x.k=="fill")b=`<p class="big">${x.stem}</p><input id="in" class="inp" value="${val.replace(/"/g,"&quot;")}" ${fb?"disabled":""} autocomplete="off" autocapitalize="off" placeholder="Nhập đáp án" onkeydown="if(event.key=='Enter')chk()">`;
+ else if(x.k=="fill")b=`<p class="big">${x.stem}</p><input id="in" class="inp" value="${val.replace(/"/g,"&quot;")}" ${fb?"disabled":""} autocomplete="off" autocapitalize="off" placeholder="Gõ phần còn thiếu (hoặc cả câu đều được)" onkeydown="if(event.key=='Enter')chk()">`;
  else b=`<div class="ans">${bd.map(i=>`<button class="chip" onclick="un(${i})">${x.tk[i]}</button>`).join("")}</div>`+pl.map(i=>`<button class="chip" onclick="ad(${i})">${x.tk[i]}</button>`).join("");
  const f=fb?`<div class="fb ${fb.g?"":"no"}"><b>${fb.g?"✅ Chính xác! +10 XP":"❌ Chưa đúng."}</b> Đáp án: <i>${x.show}</i>${fb.g?"":`<div class="tutor"><span>🤖</span><div><b>Gia sư giải thích</b><br>${x.ex}</div></div>`}</div>`:"";
- return`<p class="mu">${mode=="lvl"?`Level ${ui.l} · ${TN[ui.t][1]}`:"Ôn tập thông minh"} · Câu ${qi+1}/${qs.length}</p>${bar((qi+(fb?1:0))/qs.length*100)}<h3>${x.st}</h3>${b}${f}<p>${fb?`<button class="btn" onclick="nx()">${qi+1<qs.length?"Câu tiếp theo":"Xem kết quả"}</button>`:`<button class="btn" onclick="chk()">Kiểm tra</button>`}</p>`}
+ return`<p class="mu">${mode=="lvl"?`Level ${ui.l} · ${TN[ui.t][1]}`:"Ôn tập thông minh"} · Câu ${qi+1}/${qs.length}</p>${bar((qi+(fb?1:0))/qs.length*100)}<h3>${x.st}</h3>${b}${f}${hint&&!fb?`<p class="mu">${hint}</p>`:""}<p>${fb?`<button class="btn" onclick="nx()">${qi+1<qs.length?"Câu tiếp theo":"Xem kết quả"}</button>`:`<button class="btn" onclick="chk()">Kiểm tra</button>`}</p>`}
 function resv(){const r=res,lv=mode=="lvl";return`<div class="card res" style="cursor:default;--c:${r.pass?"var(--ok)":"var(--bad)"}">${r.pass?Array.from({length:22},(_,i)=>'<i class="cf" style="--x:'+(i*47%100)+'%;--d:'+(i%7)*.12+'s;--k:'+["#FFB84C","#6C63FF","#45C486","#FF8B7B","#5B8DEF"][i%5]+'"></i>').join(""):""}<h2>${lv&&!r.pass?"💪 Gần được rồi, thử lại nhé!":"🎉 Hoàn thành!"}</h2><p><b>${r.p}%</b> (${ok}/${qs.length} câu đúng) · +${r.xp} XP</p>${r.nw.map(a=>`<p>🏅 Thành tựu mới: <b>${a[1]}</b></p>`).join("")}${lv?`<button class="btn" onclick="open_(${ui.t},${ui.l})">Làm lại</button> ${r.pass&&ui.l<500?`<button class="btn" onclick="open_(${ui.t},${ui.l+1})">Level tiếp theo</button> `:""}<button class="btn" onclick="go('map',{t:${ui.t},s:${Math.floor((ui.l-1)/100)}})">Bản đồ</button>`:`<button class="btn" onclick="go('review')">Về trang ôn tập</button>`}</div>`}
 function rev(){return`<h2>🔁 Ôn tập thông minh</h2><p>Những câu bạn làm sai được lưu lại. Trả lời đúng một câu thì câu đó rời khỏi danh sách.</p><p><b>${st.w.length}</b> câu đang chờ ôn.</p>${st.w.length?`<button class="btn" onclick="startRev()">Ôn ${Math.min(8,st.w.length)} câu</button>`:`<p class="mu">Chưa có câu nào. Hãy làm một level để bắt đầu.</p>`}`}
 function prof(){const n=tot();return`<h2>🧑‍🎓 Hồ sơ của bạn</h2><div class="grid3"><div class="card" style="cursor:default"><h3>Cấp ${Math.floor(st.xp/200)+1}</h3><small>${st.xp} XP</small></div><div class="card" style="cursor:default"><h3>🔥 ${st.streak} ngày</h3><small>Chuỗi dài nhất: ${st.best} ngày</small></div><div class="card" style="cursor:default"><h3>${n}/6.000 level</h3><small>${(n/60).toFixed(1)}% tiến độ</small></div></div><p><button class="btn" onclick="cont()">Tiếp tục bài học gần nhất</button></p><h3>Tiến độ từng thì</h3>${TN.map((T,i)=>`<div>${T[0]} (${T[1]}) · ${st.c[i]}/500${bar(st.c[i]/5,GC[i>>2])}</div>`).join("")}<h3>Thành tựu</h3><div class="grid3">${ACH.map(a=>`<div class="card" style="cursor:default;opacity:${a[2]()?1:.45}">${a[0]} <b>${a[1]}</b><br><small>${a[3]}</small></div>`).join("")}</div><h3>Lịch sử học tập</h3>${st.h.slice(-8).reverse().map(h=>`<div>${h.d} · ${TN[h.t][1]} · level ${h.l} · ${h.p}%</div>`).join("")||`<small>Chưa có lịch sử.</small>`}<p><small>Dữ liệu được lưu trên trình duyệt này.</small></p>`}
