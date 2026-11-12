@@ -123,7 +123,7 @@ const V=[["play","played","played","playing","plays","football"],["study","studi
 const S=[["I","I",0],["She","she",2],["They","they",1],["You","you",1],["He","he",2],["We","we",1],["My brother","my brother",2],["Lan","Lan",2],["My parents","my parents",1],["The children","the children",1]];
 const GN=["Thì hiện tại","Thì quá khứ","Thì tương lai"],GC=["#5B8DEF","#FF8B7B","#A47CF5"],GI=["☀️","⏳","🚀"];
 const GD=["Học cách diễn đạt thói quen, sự thật và những hành động đang diễn ra.","Khám phá cách kể lại những sự kiện và hành động đã xảy ra.","Học cách diễn đạt dự định, dự đoán và những sự kiện trong tương lai."];
-const STG=["Chặng 1 · Cơ bản","Chặng 2 · Sơ cấp","Chặng 3 · Trung cấp","Chặng 4 · Nâng cao","Chặng 5 · Thành thạo"];
+const STG=["Chặng 1 · Cơ bản (A1)","Chặng 2 · Sơ cấp (A2)","Chặng 3 · Trung cấp (B1)","Chặng 4 · Nâng cao (C1)","Chặng 5 · Thành thạo (C2)"];
 const ACH=[["🦶","Bước Chân Đầu Tiên",()=>tot()>=1,"Hoàn thành level đầu tiên"],["🧭","Nhà Khám Phá",()=>tot()>=25,"Hoàn thành 25 level"],["🎓","Học Sinh Xuất Sắc",()=>!!st.perf,"Đạt 100% trong một thử thách"],["🔥","Giữ Lửa",()=>st.best>=3,"Học 3 ngày liên tiếp"],["🏆","Bậc Thầy Ngữ Pháp",()=>st.c.some(c=>c>=500),"Hoàn thành 500 level của một thì"],["👑","Huyền Thoại Tiếng Anh",()=>tot()>=6000,"Hoàn thành toàn bộ 6.000 level"]];
 const $=id=>document.getElementById(id);
 const MAS=`<svg viewBox='0 0 160 170' aria-hidden='true'><defs><linearGradient id='mg' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#fff'/><stop offset='1' stop-color='#d9d6ff'/></linearGradient></defs><line x1='80' y1='20' x2='80' y2='38' stroke='#fff' stroke-width='5' stroke-linecap='round'/><circle cx='80' cy='14' r='9' fill='#FFB84C'/><rect x='10' y='68' width='15' height='32' rx='7' fill='#FFB84C'/><rect x='135' y='68' width='15' height='32' rx='7' fill='#FFB84C'/><rect x='22' y='36' width='116' height='92' rx='34' fill='url(#mg)'/><rect x='38' y='54' width='84' height='56' rx='24' fill='#2b2f55'/><circle cx='62' cy='79' r='9' fill='#4fe3a9'/><circle cx='98' cy='79' r='9' fill='#4fe3a9'/><path d='M66 95q14 12 28 0' stroke='#4fe3a9' stroke-width='5' fill='none' stroke-linecap='round'/><circle cx='45' cy='101' r='6' fill='#FF8B7B' opacity='.75'/><circle cx='115' cy='101' r='6' fill='#FF8B7B' opacity='.75'/><rect x='46' y='132' width='68' height='30' rx='14' fill='url(#mg)'/><text x='80' y='153' text-anchor='middle' font-size='17' font-weight='800' fill='#6C63FF' font-family='Baloo 2,sans-serif'>12</text></svg>`;
@@ -131,6 +131,50 @@ const R=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imu
 const rp=(r,a)=>a[Math.floor(r()*a.length)];
 const sh=(r,a)=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const cap=x=>x[0].toUpperCase()+x.slice(1);
+function inf(b,d){const e=/e$/.test(b),y=/[^aeiou]y$/.test(b),x=/(s|sh|ch|x|z|o)$/.test(b),c=d?b+b.slice(-1):b,p=y?b.slice(0,-1)+'ied':e?b+'d':c+'ed';return[b,p,p,e&&!/ee$/.test(b)?b.slice(0,-1)+'ing':c+'ing',y?b.slice(0,-1)+'ies':x?b+'es':b+'s']}
+const rv=s=>{const[a,b]=s.split('='),[g,o]=b.split(':'),f=a.split('/'),r=inf(f[0].replace('*',''),f[0].endsWith('*'));if(f[1]){r[1]=f[1];r[2]=f[2]||f[1]}return{f:r,g,o:o.split(',')}};
+const VB=[['play=chơi:football,the guitar','study=học bài:English,maths','eat/ate/eaten=ăn:noodles,rice','write/wrote/written=viết:letters,a story','read/read/read=đọc:books,the news','watch=xem:cartoons,a film','cook=nấu:dinner,soup','drink/drank/drunk=uống:milk,tea','take/took/taken=lấy, chụp:photos,a bus','run*/ran/run=chạy:in the park,along the river','learn=học hỏi:new words,French','clean=dọn dẹp:the room,the kitchen','draw/drew/drawn=vẽ:pictures,a cat','sing/sang/sung=hát:songs,a lullaby','swim*/swam/swum=bơi:in the lake,in the pool','build/built/built=xây dựng:a sandcastle,a small house','ride/rode/ridden=cưỡi, đạp:a bike,a horse','paint=sơn, tô vẽ:the wall,a picture'],
+['visit=thăm:distant relatives,a museum','invite=mời:old friends,the neighbours','buy/bought/bought=mua:a new phone,fresh vegetables','sell/sold/sold=bán:old books,homemade cakes','send/sent/sent=gửi:an email,a postcard','meet/met/met=gặp:old friends,the manager','carry=mang:a heavy bag,the shopping','repair=sửa chữa:the bicycle,the roof','decorate=trang trí:the classroom,the Christmas tree','collect=sưu tầm:stamps,old coins','practise=luyện tập:the piano,speaking skills','explain=giải thích:the rules,the problem','borrow=mượn:a dictionary,some money','choose/chose/chosen=chọn:a gift,a new laptop','bake=nướng bánh:bread,cookies','wash=rửa:the dishes,the car','travel*=du lịch:to the coast,around Asia','teach/taught/taught=dạy:maths,young children','finish=hoàn thành:the homework,the project'],
+['organise=tổ chức:a charity event,the school trip','improve=cải thiện:writing skills,the service','discover=khám phá:a new route,an old photograph','compare=so sánh:two prices,different options','develop=phát triển:a mobile app,new skills','suggest=đề xuất:a better plan,an alternative','solve=giải quyết:the puzzle,a difficult problem','prepare=chuẩn bị:a presentation,the documents','describe=mô tả:the accident,the new job','recommend=giới thiệu:a good restaurant,this novel','complete=hoàn tất:the survey,the online course','arrange=sắp xếp:a meeting,the furniture','achieve=đạt được:good results,ambitious goals','encourage=khuyến khích:the students,healthy habits','postpone=hoãn lại:the conference,the concert','catch/caught/caught=bắt kịp:the early train,the last bus','spend/spent/spent=tiêu, dành:a lot of money,the whole weekend','forget*/forgot/forgotten=quên:the password,the appointment'],
+['analyse=phân tích:the survey data,current market trends','evaluate=đánh giá:the overall impact of the project,several alternatives','negotiate=đàm phán:a new contract,the terms of the agreement','implement=triển khai:the new policy,strict safety measures','undermine=làm suy yếu:public confidence,the morale of the team','acknowledge=thừa nhận:the shortcomings of the plan,a serious mistake','consolidate=củng cố:a dominant market position,the research findings','overcome/overcame/overcome=vượt qua:serious obstacles,a major setback','undertake/undertook/undertaken=đảm nhận:a challenging assignment,extensive research','withdraw/withdrew/withdrawn=rút lại:the proposal,all financial support','anticipate=dự đoán trước:potential difficulties,a sharp rise in prices','contribute=đóng góp:to the debate,to the research project','emphasise=nhấn mạnh:the importance of teamwork,the need for reform','reinforce=tăng cường:the argument,existing stereotypes','distribute=phân phối:the annual report,emergency supplies','resolve=giải quyết dứt điểm:the dispute,the long-standing conflict'],
+['scrutinise=xem xét tỉ mỉ:every clause of the contract,the proposed legislation','exacerbate=làm trầm trọng thêm:the housing crisis,existing inequalities','corroborate=xác thực:the eyewitness testimony,the initial findings','mitigate=giảm nhẹ:the effects of climate change,the risk of default','elucidate=làm sáng tỏ:the underlying mechanism,an obscure passage','perpetuate=duy trì (điều tiêu cực):harmful stereotypes,a cycle of poverty','circumvent=lách, né tránh:the regulatory framework,international sanctions','relinquish=từ bỏ:control of the company,all territorial claims','reconcile=dung hòa:conflicting interests,two opposing views','disseminate=phổ biến:scientific knowledge,reliable information','substantiate=chứng minh:the allegations,a controversial theory','ameliorate=cải thiện (tình trạng):living conditions,the plight of refugees','propagate=lan truyền:misinformation,a radical ideology','underpin*=làm nền tảng cho:the entire argument,the global economy','exemplify=là ví dụ điển hình cho:the spirit of innovation,the ideals of the movement','curtail=cắt giảm:civil liberties,public spending']].map(a=>a.map(rv));
+const SB=[['I:0:-','She:2:she','They:1','You:1:I','He:2:he','We:1:-','My brother:2:he','Lan:2:she','My parents:1','The children:1'],['Our teacher:2','My neighbour:2','The students:1','My cousins:1'],['The manager:2','Many tourists:1','My colleagues:1','The local council:2:it'],['The government:2:it','Several economists:1','The committee:2:it','Many corporations:1'],['The international consortium:2:it','Influential policymakers:1','The editorial board:2:it','Leading academics:1']].map(a=>a.map(z=>{const[t,p,r]=z.split(':');return[t,t=='I'||t=='Lan'?t:t[0].toLowerCase()+t.slice(1),+p,r=='-'?'':(r||(+p==1?'they':''))]}));
+const ADV=[['as a rule','on a regular basis'],['at present','these days'],['over the past decade','in recent years'],['for several months now','ever since the merger'],['in the early 1990s','during the last recession'],['at that very moment','throughout the entire meeting'],['by the time the inspectors arrived','before the merger was announced'],['for months before the scandal broke','for years before the reform'],['in the near future','within the next decade'],['throughout next quarter','this time next year'],['by the end of the decade','by the time the contract expires'],['for a decade by 2030','for months by the time the report is published']];
+const sbj=l=>{const i=Math.min(4,(l-1)/100|0);return i?SB[i].concat(SB[i-1]):SB[0].slice(0,l<=30?6:10)};
+const mkr=(t,i,r)=>rp(r,i>=3?ADV[t].concat(M[t][0]):i==2?M[t].concat(ADV[t]):M[t]);
+const wv=(w,i)=>w.f.concat([w.o[i||0]]);
+function lw(t,l){const i=Math.min(4,(l-1)/100|0),r=R(l*977+t*31+5),a=sh(r,VB[i]).slice(0,i?7:8);return i?a.concat([rp(r,VB[i-1])]):a}
+const kinds=l=>['mc','fill','tf','mcf','voc'].concat(l>20?['order','vocr','odd']:[],l>40?['idt','rw']:[],l>60?['fix','dlg']:[]);
+function bad(t,s,v,m,f,r){const p=s[2],e=v[5]+' '+m,[a,w]=conj(t,p,v,f),ws=w.split(' '),L=ws.pop(),n=[1,3,5,7,9,11].includes(t),pf=[2,6,10].includes(t);
+ let c=n?[v[0],v[2]].filter(z=>z!=v[3]):pf?[v[1],v[0],v[3]].filter(z=>z!=v[2]):a?[v[1],v[3],v[4]].filter(z=>z!=v[0]):t==0?(p==2?[v[0],v[3]]:[v[4],v[3]]):[v[0],v[2],v[3]].filter(z=>z!=v[1]),A=a;
+ if(a&&r()<.4){const o=[2,1,0].map(q=>conj(t,q,v,f)[0]).filter(z=>z!=a);if(o.length){A=rp(r,o);c=[]}}
+ else if(a&&f=='aff'&&r()<.25){A=null;c=[]}
+ const w2=[...ws,c.length?rp(r,c):L].join(' ');
+ return f=='aff'?`${s[0]} ${A?A+' ':''}${w2} ${e}.`:f=='neg'?`${s[0]} ${A} not ${w2} ${e}.`:`${cap(A)} ${s[1]} ${w2} ${e}?`}
+function gen(t,seed,l,kk){
+ const r=R(seed*7+t*131+l),ti=Math.min(4,(l-1)/100|0),W=lw(t,l),w=rp(r,W),v=wv(w,Math.floor(r()*w.o.length)),s=rp(r,sbj(l)),m=mkr(t,ti,r),T=TN[t];
+ let k=kk||rp(r,kinds(l)),f=l<=30?'aff':rp(r,l<=100?['aff','neg']:['aff','neg','q']);
+ if((k=='fill'||k=='mcf')&&f=='q')f='neg';
+ if(k=='dlg'&&!s[3])k='tf';
+ const a=sent(t,s,v,m,f),w2=rp(r,W),v2=wv(w2,Math.floor(r()*w2.o.length));
+ const x={t,seed,l,k:'mc',kk:k,show:a,a,ex:`Công thức: ${T[2]}. Dấu hiệu: ${T[4]}. Lỗi hay gặp: ${T[5]} Từ vựng: ${v[0]} = ${w.g} (${v[0]} – ${v[1]} – ${v[2]} – ${v[3]}). Ví dụ tương tự: ${sent(t,rp(r,sbj(l)),v2,mkr(t,ti,r),f)}`};
+ const oth=[...Array(12).keys()].filter(i=>i!=t),ph=i=>{const[A,B]=conj(i,s[2],v,f);return f=='aff'?(A?A+' ':'')+B:A+' not '+B};
+ if(k=='mc'){const c=l>60?[...sh(r,oth.filter(i=>i>>2==t>>2)),...sh(r,oth.filter(i=>i>>2!=t>>2))]:sh(r,oth),o=[a];for(const i of c){const z=sent(i,s,v,m,f);if(!o.includes(z)&&o.length<4)o.push(z)}x.o=sh(r,o);x.st=`Chọn câu đúng ở thì ${T[1]}:`}
+ else if(k=='fill'||k=='mcf'){const p=ph(t);x.a=p;x.stem=`${s[0]} ___ (${f=='neg'?'not ':''}${v[0]}) ${v[5]} ${m}.`;
+  if(k=='fill'){x.k='fill';x.acc=[p,a,s[0]+' '+p];x.st=`Chia động từ trong ngoặc ở thì ${T[1]} (điền cả trợ động từ nếu có):`}
+  else{const o=[p];for(const i of sh(r,oth)){const z=ph(i);if(!o.includes(z)&&o.length<4)o.push(z)}x.o=sh(r,o);x.st=`Chọn dạng đúng của động từ ở thì ${T[1]}:`}}
+ else if(k=='tf'){const yes=r()<.5;x.stem=yes?a:bad(t,s,v,m,f,r);x.o=['Đúng','Sai'];x.a=yes?'Đúng':'Sai';x.st=`Câu sau có đúng ngữ pháp ở thì ${T[1]} không?`;x.show=(yes?'Đúng: ':'Sai, câu đúng là: ')+a}
+ else if(k=='voc'||k=='vocr'){const ds=sh(r,VB[ti].filter(z=>z.g!=w.g)).slice(0,3);
+  if(k=='voc'){x.o=sh(r,[w.g,...ds.map(z=>z.g)]);x.a=w.g;x.stem=a;x.st=`Chọn nghĩa đúng của động từ '${v[0]}' trong câu:`}
+  else{x.o=sh(r,[v[0],...ds.map(z=>z.f[0])]);x.a=v[0];x.st=`Chọn động từ có nghĩa '${w.g}':`}
+  x.show=`${v[0]} = ${w.g}`}
+ else if(k=='odd'){const b=bad(t,s,v,m,f,r),o=[b];for(let i=0;i<40&&o.length<4;i++){const q=rp(r,W),z=sent(t,rp(r,sbj(l)),wv(q,Math.floor(r()*q.o.length)),mkr(t,ti,r),f);if(!o.includes(z))o.push(z)}x.o=sh(r,o);x.a=b;x.st=`Chọn câu SAI ngữ pháp ở thì ${T[1]}:`;x.show=`${b} (sai) → câu đúng: ${a}`}
+ else if(k=='idt'){const u=r()<.5?t:(t>>2)*4+Math.floor(r()*4),z=sent(u,s,v,mkr(u,ti,r),f);x.stem=z;x.o=sh(r,[0,1,2,3].map(i=>TN[(u>>2)*4+i][1]));x.a=TN[u][1];x.st='Câu sau thuộc thì nào?';x.show=`${z} → ${TN[u][1]}`;x.ex=`Công thức ${TN[u][1]}: ${TN[u][2]}. Dấu hiệu: ${TN[u][4]}.`}
+ else if(k=='dlg'){const q=sent(t,s,v,m,'q'),pr=s[3],ax=conj(t,{I:0,you:1,we:1,they:1,she:2,he:2,it:2}[pr],v,'q')[0],o=['do','does','did','am','is','are','was','were','have','has','had','will'].filter(z=>z!=ax);x.stem=`A: ${q}<br>B: Yes, ${pr} ___.`;x.o=sh(r,[ax,...sh(r,o).slice(0,3)]);x.a=ax;x.st=`Hoàn thành đoạn hội thoại ở thì ${T[1]}:`;x.show=`${q} → Yes, ${pr} ${ax}.`}
+ else if(k=='rw'){const f2=rp(r,['neg','q']),an=sent(t,s,v,m,f2);x.k='fill';x.stem=sent(t,s,v,m,'aff');x.acc=[an];x.a=an;x.show=an;x.st=`Viết lại câu thành ${f2=='neg'?'câu phủ định':'câu nghi vấn'} (giữ nguyên thì ${T[1]}):`}
+ else if(k=='fix'){x.k='fill';x.stem=bad(t,s,v,m,f,r);x.acc=[a];x.st=`Câu sau có một lỗi sai. Hãy viết lại câu đúng ở thì ${T[1]}:`}
+ else{const tk=a.replace(/[.?]$/,'').split(' ');x.a=tk.join(' ');let z=sh(r,tk);if(z.join(' ')==x.a)z=z.reverse();x.k='order';x.tk=z;x.st=`Sắp xếp thành câu ở thì ${T[1]} (cụm chỉ thời gian đặt ở cuối câu):`}
+ return x}
 const nmv=x=>{x=x.toLowerCase().replace(/[’`]/g,"'").replace(/won't/g,"will not").replace(/n't\b/g," not").replace(/'m\b/g," am").replace(/'re\b/g," are").replace(/'ve\b/g," have").replace(/'ll\b/g," will").replace(/'d\b/g," had");const f=y=>y.replace(/[^a-z0-9 ]/g,"").replace(/\blearnt\b/g,"learned").replace(/\s+/g," ").trim();return/'s\b/.test(x)?["is","has"].map(z=>f(x.replace(/'s\b/g," "+z))):[f(x)]};
 const nm=x=>nmv(x)[0];
 function init(){return{xp:0,streak:0,best:0,last:"",c:Array(12).fill(0),d:{},w:[],h:[],cur:null,perf:0,at:{}}}
@@ -159,7 +203,7 @@ function sent(t,s,v,m,f){const[a,r]=conj(t,s[2],v,f),e=v[5]+" "+m;
  if(f=="aff")return`${s[0]} ${a?a+" ":""}${r} ${e}.`;
  if(f=="neg")return`${s[0]} ${a} not ${r} ${e}.`;
  return`${cap(a)} ${s[1]} ${r} ${e}?`}
-function gen(t,seed,l){
+function gen0(t,seed,l){
  const r=R(seed*7+t*131+l),ns=Math.min(10,3+Math.ceil(l/12)),nv=Math.min(V.length,3+Math.ceil(l/20));
  const s=rp(r,S.slice(0,ns)),v=rp(r,V.slice(0,nv)),m=rp(r,M[t]);
  const f=l<=30?"aff":rp(r,l<=100?["aff","neg"]:["aff","neg","q"]);
@@ -182,7 +226,7 @@ const goal=l=>l<=20?"làm quen khái niệm cơ bản":l<=50?"nhận biết cấ
 function go(v,p){ui=Object.assign({v},p);render();scrollTo(0,0)}
 function focusIn(){const i=$("in");if(i&&i.focus)i.focus()}
 document.addEventListener("keydown",e=>{if(e.key=="Enter"&&!e.repeat&&ui.v=="quiz"&&fb&&e.target.id!="in"&&e.target.tagName!="BUTTON"){e.preventDefault();nx()}});
-function mkQs(t,l,n,at){const o=[],u={};for(let i=1;o.length<n&&i<800;i++){const x=gen(t,(at*1000+l)*1000+i,l);if(!u[x.show]){u[x.show]=1;o.push(x)}}return o}
+function mkQs(t,l,n,at){const o=[],u={},K=sh(R(at*31+l*7+t),kinds(l));for(let i=1,j=0;o.length<n&&i<900;i++){const x=gen(t,(at*1000+l)*1000+i,l,K[j%K.length]);if(!u[x.show]){u[x.show]=1;o.push(x);j++}}return o}
 function cont(){if(st.cur){const t=st.cur.t;open_(t,Math.min(500,st.c[t]+1))}else go("map",{t:0,s:0})}
 function open_(t,l){st.cur={t,l};save();go("learn",{t,l})}
 function home(){const n=tot();return`<section class="hero"><div class="ht"><h1>HÀNH TRÌNH CHINH PHỤC 12 THÌ TIẾNG ANH!</h1><p>Khám phá ngữ pháp tiếng Anh qua 6.000 cấp độ thú vị. Học từng chút một, tiến bộ mỗi ngày!</p><button class="btn go" onclick="cont()">BẮT ĐẦU HỌC</button></div><div class="mw">${MAS}<div class="say">Hôm nay mình học thì nào nhé?</div></div></section>
@@ -193,21 +237,21 @@ function group(g){return`<h2 style="color:${GC[g]}">${GN[g]}</h2><div class="gri
 function map(){const t=ui.t,s=ui.s,c=st.c[t],T=TN[t];let n="";
  for(let i=1;i<=100;i++){const l=s*100+i,dn=l<=c,cur=l==c+1,bs=l%25==0;if(i%5==1)n+=`<div class="row${(i-1)/5%2?" r":""}">`;n+=`<button class="nd ${dn?"dn":cur?"cur":""} ${bs?"bs":""}" ${l>c+1?"disabled":""} title="Level ${l}" aria-label="Level ${l}" onclick="open_(${t},${l})">${l%100==0?"🏆":bs?"⭐":l}</button>`+(i%5==0?"</div>":"")}
  return`<h2>${T[0]} <small>${T[1]}</small></h2><p>${c}/500 level · mỗi chặng thưởng +200 XP</p>${bar(c/5,GC[t>>2])}<div class="tabs">${STG.map((x,i)=>`<button class="${i==s?"on":""}" onclick="go('map',{t:${t},s:${i}})">${x}</button>`).join("")}</div><div class="map" style="--c:${GC[t>>2]}">${n}</div><p class="mu">⭐ Boss mỗi 25 level (10 câu) · 🏆 Kiểm tra tổng hợp mỗi 100 level · Đạt từ 80% để mở khóa level tiếp theo.</p>`}
-function learn(){const t=ui.t,l=ui.l,T=TN[t],n=l%25==0?10:6,e=f=>sent(t,S[1],V[l%V.length],M[t][0],f);
- return`<p><button class="chip" onclick="go('map',{t:${t},s:${Math.floor((l-1)/100)}})">← Bản đồ</button></p><h2>Level ${l} · ${T[1]} ${l%100==0?"🏆 Kiểm tra tổng hợp":l%25==0?"⭐ Boss":""}</h2><div class="card" style="--c:${GC[t>>2]};cursor:default"><h3>📘 Phần 1: Kiến thức</h3><p><b>Dùng khi:</b> ${T[3]}.</p><p><b>Dấu hiệu nhận biết:</b> ${T[4]}</p><code>${T[2]}</code><p>Khẳng định: <i>${e("aff")}</i><br>Phủ định: <i>${e("neg")}</i><br>Nghi vấn: <i>${e("q")}</i></p><p>⚠️ <b>Lỗi thường gặp:</b> ${T[5]}</p><p class="mu">Mục tiêu level này: ${goal(l)}.</p><p>📝 Phần 2 và 3: ${n} câu luyện tập và thử thách. Cần đúng ${Math.ceil(n*.8)}/${n} câu để mở khóa level tiếp theo.</p><button class="btn" onclick="start()">Bắt đầu làm bài</button></div>`}
+function learn(){const t=ui.t,l=ui.l,T=TN[t],n=l%25==0?10:6,W=lw(t,l),e=f=>sent(t,S[1],wv(W[0]),M[t][0],f);
+ return`<p><button class="chip" onclick="go('map',{t:${t},s:${Math.floor((l-1)/100)}})">← Bản đồ</button></p><h2>Level ${l} · ${T[1]} ${l%100==0?"🏆 Kiểm tra tổng hợp":l%25==0?"⭐ Boss":""}</h2><div class="card" style="--c:${GC[t>>2]};cursor:default"><h3>📘 Phần 1: Kiến thức</h3><p><b>Dùng khi:</b> ${T[3]}.</p><p><b>Dấu hiệu nhận biết:</b> ${T[4]}</p><code>${T[2]}</code><p>Khẳng định: <i>${e("aff")}</i><br>Phủ định: <i>${e("neg")}</i><br>Nghi vấn: <i>${e("q")}</i></p><p>⚠️ <b>Lỗi thường gặp:</b> ${T[5]}</p><p><b>📚 Từ vựng level này (${['A1','A2','B1','C1','C2'][Math.min(4,(l-1)/100|0)]}):</b> ${W.map(w=>w.f[0]+' ('+w.g+')').join(', ')}.</p><p class="mu">Mục tiêu level này: ${goal(l)}.</p><p>📝 Phần 2 và 3: ${n} câu luyện tập và thử thách. Cần đúng ${Math.ceil(n*.8)}/${n} câu để mở khóa level tiếp theo.</p><button class="btn" onclick="start()">Bắt đầu làm bài</button></div>`}
 function setup(){qi=0;ok=0;gx=0;pk=-1;fb=null;val="";hint="";ui.v="quiz";ord();render();scrollTo(0,0);focusIn()}
 function ord(){const x=qs[qi];if(x&&x.k=="order"){bd=[];pl=x.tk.map((_,i)=>i)}}
 function start(){mode="lvl";const n=ui.l%25==0?10:6;const k=ui.t+"."+ui.l,at=st.at[k]||0;st.at[k]=at+1;save();qs=mkQs(ui.t,ui.l,n,at);setup()}
-function startRev(){mode="rev";qs=st.w.slice(0,8).map(w=>gen(w.t,w.seed,w.l));setup()}
+function startRev(){mode="rev";qs=st.w.slice(0,8).map(w=>gen(w.t,w.seed,w.l,w.k));setup()}
 function sp(i){if(!fb){pk=i;hint="";render()}}
 function ad(i){if(!fb){pl=pl.filter(j=>j!=i);bd.push(i);render()}}
 function un(i){if(!fb){bd=bd.filter(j=>j!=i);pl.push(i);render()}}
 function chk(){if(fb)return;const x=qs[qi];let g;
  if(x.k=="mc"){if(pk<0){hint="Hãy chọn một đáp án trước nhé.";return render()}g=x.o[pk]==x.a}
- else if(x.k=="fill"){val=$("in").value;if(!val.trim()){hint="Hãy nhập đáp án trước nhé.";return render()}const u=nmv(val);g=[x.a,x.show,x.sj+" "+x.a].some(z=>u.includes(nm(z)))}
+ else if(x.k=="fill"){val=$("in").value;if(!val.trim()){hint="Hãy nhập đáp án trước nhé.";return render()}const u=nmv(val);g=(x.acc||[x.a]).some(z=>u.includes(nm(z)))}
  else{if(bd.length<x.tk.length){hint="Hãy xếp đủ các từ trước nhé.";return render()}g=bd.map(i=>x.tk[i]).join(" ")==x.a}
  fb={g};hint="";const w=st.w.findIndex(w=>w.t==x.t&&w.seed==x.seed);
- if(g){ok++;gx+=10;st.xp+=10;if(w>=0)st.w.splice(w,1)}else if(w<0)st.w.push({t:x.t,seed:x.seed,l:x.l});
+ if(g){ok++;gx+=10;st.xp+=10;if(w>=0)st.w.splice(w,1)}else if(w<0)st.w.push({t:x.t,seed:x.seed,l:x.l,k:x.kk});
  save();render()}
 function nx(){if(qi+1<qs.length){qi++;pk=-1;fb=null;val="";hint="";ord();render();scrollTo(0,0);focusIn()}else fin()}
 function tick(){const d=new Date().toISOString().slice(0,10);if(st.last==d)return;const y=new Date(Date.now()-864e5).toISOString().slice(0,10);st.streak=st.last==y?st.streak+1:1;st.best=Math.max(st.best,st.streak);st.last=d}
@@ -218,7 +262,7 @@ function fin(){const p=Math.round(ok/qs.length*100),pass=p>=80,b=ACH.map(a=>a[2]
   st.h.push({t:ui.t,l:ui.l,p,d:st.last});st.h=st.h.slice(-30)}
  res={p,pass:mode=="lvl"?pass:true,xp,nw:ACH.filter((a,i)=>!b[i]&&a[2]())};save();ui.v="res";render();scrollTo(0,0)}
 function quiz(){const x=qs[qi];let b="";
- if(x.k=="mc")b=x.o.map((o,i)=>`<button class="opt ${fb?(o==x.a?"ok":i==pk?"no":""):i==pk?"sel":""}" ${fb?"disabled":""} onclick="sp(${i})">${o}</button>`).join("");
+ if(x.k=="mc")b=(x.stem?`<p class="big">${x.stem}</p>`:"")+x.o.map((o,i)=>`<button class="opt ${fb?(o==x.a?"ok":i==pk?"no":""):i==pk?"sel":""}" ${fb?"disabled":""} onclick="sp(${i})">${o}</button>`).join("");
  else if(x.k=="fill")b=`<p class="big">${x.stem}</p><input id="in" class="inp" value="${val.replace(/"/g,"&quot;")}" ${fb?"disabled":""} autocomplete="off" autocapitalize="off" placeholder="Gõ phần còn thiếu (hoặc cả câu đều được)" onkeydown="if(event.key=='Enter')chk()">`;
  else b=`<div class="ans">${bd.map(i=>`<button class="chip" onclick="un(${i})">${x.tk[i]}</button>`).join("")}</div>`+pl.map(i=>`<button class="chip" onclick="ad(${i})">${x.tk[i]}</button>`).join("");
  const f=fb?`<div class="fb ${fb.g?"":"no"}"><b>${fb.g?"✅ Chính xác! +10 XP":"❌ Chưa đúng."}</b> Đáp án: <i>${x.show}</i>${fb.g?"":`<div class="tutor"><span>🤖</span><div><b>Gia sư giải thích</b><br>${x.ex}</div></div>`}</div>`:"";
