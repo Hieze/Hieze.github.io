@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>12 Thì Tiếng Anh – 6.000 Level</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700;800&display=swap">
+<style>
+:root{--p:#6C63FF;--s:#FFB84C;--ok:#45C486;--bad:#e5484d;--bg:#F7F8FC;--tx:#252A41;--card:#fff;--mu:#6b7194;--bd:#e6e8f2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171a2b;--tx:#eef0ff;--card:#222640;--mu:#a3a8c8;--bd:#363b66;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171a2b;--tx:#eef0ff;--card:#222640;--mu:#a3a8c8;--bd:#363b66;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.55 "Nunito","Segoe UI",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--tx)}
+nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--bd);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+nav b{margin-right:auto;color:var(--p);font-size:1.1rem}
+nav button{border:0;background:none;color:var(--tx);padding:8px 12px;border-radius:12px;cursor:pointer;font:inherit;font-weight:600}
+nav button:hover,nav button:focus-visible{background:var(--bg)}
+main{max-width:960px;margin:0 auto;padding:16px}
+h2{margin:.6em 0 .3em}h3{margin:.2em 0}
+.btn{background:var(--p);color:#fff;border:0;border-radius:14px;padding:12px 22px;font:inherit;font-weight:800;cursor:pointer}
+.btn.sm{padding:7px 14px;margin-top:8px;background:var(--c)}
+.btn:focus-visible,.opt:focus-visible,.nd:focus-visible,.chip:focus-visible{outline:3px solid var(--s);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--bd);border-top:6px solid var(--c,var(--p));border-radius:20px;padding:18px;box-shadow:0 4px 14px rgba(60,60,120,.08);cursor:pointer;transition:transform .15s}
+.card:hover{transform:translateY(-3px)}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:14px 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:14px 0}
+.bar{height:10px;background:var(--bd);border-radius:9px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;border-radius:9px;transition:width .4s}
+.hero{display:flex;gap:18px;align-items:center;background:linear-gradient(135deg,var(--p),#8f89ff);color:#fff;border-radius:24px;padding:24px;flex-wrap:wrap}
+.hero h1{margin:0 0 8px;font-size:1.6rem;line-height:1.2}.hero p{margin:0 0 14px}
+.hero .btn{background:var(--s);color:#252A41}.mas{font-size:4.5rem}
+.ic{font-size:2rem}.en,.mu,small{color:var(--mu)}
+code{display:block;background:var(--bg);padding:6px 8px;border-radius:8px;font-size:.85rem;margin:6px 0;white-space:normal}
+.map{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:10px;padding:14px;background:var(--card);border-radius:20px;border:1px solid var(--bd)}
+.nd{aspect-ratio:1;border-radius:50%;border:3px solid var(--bd);background:var(--bg);color:var(--tx);font:inherit;font-weight:800;cursor:pointer}
+.nd:disabled{opacity:.4;cursor:not-allowed}.nd.dn{background:var(--ok);border-color:var(--ok);color:#fff}
+.nd.cur{background:var(--c);border-color:var(--s);color:#fff;animation:pl 1.4s infinite}.nd.bs{border-color:var(--s)}
+@keyframes pl{50%{box-shadow:0 0 0 8px rgba(108,99,255,.22)}}
+@media(prefers-reduced-motion:reduce){.nd.cur{animation:none}.card{transition:none}}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.tabs button{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:12px;padding:8px 12px;cursor:pointer;font:inherit}
+.tabs .on{background:var(--p);color:#fff;border-color:var(--p)}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:14px;border:2px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;cursor:pointer}
+.opt.sel{border-color:var(--p)}.opt.ok{border-color:var(--ok);background:rgba(69,196,134,.18)}.opt.no{border-color:var(--bad)}
+.inp{width:100%;padding:12px;border-radius:14px;border:2px solid var(--bd);background:var(--card);color:var(--tx);font:inherit}
+.chip{display:inline-block;margin:4px;padding:8px 12px;border-radius:12px;background:var(--card);border:2px solid var(--bd);color:var(--tx);font:inherit;cursor:pointer}
+.ans{min-height:56px;border-bottom:2px dashed var(--bd);margin-bottom:8px}
+.fb{margin:12px 0;padding:12px 14px;border-radius:14px;background:var(--card);border-left:6px solid var(--ok)}.fb.no{border-color:var(--bad)}
+.big{font-size:1.15rem;font-weight:700}
+body{font-family:'Nunito','Segoe UI',system-ui,sans-serif;background:radial-gradient(900px 420px at 6% -4%,rgba(108,99,255,.18),transparent 60%),radial-gradient(700px 380px at 100% 0,rgba(255,184,76,.2),transparent 60%),var(--bg);background-attachment:fixed}
+h1,h2,h3,.btn,.logo,.nd,.tile b{font-family:'Baloo 2','Nunito',sans-serif}
+h2{font-size:1.7rem}main{max-width:1000px;padding:20px 16px 44px}
+nav{background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(14px);border-bottom:0;box-shadow:0 1px 0 var(--bd)}
+.logo{display:flex;align-items:center;gap:10px;font-size:1.3rem;font-weight:800;color:var(--tx)}
+.logo span{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--p),#a29bff);box-shadow:0 4px 0 #4a42cf;font-size:1.1rem}
+nav button{border-radius:999px}nav button.on{background:var(--p);color:#fff}
+.btn{border-radius:16px;box-shadow:0 5px 0 #4a42cf;transition:transform .1s,box-shadow .1s}.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #4a42cf}
+.card{border:0;border-radius:26px;box-shadow:0 10px 30px -14px rgba(76,64,200,.4)}
+.hero{position:relative;overflow:hidden;flex-wrap:nowrap;justify-content:space-between;border-radius:32px;padding:34px 32px;background:radial-gradient(circle at 88% 18%,rgba(255,184,76,.5),transparent 36%),linear-gradient(135deg,#5a50f0,#8a7cff 60%,#a47cf5);box-shadow:0 24px 44px -22px rgba(90,80,240,.75)}
+.hero::before,.hero::after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,.1)}
+.hero::before{width:230px;height:230px;left:-70px;bottom:-100px}.hero::after{width:120px;height:120px;right:32%;top:-46px}
+.ht{position:relative;z-index:1;max-width:520px}.hero h1{font-size:clamp(1.7rem,4.6vw,2.7rem);font-weight:800;line-height:1.12}.hero p{font-size:1.05rem}
+.btn.go{background:var(--s);color:#2b2340;font-size:1.1rem;padding:14px 32px;border-radius:18px;box-shadow:0 6px 0 #d98f1f}.btn.go:active{box-shadow:0 2px 0 #d98f1f}
+.mw{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
+.mw svg{width:172px;animation:fl 4s ease-in-out infinite;filter:drop-shadow(0 14px 14px rgba(0,0,0,.22))}@keyframes fl{50%{transform:translateY(-10px)}}
+.say{position:relative;margin-top:8px;max-width:190px;padding:8px 14px;border-radius:16px;background:#fff;color:#2b2340;font-weight:800;font-size:.9rem;text-align:center}
+.say::before{content:'';position:absolute;top:-6px;left:50%;margin-left:-6px;width:12px;height:12px;background:#fff;transform:rotate(45deg)}
+@media(max-width:640px){.hero{flex-direction:column;text-align:center;padding:26px 18px}.mw svg{width:130px}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0}
+.tile{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:20px;background:var(--card);border:1px solid var(--bd)}
+.tile i{font-style:normal;font-size:1.6rem;display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--bg)}
+.tile b{display:block;font-size:1.55rem;line-height:1.05}.tile span{font-size:.85rem;color:var(--mu)}.ring{width:44px;height:44px;flex:none}
+.gc{position:relative;overflow:hidden;padding:22px;color:#fff;background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 68%,#000));box-shadow:0 18px 30px -16px var(--c)}
+.gc::after{content:'';position:absolute;width:150px;height:150px;right:-44px;top:-44px;border-radius:50%;background:rgba(255,255,255,.14)}
+.gc .ic{display:grid;place-items:center;width:58px;height:58px;margin-bottom:8px;border-radius:18px;background:rgba(255,255,255,.22);font-size:1.9rem}
+.gc h3{font-size:1.3rem}.gc p{margin:.3em 0 .8em}.gc small{color:rgba(255,255,255,.88)}.gc .bar{background:rgba(255,255,255,.28)}.gc .bar i{background:#fff!important}
+.gc .btn.sm{background:#fff;color:#2b2340;box-shadow:0 4px 0 rgba(0,0,0,.2)}
+.grid2 .card{border-left:8px solid var(--c);padding:18px 20px}.grid2 code{background:color-mix(in srgb,var(--c) 12%,var(--card));font-weight:700;border-radius:10px}
+.bar{height:14px}.bar i{box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+.tabs button{border-radius:999px;font-weight:700}.tabs .on{box-shadow:0 4px 0 #4a42cf}
+.map{--w:clamp(46px,13vw,62px);display:block;padding:20px 14px;border:0;border-radius:28px;background:linear-gradient(180deg,color-mix(in srgb,var(--c) 11%,var(--card)),var(--card));box-shadow:0 14px 34px -18px var(--c)}
+.row{position:relative;display:flex;justify-content:space-between;padding:14px 0}
+.row::before{content:'';position:absolute;left:calc(var(--w)/2);right:calc(var(--w)/2);top:50%;height:10px;margin-top:-5px;border-radius:6px;background:repeating-linear-gradient(90deg,var(--bd) 0 14px,transparent 14px 24px)}
+.row:not(:last-child)::after{content:'';position:absolute;right:calc(var(--w)/2 - 5px);width:10px;top:50%;height:100%;border-radius:6px;background:repeating-linear-gradient(180deg,var(--bd) 0 14px,transparent 14px 24px)}
+.row.r:not(:last-child)::after{right:auto;left:calc(var(--w)/2 - 5px)}
+.nd{position:relative;z-index:1;width:var(--w);border:0;font-size:1.15rem;background:var(--card);color:var(--mu);box-shadow:0 6px 0 var(--bd),inset 0 0 0 3px var(--bd)}
+.nd:disabled{opacity:.55}.nd:active:not(:disabled){transform:translateY(4px)}
+.nd.dn{background:linear-gradient(160deg,#6fe6ae,var(--ok));color:#fff;box-shadow:0 6px 0 #2e9c69}
+.nd.cur{background:linear-gradient(160deg,#9b94ff,var(--p));color:#fff;box-shadow:0 6px 0 #4a42cf;animation:pl 1.6s infinite}
+.nd.bs{background:linear-gradient(160deg,#ffd27a,var(--s));color:#5b3a00;box-shadow:0 6px 0 #d98f1f}.nd.bs:disabled{filter:grayscale(.6)}
+@keyframes pl{50%{box-shadow:0 6px 0 #4a42cf,0 0 0 12px rgba(108,99,255,.18)}}
+#app h3{font-size:1.3rem}.big{font-size:1.4rem;padding:16px 18px;border-radius:18px;background:var(--card)}
+.opt{padding:14px 18px;border-radius:18px;font-weight:700;box-shadow:0 4px 0 var(--bd);transition:transform .1s,border-color .15s}
+.opt:hover:not(:disabled){border-color:var(--p);transform:translateY(-1px)}.opt.sel{background:color-mix(in srgb,var(--p) 10%,var(--card));box-shadow:0 4px 0 var(--p)}
+.opt.ok{box-shadow:0 4px 0 var(--ok)}.opt.no{background:rgba(229,72,77,.12);box-shadow:0 4px 0 var(--bad)}
+.inp{padding:14px 16px;font-size:1.1rem;border-radius:16px}.inp:focus{outline:0;border-color:var(--p);box-shadow:0 0 0 4px rgba(108,99,255,.2)}
+.chip{border-radius:14px;font-weight:700;box-shadow:0 3px 0 var(--bd)}.ans{padding:8px;border:2px dashed var(--bd);border-radius:16px;background:var(--card)}
+.fb{border:2px solid var(--ok);border-radius:18px;background:rgba(69,196,134,.14)}.fb.no{border-color:var(--bad);background:rgba(229,72,77,.1)}
+.tutor{display:flex;gap:10px;margin-top:10px;padding:12px;border-radius:14px;background:var(--card);font-size:.95rem}.tutor span{font-size:1.6rem}
+.res{position:relative;overflow:hidden;text-align:center;padding:32px 20px}
+.cf{position:absolute;top:-14px;left:var(--x);width:9px;height:14px;border-radius:2px;background:var(--k);animation:fall 1.8s var(--d) ease-in forwards}@keyframes fall{to{transform:translateY(420px) rotate(540deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){.mw svg,.nd.cur{animation:none}.cf{display:none}}
+</style></head><body>
+<nav><b class="logo"><span>📘</span>12 Thì Tiếng Anh</b>
+<button data-k="home" onclick="go('home')">Trang chủ</button><button data-k="path" onclick="go('path')">Lộ trình học</button><button data-k="review" onclick="go('review')">Ôn tập</button><button data-k="prof" onclick="go('prof')">Hồ sơ &amp; Thành tựu</button></nav>
+<main id="app"></main>
+<script>
+const TN=[
+["Hiện tại đơn","Present Simple","(+) S + V(s/es) · (−) S + do/does not + V · (?) Do/Does + S + V?","Thói quen, sự thật hiển nhiên, lịch trình","every day, every morning, on Sundays","Quên thêm -s/-es với he/she/it; đã dùng does mà vẫn thêm -s."],
+["Hiện tại tiếp diễn","Present Continuous","(+) S + am/is/are + V-ing · (−) S + am/is/are not + V-ing · (?) Am/Is/Are + S + V-ing?","Hành động đang diễn ra ngay lúc nói","now, at the moment, right now","Thiếu to be hoặc quên đuôi -ing."],
+["Hiện tại hoàn thành","Present Perfect","(+) S + have/has + V3 · (−) S + have/has not + V3 · (?) Have/Has + S + V3?","Hành động đã xảy ra và còn liên quan đến hiện tại","this week, many times, today, this year","Dùng V2 thay cho V3; chia sai have/has."],
+["Hiện tại hoàn thành tiếp diễn","Present Perfect Continuous","(+) S + have/has been + V-ing · (−) S + have/has not been + V-ing · (?) Have/Has + S + been + V-ing?","Hành động kéo dài từ quá khứ đến nay, nhấn mạnh quá trình","for two hours, since morning, all day, lately","Quên been hoặc quên -ing."],
+["Quá khứ đơn","Past Simple","(+) S + V2/-ed · (−) S + did not + V · (?) Did + S + V?","Hành động đã xảy ra và kết thúc trong quá khứ","yesterday, last night, two days ago, last week","Đã có did mà vẫn chia động từ ở V2."],
+["Quá khứ tiếp diễn","Past Continuous","(+) S + was/were + V-ing · (−) S + was/were not + V-ing · (?) Was/Were + S + V-ing?","Hành động đang diễn ra tại một thời điểm trong quá khứ","at 8 o'clock yesterday, at this time yesterday","Nhầm was/were."],
+["Quá khứ hoàn thành","Past Perfect","(+) S + had + V3 · (−) S + had not + V3 · (?) Had + S + V3?","Hành động xảy ra trước một mốc hoặc hành động khác trong quá khứ","by 9 o'clock yesterday, before ...","Dùng V2 thay cho V3."],
+["Quá khứ hoàn thành tiếp diễn","Past Perfect Continuous","(+) S + had been + V-ing · (−) S + had not been + V-ing · (?) Had + S + been + V-ing?","Hành động kéo dài liên tục trước một mốc trong quá khứ","for two hours before ..., all morning before ...","Quên been."],
+["Tương lai đơn","Future Simple","(+) S + will + V · (−) S + will not + V · (?) Will + S + V?","Quyết định tức thời, dự đoán, lời hứa","tomorrow, next week, tonight, next month","Thêm to hoặc -s sau will."],
+["Tương lai tiếp diễn","Future Continuous","(+) S + will be + V-ing · (−) S + will not be + V-ing · (?) Will + S + be + V-ing?","Hành động đang diễn ra tại một thời điểm trong tương lai","at 8 o'clock tomorrow, at this time tomorrow","Quên be sau will."],
+["Tương lai hoàn thành","Future Perfect","(+) S + will have + V3 · (−) S + will not have + V3 · (?) Will + S + have + V3?","Hành động sẽ hoàn tất trước một mốc trong tương lai","by next Friday, by the end of this year","Dùng V2 thay cho V3."],
+["Tương lai hoàn thành tiếp diễn","Future Perfect Continuous","(+) S + will have been + V-ing · (−) S + will not have been + V-ing · (?) Will + S + have been + V-ing?","Hành động kéo dài liên tục đến một mốc trong tương lai","for two hours by noon tomorrow, for a year by next June","Thiếu have been."]];
+const M=[["every day","every morning","on Sundays","every weekend"],["now","at the moment","right now"],["this week","many times","today","this year"],["for two hours","since morning","all day","lately"],["yesterday","last night","two days ago","last week"],["at 8 o'clock yesterday","at this time yesterday","at 7 o'clock last night"],["by 9 o'clock yesterday","before the bell rang","before the guests arrived"],["for two hours before it rained","all morning before the bell rang","for a long time before dinner"],["tomorrow","next week","tonight","next month"],["at 8 o'clock tomorrow","at this time tomorrow","at 7 o'clock tonight"],["by next Friday","by the end of this year","by 10 o'clock tomorrow"],["for two hours by noon tomorrow","for a year by next June","for three hours by 9 o'clock tonight"]];
+const V=[["play","played","played","playing","plays","football"],["study","studied","studied","studying","studies","English"],["eat","ate","eaten","eating","eats","noodles"],["write","wrote","written","writing","writes","letters"],["read","read","read","reading","reads","books"],["watch","watched","watched","watching","watches","cartoons"],["work","worked","worked","working","works","in the garden"],["cook","cooked","cooked","cooking","cooks","dinner"],["drink","drank","drunk","drinking","drinks","milk"],["take","took","taken","taking","takes","photos"],["run","ran","run","running","runs","in the park"],["learn","learned","learned","learning","learns","new words"],["clean","cleaned","cleaned","cleaning","cleans","the room"],["draw","drew","drawn","drawing","draws","pictures"],["sing","sang","sung","singing","sings","songs"],["swim","swam","swum","swimming","swims","in the lake"],["build","built","built","building","builds","a sandcastle"],["ride","rode","ridden","riding","rides","a bike"],["paint","painted","painted","painting","paints","the wall"]];
+const S=[["I","I",0],["She","she",2],["They","they",1],["You","you",1],["He","he",2],["We","we",1],["My brother","my brother",2],["Lan","Lan",2],["My parents","my parents",1],["The children","the children",1]];
+const GN=["Thì hiện tại","Thì quá khứ","Thì tương lai"],GC=["#5B8DEF","#FF8B7B","#A47CF5"],GI=["☀️","⏳","🚀"];
+const GD=["Học cách diễn đạt thói quen, sự thật và những hành động đang diễn ra.","Khám phá cách kể lại những sự kiện và hành động đã xảy ra.","Học cách diễn đạt dự định, dự đoán và những sự kiện trong tương lai."];
+const STG=["Chặng 1 · Cơ bản","Chặng 2 · Sơ cấp","Chặng 3 · Trung cấp","Chặng 4 · Nâng cao","Chặng 5 · Thành thạo"];
+const ACH=[["🦶","Bước Chân Đầu Tiên",()=>tot()>=1,"Hoàn thành level đầu tiên"],["🧭","Nhà Khám Phá",()=>tot()>=25,"Hoàn thành 25 level"],["🎓","Học Sinh Xuất Sắc",()=>!!st.perf,"Đạt 100% trong một thử thách"],["🔥","Giữ Lửa",()=>st.best>=3,"Học 3 ngày liên tiếp"],["🏆","Bậc Thầy Ngữ Pháp",()=>st.c.some(c=>c>=500),"Hoàn thành 500 level của một thì"],["👑","Huyền Thoại Tiếng Anh",()=>tot()>=6000,"Hoàn thành toàn bộ 6.000 level"]];
+const $=id=>document.getElementById(id);
+const MAS=`<svg viewBox='0 0 160 170' aria-hidden='true'><defs><linearGradient id='mg' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#fff'/><stop offset='1' stop-color='#d9d6ff'/></linearGradient></defs><line x1='80' y1='20' x2='80' y2='38' stroke='#fff' stroke-width='5' stroke-linecap='round'/><circle cx='80' cy='14' r='9' fill='#FFB84C'/><rect x='10' y='68' width='15' height='32' rx='7' fill='#FFB84C'/><rect x='135' y='68' width='15' height='32' rx='7' fill='#FFB84C'/><rect x='22' y='36' width='116' height='92' rx='34' fill='url(#mg)'/><rect x='38' y='54' width='84' height='56' rx='24' fill='#2b2f55'/><circle cx='62' cy='79' r='9' fill='#4fe3a9'/><circle cx='98' cy='79' r='9' fill='#4fe3a9'/><path d='M66 95q14 12 28 0' stroke='#4fe3a9' stroke-width='5' fill='none' stroke-linecap='round'/><circle cx='45' cy='101' r='6' fill='#FF8B7B' opacity='.75'/><circle cx='115' cy='101' r='6' fill='#FF8B7B' opacity='.75'/><rect x='46' y='132' width='68' height='30' rx='14' fill='url(#mg)'/><text x='80' y='153' text-anchor='middle' font-size='17' font-weight='800' fill='#6C63FF' font-family='Baloo 2,sans-serif'>12</text></svg>`;
+const R=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const rp=(r,a)=>a[Math.floor(r()*a.length)];
+const sh=(r,a)=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const cap=x=>x[0].toUpperCase()+x.slice(1);
+const nm=x=>x.toLowerCase().replace(/’/g,"'").replace(/won't/g,"will not").replace(/n't/g," not").replace(/[^a-z ]/g,"").replace(/\s+/g," ").trim();
+function init(){return{xp:0,streak:0,best:0,last:"",c:Array(12).fill(0),d:{},w:[],h:[],cur:null,perf:0}}
+function load(){try{return Object.assign(init(),JSON.parse(localStorage.getItem("t12")))}catch(e){return init()}}
+function save(){try{localStorage.setItem("t12",JSON.stringify(st))}catch(e){}}
+let st=load(),ui={v:"home"},qs=[],qi=0,ok=0,gx=0,pk=-1,fb=null,val="",bd=[],pl=[],mode="lvl",res=null;
+const tot=()=>st.c.reduce((a,b)=>a+b,0);
+const bar=(p,c)=>`<div class="bar"><i style="width:${Math.min(100,p)}%;background:${c||"var(--p)"}"></i></div>`;
+const be=(p,past)=>past?(p==1?"were":"was"):(p==0?"am":p==2?"is":"are");
+function conj(t,p,v,f){const h=p==2?"has":"have";let a,r;
+ switch(t){
+ case 0:if(f=="aff")return[null,p==2?v[4]:v[0]];a=p==2?"does":"do";r=v[0];break;
+ case 1:a=be(p);r=v[3];break;
+ case 2:a=h;r=v[2];break;
+ case 3:a=h;r="been "+v[3];break;
+ case 4:if(f=="aff")return[null,v[1]];a="did";r=v[0];break;
+ case 5:a=be(p,1);r=v[3];break;
+ case 6:a="had";r=v[2];break;
+ case 7:a="had";r="been "+v[3];break;
+ case 8:a="will";r=v[0];break;
+ case 9:a="will";r="be "+v[3];break;
+ case 10:a="will";r="have "+v[2];break;
+ default:a="will";r="have been "+v[3]}
+ return[a,r]}
+function sent(t,s,v,m,f){const[a,r]=conj(t,s[2],v,f),e=v[5]+" "+m;
+ if(f=="aff")return`${s[0]} ${a?a+" ":""}${r} ${e}.`;
+ if(f=="neg")return`${s[0]} ${a} not ${r} ${e}.`;
+ return`${cap(a)} ${s[1]} ${r} ${e}?`}
+function gen(t,seed,l){
+ const r=R(seed*7+t*131+l),ns=Math.min(10,3+Math.ceil(l/12)),nv=Math.min(V.length,3+Math.ceil(l/20));
+ const s=rp(r,S.slice(0,ns)),v=rp(r,V.slice(0,nv)),m=rp(r,M[t]);
+ const f=l<=30?"aff":rp(r,l<=100?["aff","neg"]:["aff","neg","q"]);
+ let k=rp(r,l<=20?["mc","fill"]:["mc","fill","order"]);if(f=="q"&&k=="fill")k="mc";
+ const a=sent(t,s,v,m,f),T=TN[t];
+ const ex=`Công thức: ${T[2]}. Dấu hiệu: ${T[4]}. Lỗi hay gặp: ${T[5]} Dạng của "${v[0]}": ${v[0]} – ${v[1]} – ${v[2]} – ${v[3]}. Ví dụ tương tự: ${sent(t,rp(r,S.slice(0,ns)),rp(r,V.slice(0,nv)),rp(r,M[t]),f)}`;
+ const x={t,seed,l,k,show:a,ex,a};
+ if(k=="mc"){const o=[...Array(12).keys()].filter(i=>i!=t),same=o.filter(i=>i>>2==t>>2),rest=o.filter(i=>i>>2!=t>>2);
+  const c=l>60?[...sh(r,same),...sh(r,rest)]:sh(r,o),ops=[a];
+  for(const i of c){const z=sent(i,s,v,m,f);if(!ops.includes(z)&&ops.length<4)ops.push(z)}
+  x.o=sh(r,ops);x.st=`Chọn câu đúng ở thì ${T[1]}:`}
+ else if(k=="fill"){const[A,Rr]=conj(t,s[2],v,f);
+  x.a=f=="aff"?(A?A+" ":"")+Rr:A+" not "+Rr;
+  x.st=`Chia động từ trong ngoặc ở thì ${T[1]}:`;
+  x.stem=`${s[0]} ___ (${f=="neg"?"not ":""}${v[0]}) ${v[5]} ${m}.`}
+ else{const tk=a.replace(/[.?]$/,"").split(" ");x.a=tk.join(" ");let z=sh(r,tk);if(z.join(" ")==x.a)z=z.reverse();x.tk=z;
+  x.st=`Sắp xếp thành câu ở thì ${T[1]} (cụm chỉ thời gian đặt ở cuối câu):`}
+ return x}
+const goal=l=>l<=20?"làm quen khái niệm cơ bản":l<=50?"nhận biết cấu trúc ngữ pháp":l<=100?"xây dựng câu đơn giản":l<=200?"áp dụng công thức vào nhiều tình huống":l<=300?"phân tích ngữ cảnh và chọn cấu trúc":l<=400?"xử lý câu phức tạp hơn":"thử thách tổng hợp, kiểm tra độ thành thạo";
+function go(v,p){ui=Object.assign({v},p);render();scrollTo(0,0)}
+function cont(){if(st.cur)open_(st.cur.t,st.cur.l);else go("map",{t:0,s:0})}
+function open_(t,l){st.cur={t,l};save();go("learn",{t,l})}
+function home(){const n=tot();return`<section class="hero"><div class="ht"><h1>HÀNH TRÌNH CHINH PHỤC 12 THÌ TIẾNG ANH!</h1><p>Khám phá ngữ pháp tiếng Anh qua 6.000 cấp độ thú vị. Học từng chút một, tiến bộ mỗi ngày!</p><button class="btn go" onclick="cont()">BẮT ĐẦU HỌC</button></div><div class="mw">${MAS}<div class="say">Hôm nay mình học thì nào nhé?</div></div></section>
+<div class="stats"><div class="tile"><svg class="ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="none" stroke="var(--bd)" stroke-width="5"/><circle cx="22" cy="22" r="18" fill="none" stroke="var(--p)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(n/6000*113).toFixed(1)} 113" transform="rotate(-90 22 22)"/></svg><div><b>${n}</b><span>/6.000 level đã xong</span></div></div><div class="tile"><i>⚡</i><div><b>${st.xp}</b><span>điểm XP</span></div></div><div class="tile"><i>🔥</i><div><b>${st.streak}</b><span>ngày liên tiếp</span></div></div></div>
+<div class="grid3">${[0,1,2].map(g=>{const c=st.c.slice(g*4,g*4+4).reduce((a,b)=>a+b,0);return`<div class="card gc" style="--c:${GC[g]}" onclick="go('group',{g:${g}})"><div class="ic">${GI[g]}</div><h3>${GN[g].toUpperCase()}</h3><p>${GD[g]}</p><small>2.000 level · ${(c/20).toFixed(1)}% hoàn thành</small>${bar(c/20,GC[g])}<button class="btn sm">Tiếp tục học</button></div>`}).join("")}</div>
+<div class="card" onclick="go('review')"><h3>🔁 Ôn tập thông minh</h3><p>${st.w.length?`Có ${st.w.length} câu bạn từng làm sai đang chờ ôn lại.`:"Chưa có câu nào cần ôn. Những câu làm sai sẽ xuất hiện ở đây."}</p></div>`}
+function group(g){return`<h2 style="color:${GC[g]}">${GN[g]}</h2><div class="grid2">${[0,1,2,3].map(i=>{const t=g*4+i,T=TN[t],c=st.c[t];return`<div class="card" style="--c:${GC[g]}" onclick="go('map',{t:${t},s:${Math.min(4,Math.floor(c/100))}})"><h3>${T[0]}</h3><div class="en">${T[1]}</div><code>${T[2].split(" · ")[0]}</code><p>${T[3]}.</p><p><i>${sent(t,S[1],V[0],M[t][0],"aff")}</i></p><small>${c}/500 level · ${c>=500?"Đã thành thạo":c?"Đang học":"Chưa bắt đầu"}</small>${bar(c/5,GC[g])}</div>`}).join("")}</div>`}
+function map(){const t=ui.t,s=ui.s,c=st.c[t],T=TN[t];let n="";
+ for(let i=1;i<=100;i++){const l=s*100+i,dn=l<=c,cur=l==c+1,bs=l%25==0;if(i%5==1)n+=`<div class="row${(i-1)/5%2?" r":""}">`;n+=`<button class="nd ${dn?"dn":cur?"cur":""} ${bs?"bs":""}" ${l>c+1?"disabled":""} title="Level ${l}" aria-label="Level ${l}" onclick="open_(${t},${l})">${l%100==0?"🏆":bs?"⭐":l}</button>`+(i%5==0?"</div>":"")}
+ return`<h2>${T[0]} <small>${T[1]}</small></h2><p>${c}/500 level · mỗi chặng thưởng +200 XP</p>${bar(c/5,GC[t>>2])}<div class="tabs">${STG.map((x,i)=>`<button class="${i==s?"on":""}" onclick="go('map',{t:${t},s:${i}})">${x}</button>`).join("")}</div><div class="map" style="--c:${GC[t>>2]}">${n}</div><p class="mu">⭐ Boss mỗi 25 level (10 câu) · 🏆 Kiểm tra tổng hợp mỗi 100 level · Đạt từ 80% để mở khóa level tiếp theo.</p>`}
+function learn(){const t=ui.t,l=ui.l,T=TN[t],n=l%25==0?10:6,e=f=>sent(t,S[1],V[l%V.length],M[t][0],f);
+ return`<p><button class="chip" onclick="go('map',{t:${t},s:${Math.floor((l-1)/100)}})">← Bản đồ</button></p><h2>Level ${l} · ${T[1]} ${l%100==0?"🏆 Kiểm tra tổng hợp":l%25==0?"⭐ Boss":""}</h2><div class="card" style="--c:${GC[t>>2]};cursor:default"><h3>📘 Phần 1: Kiến thức</h3><p><b>Dùng khi:</b> ${T[3]}.</p><p><b>Dấu hiệu nhận biết:</b> ${T[4]}</p><code>${T[2]}</code><p>Khẳng định: <i>${e("aff")}</i><br>Phủ định: <i>${e("neg")}</i><br>Nghi vấn: <i>${e("q")}</i></p><p>⚠️ <b>Lỗi thường gặp:</b> ${T[5]}</p><p class="mu">Mục tiêu level này: ${goal(l)}.</p><p>📝 Phần 2 và 3: ${n} câu luyện tập và thử thách. Cần đúng ${Math.ceil(n*.8)}/${n} câu để mở khóa level tiếp theo.</p><button class="btn" onclick="start()">Bắt đầu làm bài</button></div>`}
+function setup(){qi=0;ok=0;gx=0;pk=-1;fb=null;val="";ui.v="quiz";ord();render();scrollTo(0,0)}
+function ord(){const x=qs[qi];if(x&&x.k=="order"){bd=[];pl=x.tk.map((_,i)=>i)}}
+function start(){mode="lvl";const n=ui.l%25==0?10:6;qs=Array.from({length:n},(_,i)=>gen(ui.t,ui.l*100+i+1,ui.l));setup()}
+function startRev(){mode="rev";qs=st.w.slice(0,8).map(w=>gen(w.t,w.seed,w.l));setup()}
+function sp(i){if(!fb){pk=i;render()}}
+function ad(i){if(!fb){pl=pl.filter(j=>j!=i);bd.push(i);render()}}
+function un(i){if(!fb){bd=bd.filter(j=>j!=i);pl.push(i);render()}}
+function chk(){if(fb)return;const x=qs[qi];let g;
+ if(x.k=="mc"){if(pk<0)return;g=x.o[pk]==x.a}
+ else if(x.k=="fill"){val=$("in").value;if(!val.trim())return;g=nm(val)==nm(x.a)}
+ else{if(bd.length<x.tk.length)return;g=bd.map(i=>x.tk[i]).join(" ")==x.a}
+ fb={g};const w=st.w.findIndex(w=>w.t==x.t&&w.seed==x.seed);
+ if(g){ok++;gx+=10;st.xp+=10;if(w>=0)st.w.splice(w,1)}else if(w<0)st.w.push({t:x.t,seed:x.seed,l:x.l});
+ save();render()}
+function nx(){if(qi+1<qs.length){qi++;pk=-1;fb=null;val="";ord();render();scrollTo(0,0)}else fin()}
+function tick(){const d=new Date().toISOString().slice(0,10);if(st.last==d)return;const y=new Date(Date.now()-864e5).toISOString().slice(0,10);st.streak=st.last==y?st.streak+1:1;st.best=Math.max(st.best,st.streak);st.last=d}
+function fin(){const p=Math.round(ok/qs.length*100),pass=p>=80,b=ACH.map(a=>a[2]());let xp=gx;tick();
+ if(mode=="lvl"){const k=ui.t+"."+ui.l;
+  if(pass&&!st.d[k]){st.d[k]=1;st.c[ui.t]++;st.xp+=50;xp+=50;if(ui.l%100==0){st.xp+=200;xp+=200}}
+  if(p==100){st.xp+=20;xp+=20;st.perf=1}
+  st.h.push({t:ui.t,l:ui.l,p,d:st.last});st.h=st.h.slice(-30)}
+ res={p,pass:mode=="lvl"?pass:true,xp,nw:ACH.filter((a,i)=>!b[i]&&a[2]())};save();ui.v="res";render();scrollTo(0,0)}
+function quiz(){const x=qs[qi];let b="";
+ if(x.k=="mc")b=x.o.map((o,i)=>`<button class="opt ${fb?(o==x.a?"ok":i==pk?"no":""):i==pk?"sel":""}" ${fb?"disabled":""} onclick="sp(${i})">${o}</button>`).join("");
+ else if(x.k=="fill")b=`<p class="big">${x.stem}</p><input id="in" class="inp" value="${val.replace(/"/g,"&quot;")}" ${fb?"disabled":""} autocomplete="off" autocapitalize="off" placeholder="Nhập đáp án" onkeydown="if(event.key=='Enter')chk()">`;
+ else b=`<div class="ans">${bd.map(i=>`<button class="chip" onclick="un(${i})">${x.tk[i]}</button>`).join("")}</div>`+pl.map(i=>`<button class="chip" onclick="ad(${i})">${x.tk[i]}</button>`).join("");
+ const f=fb?`<div class="fb ${fb.g?"":"no"}"><b>${fb.g?"✅ Chính xác! +10 XP":"❌ Chưa đúng."}</b> Đáp án: <i>${x.show}</i>${fb.g?"":`<div class="tutor"><span>🤖</span><div><b>Gia sư giải thích</b><br>${x.ex}</div></div>`}</div>`:"";
+ return`<p class="mu">${mode=="lvl"?`Level ${ui.l} · ${TN[ui.t][1]}`:"Ôn tập thông minh"} · Câu ${qi+1}/${qs.length}</p>${bar((qi+(fb?1:0))/qs.length*100)}<h3>${x.st}</h3>${b}${f}<p>${fb?`<button class="btn" onclick="nx()">${qi+1<qs.length?"Câu tiếp theo":"Xem kết quả"}</button>`:`<button class="btn" onclick="chk()">Kiểm tra</button>`}</p>`}
+function resv(){const r=res,lv=mode=="lvl";return`<div class="card res" style="cursor:default;--c:${r.pass?"var(--ok)":"var(--bad)"}">${r.pass?Array.from({length:22},(_,i)=>'<i class="cf" style="--x:'+(i*47%100)+'%;--d:'+(i%7)*.12+'s;--k:'+["#FFB84C","#6C63FF","#45C486","#FF8B7B","#5B8DEF"][i%5]+'"></i>').join(""):""}<h2>${lv&&!r.pass?"💪 Gần được rồi, thử lại nhé!":"🎉 Hoàn thành!"}</h2><p><b>${r.p}%</b> (${ok}/${qs.length} câu đúng) · +${r.xp} XP</p>${r.nw.map(a=>`<p>🏅 Thành tựu mới: <b>${a[1]}</b></p>`).join("")}${lv?`<button class="btn" onclick="open_(${ui.t},${ui.l})">Làm lại</button> ${r.pass&&ui.l<500?`<button class="btn" onclick="open_(${ui.t},${ui.l+1})">Level tiếp theo</button> `:""}<button class="btn" onclick="go('map',{t:${ui.t},s:${Math.floor((ui.l-1)/100)}})">Bản đồ</button>`:`<button class="btn" onclick="go('review')">Về trang ôn tập</button>`}</div>`}
+function rev(){return`<h2>🔁 Ôn tập thông minh</h2><p>Những câu bạn làm sai được lưu lại. Trả lời đúng một câu thì câu đó rời khỏi danh sách.</p><p><b>${st.w.length}</b> câu đang chờ ôn.</p>${st.w.length?`<button class="btn" onclick="startRev()">Ôn ${Math.min(8,st.w.length)} câu</button>`:`<p class="mu">Chưa có câu nào. Hãy làm một level để bắt đầu.</p>`}`}
+function prof(){const n=tot();return`<h2>🧑‍🎓 Hồ sơ của bạn</h2><div class="grid3"><div class="card" style="cursor:default"><h3>Cấp ${Math.floor(st.xp/200)+1}</h3><small>${st.xp} XP</small></div><div class="card" style="cursor:default"><h3>🔥 ${st.streak} ngày</h3><small>Chuỗi dài nhất: ${st.best} ngày</small></div><div class="card" style="cursor:default"><h3>${n}/6.000 level</h3><small>${(n/60).toFixed(1)}% tiến độ</small></div></div><p><button class="btn" onclick="cont()">Tiếp tục bài học gần nhất</button></p><h3>Tiến độ từng thì</h3>${TN.map((T,i)=>`<div>${T[0]} (${T[1]}) · ${st.c[i]}/500${bar(st.c[i]/5,GC[i>>2])}</div>`).join("")}<h3>Thành tựu</h3><div class="grid3">${ACH.map(a=>`<div class="card" style="cursor:default;opacity:${a[2]()?1:.45}">${a[0]} <b>${a[1]}</b><br><small>${a[3]}</small></div>`).join("")}</div><h3>Lịch sử học tập</h3>${st.h.slice(-8).reverse().map(h=>`<div>${h.d} · ${TN[h.t][1]} · level ${h.l} · ${h.p}%</div>`).join("")||`<small>Chưa có lịch sử.</small>`}<p><small>Dữ liệu được lưu trên trình duyệt này.</small></p>`}
+function render(){const v=ui.v,nk={home:"home",group:"path",path:"path",map:"path",learn:"path",quiz:"path",res:"path",review:"review",prof:"prof"};document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.k==nk[v]));$("app").innerHTML=v=="home"?home():v=="path"?[0,1,2].map(g=>group(g)).join(""):v=="group"?group(ui.g):v=="map"?map():v=="learn"?learn():v=="quiz"?quiz():v=="res"?resv():v=="prof"?prof():rev()}
+render();
+</script></body></html>
