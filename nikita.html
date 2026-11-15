@@ -450,8 +450,8 @@ function taEndView(){const t=ta.sc+ta.bad;return`<div class="card res" style="cu
 // ===== Đăng nhập Google thật (Google Identity Services) =====
 // Tạo OAuth 2.0 Client ID loại "Web application" trong Google Cloud Console, rồi thay giá trị dưới đây.
 // Client ID là thông tin công khai; KHÔNG dán client secret vào tệp HTML.
-const GOOGLE_CLIENT_ID="PASTE_YOUR_CLIENT_ID.apps.googleusercontent.com";
-const googleReady=()=>GOOGLE_CLIENT_ID!=="PASTE_YOUR_CLIENT_ID.apps.googleusercontent.com"&&/^[\w-]+\.apps\.googleusercontent\.com$/.test(GOOGLE_CLIENT_ID);
+const GOOGLE_CLIENT_ID="264761779796-31gic7vh1n1kr7c1bijvlcn72dihtlqt.apps.googleusercontent.com";
+const googleReady=()=>GOOGLE_CLIENT_ID!=="264761779796-31gic7vh1n1kr7c1bijvlcn72dihtlqt.apps.googleusercontent.com"&&/^[\w-]+\.apps\.googleusercontent\.com$/.test(GOOGLE_CLIENT_ID);
 const cleanName=x=>{const c=String(x).replace(/[^\p{L}\p{N}_. -]/gu,"").trim().slice(0,20);return c.length>=2?c:"Player"};
 function decodeGoogleCredential(jwt){const part=jwt.split(".")[1];if(!part)throw Error("Invalid credential");const raw=atob(part.replace(/-/g,"+").replace(/_/g,"/"));const bytes=Uint8Array.from(raw,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes))}
 function handleGoogleCredential(response){try{const profile=decodeGoogleCredential(response.credential||"");if(!profile.sub||!profile.email_verified)throw Error("Unverified Google account");enter(cleanName(profile.name||profile.email.split("@")[0]),"google:"+profile.sub)}catch(e){loginErr("Không thể xác minh phiên Google. Hãy thử lại.","lerr2")}}
