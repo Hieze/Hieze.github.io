@@ -1729,13 +1729,110 @@
                 animation: none
             }
         }
+
+        .skip-link {
+            position: fixed;
+            z-index: 1000;
+            top: 8px;
+            left: 8px;
+            padding: 10px 16px;
+            border-radius: 12px;
+            background: var(--tx);
+            color: var(--card);
+            transform: translateY(-160%);
+            transition: transform .16s ease
+        }
+
+        .skip-link:focus { transform: translateY(0) }
+
+        #toast {
+            position: fixed;
+            z-index: 1001;
+            left: 50%;
+            bottom: max(18px, env(safe-area-inset-bottom));
+            width: max-content;
+            max-width: min(92vw, 520px);
+            padding: 12px 18px;
+            border: 1px solid var(--bd);
+            border-radius: 16px;
+            background: var(--card);
+            color: var(--tx);
+            box-shadow: 0 14px 40px rgba(0,0,0,.2);
+            font-weight: 800;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, 16px);
+            transition: opacity .2s ease, transform .2s ease
+        }
+
+        #toast.show { opacity: 1; transform: translate(-50%, 0) }
+        #toast.error { border-color: var(--bad) }
+        #toast.success { border-color: var(--ok) }
+
+        nav { flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin }
+        nav .logo { flex: 0 0 auto; white-space: nowrap }
+        nav button { flex: 0 0 auto; min-height: 42px; white-space: nowrap }
+        nav #who { flex: 0 0 auto; white-space: nowrap }
+        main { min-width: 0 }
+        .grid2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)) }
+        .grid3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)) }
+        .daily-card { position: relative; overflow: hidden; border: 1px solid color-mix(in srgb, var(--s) 58%, var(--bd)); background: linear-gradient(135deg, color-mix(in srgb, var(--s) 15%, var(--card)), var(--card) 64%) }
+        .daily-card .bar i { background: linear-gradient(90deg, #f5a623, #ffd36b) !important }
+        .meta-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap }
+        .coin { color: #c88716; font-weight: 900 }
+        .boss-clock { display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px; background: rgba(229,72,77,.12); border: 1px solid var(--bad); color: var(--bad); font-weight: 900; font-variant-numeric: tabular-nums }
+        .boss-clock.urgent { animation: boss-pulse .65s ease-in-out infinite alternate }
+        @keyframes boss-pulse { to { transform: scale(1.045); background: rgba(229,72,77,.22) } }
+        .quiz-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0 14px }
+        .quiz-tools .chip { margin: 0 }
+        .path-search { margin: 12px 0 18px }
+        .path-search input { width: 100%; max-width: 560px }
+        [hidden] { display: none !important }
+        .backup-box { margin-top: 16px; border: 1px dashed var(--bd); background: color-mix(in srgb, var(--bg) 66%, transparent) }
+        .backup-box input[type=file] { display: block; width: 100%; max-width: 100%; margin: 10px 0; color: var(--mu); font: inherit }
+        .stat-line { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 }
+        .stat-pill { display: inline-flex; align-items: center; gap: 6px; padding: 7px 11px; border-radius: 999px; background: var(--bg); border: 1px solid var(--bd); font-weight: 800 }
+        .opt:disabled { cursor: default }
+        button, input, select, a { touch-action: manipulation }
+        button:not(:disabled), .chip, .opt, .nd { -webkit-tap-highlight-color: transparent }
+        button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--s); outline-offset: 3px }
+        @media(max-width: 640px) {
+            nav { padding: 8px 10px; gap: 4px }
+            nav .logo { font-size: 1.05rem }
+            nav .logo span { width: 32px; height: 32px }
+            nav button { padding: 8px 10px; font-size: .88rem }
+            main { padding: 14px 12px 34px }
+            .hero { flex-direction: column; text-align: center; padding: 24px 16px }
+            .stats { grid-template-columns: repeat(2, minmax(0,1fr)) }
+            .tile { min-width: 0; padding: 10px }
+            .tile b { font-size: 1.25rem }
+            .card { padding: 15px }
+            .big { font-size: 1.12rem; overflow-wrap: anywhere }
+            .opt { min-height: 48px }
+            .chip { min-height: 42px }
+        }
+        @media(max-width: 370px) {
+            .stats { grid-template-columns: 1fr }
+            .hero h1 { font-size: 1.55rem }
+        }
+        @media(prefers-contrast:more) {
+            :root { --bd: #74798d; --mu: #454b61 }
+            .nd:disabled { opacity: .72 }
+            .card, .tile, .opt, .inp { border: 2px solid var(--bd) }
+        }
+        @media(prefers-reduced-motion:reduce) {
+            #toast, .skip-link { transition: none }
+            .boss-clock.urgent { animation: none }
+        }
     </style>
 </head>
 
 <body>
+    <a class="skip-link" href="#app">Bỏ qua điều hướng</a>
+    <div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
     <div class="cosmos" aria-hidden="true"><i class="planet"></i><i class="ring"></i><i class="galaxy"></i><i
             class="comet"></i><i class="spark s1"></i><i class="spark s2"></i><i class="spark s3"></i></div>
-    <nav><b class="logo"><span>📘</span>12 Thì Tiếng Anh</b>
+    <nav aria-label="Điều hướng chính"><b class="logo"><span>📘</span>12 Thì Tiếng Anh</b>
         <button data-k="home" onclick="go('home')">Trang chủ</button><button data-k="path" onclick="go('path')">Lộ trình
             học</button><button data-k="games" onclick="go('games')">Chế độ chơi</button><button data-k="review"
             onclick="go('review')">Ôn tập</button><button data-k="prof" onclick="go('prof')">Hồ sơ &amp; Thành
@@ -1744,7 +1841,7 @@
             aria-label="Bật/tắt nhạc nền" title="Bật/tắt nhạc nền">🎵</button><span id="who"></span>
     </nav>
     <audio id="ta-audio" preload="auto" loop><source src="./timeattack.weba" type="audio/webm"></audio>
-    <main id="app"></main>
+    <main id="app" tabindex="-1" aria-live="polite"></main>
     <script>
         const TN = [
             ["Hiện tại đơn", "Present Simple", "(+) S + V(s/es) · (−) S + do/does not + V · (?) Do/Does + S + V?", "Thói quen, sự thật hiển nhiên, lịch trình", "every day (mỗi ngày), every morning (mỗi sáng), on Sundays (vào các Chủ nhật)", "Quên thêm -s/-es với he/she/it; đã dùng does mà vẫn thêm -s."],
@@ -1766,8 +1863,17 @@
         const GN = ["Thì hiện tại", "Thì quá khứ", "Thì tương lai"], GC = ["#5B8DEF", "#FF8B7B", "#A47CF5"], GI = ["☀️", "⏳", "🚀"];
         const GD = ["Học cách diễn đạt thói quen, sự thật và những hành động đang diễn ra.", "Khám phá cách kể lại những sự kiện và hành động đã xảy ra.", "Học cách diễn đạt dự định, dự đoán và những sự kiện trong tương lai."];
         const STG = ["Chặng 1 · Cơ bản (A1)", "Chặng 2 · Sơ cấp (A2)", "Chặng 3 · Trung cấp (B1)", "Chặng 4 · Nâng cao (C1)", "Chặng 5 · Thành thạo (C2)"];
-        const ACH = [["🦶", "Bước Chân Đầu Tiên", () => tot() >= 1, "Hoàn thành level đầu tiên"], ["🧭", "Nhà Khám Phá", () => tot() >= 25, "Hoàn thành 25 level"], ["🎓", "Học Sinh Xuất Sắc", () => !!st.perf, "Đạt 100% trong một thử thách"], ["🔥", "Giữ Lửa", () => st.best >= 3, "Học 3 ngày liên tiếp"], ["🏆", "Bậc Thầy Ngữ Pháp", () => st.c.some(c => c >= 500), "Hoàn thành 500 level của một thì"], ["👑", "Huyền Thoại Tiếng Anh", () => tot() >= 6000, "Hoàn thành toàn bộ 6.000 level"]];
+        const ACH = [["🦶", "Bước Chân Đầu Tiên", () => tot() >= 1, "Hoàn thành level đầu tiên"], ["🧭", "Nhà Khám Phá", () => tot() >= 25, "Hoàn thành 25 level"], ["🎓", "Học Sinh Xuất Sắc", () => !!st.perf, "Đạt 100% trong một thử thách"], ["🔥", "Giữ Lửa", () => st.best >= 3, "Học 3 ngày liên tiếp"], ["🏆", "Bậc Thầy Ngữ Pháp", () => st.c.some(c => c >= 500), "Hoàn thành 500 level của một thì"], ["👑", "Huyền Thoại Tiếng Anh", () => tot() >= 6000, "Hoàn thành toàn bộ 6.000 level"], ["⚡", "Combo Không Trượt", () => (st.comboBest || 0) >= 10, "Đạt chuỗi 10 câu đúng liên tiếp"], ["🪙", "Túi Tiền Nặng", () => (st.coins || 0) >= 100, "Tích lũy 100 xu"], ["🎯", "Người Chăm Chỉ", () => (st.dailyClaims || 0) >= 3, "Hoàn thành 3 nhiệm vụ hằng ngày"], ["👹", "Kẻ Diệt Boss", () => (st.bosses || 0) >= 10, "Vượt qua 10 cửa ải Boss"], ["🧠", "Bách Chiến Bách Thắng", () => (st.correct || 0) >= 100, "Trả lời đúng 100 câu"], ["🛡️", "Không Ngại Sai", () => (st.mistakes || 0) >= 25 && (st.correct || 0) >= 50, "Sai 25 câu nhưng vẫn đúng ít nhất 50 câu"]];
         const $ = id => document.getElementById(id);
+        let toastTimer = 0, storageWarned = false;
+        function notify(message, type = "success") {
+            const el = $("toast");
+            if (!el) return;
+            el.textContent = message;
+            el.className = type + " show";
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => { el.className = "" }, 2600)
+        }
         const MAS = `<svg viewBox='0 0 160 170' aria-hidden='true'><defs><linearGradient id='mg' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#fff'/><stop offset='1' stop-color='#d9d6ff'/></linearGradient></defs><line x1='80' y1='20' x2='80' y2='38' stroke='#fff' stroke-width='5' stroke-linecap='round'/><circle cx='80' cy='14' r='9' fill='#FFB84C'/><rect x='10' y='68' width='15' height='32' rx='7' fill='#FFB84C'/><rect x='135' y='68' width='15' height='32' rx='7' fill='#FFB84C'/><rect x='22' y='36' width='116' height='92' rx='34' fill='url(#mg)'/><rect x='38' y='54' width='84' height='56' rx='24' fill='#2b2f55'/><circle cx='62' cy='79' r='9' fill='#4fe3a9'/><circle cx='98' cy='79' r='9' fill='#4fe3a9'/><path d='M66 95q14 12 28 0' stroke='#4fe3a9' stroke-width='5' fill='none' stroke-linecap='round'/><circle cx='45' cy='101' r='6' fill='#FF8B7B' opacity='.75'/><circle cx='115' cy='101' r='6' fill='#FF8B7B' opacity='.75'/><rect x='46' y='132' width='68' height='30' rx='14' fill='url(#mg)'/><text x='80' y='153' text-anchor='middle' font-size='17' font-weight='800' fill='#6C63FF' font-family='Baloo 2,sans-serif'>12</text></svg>`;
         const R = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296 };
         const rp = (r, a) => a[Math.floor(r() * a.length)];
@@ -1826,7 +1932,34 @@
         }
         const nmv = x => { x = x.toLowerCase().replace(/[’`]/g, "'").replace(/won't/g, "will not").replace(/n't\b/g, " not").replace(/'m\b/g, " am").replace(/'re\b/g, " are").replace(/'ve\b/g, " have").replace(/'ll\b/g, " will").replace(/'d\b/g, " had"); const f = y => y.replace(/[^a-z0-9 ]/g, "").replace(/\blearnt\b/g, "learned").replace(/\s+/g, " ").trim(); return /'s\b/.test(x) ? ["is", "has"].map(z => f(x.replace(/'s\b/g, " " + z))) : [f(x)] };
         const nm = x => nmv(x)[0];
-        function init() { return { xp: 0, streak: 0, best: 0, last: "", c: Array(12).fill(0), d: {}, w: [], h: [], cur: null, perf: 0, at: {}, ta: { best: 0, runs: 0 }, c2: { best: 0, runs: 0 } } }
+        function init() { return { version: 2, xp: 0, coins: 0, streak: 0, best: 0, last: "", c: Array(12).fill(0), d: {}, w: [], h: [], cur: null, perf: 0, at: {}, ta: { best: 0, runs: 0 }, c2: { best: 0, runs: 0 }, daily: null, dailyClaims: 0, combo: 0, comboBest: 0, correct: 0, mistakes: 0, bosses: 0 } }
+        function normalizeState(raw) {
+            const out = init();
+            if (!raw || typeof raw !== "object" || Array.isArray(raw)) return out;
+            const int = (v, min = 0, max = 100000000) => Number.isFinite(Number(v)) ? Math.max(min, Math.min(max, Math.floor(Number(v)))) : min;
+            out.xp = int(raw.xp);
+            out.coins = int(raw.coins);
+            out.streak = int(raw.streak);
+            out.best = int(raw.best);
+            out.last = typeof raw.last === "string" && /^\d{4}-\d{2}-\d{2}$/.test(raw.last) ? raw.last : "";
+            out.c = Array.from({ length: 12 }, (_, i) => int(Array.isArray(raw.c) ? raw.c[i] : 0, 0, 500));
+            out.d = raw.d && typeof raw.d === "object" && !Array.isArray(raw.d) ? Object.fromEntries(Object.entries(raw.d).filter(([k, v]) => /^\d{1,2}\.\d{1,3}$/.test(k) && !!v).slice(0, 6000)) : {};
+            out.w = Array.isArray(raw.w) ? raw.w.filter(w => w && Number.isInteger(w.t) && w.t >= 0 && w.t < 12 && Number.isFinite(w.seed) && Number.isFinite(w.l) && typeof w.k === "string").map(w => ({ t: w.t, seed: int(w.seed, -2147483648, 2147483647), l: int(w.l, 1, 500), k: ["mc", "fill", "mcf", "tf", "voc", "vocr", "odd", "idt", "dlg", "rw", "fix", "order"].includes(w.k) ? w.k : "mc" })).slice(-300) : [];
+            out.h = Array.isArray(raw.h) ? raw.h.filter(h => h && Number.isInteger(h.t) && h.t >= 0 && h.t < 12).map(h => ({ t: h.t, l: int(h.l, 1, 500), p: int(h.p, 0, 100), d: typeof h.d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(h.d) ? h.d : "" })).slice(-100) : [];
+            out.cur = raw.cur && Number.isInteger(raw.cur.t) && raw.cur.t >= 0 && raw.cur.t < 12 ? { t: raw.cur.t, l: int(raw.cur.l, 1, 500) } : null;
+            out.perf = raw.perf ? 1 : 0;
+            out.at = raw.at && typeof raw.at === "object" && !Array.isArray(raw.at) ? Object.fromEntries(Object.entries(raw.at).filter(([k, v]) => /^\d{1,2}\.\d{1,3}$/.test(k)).map(([k, v]) => [k, int(v)]).slice(0, 6000)) : {};
+            out.ta = { best: int(raw.ta && raw.ta.best), runs: int(raw.ta && raw.ta.runs) };
+            out.c2 = { best: int(raw.c2 && raw.c2.best, 0, 100), runs: int(raw.c2 && raw.c2.runs) };
+            out.daily = raw.daily && typeof raw.daily === "object" ? { date: typeof raw.daily.date === "string" ? raw.daily.date : "", target: int(raw.daily.target, 6, 20), progress: int(raw.daily.progress, 0, 20), reward: int(raw.daily.reward, 10, 500), claimed: !!raw.daily.claimed } : null;
+            out.dailyClaims = int(raw.dailyClaims);
+            out.combo = int(raw.combo, 0, 100000);
+            out.comboBest = int(raw.comboBest, 0, 100000);
+            out.correct = int(raw.correct);
+            out.mistakes = int(raw.mistakes);
+            out.bosses = int(raw.bosses);
+            return out
+        }
         const hx = s => { let a = 0xdeadbeef, b = 0x41c6ce57; for (let i = 0, c; i < s.length; i++) { c = s.charCodeAt(i); a = Math.imul(a ^ c, 2654435761); b = Math.imul(b ^ c, 1597334677) } a = Math.imul(a ^ a >>> 16, 2246822507) ^ Math.imul(b ^ b >>> 13, 3266489909); b = Math.imul(b ^ b >>> 16, 2246822507) ^ Math.imul(a ^ a >>> 13, 3266489909); return 4294967296 * (2097151 & b) + (a >>> 0) };
         const GODH = 4417883182058761;
         const isGod = n => hx(String(n).trim().toLowerCase()) === GODH;
@@ -1834,13 +1967,110 @@
         const NICK_RE = /^[\p{L}\p{N}_. -]{2,20}$/u;
         const key = n => "t12u:" + n.trim().toLowerCase();
         const rd = k => { try { return localStorage.getItem(k) } catch (e) { return null } };
-        const wr = (k, v) => { try { localStorage.setItem(k, v) } catch (e) { } };
+        const wr = (k, v) => { try { localStorage.setItem(k, v); return true } catch (e) { return false } };
         const rm = k => { try { localStorage.removeItem(k) } catch (e) { } };
         function recent() { try { const a = JSON.parse(rd("t12_users")); return Array.isArray(a) ? a.filter(n => typeof n == "string" && NICK_RE.test(n) && !isGod(n)) : [] } catch (e) { return [] } }
-        function load() { try { return Object.assign(init(), JSON.parse(rd(key(uid)))) } catch (e) { return init() } }
-        function save() { if (user) wr(key(uid), JSON.stringify(st)) }
-        let user = null, uid = null, god = false, st = init(), ui = { v: "home" }, qs = [], qi = 0, ok = 0, gx = 0, pk = -1, fb = null, val = "", hint = "", bd = [], pl = [], mp = [], ms = 0, mode = "lvl", res = null, ta = { iv: 0 };
+        function load() { try { return normalizeState(JSON.parse(rd(key(uid)))) } catch (e) { return init() } }
+        function save() { if (user && !wr(key(uid), JSON.stringify(st)) && !storageWarned) { storageWarned = true; notify("Không thể lưu thêm dữ liệu. Hãy xuất bản sao lưu và kiểm tra dung lượng trình duyệt.", "error") } }
+        let user = null, uid = null, god = false, st = init(), ui = { v: "home" }, qs = [], qi = 0, ok = 0, gx = 0, pk = -1, fb = null, val = "", hint = "", bd = [], pl = [], mp = [], ms = 0, mode = "lvl", res = null, ta = { iv: 0 }, quizTimer = 0, quizDeadline = 0, quizLimit = 0, hiddenOptions = [], achievementsBefore = [];
         const tot = () => st.c.reduce((a, b) => a + b, 0);
+        const localDay = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+        function ensureDaily() {
+            const date = localDay();
+            if (!st.daily || st.daily.date !== date) {
+                const seed = date.split("-").join("").split("").reduce((a, b) => a + Number(b), 0);
+                const target = 6 + seed % 3 * 2;
+                st.daily = { date, target, progress: 0, reward: 30 + target * 4, claimed: false };
+                save()
+            }
+            return st.daily
+        }
+        function trackAnswer(correct) {
+            ensureDaily();
+            if (correct) {
+                st.correct++;
+                st.coins += 2;
+                st.combo++;
+                st.comboBest = Math.max(st.comboBest, st.combo);
+                st.daily.progress = Math.min(st.daily.target, st.daily.progress + 1);
+                if (st.combo && st.combo % 5 === 0) { st.coins += 5; notify(`🔥 Combo ${st.combo}! +5 xu thưởng.`, "success") }
+                if (st.daily.progress === st.daily.target && !st.daily.claimed) notify("🎯 Đã hoàn thành nhiệm vụ hôm nay. Nhận thưởng thôi!", "success")
+            } else {
+                st.mistakes++;
+                st.combo = 0
+            }
+        }
+        function claimDaily() {
+            const d = ensureDaily();
+            if (d.claimed || d.progress < d.target) return;
+            d.claimed = true;
+            st.dailyClaims++;
+            st.xp += d.reward;
+            st.coins += 15;
+            save();
+            notify(`🎁 Nhận ${d.reward} XP và 15 xu!`, "success");
+            render()
+        }
+        function filterTenses(value) {
+            const q = String(value || "").trim().toLocaleLowerCase("vi");
+            document.querySelectorAll("[data-tense-card]").forEach(card => { card.hidden = !card.dataset.search.toLocaleLowerCase("vi").includes(q) })
+        }
+        function stopQuizTimer() { if (quizTimer) clearInterval(quizTimer); quizTimer = 0; quizDeadline = 0; quizLimit = 0 }
+        const isBoss = () => mode === "lvl" && ui.v === "quiz" && Number.isInteger(ui.l) && ui.l % 25 === 0;
+        function startQuizTimer() {
+            stopQuizTimer();
+            if (!isBoss() || fb) return;
+            quizLimit = ui.l % 100 === 0 ? 14000 : 18000;
+            quizDeadline = Date.now() + quizLimit;
+            quizTimer = setInterval(() => {
+                const left = Math.max(0, quizDeadline - Date.now());
+                const el = $("qtime");
+                if (el) { el.textContent = (left / 1000).toFixed(1) + "s"; el.classList.toggle("urgent", left <= 5000) }
+                if (left <= 0) { stopQuizTimer(); submitGrade(false, true) }
+            }, 100)
+        }
+        function useHint() {
+            const x = qs[qi];
+            if (fb || !x || x.k !== "mc" || hiddenOptions.length || isBoss()) return;
+            if (st.coins < 15) { hint = "Bạn cần 15 xu để dùng trợ giúp 50:50."; return render() }
+            const wrong = x.o.map((_, i) => i).filter(i => x.o[i] !== x.a);
+            if (wrong.length < 2) return;
+            hiddenOptions = sh(Math.random, wrong).slice(0, 2);
+            st.coins -= 15;
+            hint = "Đã loại 2 đáp án sai. Đừng vội, vẫn còn bẫy đấy!";
+            save(); render()
+        }
+        function exportBackup() {
+            if (!user) return;
+            const payload = { app: "twelve-tenses", version: 2, exportedAt: new Date().toISOString(), nickname: user, progress: st };
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url; a.download = `12-thi-tieng-anh-${user.replace(/[^\p{L}\p{N}-]+/gu, "-").slice(0, 20)}-backup.json`;
+            document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+            notify("Đã tạo bản sao lưu tiến độ.", "success")
+        }
+        function importBackup(input) {
+            const file = input && input.files && input.files[0];
+            if (!file) return;
+            if (file.size > 2 * 1024 * 1024) { notify("File sao lưu vượt quá 2 MB.", "error"); input.value = ""; return }
+            const reader = new FileReader();
+            reader.onload = () => {
+                try {
+                    const data = JSON.parse(String(reader.result || ""));
+                    if (data.app !== "twelve-tenses" || !data.progress || typeof data.progress !== "object") throw Error("invalid backup");
+                    if (!confirm(`Khôi phục tiến độ từ bản sao lưu của ${String(data.nickname || "người chơi")}? Dữ liệu hiện tại của tài khoản này sẽ được thay thế.`)) return;
+                    st = normalizeState(data.progress);
+                    save(); ensureDaily();
+                    notify("Đã khôi phục tiến độ thành công.", "success");
+                    render()
+                } catch (e) { notify("File sao lưu không hợp lệ hoặc đã bị hỏng.", "error") }
+                finally { input.value = "" }
+            };
+            reader.onerror = () => { notify("Không thể đọc file sao lưu.", "error"); input.value = "" };
+            reader.readAsText(file)
+        }
+        function backupBox() { return `<div class="card backup-box" style="cursor:default"><h3>💾 Sao lưu & khôi phục</h3><p class="mu">Tiến độ hiện được lưu trên trình duyệt/thiết bị này. Xuất file JSON để chuyển sang máy khác hoặc khôi phục khi đổi trình duyệt.</p><div class="row2"><button class="btn" onclick="exportBackup()">⬇ Xuất bản sao lưu</button></div><label for="backup-file"><b>Chọn file sao lưu để khôi phục</b></label><input id="backup-file" type="file" accept="application/json,.json" onchange="importBackup(this)"><small>Khôi phục sẽ thay thế tiến độ của hồ sơ đang đăng nhập. Không tải file sao lưu từ nguồn không tin cậy.</small></div>` }
         const bar = (p, c) => `<div class="bar"><i style="width:${Math.min(100, p)}%;background:${c || "var(--p)"}"></i></div>`;
         const be = (p, past) => past ? (p == 1 ? "were" : "was") : (p == 0 ? "am" : p == 2 ? "is" : "are");
         function conj(t, p, v, f) {
@@ -1895,21 +2125,22 @@
         }
         const goal = l => l <= 20 ? "làm quen khái niệm cơ bản" : l <= 50 ? "nhận biết cấu trúc ngữ pháp" : l <= 100 ? "xây dựng câu đơn giản" : l <= 200 ? "áp dụng công thức vào nhiều tình huống" : l <= 300 ? "phân tích ngữ cảnh và chọn cấu trúc" : l <= 400 ? "xử lý câu phức tạp hơn" : "thử thách tổng hợp, kiểm tra độ thành thạo";
         function taStop() { if (ta.iv) { clearInterval(ta.iv); ta.iv = 0 } ta.on = 0; stopTaMusic() }
-        function go(v, p) { taStop(); ui = Object.assign({ v }, p); render(); scrollTo(0, 0) }
+        function go(v, p) { stopQuizTimer(); taStop(); ui = Object.assign({ v }, p); render(); scrollTo(0, 0) }
         function focusIn() { const i = $("in"); if (i && i.focus) i.focus() }
         document.addEventListener("keydown", e => { if (e.key == "Enter" && !e.repeat && ui.v == "quiz" && fb && e.target.id != "in" && e.target.tagName != "BUTTON") { e.preventDefault(); nx() } });
         function mkQs(t, l, n, at) { const o = [], u = {}, K = sh(R(at * 31 + l * 7 + t), kinds(l)); for (let i = 1, j = 0; o.length < n && i < 900; i++) { const x = gen(t, (at * 1000 + l) * 1000 + i, l, K[j % K.length]); if (!u[x.show]) { u[x.show] = 1; o.push(x); j++ } } return o }
         function cont() { if (st.cur) { const t = st.cur.t; open_(t, god && st.cur.l ? st.cur.l : Math.min(500, st.c[t] + 1)) } else go("map", { t: 0, s: 0 }) }
         function open_(t, l) { st.cur = { t, l }; save(); go("learn", { t, l }) }
         function home() {
-            const n = tot(); return `<section class="hero"><div class="ht"><h1>HÀNH TRÌNH CHINH PHỤC 12 THÌ TIẾNG ANH!</h1><p>Khám phá ngữ pháp tiếng Anh qua 6.000 cấp độ thú vị. Học từng chút một, tiến bộ mỗi ngày!</p><button class="btn go" onclick="cont()">BẮT ĐẦU HỌC</button></div><div class="mw">${MAS}<div class="say">Chào ${esc(user)}! Hôm nay mình học thì nào nhé?</div></div></section>
+            const n = tot(), daily = ensureDaily(); return `<section class="hero"><div class="ht"><h1>HÀNH TRÌNH CHINH PHỤC 12 THÌ TIẾNG ANH!</h1><p>Khám phá ngữ pháp tiếng Anh qua 6.000 cấp độ thú vị. Học từng chút một, tiến bộ mỗi ngày!</p><button class="btn go" onclick="cont()">BẮT ĐẦU HỌC</button></div><div class="mw">${MAS}<div class="say">Chào ${esc(user)}! Hôm nay mình học thì nào nhé?</div></div></section>
 ${godPanel(st.cur ? st.cur.t : 0, st.cur ? st.cur.l : 1)}
-<div class="stats"><div class="tile"><svg class="ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="none" stroke="var(--bd)" stroke-width="5"/><circle cx="22" cy="22" r="18" fill="none" stroke="var(--p)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(n / 6000 * 113).toFixed(1)} 113" transform="rotate(-90 22 22)"/></svg><div><b>${n}</b><span>/6.000 level đã xong</span></div></div><div class="tile"><i>⚡</i><div><b>${st.xp}</b><span>điểm XP</span></div></div><div class="tile"><i>🔥</i><div><b>${st.streak}</b><span>ngày liên tiếp</span></div></div></div>
+<div class="stats"><div class="tile"><svg class="ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="none" stroke="var(--bd)" stroke-width="5"/><circle cx="22" cy="22" r="18" fill="none" stroke="var(--p)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(n / 6000 * 113).toFixed(1)} 113" transform="rotate(-90 22 22)"/></svg><div><b>${n}</b><span>/6.000 level đã xong</span></div></div><div class="tile"><i>⚡</i><div><b>${st.xp}</b><span>điểm XP</span></div></div><div class="tile"><i>🔥</i><div><b>${st.streak}</b><span>ngày liên tiếp</span></div></div><div class="tile"><i>🪙</i><div><b>${st.coins}</b><span>xu tích lũy</span></div></div></div>
+<div class="card daily-card" style="cursor:default"><div class="meta-row"><h3>🎯 Nhiệm vụ hằng ngày</h3><b class="coin">+${daily.reward} XP · +15 xu</b></div><p>Trả lời đúng ${daily.target} câu ở bất kỳ chế độ nào. Sai một câu không làm mất tiến độ nhiệm vụ.</p><div class="meta-row"><b>${daily.progress}/${daily.target} câu đúng</b><small>${daily.claimed ? "Đã nhận thưởng hôm nay" : daily.progress >= daily.target ? "Đã hoàn thành!" : "Cứ tiếp tục nhé"}</small></div>${bar(daily.progress / daily.target * 100, "var(--s)")}${daily.progress >= daily.target && !daily.claimed ? `<button class="btn go" onclick="claimDaily()">🎁 Nhận thưởng</button>` : ""}</div>
 <div class="grid3">${[0, 1, 2].map(g => { const c = st.c.slice(g * 4, g * 4 + 4).reduce((a, b) => a + b, 0); return `<div class="card gc" style="--c:${GC[g]}" onclick="go('group',{g:${g}})"><div class="ic">${GI[g]}</div><h3>${GN[g].toUpperCase()}</h3><p>${GD[g]}</p><small>2.000 level · ${(c / 20).toFixed(1)}% hoàn thành</small>${bar(c / 20, GC[g])}<button class="btn sm">Tiếp tục học</button></div>` }).join("")}</div>
 <div class="card" style="margin-bottom:14px" onclick="go('games')"><h3>🎮 Chế độ chơi</h3><p>Match the Tense, Sentence Transformation và Time Attack 60 giây.</p></div>
 <div class="card" onclick="go('review')"><h3>🔁 Ôn tập thông minh</h3><p>${st.w.length ? `Có ${st.w.length} câu bạn từng làm sai đang chờ ôn lại.` : "Chưa có câu nào cần ôn. Những câu làm sai sẽ xuất hiện ở đây."}</p></div>`
         }
-        function group(g) { return `<h2 style="color:${GC[g]}">${GN[g]}</h2><div class="grid2">${[0, 1, 2, 3].map(i => { const t = g * 4 + i, T = TN[t], c = st.c[t]; return `<div class="card" style="--c:${GC[g]}" onclick="go('map',{t:${t},s:${Math.min(4, Math.floor(c / 100))}})"><h3>${T[0]}</h3><div class="en">${T[1]}</div><code>${T[2].split(" · ")[0]}</code><p>${T[3]}.</p><p><i>${sent(t, S[1], V[0], M[t][0], "aff")}</i></p><small>${c}/500 level · ${c >= 500 ? "Đã thành thạo" : c ? "Đang học" : "Chưa bắt đầu"}</small>${bar(c / 5, GC[g])}</div>` }).join("")}</div>` }
+        function group(g) { return `<h2 style="color:${GC[g]}">${GN[g]}</h2><div class="grid2">${[0, 1, 2, 3].map(i => { const t = g * 4 + i, T = TN[t], c = st.c[t]; return `<div class="card" data-tense-card data-search="${esc(T.join(" "))}" style="--c:${GC[g]}" onclick="go('map',{t:${t},s:${Math.min(4, Math.floor(c / 100))}})"><h3>${T[0]}</h3><div class="en">${T[1]}</div><code>${T[2].split(" · ")[0]}</code><p>${T[3]}.</p><p><i>${sent(t, S[1], V[0], M[t][0], "aff")}</i></p><small>${c}/500 level · ${c >= 500 ? "Đã thành thạo" : c ? "Đang học" : "Chưa bắt đầu"}</small>${bar(c / 5, GC[g])}</div>` }).join("")}</div>` }
         function map() {
             const t = ui.t, s = ui.s, c = st.c[t], T = TN[t]; let n = "";
             for (let i = 1; i <= 100; i++) { const l = s * 100 + i, dn = l <= c || !!st.d[t + "." + l], cur = l == c + 1, bs = l % 25 == 0; if (i % 5 == 1) n += `<div class="row${(i - 1) / 5 % 2 ? " r" : ""}">`; n += `<button class="nd ${dn ? "dn" : cur ? "cur" : ""} ${bs ? "bs" : ""}" ${!god && l > c + 1 ? "disabled" : ""} title="Level ${l}" aria-label="Level ${l}" onclick="open_(${t},${l})">${l % 100 == 0 ? "🏆" : bs ? "⭐" : l}</button>` + (i % 5 == 0 ? "</div>" : "") }
@@ -1917,60 +2148,82 @@ ${godPanel(st.cur ? st.cur.t : 0, st.cur ? st.cur.l : 1)}
         }
         function learn() {
             const t = ui.t, l = ui.l, T = TN[t], n = l % 25 == 0 ? 10 : 6, W = lw(t, l), e = f => sent(t, S[1], wv(W[0]), M[t][0], f);
-            return `<p><button class="chip" onclick="go('map',{t:${t},s:${Math.floor((l - 1) / 100)}})">← Bản đồ</button>${god ? ` <button class="chip" ${l > 1 ? "" : "disabled"} onclick="open_(${t},${l - 1})">‹ Level trước</button> <button class="chip" ${l < 500 ? "" : "disabled"} onclick="open_(${t},${l + 1})">Level sau ›</button>` : ""}</p><h2>Level ${l} · ${T[1]} ${l % 100 == 0 ? "🏆 Kiểm tra tổng hợp" : l % 25 == 0 ? "⭐ Boss" : ""}</h2><div class="card" style="--c:${GC[t >> 2]};cursor:default"><h3>📘 Phần 1: Kiến thức</h3><p><b>Dùng khi:</b> ${T[3]}.</p><p><b>Dấu hiệu nhận biết:</b> ${T[4]}</p><code>${T[2]}</code><p>Khẳng định: <i>${e("aff")}</i><br>Phủ định: <i>${e("neg")}</i><br>Nghi vấn: <i>${e("q")}</i></p><p>⚠️ <b>Lỗi thường gặp:</b> ${T[5]}</p><p><b>📚 Từ vựng level này (${['A1', 'A2', 'B1', 'C1', 'C2'][Math.min(4, (l - 1) / 100 | 0)]}):</b> ${W.map(w => w.f[0] + ' = ' + w.g).join('; ')}.</p><p class="mu">Mục tiêu level này: ${goal(l)}.</p><p>📝 Phần 2 và 3: ${n} câu luyện tập và thử thách. Cần đúng ${Math.ceil(n * .8)}/${n} câu để mở khóa level tiếp theo.</p><button class="btn" onclick="start()">Bắt đầu làm bài</button></div>`
+            return `<p><button class="chip" onclick="go('map',{t:${t},s:${Math.floor((l - 1) / 100)}})">← Bản đồ</button>${god ? ` <button class="chip" ${l > 1 ? "" : "disabled"} onclick="open_(${t},${l - 1})">‹ Level trước</button> <button class="chip" ${l < 500 ? "" : "disabled"} onclick="open_(${t},${l + 1})">Level sau ›</button>` : ""}</p><h2>Level ${l} · ${T[1]} ${l % 100 == 0 ? "🏆 Kiểm tra tổng hợp" : l % 25 == 0 ? "⭐ Boss" : ""}</h2><div class="card" style="--c:${GC[t >> 2]};cursor:default"><h3>📘 Phần 1: Kiến thức</h3><p><b>Dùng khi:</b> ${T[3]}.</p><p><b>Dấu hiệu nhận biết:</b> ${T[4]}</p><code>${T[2]}</code><p>Khẳng định: <i>${e("aff")}</i><br>Phủ định: <i>${e("neg")}</i><br>Nghi vấn: <i>${e("q")}</i></p><p>⚠️ <b>Lỗi thường gặp:</b> ${T[5]}</p><p><b>📚 Từ vựng level này (${['A1', 'A2', 'B1', 'C1', 'C2'][Math.min(4, (l - 1) / 100 | 0)]}):</b> ${W.map(w => w.f[0] + ' = ' + w.g).join('; ')}.</p><p class="mu">Mục tiêu level này: ${goal(l)}.</p><p>🪙 Mỗi câu đúng nhận 2 xu. Trợ giúp 50:50 tốn 15 xu và không dùng được trong Boss. Combo 5 câu đúng liên tiếp thưởng thêm 5 xu.</p>${l % 25 === 0 ? `<p class="fb no"><b>👹 CỬA ẢI BOSS:</b> ${l % 100 === 0 ? "14" : "18"} giây cho mỗi câu. Trả lời sai sẽ reset combo; lần đầu vượt qua nhận thêm 20 xu.</p>` : ""}<p>📝 Phần 2 và 3: ${n} câu luyện tập và thử thách. Cần đúng ${Math.ceil(n * .8)}/${n} câu để mở khóa level tiếp theo.</p><button class="btn" onclick="start()">Bắt đầu làm bài</button></div>`
         }
-        function setup() { qi = 0; ok = 0; gx = 0; pk = -1; fb = null; val = ""; hint = ""; ui.v = "quiz"; ord(); render(); scrollTo(0, 0); focusIn() }
+        function setup() { stopQuizTimer(); qi = 0; ok = 0; gx = 0; pk = -1; fb = null; val = ""; hint = ""; hiddenOptions = []; achievementsBefore = ACH.map(a => a[2]()); ui.v = "quiz"; ord(); startQuizTimer(); render(); scrollTo(0, 0); focusIn() }
         function ord() { const x = qs[qi]; if (x && x.k == "order") { bd = []; pl = x.tk.map((_, i) => i) } if (x && x.k == "match") { mp = x.L.map(() => -1); ms = 0 } }
         function start() { mode = "lvl"; const n = ui.l % 25 == 0 ? 10 : 6; const k = ui.t + "." + ui.l, at = st.at[k] || 0; st.at[k] = at + 1; save(); qs = mkQs(ui.t, ui.l, n, at); setup() }
         function startRev() { mode = "rev"; qs = st.w.slice(0, 8).map(w => gen(w.t, w.seed, w.l, w.k)); setup() }
-        function sp(i) { if (!fb) { pk = i; hint = ""; render() } }
+        function sp(i) { if (!fb && !hiddenOptions.includes(i)) { pk = i; hint = ""; render() } }
         function ad(i) { if (!fb) { pl = pl.filter(j => j != i); bd.push(i); render() } }
         function un(i) { if (!fb) { bd = bd.filter(j => j != i); pl.push(i); render() } }
-        function chk() {
-            if (fb) return; const x = qs[qi]; let g;
-            if (x.k == "mc") { if (pk < 0) { hint = "Hãy chọn một đáp án trước nhé."; return render() } g = x.o[pk] == x.a }
-            else if (x.k == "fill") { val = $("in").value; if (!val.trim()) { hint = "Hãy nhập đáp án trước nhé."; return render() } const u = nmv(val); g = (x.acc || [x.a]).some(z => u.includes(nm(z))) }
-            else if (x.k == "match") { if (mp.includes(-1)) { hint = "Hãy ghép đủ tất cả các câu trước nhé."; return render() } g = mp.every((v, i) => v == x.a[i]) }
-            else { if (bd.length < x.tk.length) { hint = "Hãy xếp đủ các từ trước nhé."; return render() } g = bd.map(i => x.tk[i]).join(" ") == x.a }
-            fb = { g }; hint = ""; sfx(g ? "ok" : "bad"); const w = st.w.findIndex(w => w.t == x.t && w.seed == x.seed);
-            if (g) { ok++; gx += 10; st.xp += 10; if (w >= 0) st.w.splice(w, 1) } else if (w < 0 && !x.ng) st.w.push({ t: x.t, seed: x.seed, l: x.l, k: x.kk });
+        function submitGrade(g, timedOut = false) {
+            if (fb) return;
+            stopQuizTimer();
+            const x = qs[qi];
+            fb = { g: !!g, timedOut };
+            hint = "";
+            sfx(g ? "ok" : "bad");
+            const w = st.w.findIndex(w => w.t == x.t && w.seed == x.seed);
+            if (g) { ok++; gx += 10; st.xp += 10; if (w >= 0) st.w.splice(w, 1) }
+            else if (w < 0 && !x.ng) st.w.push({ t: x.t, seed: x.seed, l: x.l, k: x.kk });
+            trackAnswer(!!g);
             save(); render()
         }
-        function nx() { if (qi + 1 < qs.length) { qi++; pk = -1; fb = null; val = ""; hint = ""; ord(); render(); scrollTo(0, 0); focusIn() } else fin() }
-        function tick() { const d = new Date().toISOString().slice(0, 10); if (st.last == d) return; const y = new Date(Date.now() - 864e5).toISOString().slice(0, 10); st.streak = st.last == y ? st.streak + 1 : 1; st.best = Math.max(st.best, st.streak); st.last = d }
+        function chk() {
+            if (fb) return;
+            if (quizLimit && Date.now() >= quizDeadline) return submitGrade(false, true);
+            const x = qs[qi]; let g;
+            if (x.k == "mc") { if (pk < 0) { hint = "Hãy chọn một đáp án trước nhé."; return render() } g = x.o[pk] == x.a }
+            else if (x.k == "fill") {
+                val = $("in").value;
+                if (!val.trim()) { hint = "Hãy nhập đáp án trước nhé."; return render() }
+                const entered = nmv(val), accepted = (x.acc || [x.a]).flatMap(z => nmv(z));
+                g = entered.some(z => accepted.includes(z))
+            }
+            else if (x.k == "match") { if (mp.includes(-1)) { hint = "Hãy ghép đủ tất cả các câu trước nhé."; return render() } g = mp.every((v, i) => v == x.a[i]) }
+            else { if (bd.length < x.tk.length) { hint = "Hãy xếp đủ các từ trước nhé."; return render() } g = bd.map(i => x.tk[i]).join(" ") == x.a }
+            submitGrade(g)
+        }
+        function nx() { stopQuizTimer(); if (qi + 1 < qs.length) { qi++; pk = -1; fb = null; val = ""; hint = ""; hiddenOptions = []; ord(); startQuizTimer(); render(); scrollTo(0, 0); focusIn() } else fin() }
+        function tick() { const d = localDay(); if (st.last == d) return; const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1); const y = localDay(yesterday); st.streak = st.last == y ? st.streak + 1 : 1; st.best = Math.max(st.best, st.streak); st.last = d }
         function fin() {
-            const p = Math.round(ok / qs.length * 100), pass = p >= 80, b = ACH.map(a => a[2]()); let xp = gx; tick();
+            stopQuizTimer();
+            const p = Math.round(ok / qs.length * 100), pass = p >= 80, b = achievementsBefore.length ? achievementsBefore : ACH.map(a => a[2]()); let xp = gx, bonusCoins = 0; tick();
             if (mode == "lvl") {
                 const k = ui.t + "." + ui.l;
-                if (pass && !st.d[k]) { st.d[k] = 1; while (st.d[ui.t + "." + (st.c[ui.t] + 1)] && st.c[ui.t] < 500) st.c[ui.t]++; st.xp += 50; xp += 50; if (ui.l % 100 == 0) { st.xp += 200; xp += 200 } }
+                if (pass && !st.d[k]) { st.d[k] = 1; while (st.d[ui.t + "." + (st.c[ui.t] + 1)] && st.c[ui.t] < 500) st.c[ui.t]++; st.xp += 50; xp += 50; if (ui.l % 100 == 0) { st.xp += 200; xp += 200 } if (ui.l % 25 === 0) { st.coins += 20; st.bosses++; bonusCoins = 20 } }
                 if (p == 100) { st.xp += 20; xp += 20; st.perf = 1 }
                 st.h.push({ t: ui.t, l: ui.l, p, d: st.last }); st.h = st.h.slice(-30)
             }
-            if (mode == "c2") { st.c2 = st.c2 || { best: 0, runs: 0 }; st.c2.runs++; const nb = p > st.c2.best; if (nb) st.c2.best = p; const bonus = p >= 80 ? Math.round(p / 5) : 0; st.xp += bonus; xp += bonus; res = { p, pass: true, xp, nw: ACH.filter((a, i) => !b[i] && a[2]()), rank: c2Rank(p), c2best: st.c2.best, c2new: nb } }
-            else res = { p, pass: mode == "lvl" ? pass : true, xp, nw: ACH.filter((a, i) => !b[i] && a[2]()) }; save(); ui.v = "res"; sfx(pass || mode != "lvl" ? "win" : "lose"); render(); scrollTo(0, 0)
+            if (mode == "c2") { st.c2 = st.c2 || { best: 0, runs: 0 }; st.c2.runs++; const nb = p > st.c2.best; if (nb) st.c2.best = p; const bonus = p >= 80 ? Math.round(p / 5) : 0; st.xp += bonus; xp += bonus; res = { p, pass: true, xp, bonusCoins, nw: ACH.filter((a, i) => !b[i] && a[2]()), rank: c2Rank(p), c2best: st.c2.best, c2new: nb } }
+            else res = { p, pass: mode == "lvl" ? pass : true, xp, bonusCoins, nw: ACH.filter((a, i) => !b[i] && a[2]()) }; save(); ui.v = "res"; sfx(pass || mode != "lvl" ? "win" : "lose"); render(); scrollTo(0, 0)
         }
         function quiz() {
-            const x = qs[qi]; let b = "";
-            if (x.k == "mc") b = (x.passage ? `<article class="card" style="cursor:default;--c:var(--p);margin:12px 0"><small>READING PASSAGE</small><p>${x.passage}</p></article>` : "") + (x.stem ? `<p class="big">${x.stem}</p>` : "") + x.o.map((o, i) => `<button class="opt ${fb ? (o == x.a ? "ok" : i == pk ? "no" : "") : i == pk ? "sel" : ""}" ${fb ? "disabled" : ""} onclick="sp(${i})">${o}</button>`).join("");
-            else if (x.k == "fill") b = `<p class="big">${x.stem}</p><input id="in" class="inp" value="${val.replace(/"/g, "&quot;")}" ${fb ? "disabled" : ""} autocomplete="off" autocapitalize="off" placeholder="${x.kk == 'trf' || x.kk == 'gn' ? 'Gõ cả câu đã sửa / viết lại' : 'Gõ phần còn thiếu (hoặc cả câu đều được)'}" onkeydown="if(event.key=='Enter')chk()">`;
+            const x = qs[qi], boss = isBoss(), left = quizDeadline ? Math.max(0, quizDeadline - Date.now()) : 0; let b = "";
+            if (x.k == "mc") b = (x.passage ? `<article class="card" style="cursor:default;--c:var(--p);margin:12px 0"><small>READING PASSAGE</small><p>${x.passage}</p></article>` : "") + (x.stem ? `<p class="big">${x.stem}</p>` : "") + x.o.map((o, i) => hiddenOptions.includes(i) ? "" : `<button class="opt ${fb ? (o == x.a ? "ok" : i == pk ? "no" : "") : i == pk ? "sel" : ""}" ${fb ? "disabled" : ""} aria-pressed="${i === pk}" onclick="sp(${i})">${o}</button>`).join("");
+            else if (x.k == "fill") b = `<p class="big">${x.stem}</p><input id="in" class="inp" aria-label="Nhập câu trả lời" value="${val.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;")}" ${fb ? "disabled" : ""} autocomplete="off" autocapitalize="off" placeholder="${x.kk == 'trf' || x.kk == 'gn' ? 'Gõ cả câu đã sửa / viết lại' : 'Gõ phần còn thiếu (hoặc cả câu đều được)'}" onkeydown="if(event.key=='Enter')chk()">`;
             else if (x.k == "match") b = `<p class="mu">Chọn một câu, rồi chọn thì tương ứng ở dưới.</p>` + x.L.map((q, i) => `<button class="opt ${fb ? (mp[i] == x.a[i] ? "ok" : "no") : i == ms ? "sel" : ""}" ${fb ? "disabled" : ""} onclick="mS(${i})">${q}${mp[i] >= 0 ? `<br><b>→ ${x.R[mp[i]]}</b>` : ""}${fb && mp[i] != x.a[i] ? `<br><small>Đúng: ${x.R[x.a[i]]}</small>` : ""}</button>`).join("") + `<div>${x.R.map((r, j) => `<button class="chip" ${fb || mp.includes(j) ? "disabled" : ""} onclick="mR(${j})">${r}</button>`).join("")}</div>`;
             else b = `<div class="ans">${bd.map(i => `<button class="chip" onclick="un(${i})">${x.tk[i]}</button>`).join("")}</div>` + pl.map(i => `<button class="chip" onclick="ad(${i})">${x.tk[i]}</button>`).join("");
-            const f = fb ? `<div class="fb ${fb.g ? "" : "no"}"><b>${fb.g ? "✅ Chính xác! +10 XP" : "❌ Chưa đúng."}</b> Đáp án: <i>${x.show}</i>${fb.g ? "" : `<div class="tutor"><span>🤖</span><div><b>Gia sư giải thích</b><br>${x.ex}</div></div>`}</div>` : "";
-            return `<p class="mu">${mode == "lvl" ? `Level ${ui.l} · ${TN[ui.t][1]}` : { rev: "Ôn tập thông minh", mt: "Match the Tense", trf: "Sentence Transformation", gn: "Grammar Nightmare · C1/C2", read: "Reading: The Hidden Meaning · C1/C2", c2: "C2 Final Examination" }[mode]} · Câu ${qi + 1}/${qs.length}</p>${bar((qi + (fb ? 1 : 0)) / qs.length * 100)}<h3>${x.st}</h3>${b}${f}${hint && !fb ? `<p class="mu">${hint}</p>` : ""}<p>${fb ? `<button class="btn" onclick="nx()">${qi + 1 < qs.length ? "Câu tiếp theo" : "Xem kết quả"}</button>` : `<button class="btn" onclick="chk()">Kiểm tra</button>`}</p>`
+            const f = fb ? `<div class="fb ${fb.g ? "" : "no"}"><b>${fb.timedOut ? "⏰ Hết giờ!" : fb.g ? "✅ Chính xác! +10 XP" : "❌ Chưa đúng."}</b> Đáp án: <i>${x.show}</i>${x.ex ? `<div class="tutor"><span>🤖</span><div><b>Gia sư giải thích</b><br>${x.ex}</div></div>` : ""}</div>` : "";
+            const modeName = mode == "lvl" ? `Level ${ui.l} · ${TN[ui.t][1]}` : { rev: "Ôn tập thông minh", mt: "Match the Tense", trf: "Sentence Transformation", gn: "Grammar Nightmare · C1/C2", read: "Reading: The Hidden Meaning · C1/C2", c2: "C2 Final Examination" }[mode];
+            const timer = boss && !fb ? `<span class="boss-clock" id="qtime">${(left / 1000).toFixed(1)}s</span>` : "";
+            const tools = !fb && x.k === "mc" && !boss ? `<button class="chip" onclick="useHint()">🧯 50:50 · 15 xu</button>` : "";
+            return `<div class="meta-row"><p class="mu">${modeName} · Câu ${qi + 1}/${qs.length}</p>${timer}</div>${bar((qi + (fb ? 1 : 0)) / qs.length * 100)}${boss && !fb ? `<p class="mu">👹 Cửa ải Boss: trả lời trong ${ui.l % 100 === 0 ? 14 : 18} giây mỗi câu. Sai một câu sẽ mất combo.</p>` : ""}<div class="stat-line"><span class="stat-pill">🔥 Combo: ${st.combo || 0}</span><span class="stat-pill coin">🪙 ${st.coins || 0} xu</span></div><h3>${x.st}</h3>${b}${tools ? `<div class="quiz-tools">${tools}</div>` : ""}${f}${hint && !fb ? `<p class="mu" role="status">${hint}</p>` : ""}<p>${fb ? `<button class="btn" onclick="nx()">${qi + 1 < qs.length ? "Câu tiếp theo" : "Xem kết quả"}</button>` : `<button class="btn" onclick="chk()">Kiểm tra</button>`}</p>`
         }
         function resv() {
             const r = res, lv = mode == "lvl", conf = r.pass ? Array.from({ length: 22 }, (_, i) => '<i class="cf" style="--x:' + (i * 47 % 100) + '%;--d:' + (i % 7) * .12 + 's;--k:' + ["#FFB84C", "#6C63FF", "#45C486", "#FF8B7B", "#5B8DEF"][i % 5] + '"></i>').join("") : "";
-            if (mode == "c2") return `<div class="card res" style="cursor:default;--c:var(--p)">${conf}<h2>🏆 C2 Final Examination</h2><p><b>${r.p}%</b> (${ok}/${qs.length} câu đúng) · +${r.xp} XP</p><p class="big">Xếp hạng: <b>${r.rank}</b></p><p>${r.c2new ? "🌟 Kỷ lục cá nhân mới!" : "Kỷ lục cá nhân:"} <b>${r.c2best}%</b> · Đã thi ${st.c2.runs} lượt.</p>${r.nw.map(a => `<p>🏅 Thành tựu mới: <b>${a[1]}</b></p>`).join("")}<button class="btn go" onclick="startC2()">Thi lại</button> <button class="btn" onclick="go('games')">Chế độ chơi</button></div>`;
+            if (mode == "c2") return `<div class="card res" style="cursor:default;--c:var(--p)">${conf}<h2>🏆 C2 Final Examination</h2><p><b>${r.p}%</b> (${ok}/${qs.length} câu đúng) · +${r.xp} XP${r.bonusCoins ? ` · +${r.bonusCoins} xu` : ""}</p><p class="big">Xếp hạng: <b>${r.rank}</b></p><p>${r.c2new ? "🌟 Kỷ lục cá nhân mới!" : "Kỷ lục cá nhân:"} <b>${r.c2best}%</b> · Đã thi ${st.c2.runs} lượt.</p>${r.nw.map(a => `<p>🏅 Thành tựu mới: <b>${a[1]}</b></p>`).join("")}<button class="btn go" onclick="startC2()">Thi lại</button> <button class="btn" onclick="go('games')">Chế độ chơi</button></div>`;
             const replay = { mt: "startMT()", trf: "startTRF()", gn: "startGN()", read: "startReading()" }[mode] || "go('games')";
-            return `<div class="card res" style="cursor:default;--c:${r.pass ? "var(--ok)" : "var(--bad)"}">${conf}<h2>${lv && !r.pass ? "💪 Gần được rồi, thử lại nhé!" : "🎉 Hoàn thành!"}</h2><p><b>${r.p}%</b> (${ok}/${qs.length} câu đúng) · +${r.xp} XP</p>${r.nw.map(a => `<p>🏅 Thành tựu mới: <b>${a[1]}</b></p>`).join("")}${lv ? `<button class="btn" onclick="open_(${ui.t},${ui.l})">Làm lại</button> ${god && ui.l > 1 ? `<button class="btn" onclick="open_(${ui.t},${ui.l - 1})">Level trước</button> ` : ""}${(r.pass || god) && ui.l < 500 ? `<button class="btn" onclick="open_(${ui.t},${ui.l + 1})">Level tiếp theo</button> ` : ""}<button class="btn" onclick="go('map',{t:${ui.t},s:${Math.floor((ui.l - 1) / 100)}})">Bản đồ</button>` : mode == "rev" ? `<button class="btn" onclick="go('review')">Về trang ôn tập</button>` : `<button class="btn" onclick="${replay}">Chơi lại</button> <button class="btn" onclick="go('games')">Chế độ chơi</button>`}</div>`
+            return `<div class="card res" style="cursor:default;--c:${r.pass ? "var(--ok)" : "var(--bad)"}">${conf}<h2>${lv && !r.pass ? "💪 Gần được rồi, thử lại nhé!" : "🎉 Hoàn thành!"}</h2><p><b>${r.p}%</b> (${ok}/${qs.length} câu đúng) · +${r.xp} XP${r.bonusCoins ? ` · +${r.bonusCoins} xu` : ""}</p>${r.nw.map(a => `<p>🏅 Thành tựu mới: <b>${a[1]}</b></p>`).join("")}${lv ? `<button class="btn" onclick="open_(${ui.t},${ui.l})">Làm lại</button> ${god && ui.l > 1 ? `<button class="btn" onclick="open_(${ui.t},${ui.l - 1})">Level trước</button> ` : ""}${(r.pass || god) && ui.l < 500 ? `<button class="btn" onclick="open_(${ui.t},${ui.l + 1})">Level tiếp theo</button> ` : ""}<button class="btn" onclick="go('map',{t:${ui.t},s:${Math.floor((ui.l - 1) / 100)}})">Bản đồ</button>` : mode == "rev" ? `<button class="btn" onclick="go('review')">Về trang ôn tập</button>` : `<button class="btn" onclick="${replay}">Chơi lại</button> <button class="btn" onclick="go('games')">Chế độ chơi</button>`}</div>`
         }
         function rev() { return `<h2>🔁 Ôn tập thông minh</h2><p>Những câu bạn làm sai được lưu lại. Trả lời đúng một câu thì câu đó rời khỏi danh sách.</p><p><b>${st.w.length}</b> câu đang chờ ôn.</p>${st.w.length ? `<button class="btn" onclick="startRev()">Ôn ${Math.min(8, st.w.length)} câu</button>` : `<p class="mu">Chưa có câu nào. Hãy làm một level để bắt đầu.</p>`}` }
-        function prof() { const n = tot(); return `<h2>🧑‍🎓 Hồ sơ của bạn</h2><p>Nickname: <b>${esc(user)}</b>${god ? " · 👑 Chế độ God" : ""}</p><div class="grid3"><div class="card" style="cursor:default"><h3>Cấp ${Math.floor(st.xp / 200) + 1}</h3><small>${st.xp} XP</small></div><div class="card" style="cursor:default"><h3>🔥 ${st.streak} ngày</h3><small>Chuỗi dài nhất: ${st.best} ngày</small></div><div class="card" style="cursor:default"><h3>${n}/6.000 level</h3><small>${(n / 60).toFixed(1)}% tiến độ</small></div><div class="card" style="cursor:default"><h3>⏱ ${st.ta.best} câu</h3><small>Kỷ lục Time Attack (${st.ta.runs} lượt)</small></div></div><p><button class="btn" onclick="cont()">Tiếp tục bài học gần nhất</button></p><h3>Tiến độ từng thì</h3>${TN.map((T, i) => `<div>${T[0]} (${T[1]}) · ${st.c[i]}/500${bar(st.c[i] / 5, GC[i >> 2])}</div>`).join("")}<h3>Thành tựu</h3><div class="grid3">${ACH.map(a => `<div class="card" style="cursor:default;opacity:${a[2]() ? 1 : .45}">${a[0]} <b>${a[1]}</b><br><small>${a[3]}</small></div>`).join("")}</div><h3>Lịch sử học tập</h3>${st.h.slice(-8).reverse().map(h => `<div>${h.d} · ${TN[h.t][1]} · level ${h.l} · ${h.p}%</div>`).join("") || `<small>Chưa có lịch sử.</small>`}<p><small>Dữ liệu được lưu trên trình duyệt này.</small></p>` }
+        function prof() { const n = tot(); return `<h2>🧑‍🎓 Hồ sơ của bạn</h2><p>Nickname: <b>${esc(user)}</b>${god ? " · 👑 Chế độ God" : ""}</p><div class="grid3"><div class="card" style="cursor:default"><h3>Cấp ${Math.floor(st.xp / 200) + 1}</h3><small>${st.xp} XP</small></div><div class="card" style="cursor:default"><h3>🔥 ${st.streak} ngày</h3><small>Chuỗi dài nhất: ${st.best} ngày</small></div><div class="card" style="cursor:default"><h3>${n}/6.000 level</h3><small>${(n / 60).toFixed(1)}% tiến độ</small></div><div class="card" style="cursor:default"><h3>⏱ ${st.ta.best} câu</h3><small>Kỷ lục Time Attack (${st.ta.runs} lượt)</small></div><div class="card" style="cursor:default"><h3>🔥 ${st.comboBest || 0}</h3><small>Combo tốt nhất</small></div><div class="card" style="cursor:default"><h3>🎯 ${st.dailyClaims || 0}</h3><small>Nhiệm vụ đã nhận thưởng</small></div></div><div class="stat-line"><span class="stat-pill">✅ ${st.correct || 0} câu đúng</span><span class="stat-pill">❌ ${st.mistakes || 0} câu sai</span><span class="stat-pill">👹 ${st.bosses || 0} Boss đã hạ</span><span class="stat-pill">🪙 ${st.coins || 0} xu</span></div><p><button class="btn" onclick="cont()">Tiếp tục bài học gần nhất</button></p><h3>Tiến độ từng thì</h3>${TN.map((T, i) => `<div>${T[0]} (${T[1]}) · ${st.c[i]}/500${bar(st.c[i] / 5, GC[i >> 2])}</div>`).join("")}<h3>Thành tựu</h3><div class="grid3">${ACH.map(a => `<div class="card" style="cursor:default;opacity:${a[2]() ? 1 : .45}">${a[0]} <b>${a[1]}</b><br><small>${a[3]}</small></div>`).join("")}</div><h3>Lịch sử học tập</h3>${st.h.slice(-8).reverse().map(h => `<div>${h.d} · ${TN[h.t][1]} · level ${h.l} · ${h.p}%</div>`).join("") || `<small>Chưa có lịch sử.</small>`}${backupBox()}<p><small>Google Sign-In hiện chỉ giúp nhận diện hồ sơ trên trình duyệt; ứng dụng chưa có máy chủ để đồng bộ tiến độ tự động giữa các thiết bị.</small></p>` }
         function render() {
             document.querySelector("nav").classList.toggle("lo", !user); document.body.classList.toggle("ta-mode", ui.v === "ta");
             $("who").innerHTML = user ? `<span class="nick">${god ? "👑" : "👤"} ${esc(user)}${god ? "<em>GOD</em>" : ""}</span><button onclick="logout()">Đăng xuất</button>` : "";
             if (!user) { $("app").innerHTML = login(); const n = $("nick"); if (n) n.focus(); updM(); sync(); gLoad(); return }
-            const v = ui.v, nk = { home: "home", group: "path", path: "path", map: "path", learn: "path", quiz: mode == "lvl" ? "path" : mode == "rev" ? "review" : "games", res: mode == "lvl" ? "path" : mode == "rev" ? "review" : "games", set: "set", support: "support", games: "games", tahome: "games", ta: "games", taend: "games", review: "review", prof: "prof" }; document.querySelectorAll("nav button[data-k]").forEach(b => b.classList.toggle("on", b.dataset.k == nk[v])); $("app").innerHTML = v == "home" ? home() : v == "path" ? godPanel(st.cur ? st.cur.t : 0, st.cur ? st.cur.l : 1) + [0, 1, 2].map(g => group(g)).join("") : v == "group" ? godPanel(ui.g * 4, Math.min(500, st.c[ui.g * 4] + 1)) + group(ui.g) : v == "map" ? map() : v == "learn" ? learn() : v == "quiz" ? quiz() : v == "res" ? resv() : v == "prof" ? prof() : v == "games" ? games() : v == "tahome" ? taHome() : v == "ta" ? taView() : v == "taend" ? taEndView() : v == "set" ? setView() : v == "support" ? supportView() : rev(); updM(); sync()
+            const v = ui.v, nk = { home: "home", group: "path", path: "path", map: "path", learn: "path", quiz: mode == "lvl" ? "path" : mode == "rev" ? "review" : "games", res: mode == "lvl" ? "path" : mode == "rev" ? "review" : "games", set: "set", support: "support", games: "games", tahome: "games", ta: "games", taend: "games", review: "review", prof: "prof" }; document.querySelectorAll("nav button[data-k]").forEach(b => { const active = b.dataset.k == nk[v]; b.classList.toggle("on", active); if (active) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current") }); $("app").innerHTML = v == "home" ? home() : v == "path" ? godPanel(st.cur ? st.cur.t : 0, st.cur ? st.cur.l : 1) + `<h2>🗺️ Lộ trình 12 thì</h2><div class="path-search"><input class="inp" type="search" aria-label="Tìm thì tiếng Anh" placeholder="Tìm theo tên thì, công thức hoặc mô tả..." oninput="filterTenses(this.value)"></div>` + [0, 1, 2].map(g => group(g)).join("") : v == "group" ? godPanel(ui.g * 4, Math.min(500, st.c[ui.g * 4] + 1)) + group(ui.g) : v == "map" ? map() : v == "learn" ? learn() : v == "quiz" ? quiz() : v == "res" ? resv() : v == "prof" ? prof() : v == "games" ? games() : v == "tahome" ? taHome() : v == "ta" ? taView() : v == "taend" ? taEndView() : v == "set" ? setView() : v == "support" ? supportView() : rev(); updM(); sync()
         }
         const GNN = [
             ["Had I knew about the consequences, I would never have agreed to participate.", "Had I known about the consequences, I would never have agreed to participate.", "Đảo ngữ điều kiện loại 3 dùng <b>Had + S + V3</b>; sau <i>had</i> phải là <i>known</i>, không phải <i>knew</i>."],
@@ -2051,7 +2304,7 @@ ${godPanel(st.cur ? st.cur.t : 0, st.cur ? st.cur.l : 1)}
         function taStart() { taStop(); ta = { iv: 0, on: 1, t0: Date.now(), sc: 0, bad: 0, n: 0, q: null, msg: "", lv: 1, maxl: 1, base: Date.now() % 100000 }; taQ(); ui = { v: "ta" }; render(); startTaMusic(); ta.iv = setInterval(taTick, 250) }
         function taLeft() { return Math.max(0, 60 - (Date.now() - ta.t0) / 1000) }
         function taTick() { const l = taLeft(), a = $("tmr"), b = $("tbar"); if (a) a.textContent = Math.ceil(l); if (b) b.style.width = l / 60 * 100 + "%"; if (l <= 0) taEnd() }
-        function taPick(i) { const x = ta.q; if (!ta.on || !x || taLeft() <= 0) return; const g = x.o[i] == x.a; g ? ta.sc++ : ta.bad++; sfx(g ? "ok" : "bad"); ta.maxl = Math.max(ta.maxl, ta.lv); ta.msg = g ? "✅ Đúng!" : "❌ Sai · đáp án: " + x.show; ta.n++; taQ(); render() }
+        function taPick(i) { const x = ta.q; if (!ta.on || !x || taLeft() <= 0) return; const g = x.o[i] == x.a; g ? ta.sc++ : ta.bad++; trackAnswer(g); sfx(g ? "ok" : "bad"); ta.maxl = Math.max(ta.maxl, ta.lv); ta.msg = g ? "✅ Đúng!" : "❌ Sai · đáp án: " + x.show; ta.n++; save(); taQ(); render() }
         function taEnd() { if (!ta.on) return; taStop(); st.ta.runs++; ta.nb = ta.sc > st.ta.best && ta.sc > 0; if (ta.nb) st.ta.best = ta.sc; ta.xp = ta.sc * 5; st.xp += ta.xp; tick(); save(); ui = { v: "taend" }; sfx("end"); render() }
         const lvName = l => ["A1", "A2", "B1", "C1", "C2"][Math.min(4, (l - 1) / 100 | 0)];
         function taHome() { return `<h2>⏱ Time Attack</h2><div class="card" style="cursor:default"><p>Bạn có <b>60 giây</b> để trả lời càng nhiều câu càng tốt. Câu hỏi được chọn ngẫu nhiên và <b>khó dần theo thời gian</b>, từ A1 đến C2. Chọn đáp án là chuyển câu ngay.</p><p>Kỷ lục: <b>${st.ta.best}</b> câu · Đã chơi ${st.ta.runs} lượt · Mỗi câu đúng +5 XP.</p><p class="mu">♫ Nhạc Time Attack sẽ tự phát và lặp lại khi bạn bắt đầu.</p><button class="btn go" onclick="taStart()">BẮT ĐẦU 60 GIÂY</button></div>` }
@@ -2081,7 +2334,7 @@ const googleReady = () =>
         function setView() {
             const sw = [["#6C63FF", "Tím"], ["#5B8DEF", "Xanh dương"], ["#45C486", "Xanh lá"], ["#FF8B7B", "San hô"], ["#E75480", "Hồng"], ["#F59E0B", "Vàng cam"]];
             return `<h2>⚙️ Cài đặt</h2><div class="card" style="cursor:default;--c:var(--p)"><h3>🎨 Giao diện</h3><p>Phong cách:</p><div class="tabs">${[["classic", "🎨 Hiện tại"], ["space", "🌌 Không gian"], ["chess", "♟️ Cờ vua"], ["future", "⚡ Tương lai"]].map(([k, l]) => `<button class="${ST.style == k ? "on" : ""}" onclick="setS('style','${k}')">${l}</button>`).join("")}</div><p class="mu">Không gian có sao và thiên hà; Cờ vua pha gỗ óc chó, ngà và xanh lục; Tương lai dùng kính tối, lưới neon và ánh sáng hologram.</p><p>Chế độ sáng tối:</p><div class="tabs">${[["auto", "Tự động"], ["light", "Sáng"], ["dark", "Tối"]].map(([k, l]) => `<button class="${ST.m == k ? "on" : ""}" onclick="setS('m','${k}')">${l}</button>`).join("")}</div><p>Màu chủ đạo:</p><div>${sw.map(([c, n]) => `<button class="chip sw${ST.c.toLowerCase() == c.toLowerCase() ? " on" : ""}" style="--sc:${c}" title="${n}" aria-label="${n}" onclick="setS('c','${c}')"></button>`).join("")}<label class="chip">Tùy chọn <input type="color" value="${esc(ST.c)}" onchange="setS('c',this.value)"></label></div></div>
-<div class="card" style="cursor:default;margin-top:14px;--c:var(--p)"><h3>🔊 Âm thanh &amp; nhạc</h3><label class="row2"><input type="checkbox" ${ST.sfx ? "checked" : ""} onchange="setS('sfx',this.checked?1:0)"> Âm thanh thao tác, đúng/sai</label><label class="row2">Âm lượng hiệu ứng <input type="range" min="0" max="100" value="${Math.round(ST.sv * 100)}" oninput="setS('sv',this.value/100,1)"></label><label class="row2"><input type="checkbox" ${ST.mus ? "checked" : ""} onchange="setS('mus',this.checked?1:0)"> Nhạc nền theo chế độ</label><label class="row2">Âm lượng nhạc (${Math.round(ST.mv * 100)}%) <input type="range" min="0" max="100" value="${Math.round(ST.mv * 100)}" oninput="setS('mv',this.value/100,1)"></label><button class="btn sm" onclick="sfx('tap')">Nghe thử âm bấm</button> <button class="btn sm" onclick="sfx('ok')">Nghe thử âm đúng</button><p class="mu">Âm bấm áp dụng cho nút, lựa chọn, tab và điều khiển. Nhạc mặc định ở mức 12%. Time Attack phát file timeattack.weba từ GitHub Pages và tự động lặp trong lúc chơi.</p></div>`
+<div class="card" style="cursor:default;margin-top:14px;--c:var(--p)"><h3>🔊 Âm thanh &amp; nhạc</h3><label class="row2"><input type="checkbox" ${ST.sfx ? "checked" : ""} onchange="setS('sfx',this.checked?1:0)"> Âm thanh thao tác, đúng/sai</label><label class="row2">Âm lượng hiệu ứng <input type="range" min="0" max="100" value="${Math.round(ST.sv * 100)}" oninput="setS('sv',this.value/100,1)"></label><label class="row2"><input type="checkbox" ${ST.mus ? "checked" : ""} onchange="setS('mus',this.checked?1:0)"> Nhạc nền theo chế độ</label><label class="row2">Âm lượng nhạc (${Math.round(ST.mv * 100)}%) <input type="range" min="0" max="100" value="${Math.round(ST.mv * 100)}" oninput="setS('mv',this.value/100,1)"></label><button class="btn sm" onclick="sfx('tap')">Nghe thử âm bấm</button> <button class="btn sm" onclick="sfx('ok')">Nghe thử âm đúng</button><p class="mu">Âm bấm áp dụng cho nút, lựa chọn, tab và điều khiển. Nhạc mặc định ở mức 12%. Time Attack phát file timeattack.weba từ GitHub Pages và tự động lặp trong lúc chơi.</p></div>${backupBox()}`
         }
         let AC = null, MG, SG, mcur = "", mstep = 0, nextT = 0;
         function ac() { if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); MG = AC.createGain(); SG = AC.createGain(); MG.connect(AC.destination); SG.connect(AC.destination); vol() } catch (e) { AC = null } } if (AC && AC.state == "suspended") AC.resume(); return AC }
@@ -2138,7 +2391,7 @@ const googleReady = () =>
         function setUser(n, id) {
             n = n.trim(); user = n; uid = id || n.toLowerCase(); god = isGod(n);
             if (rd(key(uid)) === null && !god && rd("t12") !== null && rd("t12_moved") === null) { wr(key(uid), rd("t12")); wr("t12_moved", "1") }
-            st = load(); qs = []; qi = 0; fb = null; res = null; wr("t12_nick", n); id ? wr("t12_uid", id) : rm("t12_uid");
+            st = load(); ensureDaily(); qs = []; qi = 0; fb = null; res = null; wr("t12_nick", n); id ? wr("t12_uid", id) : rm("t12_uid");
             if (!god && !id) { const a = recent().filter(x => x.toLowerCase() != n.toLowerCase()); a.unshift(n); wr("t12_users", JSON.stringify(a.slice(0, 6))) }
             save()
         }
@@ -2150,7 +2403,7 @@ const googleReady = () =>
             enter(v)
         }
         function loginErr(m, id) { $(id || "lerr").textContent = m }
-        function logout() { taStop(); rm("t12_nick"); rm("t12_uid"); uid = null; user = null; god = false; st = init(); qs = []; qi = 0; fb = null; res = null; ui = { v: "home" }; render(); scrollTo(0, 0) }
+        function logout() { taStop(); stopQuizTimer(); rm("t12_nick"); rm("t12_uid"); uid = null; user = null; god = false; st = init(); qs = []; qi = 0; fb = null; res = null; ui = { v: "home" }; render(); scrollTo(0, 0) }
         function login() { const r = recent(), googleBox = googleReady() ? `<div id="gbtn" style="margin-top:14px;display:flex;justify-content:center"></div><p class="mu" style="margin-top:10px">Lần đầu dùng Google sẽ tự tạo hồ sơ; không có mật khẩu nào được lưu trong trình duyệt.</p>` : `<div class="google-setup"><b>Google Sign-In chưa được kết nối</b><small>Thay <code>GOOGLE_CLIENT_ID</code> bằng Client ID Web của Google Cloud, rồi thêm URL triển khai (hoặc <code>http://localhost</code>) vào Authorized JavaScript origins.</small></div>`; return `<section class="card login"><div class="mw">${MAS}</div><h2>Chào mừng bạn!</h2><p>Nhập nickname để lưu tiến độ học riêng trên thiết bị này.</p><input id="nick" class="inp" maxlength="20" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Nickname" placeholder="Nickname của bạn" onkeydown="if(event.key=='Enter')doLogin()"><div id="lerr" class="err" role="alert"></div><button class="btn go" onclick="doLogin()">VÀO HỌC</button>${r.length ? `<div class="recent"><small>Đã học trên máy này:</small><br>${r.map(n => `<button class="chip" data-n="${esc(n)}" onclick="enter(this.dataset.n)">${esc(n)}</button>`).join("")}</div>` : ""}<div class="or"><span>hoặc tiếp tục với Google</span></div><div id="lerr2" class="err" role="alert"></div>${googleBox}</section>` }
         function supportView() { return `<section class="card support-card" style="cursor:default"><div style="font-size:3rem;line-height:1">❤️</div><h2 style="color:inherit;margin:8px 0">Ủng hộ mình nhé!</h2><div class="bankno">VietcomBank: 0151000595704 – PHẠM THỊ THANH NHÃ</div><p>Mỗi sự ủng hộ là động lực lớn giúp mình phát triển !</p><p><button class="chip" id="cpb" onclick="copyBank()">📋 Sao chép số tài khoản</button></p></section>` }
         function copyBank() { const t = "0151000595704", b = $("cpb"), ok = () => { if (b) { b.textContent = "✅ Đã sao chép"; setTimeout(() => { b.textContent = "📋 Sao chép số tài khoản" }, 1800) } }; const fb = () => { const a = document.createElement("textarea"); a.value = t; a.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(a); a.select(); try { document.execCommand("copy"); ok() } catch (e) { } a.remove() }; try { navigator.clipboard.writeText(t).then(ok, fb) } catch (e) { fb() } }
