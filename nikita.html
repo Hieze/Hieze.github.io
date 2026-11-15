@@ -1238,87 +1238,10 @@
             filter: brightness(.98)
         }
 
-        /* Visible ASGORE music player: never hide the player off-screen */
-        #ta-music-panel {
-            display: none;
-            max-width: 1000px;
-            margin: 12px auto 0;
-            padding: 0 16px
+        #ta-audio {
+            display: none
         }
 
-        body.ta-mode #ta-music-panel {
-            display: block
-        }
-
-        .ta-music-card {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 12px 14px;
-            background: var(--card);
-            border: 1px solid var(--bd);
-            border-radius: 20px;
-            box-shadow: 0 12px 30px -22px rgba(42, 35, 96, .45)
-        }
-
-        .ta-music-copy {
-            min-width: 0;
-            flex: 1
-        }
-
-        .ta-music-copy strong {
-            display: block;
-            font-family: 'Baloo 2', 'Nunito', sans-serif;
-            font-size: 1.05rem
-        }
-
-        .ta-music-copy small {
-            display: block;
-            line-height: 1.35;
-            margin-top: 2px
-        }
-
-        .ta-music-frame {
-            flex: 0 0 280px;
-            width: 280px;
-            aspect-ratio: 16/9;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #111;
-            box-shadow: 0 5px 16px rgba(0, 0, 0, .16)
-        }
-
-        .ta-music-frame iframe {
-            display: block;
-            width: 100%;
-            height: 100%;
-            border: 0
-        }
-
-        @media(max-width:640px) {
-            #ta-music-panel {
-                margin-top: 8px
-            }
-
-            .ta-music-card {
-                align-items: stretch;
-                flex-direction: column;
-                gap: 8px
-            }
-
-            .ta-music-frame {
-                flex-basis: auto;
-                width: 100%;
-                max-width: 360px;
-                margin: 0 auto
-            }
-
-            .ta-music-copy {
-                text-align: center
-            }
-        }
-
-        /* Space theme — self-contained, no external image needed */
         :root[data-style="space"] {
             --bg: #060817;
             --tx: #f4f6ff;
@@ -1494,8 +1417,7 @@
             }
         }
 
-        :root[data-style="space"] nav,
-        :root[data-style="space"] .ta-music-card {
+        :root[data-style="space"] nav {
             background: rgba(8, 12, 35, .67);
             border-color: rgba(174, 194, 255, .2);
             box-shadow: 0 14px 36px rgba(0, 0, 0, .19);
@@ -1545,7 +1467,6 @@
             box-shadow: 0 0 0 3px rgba(139, 124, 255, .14), 0 8px 22px -14px rgba(139, 124, 255, .85)
         }
 
-        /* Chess theme — a refined walnut, ivory and emerald study room */
         :root[data-style="chess"] {
             --bg: #e8dfca;
             --tx: #1e2a25;
@@ -1658,7 +1579,6 @@
             border-color: #1c513d
         }
 
-        /* Future theme — deep glass panels, neon grid and holographic light */
         :root[data-style="future"] {
             --bg: #050914;
             --tx: #eafaff;
@@ -1738,8 +1658,7 @@
             }
         }
 
-        :root[data-style="future"] nav,
-        :root[data-style="future"] .ta-music-card {
+        :root[data-style="future"] nav {
             background: rgba(3, 14, 33, .76);
             border: 1px solid rgba(91, 229, 255, .18);
             box-shadow: 0 12px 30px -20px rgba(0, 195, 255, .62);
@@ -1794,7 +1713,6 @@
             box-shadow: 0 0 0 3px rgba(0, 200, 255, .12), 0 0 20px -7px #00c8ff
         }
 
-        #ta-music-panel,
         main {
             position: relative;
             z-index: 1
@@ -1825,17 +1743,7 @@
             data-k="support" onclick="go('support')">❤ Ủng hộ</button><button id="mbtn" onclick="togMusic()"
             aria-label="Bật/tắt nhạc nền" title="Bật/tắt nhạc nền">🎵</button><span id="who"></span>
     </nav>
-    <section id="ta-music-panel" aria-label="Nhạc nền Time Attack">
-        <div class="ta-music-card">
-            <div class="ta-music-copy"><strong>♫ 077. ASGORE — Toby Fox</strong><small>Nhạc chính thức từ UNDERTALE
-                    Soundtrack. Nếu trình duyệt chặn phát trong trang, <a
-                        href="https://www.youtube.com/watch?v=42kI2lT0x6U" target="_blank" rel="noopener noreferrer">mở
-                        bản gốc trên YouTube ↗</a>.</small></div>
-            <div class="ta-music-frame"><iframe id="ta-yt-frame" title="077. ASGORE — Toby Fox"
-                    allow="autoplay; encrypted-media; picture-in-picture"
-                    referrerpolicy="strict-origin-when-cross-origin" loading="eager"></iframe></div>
-        </div>
-    </section>
+    <audio id="ta-audio" preload="auto" loop><source src="./timeattack.weba" type="audio/webm"></audio>
     <main id="app"></main>
     <script>
         const TN = [
@@ -1919,8 +1827,6 @@
         const nmv = x => { x = x.toLowerCase().replace(/[’`]/g, "'").replace(/won't/g, "will not").replace(/n't\b/g, " not").replace(/'m\b/g, " am").replace(/'re\b/g, " are").replace(/'ve\b/g, " have").replace(/'ll\b/g, " will").replace(/'d\b/g, " had"); const f = y => y.replace(/[^a-z0-9 ]/g, "").replace(/\blearnt\b/g, "learned").replace(/\s+/g, " ").trim(); return /'s\b/.test(x) ? ["is", "has"].map(z => f(x.replace(/'s\b/g, " " + z))) : [f(x)] };
         const nm = x => nmv(x)[0];
         function init() { return { xp: 0, streak: 0, best: 0, last: "", c: Array(12).fill(0), d: {}, w: [], h: [], cur: null, perf: 0, at: {}, ta: { best: 0, runs: 0 }, c2: { best: 0, runs: 0 } } }
-        // ===== Đăng nhập bằng nickname + chế độ God =====
-        // Đổi nickname God: mở Console, gõ hx("tênmới") (viết thường), rồi dán số vừa ra vào GODH bên dưới.
         const hx = s => { let a = 0xdeadbeef, b = 0x41c6ce57; for (let i = 0, c; i < s.length; i++) { c = s.charCodeAt(i); a = Math.imul(a ^ c, 2654435761); b = Math.imul(b ^ c, 1597334677) } a = Math.imul(a ^ a >>> 16, 2246822507) ^ Math.imul(b ^ b >>> 13, 3266489909); b = Math.imul(b ^ b >>> 16, 2246822507) ^ Math.imul(a ^ a >>> 13, 3266489909); return 4294967296 * (2097151 & b) + (a >>> 0) };
         const GODH = 4417883182058761;
         const isGod = n => hx(String(n).trim().toLowerCase()) === GODH;
@@ -1988,8 +1894,8 @@
             return x
         }
         const goal = l => l <= 20 ? "làm quen khái niệm cơ bản" : l <= 50 ? "nhận biết cấu trúc ngữ pháp" : l <= 100 ? "xây dựng câu đơn giản" : l <= 200 ? "áp dụng công thức vào nhiều tình huống" : l <= 300 ? "phân tích ngữ cảnh và chọn cấu trúc" : l <= 400 ? "xử lý câu phức tạp hơn" : "thử thách tổng hợp, kiểm tra độ thành thạo";
-        function taStop() { if (ta.iv) { clearInterval(ta.iv); ta.iv = 0 } ta.on = 0 }
-        function go(v, p) { if (ui.v === "ta" && v !== "ta") stopTaMusic(); taStop(); ui = Object.assign({ v }, p); render(); scrollTo(0, 0) }
+        function taStop() { if (ta.iv) { clearInterval(ta.iv); ta.iv = 0 } ta.on = 0; stopTaMusic() }
+        function go(v, p) { taStop(); ui = Object.assign({ v }, p); render(); scrollTo(0, 0) }
         function focusIn() { const i = $("in"); if (i && i.focus) i.focus() }
         document.addEventListener("keydown", e => { if (e.key == "Enter" && !e.repeat && ui.v == "quiz" && fb && e.target.id != "in" && e.target.tagName != "BUTTON") { e.preventDefault(); nx() } });
         function mkQs(t, l, n, at) { const o = [], u = {}, K = sh(R(at * 31 + l * 7 + t), kinds(l)); for (let i = 1, j = 0; o.length < n && i < 900; i++) { const x = gen(t, (at * 1000 + l) * 1000 + i, l, K[j % K.length]); if (!u[x.show]) { u[x.show] = 1; o.push(x); j++ } } return o }
@@ -2066,7 +1972,6 @@ ${godPanel(st.cur ? st.cur.t : 0, st.cur ? st.cur.l : 1)}
             if (!user) { $("app").innerHTML = login(); const n = $("nick"); if (n) n.focus(); updM(); sync(); gLoad(); return }
             const v = ui.v, nk = { home: "home", group: "path", path: "path", map: "path", learn: "path", quiz: mode == "lvl" ? "path" : mode == "rev" ? "review" : "games", res: mode == "lvl" ? "path" : mode == "rev" ? "review" : "games", set: "set", support: "support", games: "games", tahome: "games", ta: "games", taend: "games", review: "review", prof: "prof" }; document.querySelectorAll("nav button[data-k]").forEach(b => b.classList.toggle("on", b.dataset.k == nk[v])); $("app").innerHTML = v == "home" ? home() : v == "path" ? godPanel(st.cur ? st.cur.t : 0, st.cur ? st.cur.l : 1) + [0, 1, 2].map(g => group(g)).join("") : v == "group" ? godPanel(ui.g * 4, Math.min(500, st.c[ui.g * 4] + 1)) + group(ui.g) : v == "map" ? map() : v == "learn" ? learn() : v == "quiz" ? quiz() : v == "res" ? resv() : v == "prof" ? prof() : v == "games" ? games() : v == "tahome" ? taHome() : v == "ta" ? taView() : v == "taend" ? taEndView() : v == "set" ? setView() : v == "support" ? supportView() : rev(); updM(); sync()
         }
-        // ===== Chế độ chơi: Match the Tense · Sentence Transformation · Time Attack =====
         const GNN = [
             ["Had I knew about the consequences, I would never have agreed to participate.", "Had I known about the consequences, I would never have agreed to participate.", "Đảo ngữ điều kiện loại 3 dùng <b>Had + S + V3</b>; sau <i>had</i> phải là <i>known</i>, không phải <i>knew</i>."],
             ["Neither the manager nor the assistants was aware of how many data has been omitted.", "Neither the manager nor the assistants were aware of how much data had been omitted.", "Với <b>neither...nor</b>, động từ hòa hợp với chủ ngữ gần nhất: <i>assistants were</i>. <i>Data</i> không đếm được trong ngữ cảnh này: <i>much data</i>; việc bị bỏ sót xảy ra trước quá khứ nên dùng <i>had been omitted</i>."],
@@ -2147,15 +2052,12 @@ ${godPanel(st.cur ? st.cur.t : 0, st.cur ? st.cur.l : 1)}
         function taLeft() { return Math.max(0, 60 - (Date.now() - ta.t0) / 1000) }
         function taTick() { const l = taLeft(), a = $("tmr"), b = $("tbar"); if (a) a.textContent = Math.ceil(l); if (b) b.style.width = l / 60 * 100 + "%"; if (l <= 0) taEnd() }
         function taPick(i) { const x = ta.q; if (!ta.on || !x || taLeft() <= 0) return; const g = x.o[i] == x.a; g ? ta.sc++ : ta.bad++; sfx(g ? "ok" : "bad"); ta.maxl = Math.max(ta.maxl, ta.lv); ta.msg = g ? "✅ Đúng!" : "❌ Sai · đáp án: " + x.show; ta.n++; taQ(); render() }
-        function taEnd() { if (!ta.on) return; taStop(); stopTaMusic(); st.ta.runs++; ta.nb = ta.sc > st.ta.best && ta.sc > 0; if (ta.nb) st.ta.best = ta.sc; ta.xp = ta.sc * 5; st.xp += ta.xp; tick(); save(); ui = { v: "taend" }; sfx("end"); render() }
+        function taEnd() { if (!ta.on) return; taStop(); st.ta.runs++; ta.nb = ta.sc > st.ta.best && ta.sc > 0; if (ta.nb) st.ta.best = ta.sc; ta.xp = ta.sc * 5; st.xp += ta.xp; tick(); save(); ui = { v: "taend" }; sfx("end"); render() }
         const lvName = l => ["A1", "A2", "B1", "C1", "C2"][Math.min(4, (l - 1) / 100 | 0)];
-        function taHome() { return `<h2>⏱ Time Attack</h2><div class="card" style="cursor:default"><p>Bạn có <b>60 giây</b> để trả lời càng nhiều câu càng tốt. Câu hỏi được chọn ngẫu nhiên và <b>khó dần theo thời gian</b>, từ A1 đến C2. Chọn đáp án là chuyển câu ngay.</p><p>Kỷ lục: <b>${st.ta.best}</b> câu · Đã chơi ${st.ta.runs} lượt · Mỗi câu đúng +5 XP.</p><p class="mu">🎵 Nhạc Time Attack: <a href="https://www.youtube.com/watch?v=42kI2lT0x6U" target="_blank" rel="noopener noreferrer">077. ASGORE — Toby Fox</a> (cần Internet)</p><button class="btn go" onclick="taStart()">BẮT ĐẦU 60 GIÂY</button></div>` }
-        function taView() { const x = ta.q, l = taLeft(); return `<div class="tahd"><b>⏱ <span id="tmr">${Math.ceil(l)}</span>s</b><span>Đúng: <b>${ta.sc}</b></span></div><p class="mu">♫ 077. ASGORE · Toby Fox</p><div class="bar"><i id="tbar" style="width:${l / 60 * 100}%;background:var(--s)"></i></div><p class="mu">Câu ${ta.n + 1} · độ khó ${lvName(ta.lv)}${ta.msg ? ` · ${ta.msg}` : ""}</p><h3>${x.st}</h3>${x.stem ? `<p class="big">${x.stem}</p>` : ""}${x.o.map((o, i) => `<button class="opt" onclick="taPick(${i})">${o}</button>`).join("")}` }
+        function taHome() { return `<h2>⏱ Time Attack</h2><div class="card" style="cursor:default"><p>Bạn có <b>60 giây</b> để trả lời càng nhiều câu càng tốt. Câu hỏi được chọn ngẫu nhiên và <b>khó dần theo thời gian</b>, từ A1 đến C2. Chọn đáp án là chuyển câu ngay.</p><p>Kỷ lục: <b>${st.ta.best}</b> câu · Đã chơi ${st.ta.runs} lượt · Mỗi câu đúng +5 XP.</p><p class="mu">♫ Nhạc Time Attack sẽ tự phát và lặp lại khi bạn bắt đầu.</p><button class="btn go" onclick="taStart()">BẮT ĐẦU 60 GIÂY</button></div>` }
+        function taView() { const x = ta.q, l = taLeft(); return `<div class="tahd"><b>⏱ <span id="tmr">${Math.ceil(l)}</span>s</b><span>Đúng: <b>${ta.sc}</b></span></div><p class="mu" id="ta-audio-status">♫ Nhạc Time Attack · đang phát lặp</p><div class="bar"><i id="tbar" style="width:${l / 60 * 100}%;background:var(--s)"></i></div><p class="mu">Câu ${ta.n + 1} · độ khó ${lvName(ta.lv)}${ta.msg ? ` · ${ta.msg}` : ""}</p><h3>${x.st}</h3>${x.stem ? `<p class="big">${x.stem}</p>` : ""}${x.o.map((o, i) => `<button class="opt" onclick="taPick(${i})">${o}</button>`).join("")}` }
         function taEndView() { const t = ta.sc + ta.bad; return `<div class="card res" style="cursor:default;--c:var(--ok)"><h2>⏱ Hết giờ!</h2><p><b>${ta.sc}</b> câu đúng / ${t} câu · chính xác ${t ? Math.round(ta.sc / t * 100) : 0}%</p><p>Độ khó cao nhất đạt được: <b>${lvName(ta.maxl)}</b> · +${ta.xp} XP</p>${ta.nb ? `<p>🏅 <b>Kỷ lục mới!</b></p>` : `<p class="mu">Kỷ lục hiện tại: ${st.ta.best} câu</p>`}<button class="btn" onclick="taStart()">Chơi lại</button> <button class="btn" onclick="go('games')">Chế độ chơi</button></div>` }
 
-        // ===== Đăng nhập Google thật (Google Identity Services) =====
-        // Tạo OAuth 2.0 Client ID loại "Web application" trong Google Cloud Console, rồi thay giá trị dưới đây.
-        // Client ID là thông tin công khai; KHÔNG dán client secret vào tệp HTML.
        const GOOGLE_CLIENT_ID = "264761779796-31gic7vh1n1kr7c1bijvlcn72dihtlqt.apps.googleusercontent.com";
 
 const googleReady = () =>
@@ -2166,7 +2068,6 @@ const googleReady = () =>
         function handleGoogleCredential(response) { try { const profile = decodeGoogleCredential(response.credential || ""); if (!profile.sub || !profile.email_verified) throw Error("Unverified Google account"); enter(cleanName(profile.name || profile.email.split("@")[0]), "google:" + profile.sub) } catch (e) { loginErr("Không thể xác minh phiên Google. Hãy thử lại.", "lerr2") } }
         function gLoad() { if (!googleReady()) return; if (window.google && google.accounts) return gBtn(); if (document.getElementById("google-gsi")) return; const sc = document.createElement("script"); sc.id = "google-gsi"; sc.src = "https://accounts.google.com/gsi/client"; sc.async = true; sc.onload = gBtn; sc.onerror = () => loginErr("Không tải được Google Sign-In. Kiểm tra kết nối mạng.", "lerr2"); document.head.appendChild(sc) }
         function gBtn() { const d = $("gbtn"); if (!d || !window.google || !googleReady()) return; try { google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleGoogleCredential, auto_select: false, cancel_on_tap_outside: true }); d.replaceChildren(); google.accounts.id.renderButton(d, { theme: ST.style === "space" ? "filled_black" : "outline", size: "large", shape: "pill", text: "continue_with", locale: "vi", width: 300 }) } catch (e) { loginErr("Google Sign-In chưa được cấu hình đúng tên miền / Client ID.", "lerr2") } }
-        // ===== Cài đặt: giao diện · hiệu ứng nút · âm thanh · nhạc nền =====
         const DS = { c: "#6C63FF", m: "auto", style: "classic", sfx: 1, sv: .7, mus: 1, mv: .12 };
         let ST = Object.assign({}, DS), musicLevelMigrated = false;
         try { const saved = JSON.parse(rd("t12_set")); if (saved && typeof saved === "object") { Object.assign(ST, saved); if (Number(saved.mv) === .35) { ST.mv = DS.mv; musicLevelMigrated = true } } } catch (e) { }
@@ -2175,17 +2076,16 @@ const googleReady = () =>
         const mixc = (h, t, a) => "#" + [1, 3, 5].map(i => { const n = parseInt(h.slice(i, i + 2), 16); return Math.round(n + (t - n) * a).toString(16).padStart(2, "0") }).join("");
         function applyTheme() { const r = document.documentElement, c = /^#[0-9a-f]{6}$/i.test(ST.c) ? ST.c : DS.c; if (!["classic", "space", "chess", "future"].includes(ST.style)) ST.style = DS.style; r.dataset.style = ST.style; r.style.setProperty("--p", c); r.style.setProperty("--pd", mixc(c, 0, .28)); r.style.setProperty("--pl", mixc(c, 255, .3)); ST.m == "auto" ? r.removeAttribute("data-theme") : r.setAttribute("data-theme", ST.m) }
         const updM = () => { const b = $("mbtn"); if (b) b.textContent = ST.mus ? "🎵" : "🔇" };
-        function setS(k, v, nr) { if (k == "mv" || k == "sv") v = Math.max(0, Math.min(1, Number(v) || 0)); if (k == "style" && !["classic", "space", "chess", "future"].includes(v)) v = DS.style; ST[k] = v; saveS(); applyTheme(); vol(); if (k == "mus") { mcur = ""; if (ui.v == "ta") { if (ST.mus) startTaMusic(); else stopTaMusic() } } if (k == "mv" && ui.v == "ta" && ST.mus) youtubeCommand("setVolume", [Math.round(ST.mv * 100)]); sync(); updM(); if (!nr) render() }
+        function setS(k, v, nr) { if (k == "mv" || k == "sv") v = Math.max(0, Math.min(1, Number(v) || 0)); if (k == "style" && !["classic", "space", "chess", "future"].includes(v)) v = DS.style; ST[k] = v; saveS(); applyTheme(); vol(); if (k == "mus") { mcur = ""; if (ui.v == "ta") { if (ST.mus) startTaMusic(); else pauseTaMusic() } } sync(); updM(); if (!nr) render() }
         function togMusic() { setS("mus", ST.mus ? 0 : 1, 1); ac(); vol(); sync() }
         function setView() {
             const sw = [["#6C63FF", "Tím"], ["#5B8DEF", "Xanh dương"], ["#45C486", "Xanh lá"], ["#FF8B7B", "San hô"], ["#E75480", "Hồng"], ["#F59E0B", "Vàng cam"]];
             return `<h2>⚙️ Cài đặt</h2><div class="card" style="cursor:default;--c:var(--p)"><h3>🎨 Giao diện</h3><p>Phong cách:</p><div class="tabs">${[["classic", "🎨 Hiện tại"], ["space", "🌌 Không gian"], ["chess", "♟️ Cờ vua"], ["future", "⚡ Tương lai"]].map(([k, l]) => `<button class="${ST.style == k ? "on" : ""}" onclick="setS('style','${k}')">${l}</button>`).join("")}</div><p class="mu">Không gian có sao và thiên hà; Cờ vua pha gỗ óc chó, ngà và xanh lục; Tương lai dùng kính tối, lưới neon và ánh sáng hologram.</p><p>Chế độ sáng tối:</p><div class="tabs">${[["auto", "Tự động"], ["light", "Sáng"], ["dark", "Tối"]].map(([k, l]) => `<button class="${ST.m == k ? "on" : ""}" onclick="setS('m','${k}')">${l}</button>`).join("")}</div><p>Màu chủ đạo:</p><div>${sw.map(([c, n]) => `<button class="chip sw${ST.c.toLowerCase() == c.toLowerCase() ? " on" : ""}" style="--sc:${c}" title="${n}" aria-label="${n}" onclick="setS('c','${c}')"></button>`).join("")}<label class="chip">Tùy chọn <input type="color" value="${esc(ST.c)}" onchange="setS('c',this.value)"></label></div></div>
-<div class="card" style="cursor:default;margin-top:14px;--c:var(--p)"><h3>🔊 Âm thanh &amp; nhạc</h3><label class="row2"><input type="checkbox" ${ST.sfx ? "checked" : ""} onchange="setS('sfx',this.checked?1:0)"> Âm thanh thao tác, đúng/sai</label><label class="row2">Âm lượng hiệu ứng <input type="range" min="0" max="100" value="${Math.round(ST.sv * 100)}" oninput="setS('sv',this.value/100,1)"></label><label class="row2"><input type="checkbox" ${ST.mus ? "checked" : ""} onchange="setS('mus',this.checked?1:0)"> Nhạc nền theo chế độ</label><label class="row2">Âm lượng nhạc (${Math.round(ST.mv * 100)}%) <input type="range" min="0" max="100" value="${Math.round(ST.mv * 100)}" oninput="setS('mv',this.value/100,1)"></label><button class="btn sm" onclick="sfx('tap')">Nghe thử âm bấm</button> <button class="btn sm" onclick="sfx('ok')">Nghe thử âm đúng</button><p class="mu">Âm bấm áp dụng cho nút, lựa chọn, tab và điều khiển. Nhạc mặc định ở mức 12%. Time Attack dùng trình phát YouTube chính thức hiển thị ngay trên màn hình chơi; cần kết nối Internet.</p></div>`
+<div class="card" style="cursor:default;margin-top:14px;--c:var(--p)"><h3>🔊 Âm thanh &amp; nhạc</h3><label class="row2"><input type="checkbox" ${ST.sfx ? "checked" : ""} onchange="setS('sfx',this.checked?1:0)"> Âm thanh thao tác, đúng/sai</label><label class="row2">Âm lượng hiệu ứng <input type="range" min="0" max="100" value="${Math.round(ST.sv * 100)}" oninput="setS('sv',this.value/100,1)"></label><label class="row2"><input type="checkbox" ${ST.mus ? "checked" : ""} onchange="setS('mus',this.checked?1:0)"> Nhạc nền theo chế độ</label><label class="row2">Âm lượng nhạc (${Math.round(ST.mv * 100)}%) <input type="range" min="0" max="100" value="${Math.round(ST.mv * 100)}" oninput="setS('mv',this.value/100,1)"></label><button class="btn sm" onclick="sfx('tap')">Nghe thử âm bấm</button> <button class="btn sm" onclick="sfx('ok')">Nghe thử âm đúng</button><p class="mu">Âm bấm áp dụng cho nút, lựa chọn, tab và điều khiển. Nhạc mặc định ở mức 12%. Time Attack phát file timeattack.weba từ GitHub Pages và tự động lặp trong lúc chơi.</p></div>`
         }
-        // ---- âm thanh tổng hợp bằng WebAudio (không cần file nhạc)
         let AC = null, MG, SG, mcur = "", mstep = 0, nextT = 0;
         function ac() { if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); MG = AC.createGain(); SG = AC.createGain(); MG.connect(AC.destination); SG.connect(AC.destination); vol() } catch (e) { AC = null } } if (AC && AC.state == "suspended") AC.resume(); return AC }
-        function vol() { if (AC) { MG.gain.value = ST.mus ? ST.mv : 0; SG.gain.value = ST.sfx ? ST.sv : 0 } if (ui.v === "ta" && ST.mus) youtubeCommand("setVolume", [Math.round(ST.mv * 100)]) }
+        function vol() { if (AC) { MG.gain.value = ST.mus ? ST.mv : 0; SG.gain.value = ST.sfx ? ST.sv : 0 } const audio = $("ta-audio"); if (audio) audio.volume = ST.mus ? ST.mv : 0 }
         const hz = m => 440 * Math.pow(2, (m - 69) / 12);
         function tone(f, t0, d, w, g, out) { const o = AC.createOscillator(), e = AC.createGain(); o.type = w; o.frequency.value = f; e.gain.setValueAtTime(.0001, t0); e.gain.exponentialRampToValueAtTime(g, t0 + .015); e.gain.exponentialRampToValueAtTime(.0001, t0 + d); o.connect(e); e.connect(out); o.start(t0); o.stop(t0 + d + .05) }
         function sfx(k) { if (!ST.sfx || !ac()) return; const t = AC.currentTime; (({ tap: [[78, 0, .075], [85, .045, .11]], ok: [[76, 0, .12], [83, .09, .25]], bad: [[48, 0, .22, "sawtooth"], [45, .12, .32, "sawtooth"]], win: [[72, 0, .14], [76, .12, .14], [79, .24, .14], [84, .36, .45]], lose: [[67, 0, .2], [62, .18, .2], [55, .36, .35]], end: [[84, 0, .15], [79, .15, .15], [72, .3, .45]] })[k] || []).forEach(([m, d, l, w]) => tone(hz(m), t + d, l, w || "triangle", k === "tap" ? .22 : .5, SG)) }
@@ -2199,13 +2099,33 @@ const googleReady = () =>
         const trackFor = () => { const v = ui.v; if (v === "ta") return null; return !user ? "home" : v == "quiz" ? (mode == "mt" ? "mt" : mode == "trf" ? "trf" : "study") : ["path", "group", "map", "learn", "review"].includes(v) ? "study" : "home" };
         function sync() { if (!ST.mus) { mcur = ""; return } const w = trackFor(); if (!w) { mcur = ""; return } if (AC && AC.state == "running" && mcur != w) { mcur = w; mstep = 0; nextT = AC.currentTime + .15 } }
         function mtick() { if (!AC || !mcur || !ST.mus || AC.state != "running") return; const T = TRK[mcur]; while (nextT < AC.currentTime + .3) { const e = 30 / (T.b * (mcur == "ta" && ta.on ? 1 + (60 - taLeft()) / 60 * .3 : 1)), c = T.ch[Math.floor(mstep / T.pt.length) % T.ch.length], n = c[T.pt[mstep % T.pt.length]] + (mstep % 8 == 7 ? 12 : 0); tone(hz(n), nextT, e * 1.8, T.w, (T.q || .22) * .5, MG); if (mstep % 4 == 0) tone(hz(c[0] - 24), nextT, e * 3.6, "sine", .3, MG); if (T.k && mstep % 2 == 1) tone(hz(c[0] + 24), nextT, e * .6, "square", .06, MG); nextT += e; mstep++ } }
-        const TA_VIDEO_ID = "42kI2lT0x6U";
-        let taYTTimer = 0, taYTCommandTimer = 0;
-        function youtubeCommand(func, args = []) { const f = $("ta-yt-frame"); if (f && f.contentWindow && f.src && f.src !== "about:blank") { try { f.contentWindow.postMessage(JSON.stringify({ event: "command", func, args }), "*") } catch (e) { } } }
-        function ensureTAYoutube() { const f = $("ta-yt-frame"); if (!f) return null; const origin = (location.protocol === "http:" || location.protocol === "https:") ? `&origin=${encodeURIComponent(location.origin)}` : ""; const src = `https://www.youtube-nocookie.com/embed/${TA_VIDEO_ID}?autoplay=1&mute=0&controls=1&rel=0&playsinline=1&loop=1&playlist=${TA_VIDEO_ID}&enablejsapi=1${origin}`; if (!f.src || f.src === "about:blank" || !f.src.includes(TA_VIDEO_ID)) { f.src = src; f.onload = () => { clearTimeout(taYTTimer); taYTTimer = setTimeout(() => { if (ST.mus && ui.v === "ta") { youtubeCommand("setVolume", [Math.round(ST.mv * 100)]); youtubeCommand("playVideo") } }, 1100) } } return f }
-        function startTaMusic() { if (!ST.mus) return; const f = ensureTAYoutube(); if (!f) return; clearTimeout(taYTCommandTimer); taYTCommandTimer = setTimeout(() => { if (ST.mus && ui.v === "ta") { youtubeCommand("setVolume", [Math.round(ST.mv * 100)]); youtubeCommand("playVideo") } }, 1450) }
-        function pauseTaMusic() { clearTimeout(taYTTimer); clearTimeout(taYTCommandTimer); youtubeCommand("pauseVideo") }
-        function stopTaMusic() { clearTimeout(taYTTimer); clearTimeout(taYTCommandTimer); const f = $("ta-yt-frame"); if (f) { try { f.src = "about:blank" } catch (e) { } } }
+        function startTaMusic() {
+            const audio = $("ta-audio");
+            if (!audio || !ST.mus || ui.v !== "ta") return;
+            audio.loop = true;
+            audio.volume = Math.max(0, Math.min(1, Number(ST.mv) || 0));
+            audio.onerror = () => {
+                const currentStatus = $("ta-audio-status");
+                if (currentStatus) currentStatus.textContent = "Không tải được timeattack.weba. Hãy kiểm tra file nhạc trên GitHub Pages.";
+            };
+            const request = audio.play();
+            if (request && typeof request.catch === "function") {
+                request.catch(() => {
+                    const currentStatus = $("ta-audio-status");
+                    if (currentStatus) currentStatus.textContent = "Không phát được timeattack.weba. Hãy kiểm tra file nhạc trên GitHub Pages.";
+                });
+            }
+        }
+        function pauseTaMusic() {
+            const audio = $("ta-audio");
+            if (audio) audio.pause();
+        }
+        function stopTaMusic() {
+            const audio = $("ta-audio");
+            if (!audio) return;
+            audio.pause();
+            try { audio.currentTime = 0 } catch (e) { }
+        }
         const unlock = () => { if (ac()) { vol(); sync() } };
         const UI_SOUND_SELECTOR = 'button:not(:disabled),a[href],[onclick],[role=button],[role=option],[role=tab],select,input[type="checkbox"],input[type="radio"],input[type="range"],input[type="color"]';
         function playUiSound(node) { const el = node && node.closest ? node.closest(UI_SOUND_SELECTOR) : null; if (el && !el.disabled) sfx("tap") }
