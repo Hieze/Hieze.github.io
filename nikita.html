@@ -1824,6 +1824,20 @@
             #toast, .skip-link { transition: none }
             .boss-clock.urgent { animation: none }
         }
+
+        .cloud-status{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;background:var(--bg);border:1px solid var(--bd);font-size:.82rem;font-weight:800}
+        .cloud-status i{width:8px;height:8px;border-radius:50%;background:var(--mu);display:inline-block}
+        .cloud-status.ok i{background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 18%,transparent)}
+        .cloud-status.wait i{background:var(--s)}
+        .cloud-status.err i{background:var(--bad)}
+        .cloud-panel{margin:14px 0;padding:18px;border:1px solid var(--bd);border-radius:20px;background:var(--card)}
+        .cloud-panel details{margin-top:12px;padding:12px;border:1px dashed var(--bd);border-radius:14px}
+        .cloud-panel summary{font-weight:800;cursor:pointer}
+        .cloud-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:12px;border-radius:12px;background:var(--bg);font-size:.8rem;max-height:260px;overflow:auto}
+        .cloud-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+        .cloud-actions .btn{margin:0}
+        .cloud-email{overflow-wrap:anywhere}
+        @media(max-width:640px){nav #who{width:100%;justify-content:flex-end}.cloud-actions .btn{flex:1}}
     </style>
 </head>
 
@@ -1966,12 +1980,26 @@
         const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
         const NICK_RE = /^[\p{L}\p{N}_. -]{2,20}$/u;
         const key = n => "t12u:" + n.trim().toLowerCase();
+        const stateKey = n => String(n || "").startsWith("firebase:") ? "t12firebase:" + encodeURIComponent(String(n).slice(9)) : key(String(n || ""));
         const rd = k => { try { return localStorage.getItem(k) } catch (e) { return null } };
         const wr = (k, v) => { try { localStorage.setItem(k, v); return true } catch (e) { return false } };
         const rm = k => { try { localStorage.removeItem(k) } catch (e) { } };
         function recent() { try { const a = JSON.parse(rd("t12_users")); return Array.isArray(a) ? a.filter(n => typeof n == "string" && NICK_RE.test(n) && !isGod(n)) : [] } catch (e) { return [] } }
-        function load() { try { return normalizeState(JSON.parse(rd(key(uid)))) } catch (e) { return init() } }
-        function save() { if (user && !wr(key(uid), JSON.stringify(st)) && !storageWarned) { storageWarned = true; notify("Không thể lưu thêm dữ liệu. Hãy xuất bản sao lưu và kiểm tra dung lượng trình duyệt.", "error") } }
+        function load() { try { return normalizeState(JSON.parse(rd(stateKey(uid)))) } catch (e) { return init() } }
+        function saveLocalOnly() {
+            if (!user || !uid) return false;
+            const ok = wr(stateKey(uid), JSON.stringify(st));
+            if (!ok && !storageWarned) { storageWarned = true; notify("Không thể lưu bộ nhớ cục bộ. Hãy xuất bản sao lưu và kiểm tra dung lượng trình duyệt.", "error") }
+            return ok
+        }
+        function save() {
+            if (!user) return;
+            const ok = saveLocalOnly();
+            const stamp = Date.now();
+            if (uid) wr("t12_updated:" + uid, String(stamp));
+            if (firebaseUser && cloudDb && !cloudApplying) scheduleCloudSave();
+            return ok;
+        }
         let user = null, uid = null, god = false, st = init(), ui = { v: "home" }, qs = [], qi = 0, ok = 0, gx = 0, pk = -1, fb = null, val = "", hint = "", bd = [], pl = [], mp = [], ms = 0, mode = "lvl", res = null, ta = { iv: 0 }, quizTimer = 0, quizDeadline = 0, quizLimit = 0, hiddenOptions = [], achievementsBefore = [];
         const tot = () => st.c.reduce((a, b) => a + b, 0);
         const localDay = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -2070,7 +2098,7 @@
             reader.onerror = () => { notify("Không thể đọc file sao lưu.", "error"); input.value = "" };
             reader.readAsText(file)
         }
-        function backupBox() { return `<div class="card backup-box" style="cursor:default"><h3>💾 Sao lưu & khôi phục</h3><p class="mu">Tiến độ hiện được lưu trên trình duyệt/thiết bị này. Xuất file JSON để chuyển sang máy khác hoặc khôi phục khi đổi trình duyệt.</p><div class="row2"><button class="btn" onclick="exportBackup()">⬇ Xuất bản sao lưu</button></div><label for="backup-file"><b>Chọn file sao lưu để khôi phục</b></label><input id="backup-file" type="file" accept="application/json,.json" onchange="importBackup(this)"><small>Khôi phục sẽ thay thế tiến độ của hồ sơ đang đăng nhập. Không tải file sao lưu từ nguồn không tin cậy.</small></div>` }
+        function backupBox() { return `<div class="card backup-box" style="cursor:default"><h3>💾 Sao lưu & khôi phục</h3><p class="mu">${firebaseUser ? "Tiến trình được lưu trên thiết bị này và đồng bộ lên Cloud Firestore theo tài khoản Google." : "Hồ sơ khách chỉ lưu trên trình duyệt này. Đăng nhập Google để đồng bộ tiến trình giữa điện thoại và máy tính."}</p><div class="row2"><button class="btn" onclick="exportBackup()">⬇ Xuất bản sao lưu</button>${firebaseUser ? `<button class="btn" onclick="cloudSyncNow()">☁ Đồng bộ ngay</button>` : ""}</div><label for="backup-file"><b>Chọn file sao lưu để khôi phục</b></label><input id="backup-file" type="file" accept="application/json,.json" onchange="importBackup(this)"><small>Khôi phục sẽ nhập dữ liệu vào hồ sơ đang đăng nhập. Hãy xuất bản sao lưu trước khi thay đổi dữ liệu lớn.</small></div>` }
         const bar = (p, c) => `<div class="bar"><i style="width:${Math.min(100, p)}%;background:${c || "var(--p)"}"></i></div>`;
         const be = (p, past) => past ? (p == 1 ? "were" : "was") : (p == 0 ? "am" : p == 2 ? "is" : "are");
         function conj(t, p, v, f) {
@@ -2218,11 +2246,11 @@ ${godPanel(st.cur ? st.cur.t : 0, st.cur ? st.cur.l : 1)}
             return `<div class="card res" style="cursor:default;--c:${r.pass ? "var(--ok)" : "var(--bad)"}">${conf}<h2>${lv && !r.pass ? "💪 Gần được rồi, thử lại nhé!" : "🎉 Hoàn thành!"}</h2><p><b>${r.p}%</b> (${ok}/${qs.length} câu đúng) · +${r.xp} XP${r.bonusCoins ? ` · +${r.bonusCoins} xu` : ""}</p>${r.nw.map(a => `<p>🏅 Thành tựu mới: <b>${a[1]}</b></p>`).join("")}${lv ? `<button class="btn" onclick="open_(${ui.t},${ui.l})">Làm lại</button> ${god && ui.l > 1 ? `<button class="btn" onclick="open_(${ui.t},${ui.l - 1})">Level trước</button> ` : ""}${(r.pass || god) && ui.l < 500 ? `<button class="btn" onclick="open_(${ui.t},${ui.l + 1})">Level tiếp theo</button> ` : ""}<button class="btn" onclick="go('map',{t:${ui.t},s:${Math.floor((ui.l - 1) / 100)}})">Bản đồ</button>` : mode == "rev" ? `<button class="btn" onclick="go('review')">Về trang ôn tập</button>` : `<button class="btn" onclick="${replay}">Chơi lại</button> <button class="btn" onclick="go('games')">Chế độ chơi</button>`}</div>`
         }
         function rev() { return `<h2>🔁 Ôn tập thông minh</h2><p>Những câu bạn làm sai được lưu lại. Trả lời đúng một câu thì câu đó rời khỏi danh sách.</p><p><b>${st.w.length}</b> câu đang chờ ôn.</p>${st.w.length ? `<button class="btn" onclick="startRev()">Ôn ${Math.min(8, st.w.length)} câu</button>` : `<p class="mu">Chưa có câu nào. Hãy làm một level để bắt đầu.</p>`}` }
-        function prof() { const n = tot(); return `<h2>🧑‍🎓 Hồ sơ của bạn</h2><p>Nickname: <b>${esc(user)}</b>${god ? " · 👑 Chế độ God" : ""}</p><div class="grid3"><div class="card" style="cursor:default"><h3>Cấp ${Math.floor(st.xp / 200) + 1}</h3><small>${st.xp} XP</small></div><div class="card" style="cursor:default"><h3>🔥 ${st.streak} ngày</h3><small>Chuỗi dài nhất: ${st.best} ngày</small></div><div class="card" style="cursor:default"><h3>${n}/6.000 level</h3><small>${(n / 60).toFixed(1)}% tiến độ</small></div><div class="card" style="cursor:default"><h3>⏱ ${st.ta.best} câu</h3><small>Kỷ lục Time Attack (${st.ta.runs} lượt)</small></div><div class="card" style="cursor:default"><h3>🔥 ${st.comboBest || 0}</h3><small>Combo tốt nhất</small></div><div class="card" style="cursor:default"><h3>🎯 ${st.dailyClaims || 0}</h3><small>Nhiệm vụ đã nhận thưởng</small></div></div><div class="stat-line"><span class="stat-pill">✅ ${st.correct || 0} câu đúng</span><span class="stat-pill">❌ ${st.mistakes || 0} câu sai</span><span class="stat-pill">👹 ${st.bosses || 0} Boss đã hạ</span><span class="stat-pill">🪙 ${st.coins || 0} xu</span></div><p><button class="btn" onclick="cont()">Tiếp tục bài học gần nhất</button></p><h3>Tiến độ từng thì</h3>${TN.map((T, i) => `<div>${T[0]} (${T[1]}) · ${st.c[i]}/500${bar(st.c[i] / 5, GC[i >> 2])}</div>`).join("")}<h3>Thành tựu</h3><div class="grid3">${ACH.map(a => `<div class="card" style="cursor:default;opacity:${a[2]() ? 1 : .45}">${a[0]} <b>${a[1]}</b><br><small>${a[3]}</small></div>`).join("")}</div><h3>Lịch sử học tập</h3>${st.h.slice(-8).reverse().map(h => `<div>${h.d} · ${TN[h.t][1]} · level ${h.l} · ${h.p}%</div>`).join("") || `<small>Chưa có lịch sử.</small>`}${backupBox()}<p><small>Google Sign-In hiện chỉ giúp nhận diện hồ sơ trên trình duyệt; ứng dụng chưa có máy chủ để đồng bộ tiến độ tự động giữa các thiết bị.</small></p>` }
+        function prof() { const n = tot(); return `${accountBox()}<h2>🧑‍🎓 Hồ sơ của bạn</h2><p>Nickname: <b>${esc(user)}</b>${god ? " · 👑 Chế độ God" : ""}</p><div class="grid3"><div class="card" style="cursor:default"><h3>Cấp ${Math.floor(st.xp / 200) + 1}</h3><small>${st.xp} XP</small></div><div class="card" style="cursor:default"><h3>🔥 ${st.streak} ngày</h3><small>Chuỗi dài nhất: ${st.best} ngày</small></div><div class="card" style="cursor:default"><h3>${n}/6.000 level</h3><small>${(n / 60).toFixed(1)}% tiến độ</small></div><div class="card" style="cursor:default"><h3>⏱ ${st.ta.best} câu</h3><small>Kỷ lục Time Attack (${st.ta.runs} lượt)</small></div><div class="card" style="cursor:default"><h3>🔥 ${st.comboBest || 0}</h3><small>Combo tốt nhất</small></div><div class="card" style="cursor:default"><h3>🎯 ${st.dailyClaims || 0}</h3><small>Nhiệm vụ đã nhận thưởng</small></div></div><div class="stat-line"><span class="stat-pill">✅ ${st.correct || 0} câu đúng</span><span class="stat-pill">❌ ${st.mistakes || 0} câu sai</span><span class="stat-pill">👹 ${st.bosses || 0} Boss đã hạ</span><span class="stat-pill">🪙 ${st.coins || 0} xu</span></div><p><button class="btn" onclick="cont()">Tiếp tục bài học gần nhất</button></p><h3>Tiến độ từng thì</h3>${TN.map((T, i) => `<div>${T[0]} (${T[1]}) · ${st.c[i]}/500${bar(st.c[i] / 5, GC[i >> 2])}</div>`).join("")}<h3>Thành tựu</h3><div class="grid3">${ACH.map(a => `<div class="card" style="cursor:default;opacity:${a[2]() ? 1 : .45}">${a[0]} <b>${a[1]}</b><br><small>${a[3]}</small></div>`).join("")}</div><h3>Lịch sử học tập</h3>${st.h.slice(-8).reverse().map(h => `<div>${h.d} · ${TN[h.t][1]} · level ${h.l} · ${h.p}%</div>`).join("") || `<small>Chưa có lịch sử.</small>`}${backupBox()}` }
         function render() {
             document.querySelector("nav").classList.toggle("lo", !user); document.body.classList.toggle("ta-mode", ui.v === "ta");
-            $("who").innerHTML = user ? `<span class="nick">${god ? "👑" : "👤"} ${esc(user)}${god ? "<em>GOD</em>" : ""}</span><button onclick="logout()">Đăng xuất</button>` : "";
-            if (!user) { $("app").innerHTML = login(); const n = $("nick"); if (n) n.focus(); updM(); sync(); gLoad(); return }
+            $("who").innerHTML = user ? `${firebaseUser ? `<span class="cloud-status ${cloudClass()}"><i></i>${cloudStatusLabel()}</span>` : ""}<span class="nick">${god ? "👑" : firebaseUser ? "☁️" : "👤"} ${esc(user)}${god ? "<em>GOD</em>" : ""}</span><button onclick="logout()">Đăng xuất</button>` : "";
+            if (!user) { $("app").innerHTML = login(); const n = $("nick"); if (n) n.focus(); updM(); sync(); return }
             const v = ui.v, nk = { home: "home", group: "path", path: "path", map: "path", learn: "path", quiz: mode == "lvl" ? "path" : mode == "rev" ? "review" : "games", res: mode == "lvl" ? "path" : mode == "rev" ? "review" : "games", set: "set", support: "support", games: "games", tahome: "games", ta: "games", taend: "games", review: "review", prof: "prof" }; document.querySelectorAll("nav button[data-k]").forEach(b => { const active = b.dataset.k == nk[v]; b.classList.toggle("on", active); if (active) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current") }); $("app").innerHTML = v == "home" ? home() : v == "path" ? godPanel(st.cur ? st.cur.t : 0, st.cur ? st.cur.l : 1) + `<h2>🗺️ Lộ trình 12 thì</h2><div class="path-search"><input class="inp" type="search" aria-label="Tìm thì tiếng Anh" placeholder="Tìm theo tên thì, công thức hoặc mô tả..." oninput="filterTenses(this.value)"></div>` + [0, 1, 2].map(g => group(g)).join("") : v == "group" ? godPanel(ui.g * 4, Math.min(500, st.c[ui.g * 4] + 1)) + group(ui.g) : v == "map" ? map() : v == "learn" ? learn() : v == "quiz" ? quiz() : v == "res" ? resv() : v == "prof" ? prof() : v == "games" ? games() : v == "tahome" ? taHome() : v == "ta" ? taView() : v == "taend" ? taEndView() : v == "set" ? setView() : v == "support" ? supportView() : rev(); updM(); sync()
         }
         const GNN = [
@@ -2311,16 +2339,265 @@ ${godPanel(st.cur ? st.cur.t : 0, st.cur ? st.cur.l : 1)}
         function taView() { const x = ta.q, l = taLeft(); return `<div class="tahd"><b>⏱ <span id="tmr">${Math.ceil(l)}</span>s</b><span>Đúng: <b>${ta.sc}</b></span></div><p class="mu" id="ta-audio-status">♫ Nhạc Time Attack · đang phát lặp</p><div class="bar"><i id="tbar" style="width:${l / 60 * 100}%;background:var(--s)"></i></div><p class="mu">Câu ${ta.n + 1} · độ khó ${lvName(ta.lv)}${ta.msg ? ` · ${ta.msg}` : ""}</p><h3>${x.st}</h3>${x.stem ? `<p class="big">${x.stem}</p>` : ""}${x.o.map((o, i) => `<button class="opt" onclick="taPick(${i})">${o}</button>`).join("")}` }
         function taEndView() { const t = ta.sc + ta.bad; return `<div class="card res" style="cursor:default;--c:var(--ok)"><h2>⏱ Hết giờ!</h2><p><b>${ta.sc}</b> câu đúng / ${t} câu · chính xác ${t ? Math.round(ta.sc / t * 100) : 0}%</p><p>Độ khó cao nhất đạt được: <b>${lvName(ta.maxl)}</b> · +${ta.xp} XP</p>${ta.nb ? `<p>🏅 <b>Kỷ lục mới!</b></p>` : `<p class="mu">Kỷ lục hiện tại: ${st.ta.best} câu</p>`}<button class="btn" onclick="taStart()">Chơi lại</button> <button class="btn" onclick="go('games')">Chế độ chơi</button></div>` }
 
-       const GOOGLE_CLIENT_ID = "264761779796-31gic7vh1n1kr7c1bijvlcn72dihtlqt.apps.googleusercontent.com";
-
-const googleReady = () =>
-  /^[\w-]+\.apps\.googleusercontent\.com$/.test(GOOGLE_CLIENT_ID);
-  
-  const cleanName = x => { const c = String(x).replace(/[^\p{L}\p{N}_. -]/gu, "").trim().slice(0, 20); return c.length >= 2 ? c : "Player" };
-        function decodeGoogleCredential(jwt) { const part = jwt.split(".")[1]; if (!part) throw Error("Invalid credential"); const raw = atob(part.replace(/-/g, "+").replace(/_/g, "/")); const bytes = Uint8Array.from(raw, c => c.charCodeAt(0)); return JSON.parse(new TextDecoder().decode(bytes)) }
-        function handleGoogleCredential(response) { try { const profile = decodeGoogleCredential(response.credential || ""); if (!profile.sub || !profile.email_verified) throw Error("Unverified Google account"); enter(cleanName(profile.name || profile.email.split("@")[0]), "google:" + profile.sub) } catch (e) { loginErr("Không thể xác minh phiên Google. Hãy thử lại.", "lerr2") } }
-        function gLoad() { if (!googleReady()) return; if (window.google && google.accounts) return gBtn(); if (document.getElementById("google-gsi")) return; const sc = document.createElement("script"); sc.id = "google-gsi"; sc.src = "https://accounts.google.com/gsi/client"; sc.async = true; sc.onload = gBtn; sc.onerror = () => loginErr("Không tải được Google Sign-In. Kiểm tra kết nối mạng.", "lerr2"); document.head.appendChild(sc) }
-        function gBtn() { const d = $("gbtn"); if (!d || !window.google || !googleReady()) return; try { google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleGoogleCredential, auto_select: false, cancel_on_tap_outside: true }); d.replaceChildren(); google.accounts.id.renderButton(d, { theme: ST.style === "space" ? "filled_black" : "outline", size: "large", shape: "pill", text: "continue_with", locale: "vi", width: 300 }) } catch (e) { loginErr("Google Sign-In chưa được cấu hình đúng tên miền / Client ID.", "lerr2") } }
+        const cleanName = x => { const c = String(x || "").replace(/[^\p{L}\p{N}_. -]/gu, "").trim().slice(0, 20); return c.length >= 2 ? c : "Player" };
+        const FIREBASE_CONFIG = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            appId: "YOUR_FIREBASE_APP_ID"
+        };
+        const FIRESTORE_RULES = `rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId}/devices/{deviceId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}`;
+        let firebaseApp = null, firebaseAuth = null, cloudDb = null, firebaseUser = null;
+        let cloudUnsubscribe = null, cloudSaveTimer = 0, cloudStatus = "setup", cloudMessage = "Chưa cấu hình Firebase", cloudApplying = false, cloudInitStarted = false, cloudActiveUid = "", cloudSyncBusy = false, cloudLastSync = 0, cloudInitError = "";
+        const cloudConfigured = () => Object.values(FIREBASE_CONFIG).every(v => typeof v === "string" && v.trim().length > 4 && !/YOUR_|PASTE_/i.test(v));
+        const cloudRulesText = () => FIRESTORE_RULES;
+        function loadExternalScript(src, id) {
+            return new Promise((resolve, reject) => {
+                if (document.getElementById(id)) {
+                    const existing = document.getElementById(id);
+                    if (existing.dataset.loaded === "1" || (window.firebase && window.firebase.auth && window.firebase.firestore)) return resolve();
+                    existing.addEventListener("load", resolve, { once: true });
+                    existing.addEventListener("error", reject, { once: true });
+                    return;
+                }
+                const script = document.createElement("script");
+                script.id = id;
+                script.src = src;
+                script.async = true;
+                script.onload = () => { script.dataset.loaded = "1"; resolve() };
+                script.onerror = () => reject(Error("Không tải được Firebase SDK"));
+                document.head.appendChild(script);
+            });
+        }
+        async function initFirebaseCloud() {
+            if (cloudInitStarted) return;
+            cloudInitStarted = true;
+            if (!cloudConfigured()) { cloudStatus = "setup"; cloudMessage = "Cần cấu hình Firebase một lần cho ứng dụng"; return }
+            cloudStatus = "loading";
+            try {
+                await loadExternalScript("https://www.gstatic.com/firebasejs/13.3.0/firebase-app-compat.js", "firebase-app-compat");
+                await loadExternalScript("https://www.gstatic.com/firebasejs/13.3.0/firebase-auth-compat.js", "firebase-auth-compat");
+                await loadExternalScript("https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore-compat.js", "firebase-firestore-compat");
+                firebaseApp = firebase.apps.length ? firebase.app() : firebase.initializeApp(FIREBASE_CONFIG);
+                firebaseAuth = firebase.auth();
+                cloudDb = firebase.firestore();
+                try { await cloudDb.enablePersistence({ synchronizeTabs: true }) } catch (e) { }
+                await firebaseAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+                firebaseAuth.onAuthStateChanged(async account => {
+                    if (account) {
+                        try { await activateFirebaseUser(account) }
+                        catch (e) { cloudStatus = "error"; cloudMessage = cloudErrorText(e); notify("Đăng nhập được nhưng chưa tải được dữ liệu Cloud. Tiến trình trên thiết bị vẫn được giữ nguyên.", "error"); render() }
+                    } else if (firebaseUser) {
+                        stopCloudSync();
+                        firebaseUser = null;
+                        cloudActiveUid = "";
+                        if ((rd("t12_uid") || "").startsWith("firebase:")) { rm("t12_uid"); rm("t12_nick"); user = null; uid = null; god = false; st = init(); ui = { v: "home" }; render() }
+                    }
+                });
+                firebaseAuth.getRedirectResult().catch(e => { cloudStatus = "error"; cloudMessage = cloudErrorText(e); const box = $("lerr2"); if (box) box.textContent = cloudMessage });
+            } catch (e) {
+                cloudStatus = "error";
+                cloudInitError = cloudErrorText(e);
+                cloudMessage = cloudInitError;
+                const box = $("lerr2");
+                if (box) box.textContent = cloudInitError;
+            }
+        }
+        function cloudErrorText(e) {
+            const c = e && e.code || "";
+            if (c.includes("unauthorized-domain")) return "Tên miền chưa được thêm vào Firebase Authentication > Authorized domains.";
+            if (c.includes("permission-denied")) return "Firestore từ chối truy cập. Hãy kiểm tra Firestore Security Rules.";
+            if (c.includes("network")) return "Mất kết nối mạng. Dữ liệu trên thiết bị vẫn được lưu và sẽ đồng bộ khi có mạng.";
+            if (c.includes("auth/operation-not-supported-in-this-environment")) return "Google Login cần chạy trên HTTPS hoặc localhost, không mở trực tiếp bằng file://.";
+            if (c.includes("auth/popup")) return "Không thể hoàn tất đăng nhập. Hãy thử lại trên trình duyệt mặc định.";
+            return (e && e.message) ? String(e.message).slice(0, 220) : "Đã xảy ra lỗi Cloud. Hãy kiểm tra cấu hình Firebase.";
+        }
+        function cloudDeviceId() {
+            let id = rd("t12_device_id");
+            if (!id) { id = window.crypto && crypto.randomUUID ? crypto.randomUUID() : "device-" + Date.now().toString(36) + Math.random().toString(36).slice(2); wr("t12_device_id", id) }
+            return id;
+        }
+        function parseLocalState(id) { try { return normalizeState(JSON.parse(rd(stateKey(id)))) } catch (e) { return init() } }
+        function mergeProgress(a0, b0, timeA = 0, timeB = 0) {
+            const a = normalizeState(a0), b = normalizeState(b0), newer = timeB > timeA ? b : a;
+            const out = normalizeState(newer);
+            out.xp = Math.max(a.xp, b.xp);
+            out.coins = newer.coins;
+            out.streak = newer.streak;
+            out.best = Math.max(a.best, b.best);
+            out.last = a.last > b.last ? a.last : b.last;
+            out.c = a.c.map((v, i) => Math.max(v, b.c[i]));
+            out.d = { ...a.d, ...b.d };
+            out.at = { ...a.at, ...b.at };
+            for (const k of Object.keys(out.at)) out.at[k] = Math.max(a.at[k] || 0, b.at[k] || 0);
+            const wMap = new Map();
+            [...a.w, ...b.w].forEach(w => wMap.set([w.t, w.seed, w.l, w.k].join("|"), w));
+            out.w = [...wMap.values()].slice(-300);
+            const hMap = new Map();
+            [...a.h, ...b.h].forEach(h => { const k = [h.t, h.l, h.d].join("|"); const old = hMap.get(k); if (!old || h.p > old.p) hMap.set(k, h) });
+            out.h = [...hMap.values()].sort((x, y) => (x.d || "").localeCompare(y.d || "") || x.t - y.t || x.l - y.l).slice(-100);
+            out.cur = newer.cur;
+            out.perf = a.perf || b.perf ? 1 : 0;
+            out.ta = { best: Math.max(a.ta.best, b.ta.best), runs: Math.max(a.ta.runs, b.ta.runs) };
+            out.c2 = { best: Math.max(a.c2.best, b.c2.best), runs: Math.max(a.c2.runs, b.c2.runs) };
+            if (!a.daily) out.daily = b.daily;
+            else if (!b.daily) out.daily = a.daily;
+            else if (a.daily.date > b.daily.date) out.daily = a.daily;
+            else if (b.daily.date > a.daily.date) out.daily = b.daily;
+            else out.daily = { ...newer.daily, progress: Math.max(a.daily.progress, b.daily.progress), target: Math.min(a.daily.target, b.daily.target), reward: Math.max(a.daily.reward, b.daily.reward), claimed: a.daily.claimed || b.daily.claimed };
+            out.dailyClaims = Math.max(a.dailyClaims, b.dailyClaims);
+            out.combo = newer.combo;
+            out.comboBest = Math.max(a.comboBest, b.comboBest);
+            out.correct = Math.max(a.correct, b.correct);
+            out.mistakes = Math.max(a.mistakes, b.mistakes);
+            out.bosses = Math.max(a.bosses, b.bosses);
+            return out;
+        }
+        function mergeCloudDocuments(snapshot) {
+            const records = [];
+            snapshot.forEach(doc => {
+                const data = doc.data() || {};
+                if (data.progress && typeof data.progress === "object") records.push({ state: normalizeState(data.progress), time: Number(data.updatedMs) || 0 });
+            });
+            records.sort((a, b) => a.time - b.time);
+            let merged = init(), time = 0;
+            for (const rec of records) { merged = mergeProgress(merged, rec.state, time, rec.time); time = Math.max(time, rec.time) }
+            return { state: merged, time };
+        }
+        function stopCloudSync() {
+            if (cloudUnsubscribe) { cloudUnsubscribe(); cloudUnsubscribe = null }
+            if (cloudSaveTimer) { clearTimeout(cloudSaveTimer); cloudSaveTimer = 0 }
+            cloudActiveUid = "";
+        }
+        function scheduleCloudSave() {
+            if (!firebaseUser || !cloudDb || cloudApplying) return;
+            if (cloudSaveTimer) clearTimeout(cloudSaveTimer);
+            cloudStatus = "pending";
+            cloudMessage = "Có thay đổi đang chờ đồng bộ";
+            cloudSaveTimer = setTimeout(() => { cloudSaveTimer = 0; pushCloudProgress() }, 900);
+        }
+        async function pushCloudProgress() {
+            if (!firebaseUser || !cloudDb || cloudSyncBusy || !uid) return;
+            cloudSyncBusy = true;
+            try {
+                const deviceId = cloudDeviceId();
+                const ref = cloudDb.collection("users").doc(firebaseUser.uid).collection("devices");
+                const snapshot = await ref.get();
+                const remote = mergeCloudDocuments(snapshot);
+                const localTime = Number(rd("t12_updated:" + uid)) || 0;
+                st = mergeProgress(st, remote.state, localTime, remote.time);
+                saveLocalOnly();
+                const stamp = Math.max(Date.now(), localTime + 1, remote.time + 1);
+                const payload = { progress: st, updatedMs: stamp, updatedAt: firebase.firestore.FieldValue.serverTimestamp(), deviceId, nickname: user || "Player", schema: 3 };
+                await ref.doc(deviceId).set(payload, { merge: true });
+                wr("t12_updated:" + uid, String(stamp));
+                cloudStatus = "synced";
+                cloudMessage = "Đã đồng bộ tiến trình lên Cloud";
+                cloudLastSync = Date.now();
+            } catch (e) {
+                cloudStatus = "error";
+                cloudMessage = cloudErrorText(e);
+            } finally {
+                cloudSyncBusy = false;
+                if (cloudSaveTimer) { clearTimeout(cloudSaveTimer); cloudSaveTimer = 0; scheduleCloudSave() }
+                if (ui.v === "prof" || ui.v === "set") render();
+            }
+        }
+        async function cloudSyncNow() {
+            if (!firebaseUser) { notify("Hãy đăng nhập Google để đồng bộ tiến trình.", "error"); return }
+            if (!navigator.onLine) { cloudStatus = "offline"; cloudMessage = "Đang ngoại tuyến; tiến trình vẫn được lưu trên máy"; render(); return }
+            if (cloudSaveTimer) { clearTimeout(cloudSaveTimer); cloudSaveTimer = 0 }
+            cloudStatus = "pending"; cloudMessage = "Đang đồng bộ..."; render();
+            await pushCloudProgress();
+            if (cloudStatus === "synced") notify("☁ Tiến trình đã được đồng bộ.", "success");
+        }
+        async function activateFirebaseUser(account) {
+            if (!account || !account.uid || !cloudDb) return;
+            if (cloudActiveUid === account.uid && firebaseUser) return;
+            stopCloudSync();
+            firebaseUser = account;
+            cloudActiveUid = account.uid;
+            const nextUid = "firebase:" + account.uid;
+            const provider = (account.providerData || []).find(p => p.providerId === "google.com");
+            const oldLocalUid = rd("t12_uid") || "";
+            const candidates = [parseLocalState(nextUid)];
+            if (provider && provider.uid) {
+                const oldGoogleId = "google:" + provider.uid;
+                candidates.push(parseLocalState(oldGoogleId));
+                if (oldLocalUid === oldGoogleId && user && uid === oldGoogleId) candidates.push(normalizeState(st));
+            }
+            if (user && uid && !uid.startsWith("firebase:") && uid !== (provider ? "google:" + provider.uid : "")) {
+                const hasGuestProgress = tot() > 0 || st.xp > 0 || st.coins > 0 || st.h.length > 0 || st.ta.runs > 0 || st.correct > 0;
+                if (hasGuestProgress && confirm("Thiết bị này có tiến trình hồ sơ khách. Bạn có muốn nhập và gộp tiến trình đó vào tài khoản Google vừa đăng nhập không? Dữ liệu Cloud hiện có sẽ được giữ và gộp, không bị xóa.")) candidates.push(normalizeState(st));
+            }
+            let local = candidates[0];
+            for (let i = 1; i < candidates.length; i++) local = mergeProgress(local, candidates[i], 1, 2);
+            user = cleanName(account.displayName || (account.email || "Player").split("@")[0]);
+            uid = nextUid;
+            god = false;
+            st = local;
+            wr("t12_nick", user);
+            wr("t12_uid", uid);
+            saveLocalOnly();
+            cloudStatus = "loading";
+            cloudMessage = "Đang tải tiến trình từ Cloud...";
+            render();
+            try {
+                await pushCloudProgress();
+                const col = cloudDb.collection("users").doc(account.uid).collection("devices");
+                cloudUnsubscribe = col.onSnapshot(snapshot => {
+                    if (!firebaseUser || firebaseUser.uid !== account.uid) return;
+                    const remote = mergeCloudDocuments(snapshot);
+                    const localStamp = Number(rd("t12_updated:" + uid)) || 0;
+                    const before = JSON.stringify(st);
+                    cloudApplying = true;
+                    st = mergeProgress(st, remote.state, localStamp, remote.time);
+                    const after = JSON.stringify(st);
+                    cloudApplying = false;
+                    const changed = before !== after;
+                    if (changed) {
+                        saveLocalOnly();
+                        if (!(["quiz", "ta"].includes(ui.v))) render();
+                    }
+                    cloudStatus = "synced";
+                    cloudMessage = "Đã đồng bộ giữa các thiết bị";
+                    cloudLastSync = Date.now();
+                    if (changed) scheduleCloudSave();
+                }, e => { cloudStatus = "error"; cloudMessage = cloudErrorText(e); if (ui.v === "prof" || ui.v === "set") render() });
+            } catch (e) {
+                cloudStatus = "error";
+                cloudMessage = cloudErrorText(e);
+            }
+            render();
+        }
+        function googleLogin() {
+            if (!cloudConfigured()) { const box = $("lerr2"); if (box) box.textContent = "Ứng dụng chưa được cấu hình Firebase. Mở mục Hướng dẫn đồng bộ bên dưới để kết nối Cloud."; return }
+            if (!firebaseAuth) { const box = $("lerr2"); if (box) box.textContent = "Firebase đang khởi tạo. Hãy tải lại trang sau khi kết nối mạng."; return }
+            const provider = new firebase.auth.GoogleAuthProvider();
+            provider.setCustomParameters({ prompt: "select_account" });
+            firebaseAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => firebaseAuth.signInWithRedirect(provider)).catch(e => { const box = $("lerr2"); if (box) box.textContent = cloudErrorText(e) });
+        }
+        function cloudClass() { return cloudStatus === "synced" ? "ok" : ["error", "offline"].includes(cloudStatus) ? "err" : "wait" }
+        function cloudStatusLabel() {
+            if (!cloudConfigured()) return "Chưa cấu hình Cloud";
+            return ({ setup: "Chưa cấu hình Cloud", loading: "Đang kết nối Cloud", pending: "Đang chờ đồng bộ", synced: "Đã đồng bộ", error: "Lỗi đồng bộ", offline: "Đang ngoại tuyến" })[cloudStatus] || cloudMessage;
+        }
+        function accountBox() {
+            const status = `<span class="cloud-status ${cloudClass()}"><i></i>${esc(cloudStatusLabel())}</span>`;
+            if (!firebaseUser) return `<div class="cloud-panel"><h3>☁️ Tài khoản & lưu trữ đám mây</h3>${status}<p>Hiện bạn đang dùng hồ sơ cục bộ. Dữ liệu khách chỉ nằm trên thiết bị hiện tại và không tự xuất hiện trên máy khác.</p><p class="mu">Đăng nhập cùng một tài khoản Google trên điện thoại và máy tính để đồng bộ tiến trình qua Cloud Firestore.</p><button class="btn" onclick="googleLogin()">Tiếp tục với Google</button>${cloudSetupDetails()}</div>`;
+            return `<div class="cloud-panel"><h3>☁️ Tài khoản Google đã kết nối</h3>${status}<p class="cloud-email"><b>${esc(firebaseUser.email || user)}</b></p><p class="mu">${esc(cloudMessage)}</p><div class="cloud-actions"><button class="btn" onclick="cloudSyncNow()">☁ Đồng bộ ngay</button><button class="btn" onclick="logout()">Đăng xuất Google</button></div></div>`;
+        }
+        function cloudSetupDetails() {
+            return `<details><summary>Hướng dẫn kết nối đồng bộ đa thiết bị</summary><p>Chủ ứng dụng cần cấu hình Firebase một lần trong file HTML. Tìm <code>FIREBASE_CONFIG</code> trong phần JavaScript và thay 4 giá trị mẫu bằng cấu hình ứng dụng Web trong Firebase Console.</p><ol><li>Tạo Firebase project và thêm ứng dụng Web.</li><li>Trong Authentication, bật nhà cung cấp Google và thêm tên miền website vào Authorized domains.</li><li>Tạo Cloud Firestore Database.</li><li>Mở tab Rules, thay nội dung bằng quy tắc bên dưới rồi Publish.</li><li>Điền apiKey, authDomain, projectId và appId vào FIREBASE_CONFIG; lưu và triển khai website bằng HTTPS hoặc localhost.</li></ol><p><b>Firestore Security Rules</b></p><pre id="firestore-rules">${esc(cloudRulesText())}</pre><button class="btn sm" onclick="copyCloudRules()">Sao chép Security Rules</button><p class="mu">Không mở file bằng đường dẫn file://. Khi dùng điện thoại và máy tính, cả hai phải truy cập cùng một website đã triển khai và đăng nhập cùng Google account. Firebase Web config không phải mật khẩu; dữ liệu được bảo vệ bằng Authentication và Security Rules.</p></details>`;
+        }
+        function copyCloudRules() { const text = cloudRulesText(); if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(() => notify("Đã sao chép Firestore Rules.", "success"), () => notify("Không thể sao chép. Hãy chọn và sao chép nội dung trong khung.", "error")); else notify("Hãy chọn và sao chép nội dung trong khung Rules.", "error") }
         const DS = { c: "#6C63FF", m: "auto", style: "classic", sfx: 1, sv: .7, mus: 1, mv: .12 };
         let ST = Object.assign({}, DS), musicLevelMigrated = false;
         try { const saved = JSON.parse(rd("t12_set")); if (saved && typeof saved === "object") { Object.assign(ST, saved); if (Number(saved.mv) === .35) { ST.mv = DS.mv; musicLevelMigrated = true } } } catch (e) { }
@@ -2333,7 +2610,7 @@ const googleReady = () =>
         function togMusic() { setS("mus", ST.mus ? 0 : 1, 1); ac(); vol(); sync() }
         function setView() {
             const sw = [["#6C63FF", "Tím"], ["#5B8DEF", "Xanh dương"], ["#45C486", "Xanh lá"], ["#FF8B7B", "San hô"], ["#E75480", "Hồng"], ["#F59E0B", "Vàng cam"]];
-            return `<h2>⚙️ Cài đặt</h2><div class="card" style="cursor:default;--c:var(--p)"><h3>🎨 Giao diện</h3><p>Phong cách:</p><div class="tabs">${[["classic", "🎨 Hiện tại"], ["space", "🌌 Không gian"], ["chess", "♟️ Cờ vua"], ["future", "⚡ Tương lai"]].map(([k, l]) => `<button class="${ST.style == k ? "on" : ""}" onclick="setS('style','${k}')">${l}</button>`).join("")}</div><p class="mu">Không gian có sao và thiên hà; Cờ vua pha gỗ óc chó, ngà và xanh lục; Tương lai dùng kính tối, lưới neon và ánh sáng hologram.</p><p>Chế độ sáng tối:</p><div class="tabs">${[["auto", "Tự động"], ["light", "Sáng"], ["dark", "Tối"]].map(([k, l]) => `<button class="${ST.m == k ? "on" : ""}" onclick="setS('m','${k}')">${l}</button>`).join("")}</div><p>Màu chủ đạo:</p><div>${sw.map(([c, n]) => `<button class="chip sw${ST.c.toLowerCase() == c.toLowerCase() ? " on" : ""}" style="--sc:${c}" title="${n}" aria-label="${n}" onclick="setS('c','${c}')"></button>`).join("")}<label class="chip">Tùy chọn <input type="color" value="${esc(ST.c)}" onchange="setS('c',this.value)"></label></div></div>
+            return `${accountBox()}<h2>⚙️ Cài đặt</h2><div class="card" style="cursor:default;--c:var(--p)"><h3>🎨 Giao diện</h3><p>Phong cách:</p><div class="tabs">${[["classic", "🎨 Hiện tại"], ["space", "🌌 Không gian"], ["chess", "♟️ Cờ vua"], ["future", "⚡ Tương lai"]].map(([k, l]) => `<button class="${ST.style == k ? "on" : ""}" onclick="setS('style','${k}')">${l}</button>`).join("")}</div><p class="mu">Không gian có sao và thiên hà; Cờ vua pha gỗ óc chó, ngà và xanh lục; Tương lai dùng kính tối, lưới neon và ánh sáng hologram.</p><p>Chế độ sáng tối:</p><div class="tabs">${[["auto", "Tự động"], ["light", "Sáng"], ["dark", "Tối"]].map(([k, l]) => `<button class="${ST.m == k ? "on" : ""}" onclick="setS('m','${k}')">${l}</button>`).join("")}</div><p>Màu chủ đạo:</p><div>${sw.map(([c, n]) => `<button class="chip sw${ST.c.toLowerCase() == c.toLowerCase() ? " on" : ""}" style="--sc:${c}" title="${n}" aria-label="${n}" onclick="setS('c','${c}')"></button>`).join("")}<label class="chip">Tùy chọn <input type="color" value="${esc(ST.c)}" onchange="setS('c',this.value)"></label></div></div>
 <div class="card" style="cursor:default;margin-top:14px;--c:var(--p)"><h3>🔊 Âm thanh &amp; nhạc</h3><label class="row2"><input type="checkbox" ${ST.sfx ? "checked" : ""} onchange="setS('sfx',this.checked?1:0)"> Âm thanh thao tác, đúng/sai</label><label class="row2">Âm lượng hiệu ứng <input type="range" min="0" max="100" value="${Math.round(ST.sv * 100)}" oninput="setS('sv',this.value/100,1)"></label><label class="row2"><input type="checkbox" ${ST.mus ? "checked" : ""} onchange="setS('mus',this.checked?1:0)"> Nhạc nền theo chế độ</label><label class="row2">Âm lượng nhạc (${Math.round(ST.mv * 100)}%) <input type="range" min="0" max="100" value="${Math.round(ST.mv * 100)}" oninput="setS('mv',this.value/100,1)"></label><button class="btn sm" onclick="sfx('tap')">Nghe thử âm bấm</button> <button class="btn sm" onclick="sfx('ok')">Nghe thử âm đúng</button><p class="mu">Âm bấm áp dụng cho nút, lựa chọn, tab và điều khiển. Nhạc mặc định ở mức 12%. Time Attack phát file timeattack.weba từ GitHub Pages và tự động lặp trong lúc chơi.</p></div>${backupBox()}`
         }
         let AC = null, MG, SG, mcur = "", mstep = 0, nextT = 0;
@@ -2403,15 +2680,30 @@ const googleReady = () =>
             enter(v)
         }
         function loginErr(m, id) { $(id || "lerr").textContent = m }
-        function logout() { taStop(); stopQuizTimer(); rm("t12_nick"); rm("t12_uid"); uid = null; user = null; god = false; st = init(); qs = []; qi = 0; fb = null; res = null; ui = { v: "home" }; render(); scrollTo(0, 0) }
-        function login() { const r = recent(), googleBox = googleReady() ? `<div id="gbtn" style="margin-top:14px;display:flex;justify-content:center"></div><p class="mu" style="margin-top:10px">Lần đầu dùng Google sẽ tự tạo hồ sơ; không có mật khẩu nào được lưu trong trình duyệt.</p>` : `<div class="google-setup"><b>Google Sign-In chưa được kết nối</b><small>Thay <code>GOOGLE_CLIENT_ID</code> bằng Client ID Web của Google Cloud, rồi thêm URL triển khai (hoặc <code>http://localhost</code>) vào Authorized JavaScript origins.</small></div>`; return `<section class="card login"><div class="mw">${MAS}</div><h2>Chào mừng bạn!</h2><p>Nhập nickname để lưu tiến độ học riêng trên thiết bị này.</p><input id="nick" class="inp" maxlength="20" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Nickname" placeholder="Nickname của bạn" onkeydown="if(event.key=='Enter')doLogin()"><div id="lerr" class="err" role="alert"></div><button class="btn go" onclick="doLogin()">VÀO HỌC</button>${r.length ? `<div class="recent"><small>Đã học trên máy này:</small><br>${r.map(n => `<button class="chip" data-n="${esc(n)}" onclick="enter(this.dataset.n)">${esc(n)}</button>`).join("")}</div>` : ""}<div class="or"><span>hoặc tiếp tục với Google</span></div><div id="lerr2" class="err" role="alert"></div>${googleBox}</section>` }
+        function logout() {
+            taStop(); stopQuizTimer();
+            const hadGoogle = !!firebaseUser;
+            stopCloudSync();
+            firebaseUser = null;
+            rm("t12_nick"); rm("t12_uid");
+            uid = null; user = null; god = false; st = init(); qs = []; qi = 0; fb = null; res = null; ui = { v: "home" };
+            if (hadGoogle && firebaseAuth) firebaseAuth.signOut().catch(() => {});
+            render(); scrollTo(0, 0)
+        }
+        function login() {
+            const r = recent();
+            return `<section class="card login"><div class="mw">${MAS}</div><h2>Chào mừng bạn!</h2><p>Đăng nhập Google để lưu tiến trình trên Cloud và tiếp tục học trên điện thoại, máy tính hoặc thiết bị khác.</p><div id="lerr2" class="err" role="alert"></div><button class="btn go" style="width:100%" onclick="googleLogin()">🌐 ĐĂNG NHẬP BẰNG GOOGLE</button>${!cloudConfigured() ? `<div class="google-setup"><b>Đồng bộ Cloud chưa được cấu hình</b><small>Chủ ứng dụng cần điền Firebase Web Config vào biến <code>FIREBASE_CONFIG</code> trong file HTML. Mở hướng dẫn bên dưới để xem các bước và Security Rules.</small></div>` : `<p class="mu">Dữ liệu được gắn với tài khoản Google. Không dùng nickname làm khóa tài khoản.</p>`}<div class="or"><span>hoặc dùng thử trên thiết bị này</span></div><p>Hồ sơ khách chỉ lưu cục bộ, không đồng bộ giữa các máy.</p><input id="nick" class="inp" maxlength="20" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Nickname" placeholder="Nickname của bạn" onkeydown="if(event.key=='Enter')doLogin()"><div id="lerr" class="err" role="alert"></div><button class="btn" onclick="doLogin()">VÀO HỌC VỚI HỒ SƠ KHÁCH</button>${r.length ? `<div class="recent"><small>Đã học trên máy này:</small><br>${r.map(n => `<button class="chip" data-n="${esc(n)}" onclick="enter(this.dataset.n)">${esc(n)}</button>`).join("")}</div>` : ""}<div class="cloud-panel" style="text-align:left"><h3>Thiết lập đồng bộ đa thiết bị</h3><p class="mu">Cần cấu hình Firebase một lần cho website. Sau đó mọi thiết bị dùng cùng website và cùng tài khoản Google sẽ đọc/ghi chung tiến trình.</p>${cloudSetupDetails()}</div></section>`
+        }
         function supportView() { return `<section class="card support-card" style="cursor:default"><div style="font-size:3rem;line-height:1">❤️</div><h2 style="color:inherit;margin:8px 0">Ủng hộ mình nhé!</h2><div class="bankno">VietcomBank: 0151000595704 – PHẠM THỊ THANH NHÃ</div><p>Mỗi sự ủng hộ là động lực lớn giúp mình phát triển !</p><p><button class="chip" id="cpb" onclick="copyBank()">📋 Sao chép số tài khoản</button></p></section>` }
         function copyBank() { const t = "0151000595704", b = $("cpb"), ok = () => { if (b) { b.textContent = "✅ Đã sao chép"; setTimeout(() => { b.textContent = "📋 Sao chép số tài khoản" }, 1800) } }; const fb = () => { const a = document.createElement("textarea"); a.value = t; a.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(a); a.select(); try { document.execCommand("copy"); ok() } catch (e) { } a.remove() }; try { navigator.clipboard.writeText(t).then(ok, fb) } catch (e) { fb() } }
         function godPanel(t, l) { if (!god) return ""; return `<div class="god"><b>👑 God mode · mọi level đã mở khóa</b><label>Thì <select id="gt">${TN.map((T, i) => `<option value="${i}"${i == t ? " selected" : ""}>${i + 1}. ${T[1]}</option>`).join("")}</select></label><label>Level <input id="gl" type="number" min="1" max="500" inputmode="numeric" value="${l}" onkeydown="if(event.key=='Enter')godGo()"></label><button class="btn sm" onclick="godGo()">Vào level</button></div>` }
         function godGo() { if (!god) return; const t = +$("gt").value, l = Math.max(1, Math.min(500, parseInt($("gl").value, 10) || 1)); open_(t, l) }
-        { const n = rd("t12_nick"); if (n && NICK_RE.test(n.trim())) setUser(n, rd("t12_uid") || undefined) }
+        { const n = rd("t12_nick"), savedId = rd("t12_uid") || ""; if (n && NICK_RE.test(n.trim()) && !savedId.startsWith("firebase:")) setUser(n, savedId || undefined) }
         applyTheme();
         render();
+        initFirebaseCloud();
+        window.addEventListener("online", () => { if (firebaseUser) { cloudStatus = "pending"; cloudMessage = "Có mạng trở lại, đang đồng bộ..."; scheduleCloudSave() } });
+        window.addEventListener("offline", () => { if (firebaseUser) { cloudStatus = "offline"; cloudMessage = "Đang ngoại tuyến; tiến trình vẫn được lưu cục bộ"; if (ui.v === "prof" || ui.v === "set") render() } });
     </script>
 </body>
 
