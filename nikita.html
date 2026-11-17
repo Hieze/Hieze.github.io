@@ -4326,7 +4326,7 @@ const ACH = [
     ["gn", "🧠", "Ác Mộng Ngữ Pháp", "Đạt từ 80% ở Grammar Nightmare", s => s.gn.best >= 80],
     ["c2", "🎖️", "C2 Distinction", "Đạt hạng S ở C2 Final Examination", s => s.c2.best >= 90],
     ["dq", "📅", "Siêng Năng Mỗi Ngày", "Hoàn thành đủ 3 nhiệm vụ trong một ngày", s => s.stat.dq3 >= 1],
-    ["salty", "🌶️", "Chịu Cay Giỏi", "Vượt level mà không mất tim ở độ cay Cay trở lên", s => s.stat.salty >= 1],
+    ["salty", "🌶️", "Chịu Cay Giỏi", "Vượt level mà không mất tim nào", s => s.stat.salty >= 1],
     ["comeback", "💪", "Không Bỏ Cuộc", "Vượt level ngay sau khi vừa thất bại", s => s.stat.comeback >= 1],
     ["xp5k", "💰", "Phú Ông XP", "Đạt 5.000 XP", s => s.xp >= 5000]
 ];
@@ -4459,15 +4459,16 @@ window.addEventListener("pagehide", () => { if (user) wr(key(uid), JSON.stringif
 window.addEventListener("storage", e => { if (user && e.key === key(uid) && e.newValue && !["quiz", "ta"].includes(ui.v)) { try { st = sanitize(JSON.parse(e.newValue)); regen(); render() } catch (x) { } } });
 
 /* ---------- Cài đặt toàn cục ---------- */
-const DS = { c: "#6C63FF", m: "auto", style: "classic", sfx: 1, sv: .7, mus: 1, mv: .12, salt: 2, tm: 1, fs: 100, rm: 0, hc: 0, font: "default", goal: 100, kb: 1 };
+const DS = { c: "#6C63FF", m: "auto", style: "classic", sfx: 1, sv: .7, mus: 1, mv: .12, salt: 3, tm: 1, fs: 100, rm: 0, hc: 0, font: "default", goal: 100, kb: 1 };
 let ST = Object.assign({}, DS), musicLevelMigrated = false;
 try { const saved = JSON.parse(rd("t12_set")); if (saved && typeof saved === "object") { Object.assign(ST, saved); if (Number(saved.mv) === .35) { ST.mv = DS.mv; musicLevelMigrated = true } } } catch (e) { }
-ST.salt = int(ST.salt, 0, 3, 2); ST.fs = clamp(num(ST.fs, 100), 85, 140); ST.goal = [50, 100, 200, 300].includes(+ST.goal) ? +ST.goal : 100; ST.font = ST.font === "legible" ? "legible" : "default";
+ST.salt = 3; ST.tm = 1; ST.fs = clamp(num(ST.fs, 100), 85, 140); ST.goal = [50, 100, 200, 300].includes(+ST.goal) ? +ST.goal : 100; ST.font = ST.font === "legible" ? "legible" : "default";
 const saveS = () => wr("t12_set", JSON.stringify(ST));
 if (musicLevelMigrated) saveS();
 
 /* ---------- Độ cay: các "cản chở nhỏ" ---------- */
-const saltOn = () => ST.salt > 0 && !god;
+/* Độ cay luôn ở mức cao nhất (3), người chơi không điều chỉnh được. Chỉ God mode được miễn. */
+const saltOn = () => !god;
 const SALT = [["Tắt", "Học thư giãn, không có cản chở."], ["Nhẹ 🌶️", "Có tim, câu sai quay lại cuối bài, gia sư hay cà khịa."], ["Cay 🌶️🌶️", "Thêm đếm ngược từng câu, hỏi \"Chắc chưa?\", nút làm lại bị khóa vài giây, Time Attack bị phạt giờ."], ["Cay xè 🌶️🌶️🌶️", "Thêm nút Kiểm tra biết né, đóng băng sau khi sai, Boss trừ 2 tim, tim hồi chậm, không có gợi ý."]];
 const heartIv = () => [0, 180e3, 300e3, 480e3][ST.salt] || 0;
 function regen() {
@@ -4581,7 +4582,7 @@ const updM = () => { const b = $("mbtn"); if (b) { b.innerHTML = ic(ST.mus ? "mu
 function setS(k, v, nr) {
     if (k == "mv" || k == "sv") v = clamp(Number(v) || 0, 0, 1);
     if (k == "style" && !STYLES.includes(v)) v = DS.style;
-    if (k == "salt") v = int(v, 0, 3, 2);
+    if (k == "salt" || k == "tm") return;
     if (k == "fs") v = clamp(num(v, 100), 85, 140);
     ST[k] = v; saveS(); applyTheme(); vol();
     if (k == "mus") { mcur = ""; if (ui.v == "ta") { if (ST.mus) startTaMusic(); else pauseTaMusic() } }
@@ -4946,7 +4947,7 @@ ${cm ? `<details class="cmp"><summary>Dễ nhầm với <b lang="en">${TN[cm[0]]
 <p class="mu">Mục tiêu level này: ${goal(l)}.</p>
 <p>📝 Phần 2 và 3: ${n} câu luyện tập và thử thách. Cần đúng ${Math.ceil(n * .8)}/${n} câu để mở khóa level tiếp theo.${done ? " <b>Level này đã hoàn thành: làm lại sẽ chỉ nhận một nửa XP.</b>" : ""}</p>
 ${dead ? `<div class="banner bad" role="status"><span>💔 Bạn đã hết tim. Tim tự hồi sau <b data-hrt>${mmss(heartMs())}</b>, hoặc ôn 6 câu và đúng 3 câu để hồi ngay.</span><button class="btn sm" style="--c:var(--s);color:#2b2340" ${A("startHrev")}>Ôn để hồi tim</button></div>` : `<button class="btn" ${A("start")} data-focus>Bắt đầu làm bài</button>`}
-${saltOn() ? `<p class="mu sm">🌶️ Độ cay: <b>${SALT[ST.salt][0]}</b> — ${SALT[ST.salt][1]} <button class="link" ${A("go", "set")}>Đổi</button></p>` : ""}</article>`
+${saltOn() ? `<p class="mu sm">🌶️ Độ cay: <b>${SALT[ST.salt][0]}</b> — ${SALT[ST.salt][1]}</p>` : ""}</article>`
 }
 
 /* ---------- Ôn tập ngắt quãng ---------- */
@@ -5122,7 +5123,6 @@ function setV() {
     const rg = (k, label, v, lo, hi, step, suffix) => `<label class="row2 rng">${label} <input type="range" min="${lo}" max="${hi}" step="${step || 1}" value="${v}" data-i="setRange" data-args="${esc(JSON.stringify([k]))}"><output id="o-${k}">${suffix(v)}</output></label>`;
     const m = metaOf(), isG = !!(uid && String(uid).startsWith("google:")), bk = backups(), pr = persisted;
     return `<h1 class="pg">⚙️ Cài đặt</h1>
-<article class="card" style="cursor:default;--c:var(--bad)"><h2 class="h-sm">🌶️ Độ cay</h2><p>Các "cản chở nhỏ" làm việc học thêm gay cấn. Bạn tự chọn mức mình chịu được.</p>${tabs(SALT.map((s, i) => [i, s[0]]), ST.salt, "salt")}<p class="mu" role="status">${SALT[ST.salt][1]}</p>${ST.salt >= 2 ? tg("tm", "Giới hạn thời gian cho từng câu (tắt đi nếu bạn cần nhiều thời gian hơn)", ST.tm) : ""}<p class="mu sm">Tim hồi 1 cái sau ${[0, 3, 5, 8][ST.salt] || 3} phút. Chế độ God không bị ảnh hưởng.</p></article>
 <article class="card" style="cursor:default;margin-top:14px;--c:var(--p)"><h2 class="h-sm">🎨 Giao diện</h2><p>Phong cách:</p><div class="tabs" role="group">${[["classic", "🎨 Hiện tại"], ["space", "🌌 Không gian"], ["chess", "♟️ Cờ vua"], ["future", "⚡ Tương lai"]].map(([k, l]) => `<button class="${ST.style == k ? "on" : ""}" aria-pressed="${ST.style == k}" ${A("setS", "style", k)}>${l}</button>`).join("")}</div><p class="mu">Không gian có sao và thiên hà; Cờ vua pha gỗ óc chó, ngà và xanh lục; Tương lai dùng kính tối, lưới neon và ánh sáng hologram.</p><p>Chế độ sáng tối:</p>${tabs([["auto", "Tự động"], ["light", "Sáng"], ["dark", "Tối"]], ST.m, "m")}<p>Màu chủ đạo:</p><div>${sw.map(([c, n]) => `<button class="chip sw${ST.c.toLowerCase() == c.toLowerCase() ? " on" : ""}" style="--sc:${c}" title="${n}" aria-label="${n}" aria-pressed="${ST.c.toLowerCase() == c.toLowerCase()}" ${A("setS", "c", c)}></button>`).join("")}<label class="chip">Tùy chọn <input type="color" value="${esc(ST.c)}" data-c="setS" data-args='["c"]' aria-label="Chọn màu tùy ý"></label></div></article>
 <article class="card" style="cursor:default;margin-top:14px;--c:var(--p)"><h2 class="h-sm">♿ Trợ năng</h2>${rg("fs", "Cỡ chữ", ST.fs, 85, 140, 5, v => v + "%")}${tg("font", "Phông chữ dễ đọc (Atkinson Hyperlegible)", ST.font == "legible", "legible", "default")}${tg("rm", "Giảm chuyển động và hiệu ứng", ST.rm)}${tg("hc", "Tương phản cao", ST.hc)}${tg("kb", "Hiện gợi ý phím tắt khi làm bài", ST.kb)}<p class="mu sm">Ứng dụng cũng tự theo thiết lập "giảm chuyển động" và "tương phản cao" của hệ điều hành.</p></article>
 <article class="card" style="cursor:default;margin-top:14px;--c:var(--p)"><h2 class="h-sm">🔊 Âm thanh & nhạc</h2>${tg("sfx", "Âm thanh thao tác, đúng/sai", ST.sfx)}${rg("sv", "Âm lượng hiệu ứng", Math.round(ST.sv * 100), 0, 100, 1, v => v + "%")}${tg("mus", "Nhạc nền theo chế độ", ST.mus)}${rg("mv", "Âm lượng nhạc", Math.round(ST.mv * 100), 0, 100, 1, v => v + "%")}<button class="btn sm" ${A("sfx", "tap")}>Nghe thử âm bấm</button> <button class="btn sm" ${A("sfx", "ok")}>Nghe thử âm đúng</button><p class="mu">Âm bấm áp dụng cho nút, lựa chọn, tab và điều khiển. Nhạc mặc định ở mức 12%. Time Attack phát file timeattack.weba (nếu không có sẽ dùng nhạc tổng hợp) và tự động lặp trong lúc chơi.</p></article>
